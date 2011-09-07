@@ -1,0 +1,37 @@
+/* **********************************************************************************          OVERALL SETTINGS */
+
+body {
+    font-family: "Trebuchet MS"; font-size: 8pt; color: #000;
+    background: #2e3439 url(../gfx/login/mainbg.jpg) repeat-x;
+    margin: 0px; padding: 0; height: 100%;}
+
+/* **********************************************************************************            LINKS SETTINGS */
+
+a, a:visited {text-decoration: none;color: #FFF;}
+a:hover {color: #ff6600;}
+
+.btns{
+    font-size:10px; font-family:"Trebuchet MS"; color:#FFF; background-color:#353738; border: 1px solid #000;
+    border-width:1px; padding: 1px 2px 1px 2px;}
+
+/* **********************************************************************************             MAIN SETTINGS */
+#invite {background-color: #1e1f21; padding: 10px; width:400px; border: 1px solid #000}
+#main { height: 564px; background: transparent; margin-top: -2px}
+#imageseta { width: 259px; height: 564px; background: url(../gfx/login/imageseta.jpg) no-repeat; margin-right: -4px; }
+#imagesetb { width: 217px; height: 564px; background: url(../gfx/login/imagesetb.jpg) no-repeat; }
+#imagesetc { width: 278px; height: 564px; background: url(../gfx/login/imagesetc.jpg) no-repeat; margin-left: -4px; }
+
+#content { width: 217px; height: 310px; padding-top:145px;}
+#info {text-align: center;}
+.info { width:200px; padding: 4px; color: #828282; font-size: 8px; }
+.reg { width:200px; padding-top: 15px; color: #828282; font-size: 8px; }
+.btn { height:50px; text-align: center;}
+.spacer { width:200px; height: 15px; border-bottom: 1px dotted #9d9d9d;}
+.field {font-size: 10px; background-color: #353738; border: 1px solid #000; }
+.username { text-align: center; color: #FFF; font-size: 8px; height: 20px;}
+.username1 { text-align: left; color: #FFF; font-size: 8px; height: 20px; padding-left:15px}
+.usernamefield1 {text-align: left; padding-left:15px}
+.usernamefield {text-align: center;}
+.password {text-align: center; color: #FFF; font-size: 8px; height: 20px}
+.passwordfield {text-align: center;}
+

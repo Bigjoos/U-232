@@ -1,0 +1,62 @@
+<?php
+/**
+ *   http://btdev.net:1337/svn/test/Installer09_Beta
+ *   Licence Info: GPL
+ *   Copyright (C) 2010 BTDev Installer v.1
+ *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
+ *   Project Leaders: Mindless,putyn.
+ **/
+/*
++------------------------------------------------
+|   $Date$
+|   $Revision$
+|   $Author$
+|   $URL$
+|   $flush
+|   $Sir_Snugglebunny,Bigjoos
++------------------------------------------------
+*/
+if ( ! defined( 'IN_TBDEV_ADMIN' ) )
+{
+	$HTMLOUT='';
+	$HTMLOUT .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+		<html xmlns='http://www.w3.org/1999/xhtml'>
+		<head>
+		<title>Error!</title>
+		</head>
+		<body>
+	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
+	</body></html>";
+	print $HTMLOUT;
+	exit();
+}
+
+require_once(INCL_DIR.'user_functions.php');
+require_once(INCL_DIR.'bbcode_functions.php');
+
+$lang = array_merge( $lang );
+
+if (!min_class(UC_STAFF))
+header( "Location: {$TBDEV['baseurl']}/index.php");
+
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if (!is_valid_id($id))
+    stderr("Error", "Invalid ID.");
+
+if ($CURUSER['class'] >= UC_MODERATOR) {
+    
+    $dt = time();
+    $res = sql_query("SELECT username FROM users WHERE id= $id") or sqlerr(__FILE__, __LINE__);
+    $arr = mysql_fetch_assoc($res);
+    $username = $arr['username'];
+    mysql_query("DELETE FROM peers WHERE userid=" . $id);
+    $effected = mysql_affected_rows();
+    //=== write to log
+    write_log("Staff flushed " . $username . "'s ghost torrents at " . get_date($dt, 'LONG',0,1) . ". $effected torrents where sucessfully cleaned.");
+    //write_log("User " . $username . " just flushed torrents at " . get_date($dt, 'LONG',0,1) . ". $effected torrents where sucessfully cleaned.");
+    header("Refresh: 3; url=index.php");
+    stderr('Success', "$effected ghost torrent" . ($effected ? 's' : '') . 'where sucessfully cleaned. You may now restart your torrents, The tracker has been updated, and your ghost torrents where sucessfully flushed. please remember to put the seat down. Redirecting to homepage in 3...2...1.');
+} else
+    stderr("Oops", "Your not a member of staff.");
+?>

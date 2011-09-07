@@ -1,0 +1,356 @@
+@import "bbcode.css";
+/* ------------------------------------ MAIN SITE SETTING -------------------------------------- */
+body {
+    background: #101010 url(pic/bg.jpg) repeat-x;
+    width: 100%; height: 100%; 
+    position: absolute; left: -10px; top: -10px; z-index: 0;
+    font-family: "arial"; font-size: 8pt; color: #FFF;
+    margin-top: 10px; margin-bottom: 0px;    
+}
+/* -------------------------------------- IMAGES SETTINGS -------------------------------------- */
+img {border: 0;vertical-align: middle;}
+/* ------------------------------------  HEADER SETTINGS  -------------------------------------- */
+#logostrip{ 
+	background:transparent url(pic/header.png) no-repeat;
+	height: 91px; width: 950px;
+	margin-top: 20px; padding:0; }
+/* ------------------------------------    MENU SETTING   -------------------------------------- */
+#submenu{ 
+	border: 0px solid #FFF;	border-top: 0; color: #3A4F6C; 
+	margin: 0; height: 22px; text-align: right;}
+#submenu a:link, #submenu  a:visited, #submenu a:hover, #submenu a:active { 
+	background: #003977; border : 1px solid #FFF; 
+	color: #FFF; padding: 1px 3px 2px 4px;
+    margin: 0px 1px 0px 2px; text-decoration:none;}
+#submenu a:hover, #submenu a:active{background: #EA5F00;}   
+#iconbar{ position:absolute; margin-top: 90px; padding-left: 100px; background: url('pic/menu_bg.png') no-repeat;
+width: 950px; height: 45px;}
+#iconbar li	{float:left;position:relative;margin-right:10px;overflow:hidden;font-family: "arial";}
+#iconbar a {font-family: "arial"; text-decoration: none; outline: none; color:#e9e9e9; display: block;
+	width: 58px; padding: 5px; padding-top:14px; cursor:pointer; height:26px;}
+#iconbar a:hover {font-family: "arial"; text-decoration: none; outline: none; color:#43abe4; display: block;
+	width: 58px; padding: 5px; padding-top:14px; cursor:pointer; height:26px;}
+#iconbar a:active {font-family: "arial"; text-decoration: none; outline: none; color:#43abe4; display: block;
+	width: 58px; padding: 5px; padding-top:14px; cursor:pointer; height:26px;}
+/* ------------------------------------ STATUSBAR SETTING -------------------------------------- */
+#personlig {width: 980px; text-align: right; color: #FFF;}
+#personlig a, a:visited { text-decoration: none; color: #FFF;}
+#personlig a:hover { color: #FFF;}
+#statusbar a, a:visited {text-decoration: none; color: #FFF;}
+#statusbar a:hover {color: #FFF;}
+#statusbar{ color: #FFF; padding-top: 52px; float:right; padding-right:20px;}
+/* ------------------------------------   TABLE SETTING   -------------------------------------- */
+table { border-collapse: collapse; border: none; background-color:transparent }
+table.main, table.mainouter { border:  none; background-color: transparent;}
+table.bottom { background: transparent;}
+td {font-size: 8pt;	border: solid #000000 0px;}
+td.embedded {border: none; padding: 0px; text-align: left;}
+td.bottom {border: none;}
+td.heading { font-weight: bold;}
+td.text { padding: 10pt; text-align: left; background-color: transparent;}
+td.comment { padding: 10pt; font-size: 8pt; text-align: left;}
+td.colhead { height: 30px; font-weight: bold; color: #ffffff; border: 1px solid #000; background: url('pic/headindex.png');}
+td.rowhead {font-weight: bold; text-align: right; vertical-align: top; background-color: transparent;}
+td.title {font-size: 14pt;}
+td.navigation {font-weight: bold; font-size: 10pt; border: none;}
+td.clear { padding: 10px; border: 0px; background: transparent;}
+.roundedCorners {border: 1px solid #000; -moz-border-radius: 6px; -webkit-border-radius: 6px;}
+td.clearalt6 { width: 800px; padding: 5px; border: 0px;border: hidden;}
+td.clearalt7 { padding: 5px; background: #777777; border: 0px;border: hidden;}
+
+/* ------------------------------------    TEXT SETTING   -------------------------------------- */
+
+h1 { font-size: 12pt;}
+h2 {  font-size: 10pt;  margin-bottom: 6px;}
+h3 {  font-size: 11pt;  margin-bottom: 6px;}
+p {	font-size: 8pt;}
+p.sub {   margin-bottom: 4pt;}
+p#statusgreen { font-size: 1.2em; background-color: #fff; color: #0a0; }
+p#statusred { font-size: 1.2em; background-color: #fff; color: #a00; }
+.small { font-size: 7pt;}
+.big { font-size: 10pt;}
+.red {	color: #ee0000;}
+.yellow {color: #997700;}
+.green {color: #000000;}
+.important {font-weight: bold;font-size: 8pt;}
+font.gray{  color: #ACA899; text-decoration: underline;}
+
+/* ----------------------------------- FORM/INPUT SETTING -------------------------------------- */
+
+form {display: inline; margin-top: 0; margin-bottom: 0; padding: 0;}
+.cimage { border: 1px solid #eee; }
+.btn{
+   font-size:12px; font-family:Verdana,sans-serif;  color:#FFF;
+   background-color:#890537;  border: 1px solid #000;  border-width:1px;
+   padding: 1px 3px 1px 3px;}
+input, select, textarea {
+	background: #FFF; border: 1px solid #00326A;
+	color: #000; font-family: verdana, helvetica, sans-serif;	font-size: 11px;
+	margin: 5px; padding: 2px; vertical-align: middle;}
+input:focus {   background-color: #FFFF99; }
+textarea:focus {  background-color: #FFFF99; }
+select{	margin: 5px;padding:2px;}
+
+/* ------------------------------------    FORUM SETTING  -------------------------------------- */
+
+.forumtable{
+  width: 100%; margin: 0; padding: 0; font-size: 8pt; 
+  border: 0px solid #ccc; border-collapse: collapse;
+  background-color: white;}
+.forumrules_title{
+  background-color: #7192b2;font-size: 14px;color: #fff;padding: 7px; margin-bottom: 4px;}
+.forumrules_border{  border:1px solid #e2e2e0;  padding:4px;}
+.forumrules_text_border{  border:1px solid #e2e2e0;  padding:4px;}
+.forumrules_text{  background-color: #FFFF99;font-size: 14px;color: #000;}
+.st1 { background-color: #1f1f1f; width: 200px; height: 25px; text-align: right; font-weight: bold; padding-right: 10px; border-right: 1px solid #000;}
+.st2 { background-color: #1f1f1f; width: 700px; height: 25px; text-align: left; padding-left: 10px;}
+#tbdev_forum{ background: #689BDC; }
+#tbdev_forum1{ background: #A8BED5; }
+.avatarhold {border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background-color: transparent; width:170px; padding:10px; text-align: center; }
+.texthold {
+	border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background-color: transparent; width:770px; min-height:340px; padding:10px; text-align: left; }
+.forumhead { font-size: 18px; font-weight: bold; text-align: left; color: #FFF; background-color: transparent;}
+table {background-color: transparent;}
+
+/* ------------------------------------   POPUP SETTING   -------------------------------------- */
+
+.popupmenu{
+   background: #C2CFDF; color: #3A4F6C;
+   border: 1px solid #3A4F6C;
+   text-align:left; font-size:11px; font-weight:bold; white-space:nowrap;}
+.popupmenu-item{
+	padding: 5px; white-space: nowrap;
+	border-bottom: 1px solid #C2CFDF;
+	color:  #000000; font-weight: normal;}
+.popupmenu-item-last{
+	padding: 5px; white-space: nowrap;
+	color:  #000000; font-weight: normal;}
+.popupmenubutton{
+   background: #C2CFDF; color: #3A4F6C;
+   border: 1px solid #3A4F6C;
+   text-align:center; font-size:11px; font-weight:bold; white-space:nowrap;
+   height:18px; width:120px;}
+.popupmenu-item a:link, .popupmenu-item a:visited,.popupmenu-item-last a:link, .popupmenu-item-last a:visited
+{ 	color: #000; text-decoration: none;}
+.popupmenu-item a:hover, .popupmenu-item-last a:hover{ 	color: #EA5F00; text-decoration: none;}
+
+/* --------------------------------- EVERYTHING ELSE SETTING ----------------------------------- */
+.tbi{ vertical-align:middle; border:0px; padding:0px; margin:0px; float:none;}
+.balloonstyle{position:absolute;top: -500px;left: 0;padding: 5px;visibility: hidden;border:1px solid #EAFF08;
+font:normal 12px Verdana;color: #FF6600;line-height: 18px;z-index: 100;background-color: #FFFFD4;width: 400px;
+}
+#arrowhead{z-index: 99;position:absolute;top: -500px;left: 0;visibility: hidden;}
+a.info{ position:relative; z-index:24;  color:#000; text-decoration:none}
+a.info:hover{z-index:25; background-color:#ff0}
+a.info span{display: none}
+a.info:hover span{ display:block; position:absolute; top:2em; left:2em; width:15em; border:1px solid #0cf; background-color:#cff; color:#000;
+    text-align: center}
+/* ------------------------------------   DESIGN SETTING  -------------------------------------- */
+#statindex {
+    border:0px; width:900px; height:30px; 
+    background-color:transparent; 
+    text-align:center; font-weight:bold; color:#FFF;}
+.newshold {
+	border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background-color: #1f1f1f; width:920px; padding:10px; text-align: left; }
+.headindex {
+	border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background: url('pic/headindex.png'); width:925px; height:30px; padding-left:15px; line-height:28px;
+	color: #cdcdcd; font-size:12px; font-weight:bold; font-family:Tahoma, "arial";text-align:left;}
+#headindex2 {
+	border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background-color:#890537; width:985px; height:30px; padding-left:15px; line-height:28px;
+	color: #cdcdcd; font-size:12px; font-weight:bold; font-family:Tahoma, "arial";text-align:left;}
+#statindex {
+	border:0px; width:900px; height:30px; background-color:#1f1f1f; text-align:center; font-weight:bold; color:#FFF;}
+#newshold1 {
+	border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background-color: transparent; width:980px; padding:10px; text-align: left; }
+#headindex1 {
+	border: 1px solid #000;	-moz-border-radius: 6px; -webkit-border-radius: 6px;
+	background: url('pic/headindex.png'); width:925px; height:30px; padding-left:15px; line-height:28px;
+	color: #cdcdcd; font-size:12px; font-weight:bold; font-family:Tahoma, "arial";text-align:left;}
+.headlineindex {
+	font-size:12px; font-weight:bold; font-family:Tahoma, "arial"; text-align:left; padding-left:10px; width:990px; height:21px;  }
+.headlineindex1 {
+	font-size:12px; font-weight:bold; font-family:Tahoma, "arial"; text-align:left; padding-left:10px; width:990px; height:21px;  }
+.details-header {
+    background: url('pic/headindex.png'); width:925px; height:30px;
+    border: 1px solid #000;	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px; color: #FFF; text-align: center;
+    padding-bottom: 10px;}
+.upload-header {
+    background: url('pic/headindex.png'); width:925px; height:30px;
+    border: 1px solid #000;	-moz-border-radius: 6px;-webkit-border-radius: 6px;
+    color: #FFF; text-align: center; font-weight: bolder; font-size: 14px; padding-top: 9px;}
+.staffholder { width:1000px;}
+.staffholder2 { width:350px;}
+.staff-name { width: 200px; height: 25px; text-align: left; border:none;}
+.staff-onoff { max-width: 20px; max-height: 25px; text-align: left; border:none;}
+.staff-pm { max-width: 20px; max-height: 25px; text-align: center; border:none;}
+.staff-flag { max-width: 20px; max-height: 25px; text-align: center; border:none;}
+td.clearalt6 {
+background: #004E98;
+padding: 5px;
+border: 0px;
+border: hidden;}
+td.clearalt7 {
+padding: 5px;
+background: #777777;
+border: 0px;
+border: hidden;}
+.codetop {
+background: #0099FF url('pic/code.jpg') no-repeat right;
+color: #000;
+font-weight: bold;
+margin: 0 auto 0 auto;
+padding: 3px;
+border: 1px solid #000;
+width:500px;
+}
+.codemain {
+background: #FFF;
+border: 1px solid #000;
+color: #000;
+margin: 0 auto 0 auto;
+padding: 3px;
+width:500px;
+overflow:auto;
+height:150px;
+}
+/* fancy tooltip */
+span.tool {
+position: relative;   /* this is key */
+cursor: help;
+}
+span.tool span.tip {
+white-space: nowrap;
+display: none;        /* so is this */
+}
+/* tooltip will display on :hover event */
+span.tool:hover span.tip {
+display: block;
+z-index: 100;
+position: absolute;
+top: 1.6em;
+left: 0;
+width: auto;
+padding: 3px 7px 4px 6px;
+border: 1px solid #336;
+background-color: #f7f7ee;
+font: normal 1.2em/1.2em tahoma, helvetica, sans-serif;
+text-align: left;
+color: #000;
+}
+#content span.tool::after {
+padding-left: 2px;            /* eye candy */
+content: url(pic/bubble.gif);
+}
+/* ------------------------------------    TAGS SETTING   -------------------------------------- */
+
+.tag_cloud{ padding: 3px; text-decoration: none; font-family: verdana; }
+.tag_cloud:link  { color: #0099FF; text-decoration:none;}
+.tag_cloud:visited { color: #00CCFF; }
+.tag_cloud:hover { color: #0000FF; background: #00CCFF; }
+.tag_cloud:active { color: #0000FF; background: #FFFFFF; }
+.codetop { background: #890537;color: #FFF;font-weight: bolder; margin: 0 auto 0 auto;padding: 3px;border: 1px solid #000;
+    border-bottom: none; width:700px;}
+.codemain {background: #FFF; border: 1px solid #000;  color: #000; margin: 0 auto 0 auto; padding: 3px;
+    width:700px; overflow:auto; height:250px;}
+
+/* ------------------------------------   LINKS SETTING   -------------------------------------- */
+
+a:link, a:visited { text-decoration: none; color: #FFF;}
+a:hover {color: #FFF;}
+a.index {font-weight: bold;}
+a.biglink {	font-weight: bold;	font-size: 12pt;}
+a.altlink:link, a.altlink:visited{	font-weight: bold; color: #FFF;	text-decoration: none;}
+a.altlink:hover {  text-decoration: underline;}
+a.altlink_blue:link, a.altlink_blue:visited{ font-weight: bold;	color: #FFF; text-decoration: none;}
+a.altlink_blue:hover {  text-decoration: underline;}
+a.altlink_green:link, a.altlink_green:visited{	font-weight: bold; color: #FFF; text-decoration: none;}
+a.altlink_green:hover {text-decoration: underline;}
+a.colheadlink:link, a.colheadlink:visited {font-weight: bold; color: #FFFFFF; text-decoration: none;}
+a.colheadlink:hover {text-decoration: underline;}
+.minipagelink,.minipagelinklast{border: 1px solid #C2CFDF;	font-size: 10px; margin: 0 1px 0 0;}
+.pagelink a:active,.pagelink a:visited,.pagelink a:link,.pagelinklast a:active,.pagelinklast a:visited,
+.pagelinklast a:link,.pagecurrent a:active,.pagecurrent a:visited,.pagecurrent a:link,.minipagelink a:active,
+.minipagelink a:visited,.minipagelink a:link,.minipagelinklast a:active,.minipagelinklast a:visited,
+.minipagelinklast a:link{text-decoration: none;}
+.pagelink,.pagelinklast,.pagecurrent,.minipagecurrent,.minipagelink,.minipagelinklast{
+	background: #F0F5FA; border: 1px solid #072A66;	padding: 1px 3px 1px 3px;}
+.pagelinklast,.minipagelinklast{background: #DFE6EF;}
+.pagecurrent{background: #FFC9A5;}
+.minipagecurrent{background: #F0F5FA;font-size: 10px;}
+.sublink {	font-style: italic;	font-size: 7pt;	font-weight: normal;}
+.highlight {
+  background-color:#CCFF9D;
+}
+
+.highlight a:hover, .highlight a:active {
+  color:#000000;
+  background-color:#fd9e09;
+}
+a.altlink_white:link, a.altlink_white:visited{
+font-weight: bold;
+color: #FFF;
+text-decoration: none;
+}
+a.altlink_white:hover {
+  text-decoration: underline;
+}
+
+th.colhead {
+border:1px;
+background-color:#004E98;
+font-weight:bold;
+color:#FFF;
+}
+.captchaImage {margin:0 2px;}
+.captchaImages { margin: 5px auto;width:350px;text-align:center;}
+.simpleCaptchaSelected { border: 2px solid #999;
+-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+#middle {
+margin-top: auto;
+margin-right: auto;
+margin-bottom: auto;
+margin-left: auto;
+background-image: url(pic/evilreels.png);
+background-repeat: no-repeat;
+background-position: center;
+width: auto;
+}
+#marqueecontainer{
+position: relative;
+width: 99%; /*marquee width - adjust to your design */
+height: 120px; /*marquee height */
+background-color:lightyellow;
+color:black;
+overflow: hidden;
+border: 1px solid blue;
+padding: 2px;
+padding-left: 4px;
+text-align:left;
+}
+
+#marqueecontainer img {
+border-width:2px;
+border-style:solid;
+}
+td.normal {
+background: #990000;
+}
+td.normalrowhead {
+font-weight: bold;
+text-align: right;
+background: #990000;
+}
+.listitem {
+margin-left:10px;
+margin-right:3px;
+}
+/* ------------------------------------      DOCK MENU    -------------------------------------- */

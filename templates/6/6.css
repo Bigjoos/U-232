@@ -1,0 +1,659 @@
+/* **********************************************************************************          OVERALL SETTINGS */
+body {
+    font-family: "Trebuchet MS"; font-size: 8pt; color: #000;
+    background: #FFF url(gfx/main-bg.jpg) repeat-x;
+    margin: 0px; padding: 0; height: 100%;}
+html{
+    height: 100%; border: 0; padding: 0; margin: 0;
+    } 
+
+/* **********************************************************************************           IMAGES SETTINGS */
+
+img{ border: 0; vertical-align: middle;}
+/*Cpatcha/pin stuff*/
+.cimage { border: 1px solid #eee; }
+
+/* **********************************************************************************           TABLE SETTINGS */
+
+table {border-collapse: collapse; border: none; background-color: #FFF; }
+table.main, table.mainouter { border:  none; background-color: transparent; border-collapse: collapse;}
+table.bottom { background: transparent;}
+td {font-size: 8pt; border: solid #000000 0px;}
+td.embedded {border: 0 ;padding: 0px;text-align: left;}
+td.bottom {border: none;}
+td.heading {font-weight: bold;}
+td.text {padding: 10pt;text-align: left;background-color: transparent;}
+td.comment {padding: 10pt;font-size: 8pt; text-align: left; }
+td.colhead {height: 30px;font-weight: bold;color: #ffffff;border: 1px solid #000;background: #ff6600;}
+td.colhead2 {height: 30px;font-weight: bold;color: #000;border-bottom: 1px dashed #9d9d9d; text-align: center; background: #FFF;}
+td.rowhead {font-weight: bold;text-align: right;vertical-align: top;background-color: transparent;}
+td.title {font-size: 14pt;}
+td.navigation {font-weight: bold;font-size: 10pt;border: none;}
+td.clear {padding: 0px;border: 0px;background: transparent;}
+form {display: inline;margin-top: 0;margin-bottom: 0;padding: 0;}
+td.clearalt6 {background: #004E98;padding: 5px;border: 0px;border: hidden;}
+td.clearalt7 {padding: 5px;background: #777777;border: 0px;border: hidden;}
+
+/* **********************************************************************************           TEXT SETTINGS */
+
+h1 {font-size: 12pt;}
+h2 {font-size: 10pt;margin-bottom: 6px;}
+h3 {font-size: 11pt;margin-bottom: 6px;}
+p {font-size: 8pt;}
+p.sub { margin-bottom: 4pt;}
+
+.red {color: #ee0000;}
+.yellow {color: #ff6600;}
+.green {color: #000000;}
+
+input, select, textarea {
+    background: #FFF;
+    border: 1px solid #00326A;
+    color: #000;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 11px;
+    margin: 5px;
+    padding: 2px;
+    vertical-align: middle;}
+input:focus { background-color: #FFFF99; }
+textarea:focus {background-color: #FFFF99; }
+select{margin: 0px;}
+.small {font-size: 7pt;}
+.big {font-size: 10pt;}
+p#statusgreen { 
+font-size: 1.2em; background-color: #fff; color: #0a0; }
+p#statusred { font-size: 1.2em; background-color: #fff; color: #a00; }
+
+/* **********************************************************************************           LINKS SETTINGS */
+
+.sublink {font-style: italic;font-size: 7pt;font-weight: normal;}
+
+/*pagination links start*/
+font.gray{color: #ACA899;text-decoration: underline;}
+.pagelink,
+.pagelinklast,
+.pagecurrent,
+.minipagecurrent,
+.minipagelink,
+.minipagelinklast{background: #F0F5FA;border: 1px solid #072A66;padding: 1px 3px 1px 3px;}
+.pagelinklast,.minipagelinklast{background: #DFE6EF;}
+.pagecurrent{background: #FFC9A5;}
+.minipagecurrent{background: #F0F5FA;font-size: 10px;}
+.minipagelink,.minipagelinklast{border: 1px solid #C2CFDF;font-size: 10px;margin: 0 1px 0 0;}
+.pagelink a:active,
+.pagelink a:visited,
+.pagelink a:link,
+.pagelinklast a:active,
+.pagelinklast a:visited,
+.pagelinklast a:link,
+.pagecurrent a:active,
+.pagecurrent a:visited,
+.pagecurrent a:link,
+.minipagelink a:active,
+.minipagelink a:visited,
+.minipagelink a:link,
+.minipagelinklast a:active,
+.minipagelinklast a:visited,
+.minipagelinklast a:link{text-decoration: none;}
+/*pagination links end*/
+
+a, a:visited, a:active {text-decoration: none; color: #000;}
+a:hover {text-decoration: none; color: #ff6600;}
+
+a.index {font-weight: bold;}
+a.biglink {font-weight: bold;font-size: 12pt;}
+a.altlink:link, a.altlink:visited{font-weight: bold;color: #000;text-decoration: none;}
+a.altlink:hover {text-decoration: none; color: #ff6600;}
+a.altlink_blue:link, a.altlink_blue:visited{font-weight: bold;color: #000;text-decoration: none;}
+a.altlink_blue:hover {text-decoration: none; color: #ff6600;}
+a.altlink_green:link, a.altlink_green:visited{font-weight: bold;color: #000;text-decoration: none;}
+a.altlink_green:hover {text-decoration: none;}
+a.colheadlink:link, a.colheadlink:visited {font-weight: bold;color: #000;text-decoration: none;}
+a.colheadlink:hover {text-decoration: none; color: #ff6600;}
+
+a.info{position:relative; z-index:24; color:#000;text-decoration:none}
+a.info:hover{z-index:25; background-color:#ff0}
+a.info span{display: none}
+a.info:hover span{ 
+    display:block;position:absolute;top:2em; left:2em; width:15em;
+    border:0px solid #0cf;background-color:#fff; color:#000;
+    text-align: center}
+.highlight {
+  background-color:#fff;
+}
+
+.highlight a, .highlight a:active, .highlight a:visited {  color:#000;}
+.highlight a:hover{text-decoration: none; color: #ff6600;}
+#header a, a:visited {text-decoration: none;color: #000;}
+#header a:hover {color: #ff6600;}
+
+/* **********************************************************************************           ELS SETTINGS */
+
+.btn{
+    font-size:10px;
+    font-family:"Trebuchet MS";
+    color:#FFF;
+    background-color:#ff6600;
+    border: 1px solid #000;
+    border-width:1px;
+    padding: 1px 2px 1px 2px;}
+    
+.btn a, .btn a:visited {text-decoration: none;color: #FFF;}
+.btn a:hover {color: #fff;}
+.important {font-weight: bold;font-size: 8pt;}
+.popupmenu{
+    background: #C2CFDF;
+    color: #3A4F6C;
+    border: 1px solid #3A4F6C;
+    text-align:left;
+    font-size:11px;
+    font-weight:bold;
+    white-space:nowrap;}
+.popupmenu-item{
+    padding: 5px;
+    /*margin-top:4px;*/
+    white-space: nowrap;
+    border-bottom: 1px solid #C2CFDF;
+    color:  #000000;
+    font-weight: normal;}
+.popupmenu-item-last{
+    padding: 5px;
+    /*margin-top:4px;*/
+    white-space: nowrap;
+    color:  #000000;
+    font-weight: normal;}
+.popupmenubutton{
+    background: #C2CFDF;
+    color: #3A4F6C;
+    border: 1px solid #3A4F6C;
+    text-align:center;
+    font-size:11px;
+    font-weight:bold;
+    white-space:nowrap;
+    /*padding:3px 5px 3px 3px;*/
+    height:18px;
+    width:120px;}
+.popupmenu-item a:link, 
+.popupmenu-item a:visited,
+.popupmenu-item-last a:link, 
+.popupmenu-item-last a:visited{ color: #000; text-decoration: none;}
+.popupmenu-item a:hover, .popupmenu-item-last a:hover{ color: #EA5F00; text-decoration: none;}
+.tbi{vertical-align:middle;border:0px;padding:0px;margin:0px;float:none;}
+
+.roundedCorners {border: 1px solid #000;-moz-border-radius: 6px;-webkit-border-radius: 6px;}
+.balloonstyle{
+    position:absolute;
+    top: -500px;
+    left: 0;
+    padding: 5px;
+    visibility: hidden;
+    border:1px solid #EAFF08;
+    font:normal 12px arial;
+    color: #FF6600;
+    line-height: 18px;
+    z-index: 100;
+    background-color: #FFFFD4;
+    width: 400px;}
+#arrowhead{z-index: 99;position:absolute;top: -500px;left: 0;visibility: hidden;}
+
+.codetop {
+    background: #0099FF url(pic/code.jpg) no-repeat right;
+    color: #000;
+    font-weight: bold;
+    margin: 0 auto 0 auto;
+    padding: 3px;
+    border: 1px solid #000;
+    width:500px;}
+.codemain {
+    background: #FFF;
+    border: 1px solid #000;
+    color: #000;
+    margin: 0 auto 0 auto;
+    padding: 3px;
+    width:500px;
+    overflow:auto;
+    height:150px;}
+/* fancy tooltip */
+span.tool {
+position: relative;   /* this is key */
+cursor: help;
+}
+span.tool span.tip {
+white-space: nowrap;
+display: none;        /* so is this */
+}
+/* tooltip will display on :hover event */
+span.tool:hover span.tip {
+    display: block;
+    z-index: 100;
+    position: absolute;
+    top: 1.6em;
+    left: 0;
+    width: auto;
+    padding: 3px 7px 4px 6px;
+    border: 1px solid #336;
+    background-color: #f7f7ee;
+    font: normal 1.2em/1.2em tahoma, helvetica, sans-serif;
+    text-align: left;
+    color: #000;}
+#content span.tool:after {padding-left: 2px;content: url(pic/bubble.gif);}
+
+/* **********************************************************************************           SETTINGS */
+
+#rollover{
+    display: inline-table;
+    width: 55px;
+    height: 20px;
+    line-height:20px;
+    background: url(pic/button.png) no-repeat 0 0;
+    background-repeat: no-repeat;
+    background-position: left top;
+    text-align: center;}
+#rollover:hover {background-position: 0 -20px;}
+#rollover span {display: none;}
+
+.pagination{padding:3px;margin:3px;text-align:center;}
+.pagination ul{margin: 0;padding: 0;text-align: right; font-size: 10px;}
+.pagination li{list-style-type: none;display: inline;padding-bottom: 1px;}
+.pagination a, .pagination a:visited{padding: 0 2px;border: 1px solid #9aafe5;text-decoration: none;color: #2e6ab1;}
+.pagination a:hover, .pagination a:active{border: 1px solid #2b66a5;color: #000;background-color: #30C636;}
+.pagination a.currentpage{
+    background-color: #2e6ab1;
+    color: #FFF !important;
+    border-color: #2b66a5;
+    font-weight: bold;
+    cursor: default;}
+.pagination a.disablelink, .pagination a.disablelink:hover{
+    background-color: white;
+    cursor: default;
+    color: #929292;
+    border-color: #929292;
+    font-weight: normal !important;  }
+.pagination a.prevnext{font-weight: bold;}
+
+/* **********************************************************************************           TAGS SETTINGS */
+
+.tag_cloud{padding: 3px; text-decoration: none;font-family: Trebuchet MS;}
+.tag_cloud:link  { color: #0099FF; text-decoration:none;}
+.tag_cloud:visited { color: #00CCFF; }
+.tag_cloud:hover { color: #0000FF; background: #00CCFF; }
+.tag_cloud:active { color: #0000FF; background: #FFFFFF; }
+
+/* **********************************************************************************           FORUM SETTINGS */
+.forumtable{
+    width: 900px; font-size: 8pt;
+    margin: 0; padding: 0;
+    border: 0px solid #ccc;
+    background-color: white;}
+.forumrules_title{
+    background-color: #7192b2;
+    font-size: 14px;
+    color: #fff;
+    padding: 7px;
+    margin-bottom: 4px;}
+.forumrules_border{border:1px solid #e2e2e0;padding:4px;}
+.forumrules_text_border{border:1px solid #e2e2e0;padding:4px;}
+.forumrules_text{background-color: #FFFF99;font-size: 14px;color: #000;}
+.tbdev_forum{background: #FFF;}
+.tbdev_forum1{background: #FFF;}
+
+.forum1 { text-align: left; width: 500px; height: 25px; border-bottom: 1px dashed #9d9d9d; color: #727677; font-size: 12px; font-weight: bold;}
+.forum2 { text-align: center; width: 40px; height: 25px; border-bottom: 1px dashed #9d9d9d; color: #727677; font-size: 12px; font-weight: bold;}
+.forum3 { text-align: left; width: 320px; height: 25px; border-bottom: 1px dashed #9d9d9d; color: #727677; font-size: 12px; font-weight: bold;}
+.forum4 { text-align: left; width: 400px; height: 25px; border-bottom: 1px dashed #9d9d9d; color: #727677; font-size: 12px; font-weight: bold;}
+.forum5 { text-align: center; width: 50px; height: 25px; border-bottom: 1px dashed #9d9d9d; color: #727677; font-size: 12px; font-weight: bold;}
+.forum6 { text-align: left; width: 200px; height: 25px; border-bottom: 1px dashed #9d9d9d; color: #727677; font-size: 12px; font-weight: bold;}
+.forumu {border-bottom: 1px dashed #9d9d9d;}
+.forumu2 {border-bottom: 1px dashed #9d9d9d; width:350px;}
+.forumi {height:35px; width: 40px; text-align: center; display: block; float:left; padding-right: 5px;}
+.forimii {height:35px; width: 460px; text-align: left; display: inline; float: right; margin-top:-32px; margin-left:40px}
+.forimiii {height:35px; width: 460px; text-align: left; display: inline; float: right; margin-top:-22px; margin-left: 40px;}
+.forumheader {text-align: left; color: #727677; font-size: 8pt; font-weight: bold;
+    border: 1px dashed #9d9d9d; padding: 5px; width:900px}
+.smallforum {font-size: 7pt; color: #ff6600;}
+
+
+.forumu  a:visited, a:link
+{text-decoration: none; color: #000;}
+.forumu a:hover 
+{text-decoration: none; color: #ff6600;}
+
+/* *********************************************************************************************************** */
+/*                                     TEMPLATE // DESIGN STARTS HERE                                          */
+/* *********************************************************************************************************** */
+
+/* **********************************************************************************           MAIN SETTINGS */
+#container {
+    width: 900px;  
+    border:none; margin:0 auto;
+    min-height:100%; position:relative;
+}
+#containerout {
+    width: 99%;  
+    border:none; margin:0; padding: 0;
+    min-height:100%; display: block;
+}
+#logo { 
+    height: 84px; width: 400px; 
+    display: inline; float: left; 
+    background: transparent url(gfx/digifeed-logo.png) left no-repeat;}
+
+#userstats {
+    height: 84px; width: 500px; 
+    float: right; display: block;
+    text-align: right; font-size: 11px;
+    color: #a0a1a1;
+    margin-top: 35px; line-height: 15px;} 
+#userstats a, #userstats a:visited, #userstats a:link
+    {text-decoration: none; color: #a0a1a1;}
+#userstats a:hover {text-decoration: none; color: #ff6600;}   
+
+.clear { clear: both;}
+
+#infomenu {width: 400px; display:inline; float:right; margin-top:-22px; text-align: right; height: 20px;}
+
+#globalmenu {display:block; float:left; width:500px; height: 20px; margin-left:5px;margin-top:-27px}
+#menu2 {padding: 0 0 0 0; list-style:none; width:500px}
+#globalmenu li {
+    float:left; display:inline;
+    border-right: 1px dashed #FFF;}
+#globalmenu li a, #globalmenu li a:visited {
+    display:block; height:20px; 
+    line-height:20px; padding:0 10px; 
+    color:#FFF; text-decoration:none;}
+#globalmenu li a b {text-transform:uppercase;}
+#globalmenu li a:hover, 
+.home #globalmenu li#home a,
+.browse #globalmenu li#browse a,
+.forums #globalmenu li#forums a,
+.rules #globalmenu li#rules a,
+.faq #globalmenu li#faq a,
+.logout #globalmenu li#logout a,
+.staff #globalmenu li#staff a
+.login #globalmenu li#login a
+.signup #globalmenu li#signup a
+.recover #globalmenu li#recover a
+{background: #ff6600; padding: 0 10px; color:#FFF;}
+
+#globalundermenu {
+    height:  24px; width:900px;
+    text-align: left; color: #a0a1a1; font-size: 10px;
+    padding-top: 22px; margin-left: 5px;}
+#globalundermenu a, #globalundermenu a:visited, #globalundermenu a:link
+    {text-decoration: none; color: #a0a1a1;}
+#globalundermenu a:hover {text-decoration: none; color: #ff6600;} 
+    
+#footer-tb {background: transparent}
+#footer {
+    width: 100%; 
+    background: url(gfx/footer.png) repeat-x; 
+    height:111px;
+    left:0px; bottom:0px;z-index: 9999; 
+    }
+#footer-top {
+    padding-top: 6px; text-align: center; width:100%; background: transparent;
+}
+.footer-t { text-align: center; padding-top: 5px; color: #6e6e6e;}
+.btn1{
+    font-size:9px;
+    font-family:"Trebuchet MS";
+    color:#FFF;
+    background-color:#ff6600;
+    padding: 0px 0px 0px 0px;
+    border: 1px solid #000;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;}
+
+
+/* **********************************************************************************         INDEX.PHP SETTINGS */
+
+#holderindex {width: 900px;}
+#holderindex-a {width: 900px; vertical-align: top;}
+#leftside {
+    float:left; display: inline;
+    width:600px; vertical-align: top;}
+
+#rightside {
+    float:right; display: block;
+    width: 300px; vertical-align: top;
+    margin-top:-15px}
+.newslock {width: 600px;}
+.newslock a, .newslock a:visited, .newslock a:link
+{text-decoration: none; color: #000;}
+.newslock a:hover {text-decoration: none; color: #ff6600;}
+.news-headline {
+    text-align: left; margin-left: -10px; margin-top: 0px;
+    color: #727677; font-size: 10pt; font-weight: bold;
+    border-bottom: 1px dashed #9d9d9d; width: 600px}
+.news-add {
+    float: right;
+    margin-right: 5px;
+    margin-top: 3px;
+    font-size: 7pt;}
+.news-add a, .news-add a:visited, .news-add a:link, 
+.news-add a:hover {text-decoration: none; color: #ff6600;}
+.newshead {
+    font-size: 11px; font-weight: bold;
+    text-align: left; color:#727677;
+    margin-left:10px;}
+.newshead a, .newshead a:visited, .newshead a:link {
+    text-decoration: none; color: #727677;}
+.newshead a:hover {text-decoration: none; color: #ff6600;}
+.news-edit {
+    float: right;
+    margin-right: 5px;
+    font-size: 7pt;}
+.news-edit a, .news-edit a:visited, .news-edit a:link {
+    text-decoration: none; color: #727677;}
+.news-edit a:hover {text-decoration: none; color: #ff6600;}
+.newstxt {
+    text-align: left;
+    margin-left: 5px;
+    margin-right: 5px;}
+.statlock {width: 280px; float:right; vertical-align: top;}
+.stat-headline {
+    text-align: left; margin-left: 5px; margin-top: 0px;
+    color: #727677; font-size: 10pt; font-weight: bold;
+    border-bottom: 1px dashed #9d9d9d; width: 280px}
+.stat-a { width:200px; text-align: left;}
+.stat-b { width:100px; text-align: right;}
+.space {height: 10px;}
+.statement {border: 1px dashed #ff6600; width:880px; padding:10px; text-align: center; font-weight: bold;}
+#marqueecontainer{
+position: relative;
+width: 100%; /*marquee width - adjust to your design */
+height: 120px; /*marquee height */
+color:black;
+overflow: hidden;
+padding: 2px;
+padding-left: 40px;
+text-align:left;
+}
+
+#marqueecontainer img {
+border:2px solid #fff;
+
+}
+
+
+/* **********************************************************************************         STAFF.PHP SETTINGS */
+
+.staffheader {
+    text-align: left; color: #727677; font-size: 10pt; font-weight: bold;
+    border-bottom: 1px dashed #9d9d9d; width: 900px
+}
+.staffholder {
+    padding: 10px; font-weight: bold;
+}
+.staffhold {width: 200px; }
+.staffname { width:150px; display:inline; float: left; text-align: left;}
+.stafficon {width:50px; display:inline; float: right; text-align: right;}
+
+/* **********************************************************************************    USERDETAILS.PHPSETTINGS */
+
+.userheader {
+    text-align: left; color: #727677; font-size: 10pt; font-weight: bold;
+    border-bottom: 1px dashed #9d9d9d; width: 900px}
+.userholder {width:900px; padding-top: 10px;}
+.userboks1 {width:200px; float:left; display:inline; text-align: center; vertical-align: top;}
+.userboks2 {width:700px; float:right; display:block;}
+.userset {
+    width: 700px; text-align: center; 
+    vertical-align: top; border-bottom: 1px dashed #9d9d9d;
+    margin-top: -10px;}
+.userdonor {
+    width: 700px; text-align: center; vertical-align: top; border-bottom: 1px dashed #9d9d9d;
+    margin-top: -10px; color: #ff6600; }
+.userboks3 {
+    width:330px; float:left; display:inline; vertical-align: top; 
+    border-right: 1px dashed #9d9d9d; padding: 5px;}
+.userboks3a {width:100px; height:15px; float:left; display:inline; text-align: left;}
+.userboks3b {width:230px; height:18px; float:right; display:block; text-align: right;}
+
+.userboks4 {width:330px; float:none; display:block; vertical-align: top;   }
+.usertorrents {
+    text-align: left; color: #727677; font-size: 10pt; font-weight: bold;
+    border-bottom: 1px dashed #9d9d9d; width: 900px; margin-top:260px}
+.user-tor1 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor2 { width:600px; height: 20px;  color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor3 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor4 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor5 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor6 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor7 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor8 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor9 { width:40px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+.user-tor10 { width:455px; height: 20px; color: #727677; font-weight: bold; text-align: center; border-bottom: 1px dashed #9d9d9d }
+
+.user-table {width: 700px; background: transparent; }
+.user-left-col { width: 350px; vertical-align: top; border-right: 1px dashed #9d9d9d;}
+.user-right-col {width: 350px; vertical-align: top; }
+.user-hold-a {width:115px; height:15px; text-align: left; vertical-align: top;}
+.user-hold-b {width:235px; height:15px; text-align: right; vertical-align: top; padding-right:5px}
+.user-hold-c {width:105px; height:15px; text-align: left; vertical-align: top; padding-left:5px}
+.user-hold-d {width:225px; height:15px; text-align: right; vertical-align: top;}
+.user-space-a {width:115px; height:15px; border-bottom: 1px dashed #9d9d9d; }
+.user-space-b {width:235px; height:15px; border-bottom: 1px dashed #9d9d9d; }
+.user-space-c {width:115px; height:15px;}
+.user-space-d {width:235px; height:15px;}
+
+/* **********************************************************************************         LOGIN.PHP SETTINGS */
+
+#loginholder {
+    width:900px; height: 500px; border: 1px dashed #9d9d9d; margin-top: -450px;
+}
+#logintop {
+    width: 700px; float:right; margin-top:-620px; margin-right: -40px;
+}
+.logintb {background-color: transparent;}
+/* **********************************************************************************        BROWSE.PHP SETTINGS */
+
+.tt-a { width: 25px; height: 25px; border-bottom: 1px dashed #9d9d9d; text-align: center;}
+.tt-b { width: 80px; height: 25px; border-bottom: 1px dashed #9d9d9d; text-align: center;}
+.tt-c { width: 50px; height: 25px; border-bottom: 1px dashed #9d9d9d; text-align: center;}
+.tt-d { width: 50px; height: 25px; border-bottom: 1px dashed #9d9d9d; text-align: center;}
+.tt-e { height: 25px; border-bottom: 1px dashed #9d9d9d; text-align: left;}
+
+.tt-a,.tt-b  a:visited, a:link
+{text-decoration: none; color: #000;}
+.tt-a,.tt-b a:hover 
+{text-decoration: none; color: #ff6600;}
+
+/* **********************************************************************************         PMVIEW.PHP SETTINGS */
+
+.pmv-a { text-align: center; width: 50px; height: 25px; border-bottom: 1px dashed #9d9d9d; }
+.pmv-b { text-align: center; height: 25px; border-bottom: 1px dashed #9d9d9d;}
+
+/* **********************************************************************************        STAFFPANEL SETTINGS */
+.st1 {
+	width: 190px; height: 25px;
+	text-align: right; font-weight: bold;
+	padding-right: 10px;
+	border-right: 1px dashed #9d9d9d;
+	}
+.st2 {
+	width: 690px; height: 25px;
+	text-align: left;
+	padding-left: 10px;
+}
+/* - Admin - */
+
+.button {
+    border: 1px solid #ccc;
+    display: block;
+    width: 120px;
+    margin: 0 0 20px 0;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.button span {
+    border: 1px solid #fff;
+    display:block;
+    padding: 15px 10px 15px 10px;
+    text-align: center;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.3em;
+}
+
+.button span img {
+    margin-bottom: 10px;
+}
+
+.button:hover {
+    background: #fff;
+}
+
+.button span:hover {
+    color: #ff6600;
+}
+
+ul.buttons-set li {
+    float: left;
+    margin: 0 15px 0 0;
+    padding: 0 !important;
+	background: 0;
+    list-style: none;
+}
+
+/* **********************************************************************************           FAQ SETTINGS */
+
+.faq1 {width: 225px; height:25px; text-align: center; font-size: 10pt; font-weight: bold;}
+.faq1  a:visited, a:link
+{text-decoration: none; color: #000;}
+.faq1 a:hover 
+{text-decoration: none; color: #ff6600;}
+
+/* **********************************************************************************           TOP10 SETTINGS */
+
+.top10h { text-align: center; height: 25px; border-bottom: 1px dashed #9d9d9d; font-weight: bold;}
+
+/* **********************************************************************************           INVITE SETTINGS */
+
+.inviteinfo {
+    border: 1px dashed #9d9d9d; padding: 5px;
+}
+#middle {
+margin-top: auto;
+margin-right: auto;
+margin-bottom: auto;
+margin-left: auto;
+background-image: url(pic/evilreels.png);
+background-repeat: no-repeat;
+background-position: center;
+width: auto;
+}
+td.normal {
+background: #990000;
+}
+td.normalrowhead {
+font-weight: bold;
+text-align: right;
+background: #990000;
+}
+.listitem {
+margin-left:10px;
+margin-right:3px;
+}
