@@ -863,9 +863,9 @@ if (count($_POST) > 0 );//&& isset($_POST['n']))
 
       $auxres = sql_query(
       "SELECT COUNT(DISTINCT p.id)
-      FROM posts AS p LEFT JOIN topics as t ON p.topic_id = t.id
-      LEFT JOIN forums AS f ON t.forum_id = f.id
-      WHERE p.user_id = " . $user['id'] . " AND f.min_class_read <= " . $CURUSER['class']) or sqlerr(__FILE__, __LINE__);
+      FROM posts AS p LEFT JOIN topics as t ON p.topicid = t.id
+      LEFT JOIN forums AS f ON t.forumid = f.id
+      WHERE p.userid = " . $user['id'] . " AND f.minclassread <= " . $CURUSER['class']) or sqlerr(__FILE__, __LINE__);
 
       $n = mysql_fetch_row($auxres);
       $n_posts = $n[0];
