@@ -2625,7 +2625,7 @@ else if ($action == "search") //-------- Action: Search
                 exit();
             }
             $f_mod='';
-            mysql_query("UPDATE users SET forum_access = '" . time() . "' WHERE id={$CURUSER['id']}") or sqlerr(__FILE__, __LINE__);
+            mysql_query("UPDATE users SET forum_access = ".TIME_NOW." WHERE id={$CURUSER['id']}") or sqlerr(__FILE__, __LINE__);
             $sub_forums = mysql_query(" SELECT f.id, f2.name, f2.id AS subid,f2.postcount,f2.topiccount, p.added, p.anonymous, p.userid, p.id AS pid, u.username, t.subject,t.id as tid,r.lastpostread,t.lastpost
 									FROM forums AS f
 									LEFT JOIN forums AS f2 ON f2.place = f.id AND f2.minclassread<" . sqlesc($CURUSER["class"]) . "
