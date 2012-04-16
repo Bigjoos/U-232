@@ -21,7 +21,7 @@ loggedinorreturn();
     $HTMLOUT = '';
     $HTMLOUT .="<script type=\"text/javascript\" src=\"./scripts/shout.js\"></script>";
     
-   if ($CURUSER['class'] < UC_USER OR $CURUSER["uploadpos"] == 0|| $CURUSER["uploadpos"] > 1 )
+   if ($CURUSER['class'] < UC_UPLOADER OR $CURUSER["uploadpos"] == 0|| $CURUSER["uploadpos"] > 1 )
    stderr($lang['upload_sorry'], $lang['upload_no_auth']);
    
     $HTMLOUT .= "<div align='center'>
