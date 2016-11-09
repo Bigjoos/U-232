@@ -6,19 +6,19 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
-require_once INCL_DIR.'bbcode_functions.php';
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
+require_once INCL_DIR . 'bbcode_functions.php';
 dbconn(false);
 
-$lang = array_merge( load_language('global'));
+$lang = array_merge(load_language('global'));
 
 loggedinorreturn();
-		$htmlout = '';
-    $htmlout = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+$htmlout = '';
+$htmlout = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 		<html xmlns='http://www.w3.org/1999/xhtml'>
 		<head>
-    <meta name='generator' content='TBDev.net' />
+    <meta name='generator' content='u-232' />
 	  <meta name='MSSmartTagsPreventParsing' content='TRUE' />
 		<title>More Smilies</title>
     <link rel='stylesheet' href='./templates/1/itunes.css' type='text/css' />
@@ -32,15 +32,15 @@ loggedinorreturn();
     }
     </script>
     <table class='list' width='100%' cellpadding='1' cellspacing='1'>";
-    $count='';
-    while ((list($code, $url) = each($smilies))) {
+$count   = '';
+while ((list($code, $url) = each($smilies))) {
     if ($count % 3 == 0)
-    $htmlout .= " \n<tr>";
+        $htmlout .= " \n<tr>";
     $htmlout .= "\n\t<td class=\"list\" align=\"center\"><a href=\"javascript: SmileIT('" . str_replace("'", "\'", $code) . "','" . htmlspecialchars($_GET["form"]) . "','" . htmlspecialchars($_GET["text"]) . "')\"><img border='0' src='./pic/smilies/" . $url . "' alt='' /></a></td>";
     $count++;
     if ($count % 3 == 0)
-    $htmlout .= "\n</tr>";
-    }
-    $htmlout .= "</table><div align='center'><a href='javascript: window.close()'>[ Close Window ]</a></div></body></html>";
+        $htmlout .= "\n</tr>";
+}
+$htmlout .= "</table><div align='center'><a href='javascript: window.close()'>[ Close Window ]</a></div></body></html>";
 
-print $htmlout;
+echo $htmlout;

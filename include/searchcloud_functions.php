@@ -11,7 +11,7 @@
 		
 		$result = sql_query("SELECT searchedfor, howmuch FROM searchcloud ORDER BY id DESC LIMIT 50");
   
-		while($row = mysql_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)) {
 			// suck into array
 			$arr[$row['searchedfor']] = $row['howmuch'];
 		}

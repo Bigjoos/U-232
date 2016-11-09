@@ -77,12 +77,12 @@ h2 {font-size: 125%;}
 $html = array();
 function sql_get_version()
 {
-    $query = mysql_query("SELECT VERSION() AS version");
+    $query = sql_query("SELECT VERSION() AS version");
 
-    if (! $row = mysql_fetch_assoc($query)) {
+    if (! $row = mysqli_fetch_assoc($query)) {
         unset($row);
-        $query = mysql_query("SHOW VARIABLES LIKE 'version'");
-        $row = mysql_fetch_row($query);
+        $query = sql_query("SHOW VARIABLES LIKE 'version'");
+        $row = mysqli_fetch_row($query);
         $row['version'] = $row[1];
     }
 
@@ -100,8 +100,8 @@ $load_limit = "--";
 $server_load_found = 0;
 $using_cache = 0;
 
-$avp = @mysql_query("SELECT value_s FROM avps WHERE arg = 'loadlimit'");
-if (false !== $row = mysql_fetch_assoc($avp)) {
+$avp = sql_query("SELECT value_s FROM avps WHERE arg = 'loadlimit'");
+if (false !== $row = mysqli_fetch_assoc($avp)) {
     $loadinfo = explode("-", $row['value_s']);
 
     if (intval($loadinfo[1]) > (time() - 20)) {
@@ -141,7 +141,7 @@ if (!$server_load_found) {
     }
 
     if ($load_limit) {
-        @mysql_query("UPDATE avps SET value_s = '" . $load_limit . "-" . time() . "' WHERE arg = 'loadlimit'");
+        sql_query("UPDATE avps SET value_s = '" . $load_limit . "-" . time() . "' WHERE arg = 'loadlimit'");
     }
 }
 
@@ -207,5 +207,5 @@ foreach($html as $key => $value) {
     $htmlout .='<tr><td>' . $value[0] . '</td><td>' . $value[1] . '</td></tr>';
 }
 $htmlout .='</table>';
-print stdhead('System Overview') . $htmlout . stdfoot();
+echo stdhead('System Overview') . $htmlout . stdfoot();
 ?>

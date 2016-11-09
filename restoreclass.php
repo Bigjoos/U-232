@@ -10,7 +10,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR
 require_once(INCL_DIR.'user_functions.php');
 dbconn(false);
 loggedinorreturn();
-sql_query("UPDATE users SET override_class='255' WHERE id = " . $CURUSER['id']);
+sql_query("UPDATE users SET override_class='255' WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__); 
 header("Location: {$TBDEV['baseurl']}/index.php");
 die();
 

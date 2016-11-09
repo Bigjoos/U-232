@@ -32,7 +32,7 @@ require_once(INCL_DIR.'user_functions.php');
     $remove = isset($_GET['remove']) ? (int)$_GET['remove'] : 0;
     if (is_valid_id($remove))
     {
-      @mysql_query("DELETE FROM bans WHERE id=$remove") or sqlerr();
+      sql_query("DELETE FROM bans WHERE id=".sqlesc($remove)) or sqlerr(__FILE__, __LINE__);
       $removed = sprintf($lang['text_banremoved'], $remove);
       write_log("{$removed}".$CURUSER['id']." (".$CURUSER['username'].")");
       $doUpdate = true;
@@ -57,10 +57,10 @@ require_once(INCL_DIR.'user_functions.php');
         if ($first == -1 || $first === FALSE || $last == -1 || $last === FALSE)
           stderr("{$lang['stderr_error']}", "{$lang['text_badip.']}");
         $comment = sqlesc($comment);
-        $added = time();
+        $added = sqlesc(time());
 
-        mysql_query("INSERT INTO bans (added, addedby, first, last, comment) 
-                      VALUES($added, {$CURUSER['id']}, $first, $last, $comment)") or sqlerr(__FILE__, __LINE__);
+        sql_query("INSERT INTO bans (added, addedby, first, last, comment) 
+                      VALUES($added, ".sqlesc($CURUSER['id']).", ".sqlesc($first).", ".sqlesc($last).", $comment)") or sqlerr(__FILE__, __LINE__);
         $doUpdate = true;
         //header("Location: {$TBDEV['baseurl']}/bans.php");
         //die;
@@ -69,7 +69,7 @@ require_once(INCL_DIR.'user_functions.php');
 
 
 
-    $res = mysql_query("SELECT b.*, u.username FROM bans b LEFT JOIN users u on b.addedby = u.id ORDER BY added DESC") or sqlerr(__FILE__,__LINE__);
+    $res = sql_query("SELECT b.*, u.username FROM bans b LEFT JOIN users u on b.addedby = u.id ORDER BY added DESC") or sqlerr(__FILE__,__LINE__);
 
     $configfile="<"."?php\n\n\$bans = array(\n";
 
@@ -78,7 +78,7 @@ require_once(INCL_DIR.'user_functions.php');
 
     $HTMLOUT .= "<h1>{$lang['text_current']}</h1>\n";
 
-    if (mysql_num_rows($res) == 0)
+    if (mysqli_num_rows($res) == 0)
     {
       $HTMLOUT .= "<p align='center'><b>{$lang['text_nothing']}</b></p>\n";
     }
@@ -95,7 +95,7 @@ require_once(INCL_DIR.'user_functions.php');
         
 
 
-      while ($arr = mysql_fetch_assoc($res))
+      while ($arr = mysqli_fetch_assoc($res))
       {
         if($doUpdate) 
         {
@@ -107,11 +107,11 @@ require_once(INCL_DIR.'user_functions.php');
         
         $HTMLOUT .= "<tr>
           <td>".get_date($arr['added'],'')."</td>
-          <td align='left'>{$arr['first']}</td>
-          <td align='left'>{$arr['last']}</td>
-          <td align='left'><a href='userdetails.php?id={$arr['addedby']}'>{$arr['username']}</a></td>
+          <td align='left'>".htmlspecialchars($arr['first'])."</td>
+          <td align='left'>".htmlspecialchars($arr['last'])."</td>
+          <td align='left'><a href='userdetails.php?id=".intval($arr['addedby'])."'>".htmlspecialchars($arr['username'])."</a></td>
           <td align='left'>".htmlentities($arr['comment'], ENT_QUOTES)."</td>
-          <td><a href='admin.php?action=bans&amp;remove={$arr['id']}'>{$lang['text_remove']}</a></td>
+          <td><a href='admin.php?action=bans&amp;remove=".intval($arr['id'])."'>{$lang['text_remove']}</a></td>
          </tr>\n";
       }
       
@@ -155,6 +155,6 @@ require_once(INCL_DIR.'user_functions.php');
       
     }
 
-    print stdhead("{$lang['stdhead_adduser']}") . $HTMLOUT . stdfoot();
+    echo stdhead("{$lang['stdhead_adduser']}") . $HTMLOUT . stdfoot();
 
 ?>

@@ -30,17 +30,17 @@ if ($slot)
     }
 
     $added = (TIME_NOW + 14*86400);
-    $r = sql_query("SELECT * FROM `freeslots` WHERE tid = ".sqlesc($id)." AND uid = {$CURUSER['id']}");
-    $a = mysql_fetch_assoc($r);
+    $r = sql_query("SELECT * FROM `freeslots` WHERE tid = ".sqlesc($id)." AND uid = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
+    $a = mysqli_fetch_assoc($r);
 
     if ($a['tid'] == $id && $a['uid'] == $CURUSER['id'] && (($a['free'] != 0 && $slot === 'free') || ($a['double'] != 0 && $slot === 'double')))
         stderr('Doh!', ($slot != 'free' ? 'Doubleseed' : 'Freeleech').' slot already in use.');
 
-    sql_query("UPDATE users SET freeslots = ($CURUSER[freeslots]-1) WHERE id = $CURUSER[id] && $CURUSER[freeslots]>=1") or sqlerr(__file__, __line__);
+    sql_query("UPDATE users SET freeslots = (".sqlesc($CURUSER['freeslots'])."-1) WHERE id = ".sqlesc($CURUSER['id'])." && ".sqlesc($CURUSER['freeslots']).">=1") or sqlerr(__FILE__, __LINE__);
 
    if ($a['tid'] == $id && $a['uid'] == $CURUSER['id'] && ($a['free'] != 0 || $a['double'] != 0))
-        sql_query("UPDATE `freeslots` SET `".$slot."` = $added  WHERE `tid` = ".sqlesc($id)." AND `uid` = $CURUSER[id] AND `".$value_3."` != 0") or sqlerr(__file__, __line__);
+        sql_query("UPDATE `freeslots` SET ".sqlesc($slot)." = ".sqlesc($added)."  WHERE `tid` = ".sqlesc($id)." AND `uid` = ".sqlesc($CURUSER['id'])." AND ".sqlesc($value_3)." != 0") or sqlerr(__FILE__, __LINE__);
     else
-       sql_query("INSERT INTO `freeslots` (`tid`, `uid`, `".$slot."`) VALUES (".sqlesc($id).", {$CURUSER['id']}, $added)") or sqlerr(__file__, __line__);   
+       sql_query("INSERT INTO `freeslots` (`tid`, `uid`, `".$slot."`) VALUES (".sqlesc($id).", ".sqlesc($CURUSER['id']).", ".sqlesc($added).")") or sqlerr(__FILE__, __LINE__);   
 }
 ?>

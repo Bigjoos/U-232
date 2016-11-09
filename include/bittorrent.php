@@ -69,24 +69,24 @@ function dbconn($autoclean = false)
 {
     global $TBDEV;
 
-    if (!@mysql_connect($TBDEV['mysql_host'], $TBDEV['mysql_user'], $TBDEV['mysql_pass']))
+    if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'],  $TBDEV['mysql_user'],  $TBDEV['mysql_pass'])))
     {
-	  switch (mysql_errno())
+	  switch (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)))
 	  {
 		case 1040:
 		case 2002:
 			if ($_SERVER['REQUEST_METHOD'] == "GET")
-				die("<html><head><meta http-equiv='refresh' content=\"5 $_SERVER[REQUEST_URI]\"></head><body><table border='0' width='100%' height='100%'><tr><td><h3 align='center'>The server load is very high at the moment. Retrying, please wait...</h3></td></tr></table></body></html>");
+				die("<html><head><meta http-equiv='refresh' content=\"5 {$_SERVER['REQUEST_URI']}\"></head><body><table border='0' width='100%' height='100%'><tr><td><h3 align='center'>The server load is very high at the moment. Retrying, please wait...</h3></td></tr></table></body></html>");
 			else
 				die("Too many users. Please press the Refresh button in your browser to retry.");
         default:
-    	    die("[" . mysql_errno() . "] dbconn: mysql_connect: " . mysql_error());
+    	    die("[" . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) . "] dbconn: mysql_connect: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
       }
     }
-    mysql_select_db($TBDEV['mysql_db'])
-        or die('dbconn: mysql_select_db: ' . mysql_error());
+    ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$TBDEV['mysql_db']}"))
+        or die('dbconn: mysql_select_db: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
     //mysql_query("SET NAMES utf8");
-    mysql_set_charset('utf8');
+    //mysql_set_charset('utf8');
     userlogin();
 
     if ($autoclean)
@@ -94,7 +94,7 @@ function dbconn($autoclean = false)
 }
 
 function status_change($id) {
-sql_query('UPDATE announcement_process SET status = 0 WHERE user_id = '.sqlesc($id).' AND status = 1');
+sql_query('UPDATE announcement_process SET status = 0 WHERE user_id = '.sqlesc($id).' AND status = 1') or sqlerr(__FILE__, __LINE__);
 }
 
 function hashit($var,$addtext="")
@@ -129,7 +129,7 @@ function userlogin() {
    // ==Retro's Announcement mod
     $prefix = 'ChangeMe';
     $res = sql_query("SELECT ".$prefix.".*, ann_main.subject AS curr_ann_subject, ann_main.body AS curr_ann_body " . "FROM users AS ".$prefix." " . "LEFT JOIN announcement_main AS ann_main " . "ON ann_main.main_id = ".$prefix.".curr_ann_id " . "WHERE ".$prefix.".id = $id AND ".$prefix.".enabled='yes' AND ".$prefix.".status = 'confirmed'") or sqlerr(__FILE__, __LINE__);
-    $row = mysql_fetch_assoc($res);
+    $row = mysqli_fetch_assoc($res);
     if (!$row)
         return;
    if (get_mycookie('pass') !== md5($row["passhash"].$_SERVER["REMOTE_ADDR"]))
@@ -156,11 +156,11 @@ function userlogin() {
  			 'LIMIT 1',
  	sqlesc($row['id']));
 
- 	$result = sql_query($query);
+ 	$result = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
- 	if (mysql_num_rows($result))
+ 	if (mysqli_num_rows($result))
  	{ // Main Result set exists
- 	$ann_row = mysql_fetch_assoc($result);
+ 	$ann_row = mysqli_fetch_assoc($result);
 
  	$query = $ann_row['sql_query'];
 
@@ -171,9 +171,9 @@ function userlogin() {
  	// row if the existing query matches any attributes.
  	$query .= ' AND u.id = '.sqlesc($row['id']).' LIMIT 1';
 
- 	$result = sql_query($query);
+ 	$result = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
- 	if (mysql_num_rows($result))
+ 	if (mysqli_num_rows($result))
  	{ // Announcement valid for member
  	$row['curr_ann_id'] = $ann_row['main_id'];
 
@@ -225,8 +225,8 @@ function userlogin() {
     $add_set = (isset($add_set))?$add_set:'';
     if (($row['last_access'] != '0') AND (($row['last_access']) < (time($dt) - 180))/** 3 mins **/ || ($row['ip'] !== $ip)) 
     {
-    sql_query("UPDATE users SET last_access=".sqlesc($dt).", ip=".sqlesc($ip).$add_set." WHERE id=".$row['id']);// or die(mysql_error());
-    sql_query('INSERT INTO iplog (ip, userid, access) VALUES (' . ip2long($ip) . ', ' .$row['id']. ', \'' . $row['last_access'] . '\') on DUPLICATE KEY update access=values(access)');
+    sql_query("UPDATE users SET last_access=".sqlesc($dt).", ip=".sqlesc($ip).$add_set." WHERE id=".sqlesc($row['id'])) or sqlerr(__FILE__, __LINE__);
+    sql_query('INSERT INTO iplog (ip, userid, access) VALUES (' . ip2long($ip) . ', ' .sqlesc($row['id']). ', ' . sqlesc($row['last_access']) . ') on DUPLICATE KEY update access=values(access)') or sqlerr(__FILE__, __LINE__);
     }
     if ($row['override_class'] < $row['class']) $row['class'] = $row['override_class']; // Override class and save in GLOBAL array below.
     $GLOBALS["CURUSER"] = $row;
@@ -239,7 +239,7 @@ function userlogin() {
 	$now = time();
 	/* Better cleanup function with db-optimization and slow clean by x0r @ tbdev.net */
 	$w00p = sql_query("SELECT arg, value_u FROM avps") or sqlerr(__FILE__, __LINE__);
-	while ($row = mysql_fetch_assoc($w00p))
+	while ($row = mysqli_fetch_assoc($w00p))
 	{
 	if ($row['arg'] == "lastcleantime" && ($row['value_u'] + $TBDEV['autoclean_interval']) < $now)
 	{
@@ -266,7 +266,7 @@ function userlogin() {
 	dooptimizedb();
 	}
 	}
-	mysql_free_result($w00p);
+	((mysqli_free_result($w00p) || (is_object($w00p) && (get_class($w00p) == "mysqli_result"))) ? true : false);
 	return;
   }
 
@@ -386,12 +386,15 @@ function validemail($email) {
     return preg_match('/^[\w.-]+@([\w.-]+\.)+[a-z]{2,6}$/is', $email);
 }
 
-function sqlesc($x) {
-    return "'".mysql_real_escape_string($x)."'";
+//== putyn  08/08/2011
+function sqlesc($x)
+{
+    if (is_integer($x)) return (int)$x;
+    return sprintf('\'%s\'', mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $x));
 }
-
-function sqlwildcardesc($x) {
-    return str_replace(array("%","_"), array("\\%","\\_"), mysql_real_escape_string($x));
+function sqlwildcardesc($x)
+{
+    return str_replace(array('%', '_'), array('\\%', '\\_'), mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $x));
 }
 
 function genbark($x,$y) {
@@ -415,7 +418,7 @@ function logincookie($id, $passhash, $updatedb = 1, $expires = 0x7fffffff)
     set_mycookie( "pass", $passhash, $expires );
     set_mycookie( "hashv", hashit($id,$passhash), $expires );
     if ($updatedb)
-      @sql_query("UPDATE users SET last_login = ".TIME_NOW." WHERE id = $id");
+      sql_query("UPDATE users SET last_login = ".TIME_NOW." WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 }
 
 function set_mycookie( $name, $value="", $expires_in=0, $sticky=1 )
@@ -491,8 +494,8 @@ function searchfield($s) {
 
 function genrelist() {
     $ret = array();
-    $res = sql_query("SELECT id, image, name FROM categories ORDER BY name");
-    while ($row = mysql_fetch_array($res))
+    $res = sql_query("SELECT id, image, name FROM categories ORDER BY name") or sqlerr(__FILE__, __LINE__);
+    while ($row = mysqli_fetch_array($res))
         $ret[] = $row;
     return $ret;
 }
@@ -501,8 +504,8 @@ function get_row_count($table, $suffix = "")
 {
   if ($suffix)
   $suffix = " $suffix";
-  ($r = sql_query("SELECT COUNT(*) FROM $table$suffix")) or die(mysql_error());
-  ($a = mysql_fetch_row($r)) or die(mysql_error());
+  ($r = sql_query("SELECT COUNT(*) FROM $table$suffix")) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
+  ($a = mysqli_fetch_row($r)) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   return $a[0];
 }
 
@@ -521,8 +524,8 @@ function stderr($heading, $text)
 function sqlerr($file = '', $line = '') {
     global $TBDEV, $CURUSER;
     
-		$the_error    = mysql_error();
-		$the_error_no = mysql_errno();
+		$the_error    = ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false));
+		$the_error_no = ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false));
 
     	if ( SQL_DEBUG == 0 )
     	{
@@ -574,8 +577,10 @@ function sqlerr($file = '', $line = '') {
 function coin($coins, $add=true){
 	global $TBDEV, $CURUSER;
 	if($TBDEV['coins']){
-	if ($add) sql_query("UPDATE users SET coins=coins+$coins WHERE is=$CURUSER[id]");
-	else sql_query("UPDATE users SET coins=coins-$coins WHERE is=$CURUSER[id]");
+	if ($add) 
+        sql_query("UPDATE users SET coins=coins+".sqlesc($coins)." WHERE is=".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
+	    else 
+        sql_query("UPDATE users SET coins=coins-".sqlesc($coins)." WHERE is=".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 }
 }
 
@@ -791,8 +796,8 @@ global $CURUSER,$TBDEV,$lang;
 	if(!isset($max[$CURUSER['class']]))
 	return;
 	$tb = array('posts'=>'posts.userid','comments'=>'comments.user','messages'=>'messages.sender');
-	$q = sql_query('SELECT min('.$table.'.added) as first_post, count('.$table.'.id) as how_many FROM '.$table.' WHERE '.$tb[$table].' = '.$CURUSER['id'].' AND '.time().' - '.$table.'.added < '.$TBDEV['flood_time']);
-	$a = mysql_fetch_assoc($q);
+	$q = sql_query('SELECT min('.$table.'.added) as first_post, count('.$table.'.id) as how_many FROM '.$table.' WHERE '.$tb[$table].' = '.$CURUSER['id'].' AND '.time().' - '.$table.'.added < '.$TBDEV['flood_time']) or sqlerr(__FILE__, __LINE__);
+	$a = mysqli_fetch_assoc($q);
 	if($a['how_many'] > $max[$CURUSER['class']])
   stderr($lang['gl_sorry'] ,$lang['gl_flood_msg'].''.mkprettytime($TBDEV['flood_time'] - (time() - $a['first_post'])));
 }
@@ -805,7 +810,7 @@ function sql_query($query) {
 	  $q['query_stat']= isset($q['query_stat']) && is_array($q['query_stat']) ? $q['query_stat'] : array();
     $queries++;
     $query_start_time  = microtime(true); // Start time
-    $result            = mysql_query($query);
+    $result            = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     $query_end_time    = microtime(true); // End time
     $query_time        = ($query_end_time - $query_start_time);
     $querytime = $querytime + $query_time;
@@ -825,7 +830,7 @@ function sql_query($query) {
     <title>Warning</title>
     </head>
     <body><div style='font-size:33px;color:white;background-color:red;text-align:center;'>Delete the install directory</div></body></html>";
-    print $HTMLOUT;
+    echo $HTMLOUT;
     exit();
     }
 ?>

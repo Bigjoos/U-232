@@ -28,7 +28,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -110,8 +110,8 @@ $count = number_format(get_row_count("snatched", "WHERE complete_date != '0'"));
 $HTMLOUT .="<h2 align='center'>{$lang['ad_snatched_torrents_allsnatched']}</h2>
 <font class='small'>{$lang['ad_snatched_torrents_currently']}&nbsp;".htmlspecialchars($count)."&nbsp;{$lang['ad_snatched_torrents_snatchedtor']}</font>";
 $HTMLOUT .= begin_main_frame();
-$res = @sql_query("SELECT COUNT(id) FROM snatched") or sqlerr();
-$row = mysql_fetch_row($res);
+$res = sql_query("SELECT COUNT(id) FROM snatched") or sqlerr(__FILE__, __LINE__);
+$row = mysqli_fetch_row($res);
 $count = $row[0];
 $snatchedperpage = 15;
 
@@ -122,9 +122,9 @@ $sql = "SELECT sn.userid, sn.id, sn.torrentid, sn.timesann, sn.hit_and_run, sn.m
 "FROM snatched AS sn ".
 "LEFT JOIN users AS u ON u.id=sn.userid ".
 "LEFT JOIN torrents AS t ON t.id=sn.torrentid WHERE complete_date != '0'".
-"ORDER BY sn.complete_date DESC ".$pager['limit']."";
-$result = @sql_query($sql) or print(mysql_error());
-if( mysql_num_rows($result) != 0 ) {
+"ORDER BY sn.complete_date DESC ".$pager['limit'];
+$result = sql_query($sql) or sqlerr(__FILE__, __LINE__);
+if( mysqli_num_rows($result) != 0 ) {
 
 $HTMLOUT .="<table width='100%' border='1' cellspacing='0' cellpadding='5' align='center'>
 <tr>
@@ -142,16 +142,16 @@ $HTMLOUT .="<table width='100%' border='1' cellspacing='0' cellpadding='5' align
 <td class='table' align='center' width='1%'>{$lang['ad_snatched_torrents_seeding']}</td>
 </tr>";
 
-while($row = mysql_fetch_assoc($result)) {
+while($row = mysqli_fetch_assoc($result)) {
 $smallname =substr(htmlspecialchars($row["name"]) , 0, 25);
 if ($smallname != htmlspecialchars($row["name"])) {
 $smallname .= '...';
 }
-$HTMLOUT .="<tr><td><a href='/userdetails.php?id=".$row['userid']."'><b>".$row['username']."</b></a></td>
-<td align='center'><a href='/details.php?id=".$row['torrentid']."'><b>".$smallname."</b></a></td>
+$HTMLOUT .="<tr><td><a href='/userdetails.php?id=".intval($row['userid'])."'><b>".htmlspecialchars($row['username'])."</b></a></td>
+<td align='center'><a href='/details.php?id=".intval($row['torrentid'])."'><b>".$smallname."</b></a></td>
 <td align='center'><b>".get_date($row['hit_and_run'], 'LONG',0,1)."</b></td>
-<td align='center'><b>".($row['mark_of_cain'])."</b></td>
-<td align='center'><b>".($row['timesann'])."</b></td>
+<td align='center'><b>".htmlspecialchars($row['mark_of_cain'])."</b></td>
+<td align='center'><b>".intval($row['timesann'])."</b></td>
 <td align='center'><b>".mksize($row['uploaded'])."</b></td>
 <td align='center'><b>".mksize($row['downloaded'])."</b></td>
 <td align='center'><b>".get_snatched_color($row["seedtime"])."</b></td>
@@ -170,6 +170,6 @@ else
 $HTMLOUT .="{$lang['ad_snatched_torrents_nothing']}";
 $HTMLOUT .= $pager['pagertop'];
 $HTMLOUT .= end_main_frame();
-print stdhead('Snatched Torrents Overview') . $HTMLOUT . stdfoot();
+echo stdhead('Snatched Torrents Overview') . $HTMLOUT . stdfoot();
 die;
 ?>

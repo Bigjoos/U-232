@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -29,13 +29,13 @@ require_once(INCL_DIR.'user_functions.php');
     // delete items older than a week
     $secs = 24 * 60 * 60;
     
-    @mysql_query("DELETE FROM sitelog WHERE " . time() . " - added > $secs") or sqlerr(__FILE__, __LINE__);
+    sql_query("DELETE FROM sitelog WHERE " . time() . " - added > $secs") or sqlerr(__FILE__, __LINE__);
     
-    $res = mysql_query("SELECT added, txt FROM sitelog ORDER BY added DESC") or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT added, txt FROM sitelog ORDER BY added DESC") or sqlerr(__FILE__, __LINE__);
     
     $HTMLOUT = "<h1>{$lang['text_sitelog']}</h1>\n";
     
-    if (mysql_num_rows($res) == 0)
+    if (mysqli_num_rows($res) == 0)
     {
       $HTMLOUT .= "<b>{$lang['text_logempty']}</b>\n";
     }
@@ -48,7 +48,7 @@ require_once(INCL_DIR.'user_functions.php');
         <td class='colhead' align='left'>{$lang['header_event']}</td>
       </tr>\n";
       
-      while ($arr = mysql_fetch_assoc($res))
+      while ($arr = mysqli_fetch_assoc($res))
       {
         $date = explode( ',', get_date( $arr['added'], 'LONG' ) );
         $HTMLOUT .= "<tr><td>{$date[0]}</td>
@@ -61,6 +61,6 @@ require_once(INCL_DIR.'user_functions.php');
     }
     $HTMLOUT .= "<p>{$lang['text_times']}</p>\n";
     
-    print stdhead("{$lang['stdhead_log']}") . $HTMLOUT . stdfoot();
+    echo stdhead("{$lang['stdhead_log']}") . $HTMLOUT . stdfoot();
 
 ?>

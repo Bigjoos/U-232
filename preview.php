@@ -39,5 +39,5 @@ $HTMLOUT .="<form method='post' action='preview.php'>
 $HTMLOUT .= end_frame();
 
 $HTMLOUT .= end_main_frame();
-print stdhead('Preview') . $HTMLOUT . stdfoot();
+echo stdhead('Preview') . $HTMLOUT . stdfoot();
 ?>

@@ -37,15 +37,15 @@ $HTMLOUT.= begin_table();
  <td class='colhead' width='40'>{$lang['ipcheck_peer']}</td></tr>\n";
  $ip='';
  $uc = 0;
-  while($ras = mysql_fetch_assoc($res)) {
+  while($ras = mysqli_fetch_assoc($res)) {
         if ($ras["dupl"] <= 1)
           break;
         if ($ip <> $ras['ip']) {
-          $ros = sql_query("SELECT id, username, class, email, chatpost, pirate, king, leechwarn, added, last_access, downloaded, uploaded, ip, warned, donor, enabled, (SELECT COUNT(*) FROM peers WHERE peers.ip = users.ip AND users.id = peers.userid) AS peer_count FROM users WHERE ip='".$ras['ip']."' ORDER BY id") or sqlerr(__FILE__, __LINE__);
-          $num2 = mysql_num_rows($ros);
+          $ros = sql_query("SELECT id, username, class, email, chatpost, pirate, king, leechwarn, added, last_access, downloaded, uploaded, ip, warned, donor, enabled, (SELECT COUNT(*) FROM peers WHERE peers.ip = users.ip AND users.id = peers.userid) AS peer_count FROM users WHERE ip=".sqlesc($ras['ip'])." ORDER BY id") or sqlerr(__FILE__, __LINE__);
+          $num2 = mysqli_num_rows($ros);
           if ($num2 > 1) {
                 $uc++;
-            while($arr = mysql_fetch_assoc($ros)) {
+            while($arr = mysqli_fetch_assoc($ros)) {
                   
                   
                   
@@ -69,16 +69,16 @@ $HTMLOUT.= begin_table();
                   else
                         $utc = " bgcolor=\"ECE9D8\"";
 
-                  $HTMLOUT.="<tr$utc><td align='left'><a href='userdetails.php?id=" . $arr['id'] . "'>" . format_username($arr) . "</a></td>
-                                  <td align='center'>$arr[email]</td>
+                  $HTMLOUT.="<tr$utc><td align='left'><a href='userdetails.php?id=" . intval($arr['id']) . "'>" . format_username($arr) . "</a></td>
+                                  <td align='center'>".htmlspecialchars($arr['email'])."</td>
                                   <td align='center'>$added</td>
                                   <td align='center'>$last_access</td>
                                   <td align='center'>$downloaded</td>
                                   <td align='center'>$uploaded</td>
                                   <td align='center'>$ratio</td>
-                                  <td align='center'><span style=\"font-weight: bold;\">$arr[ip]</span></td>\n<td align='center'>" .
+                                  <td align='center'><span style=\"font-weight: bold;\">".htmlspecialchars($arr['ip'])."</span></td>\n<td align='center'>" .
                                   ($arr['peer_count'] > 0 ? "<span style=\"color: red; font-weight: bold;\">{$lang['ipcheck_no']}</span>" : "<span style=\"color: green; font-weight: bold;\">{$lang['ipcheck_yes']}</span>") . "</td></tr>\n";
-                  $ip = $arr["ip"];
+                  $ip = htmlspecialchars($arr["ip"]);
                 }
           }
         }
@@ -86,5 +86,5 @@ $HTMLOUT.= begin_table();
 
 $HTMLOUT.= end_table();
 $HTMLOUT.= end_frame();
-print stdhead('Ip Check') . $HTMLOUT . stdfoot();
+echo stdhead('Ip Check') . $HTMLOUT . stdfoot();
 ?>

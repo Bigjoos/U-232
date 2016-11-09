@@ -6,14 +6,14 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-$res = mysql_query('SELECT r.*, r.added as utadded, u.username 
+$res = sql_query('SELECT r.*, r.added as utadded, u.username 
                   FROM requests AS r LEFT JOIN users AS u ON (u.id=r.userid) 
-                  WHERE r.id = '.$id) or sqlerr(__FILE__, __LINE__);
+                  WHERE r.id = '.sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 
-if (!mysql_num_rows($res))
+if (!mysqli_num_rows($res))
     stderr("{$lang['error_error']}", "{$lang['error_invalid']}");
    
-$num = mysql_fetch_assoc($res);	 
+$num = mysqli_fetch_assoc($res);	 
  
 $added = get_date($num['utadded'], '');
 $s     = htmlspecialchars($num['request']);
@@ -58,16 +58,16 @@ if ($num['torrentid'] == 0)
 {$lang['details_enter_id']}<br /></form>" : "{$lang['details_yours']}")."</td>
 </tr>\n";
 else
-    $HTMLOUT .= "<tr><td align='right' valign='top'><b>{$lang['details_filled']}</b></td><td><a class='altlink' href='details.php?id=".$num['torrentid']."'><b>".$TBDEV['baseurl']."/details.php?id=".$num['torrentid']."</b></a></td></tr>";	
+    $HTMLOUT .= "<tr><td align='right' valign='top'><b>{$lang['details_filled']}</b></td><td><a class='altlink' href='details.php?id=".intval($num['torrentid'])."'><b>".$TBDEV['baseurl']."/details.php?id=".intval($num['torrentid'])."</b></a></td></tr>";	
 
 
 $HTMLOUT .= "<tr><td class='embedded' colspan='2'><p><a name='startcomments'></a></p>\n";
 
 $commentbar = "<p align='center'><a class='index' href='comment.php?action=add&amp;tid=$id&amp;type=request'>{$lang['details_add_comment']}</a></p>\n";
 
-$subres = mysql_query("SELECT COUNT(*) FROM comments WHERE request = $id");
-$subrow = mysql_fetch_array($subres);
-$count = $subrow[0];
+$subres = sql_query("SELECT COUNT(*) FROM comments WHERE request = ".sqlesc($id)) or sqlerr(__FILE__,__LINE__);
+$subrow = mysqli_fetch_array($subres);
+$count = intval($subrow[0]);
 
 $HTMLOUT .=  '</td></tr></table>'; 
 
@@ -76,16 +76,16 @@ if (!$count)
 else {
     $pager = pager(25, $count, "viewrequests.php?id=$id&amp;req_details&amp;", array('lastpagedefault' => 1));
 
-$subres = mysql_query("SELECT comments.id, comments.text, comments.user, comments.editedat, 
+$subres = sql_query("SELECT comments.id, comments.text, comments.user, comments.editedat, 
                       comments.editedby, comments.ori_text, comments.request AS request, 
                       comments.added, comments.anonymous, users.avatar, users.av_w ,users.av_h,
                       users.warned, users.username, users.title, users.class, users.last_access, 
                       users.enabled, users.reputation, users.donor, users.downloaded, users.uploaded 
                       FROM comments LEFT JOIN users ON comments.user = users.id 
-                      WHERE request = $id ORDER BY comments.id") or sqlerr(__FILE__, __LINE__);
+                      WHERE request = ".sqlesc($id)." ORDER BY comments.id") or sqlerr(__FILE__, __LINE__);
 			 
  $allrows = array();
- while ($subrow = mysql_fetch_assoc($subres))
+ while ($subrow = mysqli_fetch_assoc($subres))
          $allrows[] = $subrow;
 
  $HTMLOUT .= $commentbar;
@@ -97,5 +97,5 @@ $subres = mysql_query("SELECT comments.id, comments.text, comments.user, comment
  $HTMLOUT .= $commentbar; 
 
 /////////////////////// HTML OUTPUT //////////////////////////////
-print stdhead('Request Details').$HTMLOUT.stdfoot();
+echo stdhead('Request Details').$HTMLOUT.stdfoot();
 ?>

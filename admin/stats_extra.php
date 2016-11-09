@@ -141,7 +141,7 @@ function show_views(){
 		
 		$sql = array( 'from_time' => $from_time, 'to_time' => $to_time, 'sortby' => $inbound['sortby'] );
 		
-		$q = mysql_query( "SELECT SUM(t.views) as result_count, t.forumid, f.name as result_name
+		$q = sql_query("SELECT SUM(t.views) as result_count, t.forumid, f.name as result_name
 					FROM topics t
 					LEFT JOIN forums f ON (f.id=t.forumid)
 					WHERE t.start_date > '{$sql['from_time']}'
@@ -175,10 +175,10 @@ function show_views(){
     </tr>";
 		
 		
-		if ( mysql_num_rows($q) )
+		if ( mysqli_num_rows($q) )
 		{
 		
-			while ($row = mysql_fetch_assoc($q) )
+			while ($row = mysqli_fetch_assoc($q) )
 			{
 			
 				if ( $row['result_count'] >  $max_result )
@@ -351,7 +351,7 @@ function result_screen($mode='reg'){
 									'sql_table' => $sql_table,
 									'sql_date'  => $sql_date );
 		
-		$q1 = mysql_query( "SELECT MAX({$sql['sql_field']}) as result_maxdate,
+		$q1 = sql_query("SELECT MAX({$sql['sql_field']}) as result_maxdate,
 				 COUNT(*) as result_count,
 				 DATE_FORMAT(from_unixtime({$sql['sql_field']}),'{$sql['sql_date']}') AS result_time
 				 FROM {$sql['sql_table']}
@@ -387,10 +387,10 @@ function result_screen($mode='reg'){
     <td align='center' width='10%'>Count</td>
     </tr>";
 		
-		if ( mysql_num_rows($q1) )
+		if ( mysqli_num_rows($q1) )
 		{
 		
-			while ($row = mysql_fetch_assoc($q1) )
+			while ($row = mysqli_fetch_assoc($q1) )
 			{
 			
 				if ( $row['result_count'] >  $max_result )

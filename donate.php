@@ -11,12 +11,12 @@ require_once "include/html_functions.php";
 require_once "include/user_functions.php";
 
 dbconn();
-    
-    $lang = array_merge( load_language('global'), load_language('donate') );
-    
-    $HTMLOUT = '';
 
-    $HTMLOUT .= "<b>{$lang['donate_click']}</b>
+$lang = array_merge(load_language('global'), load_language('donate'));
+
+$HTMLOUT = '';
+
+$HTMLOUT .= "<b>{$lang['donate_click']}</b>
 
 
     <form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
@@ -27,10 +27,10 @@ dbconn();
     <br />
 
     <br />";
-    $HTMLOUT .= begin_main_frame(); 
-    $HTMLOUT .= begin_frame(); 
-    
-    $HTMLOUT .= "<table border='0' cellspacing='0' cellpadding='0'>
+$HTMLOUT .= begin_main_frame();
+$HTMLOUT .= begin_frame();
+
+$HTMLOUT .= "<table border='0' cellspacing='0' cellpadding='0'>
     <tr valign='top'>
       <td class='embedded'>
         <img src='pic/flag/uk.gif' style='margin-right: 10px' alt='' />
@@ -41,16 +41,16 @@ dbconn();
       </td>
     </tr>
     </table>";
-    
-    $HTMLOUT .= end_frame(); 
-    $HTMLOUT .= begin_frame("{$lang['donate_other']}");
-    
-    $HTMLOUT .= "{$lang['donate_no_other']}";
-    $HTMLOUT .= end_frame(); 
-    $HTMLOUT .= end_main_frame();
+
+$HTMLOUT .= end_frame();
+$HTMLOUT .= begin_frame("{$lang['donate_other']}");
+
+$HTMLOUT .= "{$lang['donate_no_other']}";
+$HTMLOUT .= end_frame();
+$HTMLOUT .= end_main_frame();
 
 
-    $HTMLOUT .= "<b>{$lang['donate_after']}<a href='sendmessage.php?receiver=1'>{$lang['donate_send']}</a>{$lang['donate_the']}<font color='red'>{$lang['donate_transaction']}</font>{$lang['donate_credit']}</b>";
+$HTMLOUT .= "<b>{$lang['donate_after']}<a href='sendmessage.php?receiver=1'>{$lang['donate_send']}</a>{$lang['donate_the']}<font color='red'>{$lang['donate_transaction']}</font>{$lang['donate_credit']}</b>";
 
-    print stdhead() . $HTMLOUT . stdfoot();
+print stdhead() . $HTMLOUT . stdfoot();
 ?>

@@ -104,7 +104,7 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
 
     $htmlout .= "</tr>\n";
 
-    while ($row = mysql_fetch_assoc($res)) 
+    while ($row = mysqli_fetch_assoc($res)) 
     {
         $id = $row["id"];
         if ($row["sticky"] == "yes")

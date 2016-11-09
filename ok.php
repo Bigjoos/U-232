@@ -46,7 +46,7 @@ dbconn();
       }
       $HTMLOUT .= stdfoot();
       
-      print $HTMLOUT;
+      echo $HTMLOUT;
     }
     elseif ($type == "confirmed") 
     {
@@ -54,7 +54,7 @@ dbconn();
       $HTMLOUT .= "<h1>{$lang['ok_confirmed']}</h1>\n";
       $HTMLOUT .= "{$lang['ok_user_confirmed']}";
       $HTMLOUT .= stdfoot();
-      print $HTMLOUT;
+      echo $HTMLOUT;
     }
     elseif ($type == "confirm") 
     {
@@ -65,7 +65,7 @@ dbconn();
         $HTMLOUT .= "<p>".sprintf($lang['ok_account_active_login'], "<a href='{$TBDEV['baseurl']}/index.php'><b>{$lang['ok_account_active_login_link']}</b></a>")."</p>\n";
         $HTMLOUT .= sprintf($lang['ok_read_rules'], $TBDEV['site_name']);
         $HTMLOUT .= stdfoot();
-        print $HTMLOUT;
+        echo $HTMLOUT;
       }
       else 
       {
@@ -73,7 +73,7 @@ dbconn();
         $HTMLOUT .= "<h1>{$lang['ok_success_confirmed']}</h1>\n";
         $HTMLOUT .= "{$lang['ok_account_cookies']}";
         $HTMLOUT .= stdfoot();
-        print $HTMLOUT;
+        echo $HTMLOUT;
       }
     }
     else

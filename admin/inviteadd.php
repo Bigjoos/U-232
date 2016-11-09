@@ -21,7 +21,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -45,32 +45,32 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 	
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		$classes = isset($_POST["classes"]) ? $_POST["classes"] : '';
+		$classes = isset($_POST["classes"]) ? intval($_POST["classes"]) : '';
 		
 		$all = (is_array($classes) && $classes[0] == 255 ? true : false );
 		
 		if(empty($classes) || sizeof($classes) == 0 )
 			stderr($lang['inviteadd_error'],$lang['inviteadd_noclass']);
 		$a_do = array("add","remove","remove_all");
-		$do = isset($_POST["do"]) && in_array($_POST["do"],$a_do) ? $_POST["do"] : "";
+		$do = isset($_POST["do"]) && in_array($_POST["do"],$a_do) ? htmlspecialchars($_POST["do"]) : "";
 		if(empty($do))
 			stderr($lang['inviteadd_error'],sprintf($lang['inviteadd_aunknown'],str_replace('_',' ',join(',',$a_do))));
 			
-		$invites = isset($_POST["invites"]) ? 0+$_POST["invites"] : 0;
+		$invites = isset($_POST["invites"]) ? 0 + $_POST["invites"] : 0;
 		if($invites == 0 && ($do == "add" || $do == "remove"))
 			stderr($lang['inviteadd_error'],$lang['inviteadd_error2']);
 			
-		$sendpm = isset($_POST["pm"]) && $_POST["pm"] == "yes" ? true : false;
+		$sendpm = isset($_POST["pm"]) && htmlspecialchars($_POST["pm"]) == "yes" ? true : false;
 		
 		$pms = array();
 		$users = array();
 		//select the users
-		$q1 = mysql_query("SELECT id,invites,username FROM users ".($all ? "" : "WHERE class in (".join(",",$classes).")" )." ORDER BY id desc ") or sqlerr(__FILE__, __LINE__);
-		if(mysql_num_rows($q1) == 0)
+		$q1 = sql_query("SELECT id,invites,username FROM users ".($all ? "" : "WHERE class in (".join(",",$classes).")" )." ORDER BY id desc ") or sqlerr(__FILE__, __LINE__);
+		if(mysqli_num_rows($q1) == 0)
 		stderr($lang['inviteadd_error'],"");
-			while($a = mysql_fetch_assoc($q1))
+			while($a = mysqli_fetch_assoc($q1))
 			{
-				$users[] = "(".$a["id"].", ".($do == "remove_all" ? 0 : ($do == "add" ? $a["invites"] + $invites : mkpositive($a["invites"] - $invites))) .")";
+				$users[] = "(".sqlesc($a["id"]).", ".($do == "remove_all" ? 0 : ($do == "add" ? $a["invites"] + $invites : mkpositive($a["invites"] - $invites))) .")";
 				if($sendpm)
 				{
 					$subject = sqlesc($do == "remove_all" || $do == "remove" ?  $lang['inviteadd_subject_r'] : $lang['inviteadd_subject_a']);
@@ -82,14 +82,14 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 						case 'add' : $body = sprintf($lang['inviteadd_body_add'],$a['username'],$invites, ($invites > 1 ? 's' : ''),$TBDEV['site_name']);
 					break;
 					}
-					$pms[] = "(0,".$a['id'].",".sqlesc(time()).",".sqlesc($body)." ".($use_subject ? ",$subject" : "").")" ;
+					$pms[] = "(0,".sqlesc($a['id']).",".sqlesc(time()).",".sqlesc($body)." ".($use_subject ? ",".sqlesc($subject)."" : "").")" ;
 				}
 			}
 			
 			if(sizeof($users) > 0)
-				$r = mysql_query("INSERT INTO users(id,invites) VALUES ".join(",",$users)." ON DUPLICATE key UPDATE invites=values(invites) ") or sqlerr(__FILE__, __LINE__);
+				$r = sql_query("INSERT INTO users(id,invites) VALUES ".join(",",$users)." ON DUPLICATE key UPDATE invites=values(invites) ") or sqlerr(__FILE__, __LINE__);
 			if(sizeof($pms) > 0)
-				$r1 = mysql_query("INSERT INTO messages (sender, receiver, added, msg ".($use_subject ? ", subject" : "").") VALUES ".join(",",$pms)." ") or sqlerr(__FILE__, __LINE__);
+				$r1 = sql_query("INSERT INTO messages (sender, receiver, added, msg ".($use_subject ? ", subject" : "").") VALUES ".join(",",$pms)." ") or sqlerr(__FILE__, __LINE__);
 				
 			if($r && ($sendpm ? $r1 : true))
 			{
@@ -125,5 +125,5 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 	</table>
 	</form>";
 	
-	print(stdhead($lang['inviteadd_stdhead']).begin_frame().$HTMLOUT.end_frame().stdfoot());
+	echo(stdhead($lang['inviteadd_stdhead']).begin_frame().$HTMLOUT.end_frame().stdfoot());
 ?>

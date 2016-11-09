@@ -6,7 +6,7 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
 
 $string = $_SERVER['QUERY_STRING'];
 if ($string == '404') {
@@ -32,15 +32,15 @@ if ($string == '400') {
 
 $domain = htmlspecialchars($_SERVER['HTTP_HOST']);
 
-    $htmlout = '';
-    $htmlout = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+$htmlout = '';
+$htmlout = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 		<html xmlns='http://www.w3.org/1999/xhtml'>
 		<head>
-    <meta http-equiv='refresh' content='5; url=http://".$domain."' />
-    <meta name='generator' content='TBDev.net' />
+    <meta http-equiv='refresh' content='5; url=http://" . $domain . "' />
+    <meta name='generator' content='u-232' />
 	  <meta name='MSSmartTagsPreventParsing' content='TRUE' />
-		<title>".htmlspecialchars($page)."</title>
+		<title>" . htmlspecialchars($page) . "</title>
     <style type='text/css'>
     /*<![CDATA[*/
     body
@@ -78,9 +78,9 @@ $domain = htmlspecialchars($_SERVER['HTTP_HOST']);
     </table></div><map name='Map' id='map'>
     <area shape='rect' coords='99,425,203,481' alt='Error Not Found' />
     </map>
-    <p align='center'><b>".htmlspecialchars($page)."</b></p>
-    <p align='center'>".htmlspecialchars($text)."</p><br />
-    <p align='center'>You will be redirected back to ".htmlspecialchars($domain)." in 5 seconds</p>
+    <p align='center'><b>" . htmlspecialchars($page) . "</b></p>
+    <p align='center'>" . htmlspecialchars($text) . "</p><br />
+    <p align='center'>You will be redirected back to " . htmlspecialchars($domain) . " in 5 seconds</p>
     </body>
     </html>";
-    print $htmlout;
+echo $htmlout;

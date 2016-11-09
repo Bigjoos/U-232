@@ -43,7 +43,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 		$enabled = "no";
 		}
 		
-		$sql = "UPDATE bonus SET points = '$points', pointspool='$pointspool', minpoints='$minpoints', enabled = '$enabled', description = '$descr' WHERE id = '$id'";
+		$sql = "UPDATE bonus SET points = ".sqlesc($points).", pointspool=".sqlesc($pointspool).", minpoints=".sqlesc($minpoints).", enabled = ".sqlesc($enabled).", description = ".sqlesc($descr)." WHERE id = ".sqlesc($id)."";
 	  switch($id){
 		case 1:
 			makeithappen($sql);
@@ -135,7 +135,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 	}
 	}
 	
-while($arr = mysql_fetch_assoc($res)) {
+while($arr = mysqli_fetch_assoc($res)) {
     $HTMLOUT .="<form name='bonusmanage' method='post' action='admin.php?action=bonusmanage'>
 	  <div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'>
     <div style='background:#890537;height:25px;'><span style='font-weight:bold;font-size:12pt;'>{$lang['bonusmanager_bm']}</span></div>
@@ -152,15 +152,15 @@ while($arr = mysql_fetch_assoc($res)) {
 		<td style='background:#890537;height:25px;'>{$lang['bonusmanager_quantity']}</td>
 		<td style='background:#890537;height:25px;'>{$lang['bonusmanager_action']}</td></tr> 
 	  <tr><td>
-		<input name='id' type='hidden' value='" . $arr["id"] ."' />$arr[id]</td>
+		<input name='id' type='hidden' value='" . intval($arr["id"]) ."' />".intval($arr['id'])."</td>
 		<td><input name='enabled' type='checkbox' ".($arr["enabled"] == "yes" ? " checked='checked'" : ""). " /></td>
-		<td>$arr[bonusname]</td>
-		<td><input type='text' name='bonuspoints' value='" . $arr["points"] ."' size='4' /></td>
-		<td><input type='text' name='pointspool' value='" . $arr["pointspool"] ."' size='4' /></td>
-		<td><input type='text' name='minpoints' value='" . $arr["minpoints"] ."' size='4' /></td>
-		<td><textarea name='description' rows='4' cols='10'>" . $arr["description"] . "</textarea></td>
-		<td>$arr[art]</td>
-		<td>". (($arr["art"] == "traffic" || $arr["art"] == "traffic2" || $arr["art"] == "gift_1" || $arr["art"] == "gift_2") ? ($arr["menge"] / 1024 / 1024 / 1024) . " GB" : $arr["menge"]) ."</td>
+		<td>".htmlspecialchars($arr['bonusname'])."</td>
+		<td><input type='text' name='bonuspoints' value='" . intval($arr["points"]) ."' size='4' /></td>
+		<td><input type='text' name='pointspool' value='" . intval($arr["pointspool"]) ."' size='4' /></td>
+		<td><input type='text' name='minpoints' value='" . intval($arr["minpoints"]) ."' size='4' /></td>
+		<td><textarea name='description' rows='4' cols='10'>" . htmlspecialchars($arr["description"]) . "</textarea></td>
+		<td>".htmlspecialchars($arr['art'])."</td>
+		<td>". (($arr["art"] == "traffic" || $arr["art"] == "traffic2" || $arr["art"] == "gift_1" || $arr["art"] == "gift_2") ? ($arr["menge"] / 1024 / 1024 / 1024) . " GB" : intval($arr["menge"])) ."</td>
 		<td align='center'><input type='submit' value='{$lang['bonusmanager_submit']}' /></td>
 		</tr></table></div></form>";
 		}
@@ -174,5 +174,5 @@ while($arr = mysql_fetch_assoc($res)) {
 	stderr($lang['bonusmanager_oops'], "{$lang['bonusmanager_sql']}");
 	}
   }
-print stdhead('Bonus Manager') . $HTMLOUT . stdfoot();
+echo stdhead('Bonus Manager') . $HTMLOUT . stdfoot();
 ?>

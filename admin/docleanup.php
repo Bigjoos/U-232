@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -71,8 +71,8 @@ $HTMLOUT .="<tr><td class='colhead'>Cleanup Name</td>
 <td class='colhead'>Scheduled to run</td>
 </tr>";
 
-$res = mysql_query("SELECT arg, value_u FROM avps");
-while ($arr = mysql_fetch_assoc($res)) {
+$res = sql_query("SELECT arg, value_u FROM avps") or sqlerr(__FILE__, __LINE__);
+while ($arr = mysqli_fetch_assoc($res)) {
     switch ($arr['arg']) {
         case 'lastcleantime': $arg = $TBDEV['autoclean_interval'];
             break;
@@ -84,7 +84,7 @@ while ($arr = mysql_fetch_assoc($res)) {
             break;
     }
 
-    $HTMLOUT .="<tr><td>".$arr['arg']."</td>
+    $HTMLOUT .="<tr><td>".htmlspecialchars($arr['arg'])."</td>
     <td>".get_date($arr['value_u'], 'DATE',1,0) . " (" .get_date($arr['value_u'], 'DATE',1,0) . ")</td>
     <td>" . calctime($arg) . "</td>
     <td>" . calctime($arr['value_u'] - (time() - $arg)) . "</td>
@@ -110,7 +110,7 @@ $HTMLOUT .="<form action='admin.php?action=docleanup' method='post'>
 
 $now = time();
 if (isset($_POST['docleanup'])) {
-    mysql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastcleantime'") or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastcleantime'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     docleanup();
     header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
@@ -118,7 +118,7 @@ if (isset($_POST['docleanup'])) {
 }
 
 if (isset($_POST['doslowcleanup'])) {
-    mysql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastslowcleantime'") or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastslowcleantime'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     doslowcleanup();
     header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
@@ -126,7 +126,7 @@ if (isset($_POST['doslowcleanup'])) {
 }
 
 if (isset($_POST['doslowcleanup2'])) {
-    mysql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastslowcleantime2'") or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastslowcleantime2'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     doslowcleanup2();
     header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
@@ -134,7 +134,7 @@ if (isset($_POST['doslowcleanup2'])) {
 }
 
 if (isset($_POST['dooptimization'])) {
-    mysql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastoptimizedbtime'") or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastoptimizedbtime'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     dooptimizedb();
     header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
@@ -143,5 +143,5 @@ if (isset($_POST['dooptimization'])) {
 
 $HTMLOUT .="Memory usage:" . memory_get_usage() . "<br /><br />";
 $HTMLOUT .= end_main_frame();
-print stdhead('Doclean Up') . $HTMLOUT . stdfoot();
+echo stdhead('Doclean Up') . $HTMLOUT . stdfoot();
 ?>

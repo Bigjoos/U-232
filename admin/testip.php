@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -30,11 +30,11 @@ require_once(INCL_DIR.'user_functions.php');
     
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-      $ip = isset($_POST["ip"]) ? $_POST["ip"] : false;
+      $ip = isset($_POST["ip"]) ? htmlentities($_POST["ip"]) : false;
     }
     else
     {
-      $ip = isset($_GET["ip"]) ? $_GET["ip"] : false;
+      $ip = isset($_GET["ip"]) ? htmlentities($_GET["ip"]) : false;
     }
     
     if ($ip)
@@ -43,9 +43,9 @@ require_once(INCL_DIR.'user_functions.php');
       if ($nip == -1)
         stderr($lang['testip_error'], $lang['testip_error1']);
       
-      $res = mysql_query("SELECT * FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
+      $res = sql_query("SELECT * FROM bans WHERE ".sqlesc($nip)." >= first AND ".sqlesc($nip)." <= last") or sqlerr(__FILE__, __LINE__);
       
-      if (mysql_num_rows($res) == 0)
+      if (mysqli_num_rows($res) == 0)
       {
         stderr($lang['testip_result'], sprintf($lang['testip_notice'],htmlentities($ip, ENT_QUOTES)));
       }
@@ -58,7 +58,7 @@ require_once(INCL_DIR.'user_functions.php');
           <td class='colhead'>{$lang['testip_comment']}</td>
         </tr>\n";
         
-        while ($arr = mysql_fetch_assoc($res))
+        while ($arr = mysqli_fetch_assoc($res))
         {
           $first = long2ip($arr["first"]);
           $last = long2ip($arr["last"]);
@@ -83,5 +83,5 @@ require_once(INCL_DIR.'user_functions.php');
     </form>";
 
 
-    print stdhead($lang['testip_windows_title']) . $HTMLOUT . stdfoot();
+    echo stdhead($lang['testip_windows_title']) . $HTMLOUT . stdfoot();
 ?>

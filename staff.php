@@ -6,42 +6,42 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
-require_once(INCL_DIR.'user_functions.php');
-require_once(INCL_DIR.'html_functions.php');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
+require_once(INCL_DIR . 'user_functions.php');
+require_once(INCL_DIR . 'html_functions.php');
 dbconn();
 error_reporting(0);
-$firstline='';
-$lang = array_merge( load_language('global'), load_language('staff'));
+$firstline = '';
+$lang      = array_merge(load_language('global'), load_language('staff'));
 
-$HTMLOUT ="";
+$HTMLOUT = "";
 
 // Get current datetime
-$staff_table   = array();
+$staff_table = array();
 
 $col = '';
 
 $dt = sqlesc(time() - 60);
 // Search User Database for Moderators and above and display in alphabetical order
-$res = sql_query("SELECT * FROM users WHERE class >= ".UC_UPLOADER." AND status='confirmed' ORDER BY username") or sqlerr();
+$res = sql_query("SELECT * FROM users WHERE class >= " . UC_UPLOADER . " AND status='confirmed' ORDER BY username") or sqlerr(__FILE__, __LINE__);
 
-while ($arr = mysql_fetch_assoc($res)) { 
-    $staff_table   = ($staff_table   ? $staff_table   : ''); 
-    $staff_table[$arr['class']] = $staff_table[$arr['class']] . "<td class='staffembedded'><a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=" . $arr['id'] . "'>" . $arr['username'] . "</a></td><td class='staffembedded'> " . ("'" . $arr['last_access'] . "'" > $dt ? "<img src='" . $TBDEV['pic_base_url'] . "user_online.gif' border='0' alt='online' />":"<img src='" . $TBDEV['pic_base_url'] . "user_offline.gif' border='0' alt='offline' />") . "</td>" . "<td class='staffembedded'><a href='{$TBDEV['baseurl']}/sendmessage.php?receiver=" . $arr['id'] . "'>" . "<img src='" . $TBDEV['pic_base_url'] . "pm.gif' alt='Pm'  border='0' /></a></td>" . " ";
+while ($arr = mysqli_fetch_assoc($res)) {
+    $staff_table                = ($staff_table ? $staff_table : '');
+    $staff_table[$arr['class']] = $staff_table[$arr['class']] . "<td class='staffembedded'><a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['username']) . "</a></td><td class='staffembedded'> " . ("'" . $arr['last_access'] . "'" > $dt ? "<img src='" . $TBDEV['pic_base_url'] . "user_online.gif' border='0' alt='online' />" : "<img src='" . $TBDEV['pic_base_url'] . "user_offline.gif' border='0' alt='offline' />") . "</td>" . "<td class='staffembedded'><a href='{$TBDEV['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "'>" . "<img src='" . $TBDEV['pic_base_url'] . "pm.gif' alt='Pm'  border='0' /></a></td>" . " ";
     // Show 3 staff per row, separated by an empty column
-     ++ $col[$arr['class']];
+    ++$col[$arr['class']];
     if ($col[$arr['class']] <= 3)
         $staff_table[$arr['class']] = $staff_table[$arr['class']] . "<td class='staffembedded'>&nbsp;</td>";
     else {
         $staff_table[$arr['class']] = $staff_table[$arr['class']] . "</tr><tr style='height:15px'>";
-        $col[$arr['class']] = 0;
+        $col[$arr['class']]         = 0;
     }
-
+    
 }
 $HTMLOUT .= begin_main_frame();
 
 
-$HTMLOUT .="<table width='725' cellspacing='0' align='center'>
+$HTMLOUT .= "<table width='725' cellspacing='0' align='center'>
 <tr>
 <td class='colhead' colspan='15'>General support question's should preferably be directed to these user's. Note that they are volunteer's, giving away their time and effort to help you.</td></tr>
 <!-- Define table column widths -->
@@ -84,19 +84,19 @@ $HTMLOUT .= end_main_frame();
 
 $HTMLOUT .= begin_main_frame();
 $dt = sqlesc(time() - 180);
-$res = sql_query("SELECT id,username, last_access,supportfor,country FROM users WHERE support='yes' AND status='confirmed' ORDER BY username LIMIT 10") or sqlerr();
-while ($arr = mysql_fetch_assoc($res)) {
-require_once("cache/countries.php");
-foreach ($countries as $c)
-if ($arr["country"] == $c["id"]) {
-$flag = $c["flagpic"];
-$cname = $c["name"];
+$res = sql_query("SELECT id,username, last_access,supportfor,country FROM users WHERE support='yes' AND status='confirmed' ORDER BY username LIMIT 10") or sqlerr(__FILE__, __LINE__);
+while ($arr = mysqli_fetch_assoc($res)) {
+    require_once("cache/countries.php");
+    foreach ($countries as $c)
+        if ($arr["country"] == $c["id"]) {
+            $flag  = $c["flagpic"];
+            $cname = $c["name"];
+        }
+    
+    $firstline .= "<tr style=\"height:15px\"><td class=\"embedded\"><a class=\"altlink\" href=\"{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "\">" . htmlspecialchars($arr['username']) . "</a></td>
+<td class=\"embedded\"> " . ("'" . $arr['last_access'] . "'" > $dt ? " <img src=\"" . $TBDEV['pic_base_url'] . "user_online.gif\"  border=\"0\" alt=\"online\" />" : "<img src=\"" . $TBDEV['pic_base_url'] . "user_offline.gif\" border=\"0\" alt=\"offline\" />") . "</td>" . "<td class=\"embedded\"><a href=\"{$TBDEV['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "\">" . "<img src=\"" . $TBDEV['pic_base_url'] . "pm.gif\" alt=\"Pm\" border=\"0\" /></a></td>" . "<td class=\"embedded\"><img src=\"" . $TBDEV['pic_base_url'] . "flag/$flag\" alt=\"" . $cname . "\" title=\"" . $cname . "\" border=\"0\" /></td>" . "<td class=\"embedded\">" . $arr['supportfor'] . "</td></tr>\n";
 }
-
-$firstline .= "<tr style=\"height:15px\"><td class=\"embedded\"><a class=\"altlink\" href=\"{$TBDEV['baseurl']}/userdetails.php?id=" . $arr['id'] . "\">" . $arr['username'] . "</a></td>
-<td class=\"embedded\"> " . ("'" . $arr['last_access'] . "'" > $dt ?" <img src=\"" . $TBDEV['pic_base_url'] . "user_online.gif\"  border=\"0\" alt=\"online\" />":"<img src=\"" . $TBDEV['pic_base_url'] . "user_offline.gif\" border=\"0\" alt=\"offline\" />") . "</td>" . "<td class=\"embedded\"><a href=\"{$TBDEV['baseurl']}/sendmessage.php?receiver=" . $arr['id'] . "\">" . "<img src=\"" . $TBDEV['pic_base_url'] . "pm.gif\" alt=\"Pm\" border=\"0\" /></a></td>" . "<td class=\"embedded\"><img src=\"" . $TBDEV['pic_base_url'] . "flag/$flag\" alt=\"" . $cname . "\" title=\"" . $cname . "\" border=\"0\" /></td>" . "<td class=\"embedded\">" . $arr['supportfor'] . "</td></tr>\n";
-}
-$HTMLOUT .="<table width='725' cellspacing='0' align='center'>
+$HTMLOUT .= "<table width='725' cellspacing='0' align='center'>
 <tr>
 <td class='embedded' colspan='11'><br /><b>{$lang['staff_fls']}</b><br /><br /><b>{$lang['staff_asup']}</b><br /><br /></td></tr>
 <!-- Define table column widths -->
@@ -113,6 +113,6 @@ $HTMLOUT .="<table width='725' cellspacing='0' align='center'>
 
 $HTMLOUT .= end_main_frame();
 
-print stdhead('Staff') . $HTMLOUT . stdfoot();
+echo stdhead('Staff') . $HTMLOUT . stdfoot();
 
 ?>

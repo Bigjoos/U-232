@@ -73,4 +73,4 @@ die();
 	<td align='center'><b><input type='text' size='20' value='/private' onclick=\"command('/private','shbox','shbox_text')\" /></b></td>
 	</tr></table><br /><div align='center'><a class='altlink' href='javascript: window.close()'><b>[ Close window ]</b></a></div></body></html>";
 	
-print $htmlout;
+echo $htmlout;

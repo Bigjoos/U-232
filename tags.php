@@ -175,5 +175,5 @@ function insert_tag($name, $description, $syntax, $example, $remarks)
     $HTMLOUT .= end_frame();
     $HTMLOUT .= end_main_frame();
     
-    print stdhead("{$lang['tags_tags']}") . $HTMLOUT . stdfoot();
+    echo stdhead("{$lang['tags_tags']}") . $HTMLOUT . stdfoot();
 ?>

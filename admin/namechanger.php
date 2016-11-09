@@ -28,7 +28,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -41,26 +41,26 @@ $HTMLOUT='';
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
 header( "Location: {$TBDEV['baseurl']}/index.php");
 
-$mode = (isset($_GET['mode']) && $_GET['mode']);
+$mode = (isset($_GET['mode']) && htmlspecialchars($_GET['mode']));
 
 if (isset($mode) && $mode == 'change') {
     $uid = $uid = (int)$_POST["uid"];
-    $uname = sqlesc($_POST["uname"]);
+    $uname = htmlspecialchars($_POST["uname"]);
 
     if ($_POST["uname"] == "" || $_POST["uid"] == "")
         stderr("Error", "UserName or ID missing");
 
-    $change = mysql_query("UPDATE users SET username=$uname WHERE id=$uid") or sqlerr(__FILE__, __LINE__);
+    $change = sql_query("UPDATE users SET username=".sqlesc($uname)." WHERE id=".sqlesc($uid)) or sqlerr(__FILE__, __LINE__);
     $added = time();
     $changed = sqlesc("Your Username Has Been Changed To $uname");
     $subject = sqlesc("Username changed");
     if (!$change) {
-        if (mysql_errno() == 1062)
+        if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) == 1062)
             bark("Username already exists!");
         bark("borked");
     }
 
-    mysql_query("INSERT INTO messages (sender, receiver, msg, subject, added) VALUES(0, $uid, $changed, $subject, $added)") or sqlerr(__FILE__, __LINE__);
+    sql_query("INSERT INTO messages (sender, receiver, msg, subject, added) VALUES(0, ".sqlesc($uid).", $changed, $subject, ".sqlesc($added).")") or sqlerr(__FILE__, __LINE__);
     header("Refresh: 2; url=namechanger.php");
     stderr("Success","Username Has Been Changed To ".htmlspecialchars($uname)." please wait while you are redirected");
 }
@@ -75,5 +75,5 @@ $HTMLOUT.="
 </table>
 </form>";
 
-print stdhead('Username Changer') . $HTMLOUT . stdfoot();
+echo stdhead('Username Changer') . $HTMLOUT . stdfoot();
 ?>

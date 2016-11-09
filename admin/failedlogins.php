@@ -27,7 +27,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -41,7 +41,7 @@ $HTMLOUT="";
 if (!min_class(UC_STAFF)) // or just simply: if (!min_class(UC_STAFF))
 header( "Location: {$TBDEV['baseurl']}/index.php");
 
-$mode = (isset($_GET['mode']) ? $_GET['mode'] : '');
+$mode = (isset($_GET['mode']) ? htmlspecialchars($_GET['mode']) : '');
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : '';
 
@@ -57,7 +57,7 @@ return true;
 //==Actions
 if ($mode == 'ban'){
 validate($id);
-mysql_query("UPDATE failedlogins SET banned = 'yes' WHERE id=".sqlesc($id)."");
+sql_query("UPDATE failedlogins SET banned = 'yes' WHERE id=".sqlesc($id)) or sqlerr(__FILE__,__LINE__);
 header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=failedlogins');
 stderr($lang['failed_success'],"{$lang['failed_message_ban']}");
 exit();
@@ -65,7 +65,7 @@ exit();
 
 if ($mode == 'removeban') {
 validate($id);
-mysql_query("UPDATE failedlogins SET banned = 'no' WHERE id=".sqlesc($id)."") ;
+sql_query("UPDATE failedlogins SET banned = 'no' WHERE id=".sqlesc($id)) or sqlerr(__FILE__,__LINE__);
 header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=failedlogins');
 stderr($lang['failed_success'],"{$lang['failed_message_unban']}");
 exit();
@@ -73,7 +73,7 @@ exit();
 
 if ($mode == 'delete') {
 validate($id);
-mysql_query("DELETE FROM failedlogins WHERE id=".sqlesc($id)."");
+sql_query("DELETE FROM failedlogins WHERE id=".sqlesc($id)) or sqlerr(__FILE__,__LINE__);
 header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=failedlogins');
 stderr($lang['failed_success'],"{$lang['failed_message_deleted']}");
 exit();
@@ -84,23 +84,23 @@ $HTMLOUT ="";
 
 $HTMLOUT .="<table border='1' cellspacing='0' cellpadding='5' width='80%'>\n";
 
-$res = mysql_query("SELECT f.*,u.id as uid, u.username FROM failedlogins as f LEFT JOIN users as u ON u.ip = f.ip ORDER BY f.added DESC") or sqlerr(__FILE__,__LINE__);
+$res = sql_query("SELECT f.*,u.id as uid, u.username FROM failedlogins as f LEFT JOIN users as u ON u.ip = f.ip ORDER BY f.added DESC") or sqlerr(__FILE__,__LINE__);
 
-if (mysql_num_rows($res) == 0)
+if (mysqli_num_rows($res) == 0)
   $HTMLOUT .="<tr><td colspan='2'><b>{$lang['failed_message_nothing']}</b></td></tr>\n";
 else
 {  
   $HTMLOUT .="<tr><td class='colhead'>ID</td><td class='colhead' align='left'>{$lang['failed_main_ip']}</td><td class='colhead' align='left'>{$lang['failed_main_added']}</td>".
 	"<td class='colhead' align='left'>{$lang['failed_main_attempts']}</td><td class='colhead' align='left'>{$lang['failed_main_status']}</td></tr>\n";
-  while ($arr = mysql_fetch_assoc($res))
+  while ($arr = mysqli_fetch_assoc($res))
   {
-  $HTMLOUT .="<tr><td align='left'><b>$arr[id]</b></td>
-  <td align='left'><b>$arr[ip]" . ($arr['uid'] ? "<a href='{$TBDEV['baseurl']}/userdetails.php?id=$arr[uid]'>" : "" ) . " " . ( $arr['username'] ? "($arr[username])" : "" ) . "</a></b></td>
+  $HTMLOUT .="<tr><td align='left'><b>".intval($arr['id'])."</b></td>
+  <td align='left'><b>".htmlspecialchars($arr['ip'])."" . ($arr['uid'] ? "<a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($arr['uid'])."'>" : "" ) . " " . ( $arr['username'] ? "(".htmlspecialchars($arr['username']).")" : "" ) . "</a></b></td>
   <td align='left'><b>".get_date($arr['added'], '', 1,0)."</b></td>
-  <td align='left'><b>$arr[attempts]</b></td>
-  <td align='left'>".($arr['banned'] == "yes" ? "<font color='red'><b>{$lang['failed_main_banned']}</b></font> <a href='admin.php?action=failedlogins&amp;mode=removeban&amp;id=$arr[id]'> <font color='green'>[<b>{$lang['failed_main_remban']}</b>]</font></a>" : "<font color='green'><b>{$lang['failed_main_noban']}</b></font> <a href='admin.php?action=failedlogins&amp;mode=ban&amp;id=$arr[id]'><font color='red'>[<b>{$lang['failed_main_ban']}</b>]</font></a>")."  <a onclick=\"return confirm('{$lang['failed_main_delmessage']}');\" href='admin.php?action=failedlogins&amp;mode=delete&amp;id=$arr[id]'>[<b>{$lang['failed_main_delete']}</b>]</a></td></tr>\n";
+  <td align='left'><b>".intval($arr['attempts'])."</b></td>
+  <td align='left'>".($arr['banned'] == "yes" ? "<font color='red'><b>{$lang['failed_main_banned']}</b></font> <a href='admin.php?action=failedlogins&amp;mode=removeban&amp;id=".intval($arr['id'])."'> <font color='green'>[<b>{$lang['failed_main_remban']}</b>]</font></a>" : "<font color='green'><b>{$lang['failed_main_noban']}</b></font> <a href='admin.php?action=failedlogins&amp;mode=ban&amp;id=".intval($arr['id'])."'><font color='red'>[<b>{$lang['failed_main_ban']}</b>]</font></a>")."  <a onclick=\"return confirm('{$lang['failed_main_delmessage']}');\" href='admin.php?action=failedlogins&amp;mode=delete&amp;id=".intval($arr['id'])."'>[<b>{$lang['failed_main_delete']}</b>]</a></td></tr>\n";
   }
   }
 $HTMLOUT .="</table>\n";
-print stdhead($lang['failed_main_logins']) .$HTMLOUT . stdfoot();
+echo stdhead($lang['failed_main_logins']) .$HTMLOUT . stdfoot();
 ?>

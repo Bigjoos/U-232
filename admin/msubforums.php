@@ -19,7 +19,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -39,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($subforum) || empty($descr) || empty($place))
         stderr("Err", "You missed something !");
     else {
-        mysql_query("INSERT INTO forums(`name`,`description` ,`minclassread` ,`minclasswrite` ,`minclasscreate`,`place`,`forid`) VALUES(" . join(",", array_map("sqlesc", array($subforum, $descr, $minclassread, $minclasswrite, $minclasscreate, $place, $place))) . ")")or sqlerr(__FILE__, __LINE__);
-        if (mysql_insert_id()) {
+        sql_query("INSERT INTO forums(`name`,`description` ,`minclassread` ,`minclasswrite` ,`minclasscreate`,`place`,`forid`) VALUES(" . join(",", array_map("sqlesc", array($subforum, $descr, $minclassread, $minclasswrite, $minclasscreate, $place, $place))) . ")")or sqlerr(__FILE__, __LINE__);
+        if (((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res)) {
             header('Refresh: 3; url='.$TBDEV['baseurl'].'/admin.php?action=msubforums');
             stderr("Success", "Forum added");
         } else
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
     $HTMLOUT .= begin_frame();
     //== First build the list with all the subforums
-    $r_list = mysql_query("SELECT f.id as parrentid , f.name as parrentname , f2.id as subid , f2.name as subname, f2.minclassread, f2.minclasswrite, f2.minclasscreate, f2.description FROM forums as f LEFT JOIN forums as f2 ON f2.place=f.id WHERE f2.place !=-1 ORDER BY f.id ASC") or sqlerr(__FILE__, __LINE__);
+    $r_list = sql_query("SELECT f.id as parrentid , f.name as parrentname , f2.id as subid , f2.name as subname, f2.minclassread, f2.minclasswrite, f2.minclasscreate, f2.description FROM forums as f LEFT JOIN forums as f2 ON f2.place=f.id WHERE f2.place !=-1 ORDER BY f.id ASC") or sqlerr(__FILE__, __LINE__);
 
  
 	$HTMLOUT .="<table width='60%' cellpadding='4' cellspacing='0' border='1' align='center' style=' border-collapse:collapse'>
@@ -68,18 +68,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </tr>";
 
 
-    while ($a = mysql_fetch_assoc($r_list)) {
+    while ($a = mysqli_fetch_assoc($r_list)) {
 
         
 		$HTMLOUT .="<tr>
-    <td width='100%' align='left' ><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=".($a["subid"])."' >".($a["subname"])."</a><br/>".($a["description"])."</td>
-    <td nowrap='nowrap' align='center'><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=".($a["parrentid"])."' >".($a["parrentname"])."</a></td>
+    <td width='100%' align='left' ><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=".intval($a["subid"])."' >".htmlspecialchars($a["subname"])."</a><br/>".htmlspecialchars($a["description"])."</td>
+    <td nowrap='nowrap' align='center'><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=".intval($a["parrentid"])."' >".htmlspecialchars($a["parrentname"])."</a></td>
     <td nowrap='nowrap'>".(get_user_class_name($a['minclassread']))."</td>
     <td nowrap='nowrap'>".(get_user_class_name($a['minclasswrite']))."</td>
     <td nowrap='nowrap'>".(get_user_class_name($a['minclasscreate']))."</td>
-		<td align='center' nowrap='nowrap' ><a href='{$TBDEV['baseurl']}/forums.php?action=deleteforum&amp;forumid=".($a['subid'])."'>
+		<td align='center' nowrap='nowrap' ><a href='{$TBDEV['baseurl']}/forums.php?action=deleteforum&amp;forumid=".intval($a['subid'])."'>
 		<img src='{$TBDEV['pic_base_url']}del.png' alt='Delete Forum' title='Delete Forum' style='border:none;padding:2px;' /></a>
-		<a href='{$TBDEV['baseurl']}/forums.php?action=editforum&amp;forumid=".($a['subid'])."'><img src='{$TBDEV['pic_base_url']}edit.png' alt='Edit Forum' title='Edit Forum' style='border:none;padding:2px;' /></a></td>
+		<a href='{$TBDEV['baseurl']}/forums.php?action=editforum&amp;forumid=".intval($a['subid'])."'><img src='{$TBDEV['pic_base_url']}edit.png' alt='Edit Forum' title='Edit Forum' style='border:none;padding:2px;' /></a></td>
     </tr>";
     }
     
@@ -92,9 +92,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<td align='right' class='colhead'>subforum in</td>
 		<td nowrap='nowrap' colspan='3' align='left' >";
     $select .="<select name=\"place\"><option value=\"\">Select</option>\n";
-    $r = mysql_query("SELECT id,name FROM forums WHERE place=-1 ORDER BY name ASC") or die();
-    while ($ar = mysql_fetch_assoc($r))
-    $select .= "<option value=\"" . $ar["id"] . "\">" . $ar["name"] . "</option>\n";
+    $r = sql_query("SELECT id,name FROM forums WHERE place=-1 ORDER BY name ASC") or sqlerr(__FILE__, __LINE__);
+    while ($ar = mysqli_fetch_assoc($r))
+    $select .= "<option value=\"" . intval($ar["id"]) . "\">" . htmlspecialchars($ar["name"]) . "</option>\n";
     $select .= "</select>\n";
     $HTMLOUT .=($select);
     
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	  </form>";
 
     $HTMLOUT .= end_frame();
-     print stdhead("Sub Forum Manage") . $HTMLOUT . stdfoot();
+     echo stdhead("Sub Forum Manage") . $HTMLOUT . stdfoot();
 }
 
 ?>

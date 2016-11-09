@@ -20,5 +20,5 @@ loggedinorreturn();
     $HTMLOUT .= insert_smilies_frame();
     $HTMLOUT .= end_main_frame();
     $HTMLOUT .= stdfoot();
-    print $HTMLOUT ;
+    echo $HTMLOUT ;
 ?>

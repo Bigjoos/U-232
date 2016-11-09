@@ -29,7 +29,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -46,7 +46,7 @@ $lang = array_merge( $lang, load_language('ad_news') );
 if ($CURUSER['class'] < UC_STAFF)
 stderr("Error", "Permission denied.");
 
-$mode = isset($_GET["mode"]) ?$_GET["mode"] : '';
+$mode = isset($_GET["mode"]) ? htmlspecialchars($_GET["mode"]) : '';
 
 //==Delete news
 if ($mode == 'delete') {
@@ -56,7 +56,7 @@ if ($mode == 'delete') {
     $hash = md5('the@@saltto66??' . $newsid . 'add' . '@##mu55y==');
     $sure='';
     $returnto = isset($_POST['returnto']) ? htmlentities($_POST['returnto']) : '';
-    isset($_GET['sure']) && $sure = htmlspecialchars($_GET['sure']);
+    isset($_GET['sure']) && $sure = intval($_GET['sure']);
     if (!$sure)
         stderr("Confirm Delete", "Do you really want to delete this news entry? Click\n" . "<a href='admin.php?action=news&amp;mode=delete&amp;sure=1&amp;h=$hash&amp;newsid=$newsid&amp;returnto=admin.php?action=news'>here</a> if you are sure.", false);
     if ($_GET['h'] != $hash)
@@ -65,30 +65,30 @@ if ($mode == 'delete') {
     {
         
         global $CURUSER;
-        mysql_query("DELETE FROM news WHERE id = $newsid AND userid = $CURUSER[id]");
+        sql_query("DELETE FROM news WHERE id = ".sqlesc($newsid)." AND userid = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
         @unlink("cache/news.txt");
     }
     $HTMLOUT.= deletenewsid($newsid);
     header("Refresh: 3; url=admin.php?action=news");
     $HTMLOUT .="<h2>News entry deleted - Please wait while you are redirected!</h2>";
-    print stdhead('News') . $HTMLOUT . stdfoot();
+    echo stdhead('News') . $HTMLOUT . stdfoot();
     die;
     }
 
 //==Add news
 if ($mode == 'add') {
-    $body = isset($_POST['body']) ? $_POST['body'] : '';
-    $sticky = isset($_POST['sticky']) ? $_POST['sticky'] : 'yes';
+    $body = isset($_POST['body']) ? htmlspecialchars($_POST['body']) : '';
+    $sticky = isset($_POST['sticky']) ? htmlspecialchars($_POST['sticky']) : 'yes';
     if (!$body)
         stderr("Error", "The news item cannot be empty!");
     $title = htmlentities($_POST['title']);
     if (!$title)
         stderr("Error", "The news title cannot be empty!");
-    $added = isset($_POST["added"]) ?$_POST["added"] : '';
+    $added = isset($_POST["added"]) ? intval($_POST["added"]) : '';
     if (!$added)
         $added = time();
-    mysql_query("INSERT INTO news (userid, added, body, title, sticky) VALUES (" . $CURUSER['id'] . "," . sqlesc($added) . ", " . sqlesc($body) . ", " . sqlesc($title) . ", " . sqlesc($sticky) . ")") or sqlerr(__FILE__, __LINE__);
-    mysql_affected_rows() == 1 ?$warning = "News entry was added successfully." : stderr("oopss", "Something's wrong !! .");
+    sql_query("INSERT INTO news (userid, added, body, title, sticky) VALUES (" . sqlesc($CURUSER['id']) . "," . sqlesc($added) . ", " . sqlesc($body) . ", " . sqlesc($title) . ", " . sqlesc($sticky) . ")") or sqlerr(__FILE__, __LINE__);
+    mysqli_affected_rows($GLOBALS["___mysqli_ston"]) == 1 ?$warning = "News entry was added successfully." : stderr("oopss", "Something's wrong !! .");
     @unlink("cache/news.txt");
 }
 
@@ -97,13 +97,13 @@ if ($mode == 'edit') {
     $newsid = (int)$_GET["newsid"];
     if (!is_valid_id($newsid))
         stderr("Error", "Invalid news item ID.");
-    $res = mysql_query("SELECT * FROM news WHERE id=" . sqlesc($newsid)) or sqlerr(__FILE__, __LINE__);
-    if (mysql_num_rows($res) != 1)
+    $res = sql_query("SELECT * FROM news WHERE id=" . sqlesc($newsid)) or sqlerr(__FILE__, __LINE__);
+    if (mysqli_num_rows($res) != 1)
         stderr("Error", "No news item with that ID .");
-    $arr = mysql_fetch_assoc($res);
+    $arr = mysqli_fetch_assoc($res);
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $body = isset($_POST['body']) ? $_POST['body'] : '';
-        $sticky = isset($_POST['sticky']) ? $_POST['sticky'] : 'yes';
+        $body = isset($_POST['body']) ? htmlspecialchars($_POST['body']) : '';
+        $sticky = isset($_POST['sticky']) ? htmlspecialchars($_POST['sticky']) : 'yes';
         if ($body == "")
         stderr("Error", "Body cannot be empty!");
         $title = htmlentities($_POST['title']);
@@ -112,7 +112,7 @@ if ($mode == 'edit') {
         $body = sqlesc($body);
         $sticky = sqlesc($sticky);
         $editedat = sqlesc(time());
-        mysql_query("UPDATE news SET body=$body, sticky=$sticky, title=" . sqlesc($title) . " WHERE id=$newsid") or sqlerr(__FILE__, __LINE__);
+        sql_query("UPDATE news SET body=$body, sticky=$sticky, title=" . sqlesc($title) . " WHERE id=".sqlesc($newsid)) or sqlerr(__FILE__, __LINE__);
         @unlink("cache/news.txt");
         $returnto = isset($_POST['returnto']) ? htmlentities($_POST['returnto']) : '';
         if ($returnto != "")
@@ -132,35 +132,35 @@ if ($mode == 'edit') {
         <tr><td colspan='2' align='center'><input type='submit' value='Okay' class='btn' /></td></tr>
         </table>
         </form>\n";
-        print  stdhead('News Page') . $HTMLOUT . stdfoot();
+        echo  stdhead('News Page') . $HTMLOUT . stdfoot();
         die;
     }
 }
 
 //==Final Actions
-$res = mysql_query("SELECT * FROM news ORDER BY sticky, added DESC") or sqlerr(__FILE__, __LINE__);
+$res = sql_query("SELECT * FROM news ORDER BY sticky, added DESC") or sqlerr(__FILE__, __LINE__);
    $HTMLOUT .= begin_main_frame();
    $HTMLOUT .= begin_frame();
     if (!empty($warning))
     $HTMLOUT .="<p><font size='-3'>($warning)</font></p>";
     $HTMLOUT .="<form method='post' name='compose' action='admin.php?action=news&amp;mode=add'>
     <h1>Submit News Item</h1><table border='1' cellspacing='0' cellpadding='5'>
-    <tr><td><input type='text' name='title' value='" . htmlspecialchars($res['title']) . "' /></td></tr>\n";
+    <tr><td><input type='text' name='title' value='' /></td></tr>\n";
     $HTMLOUT .="<tr>
     <td align='left' style='padding: 0px'>".textbbcode("compose", "body")."</td></tr>";
     $HTMLOUT .="<tr><td colspan='2' class='rowhead'>Sticky<input type='radio' checked='checked' name='sticky' value='yes' />Y<input name='sticky' type='radio' value='no' />N</td></tr>\n
     <tr><td colspan='2' class='rowhead'><input type='submit' value='Okay' class='btn' /></td></tr>\n
     </table></form><br /><br />\n";
     
-    while ($arr = mysql_fetch_assoc($res)) {
-        $newsid = $arr["id"];
-        $body = $arr["body"];
-        $title = $arr["title"];
-        $userid = $arr["userid"];
+    while ($arr = mysqli_fetch_assoc($res)) {
+        $newsid = intval($arr["id"]);
+        $body = htmlspecialchars($arr["body"]);
+        $title = htmlspecialchars($arr["title"]);
+        $userid = intval($arr["userid"]);
         $added = get_date($arr["added"], 'LONG',0,1);
-        $res2 = mysql_query("SELECT id, username, class, warned, chatpost, pirate, king, leechwarn, enabled, donor, added FROM users WHERE id =$userid") or sqlerr(__FILE__, __LINE__);
-        $arr2 = mysql_fetch_assoc($res2);
-        $postername = $arr2["username"];
+        $res2 = sql_query("SELECT id, username, class, warned, chatpost, pirate, king, leechwarn, enabled, donor, added FROM users WHERE id =".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+        $arr2 = mysqli_fetch_assoc($res2);
+        $postername = htmlspecialchars($arr2["username"]);
         $by = "<b>".format_username($arr2)."</b>";
         $hash = md5('the@@saltto66??' . $newsid . 'add' . '@##mu55y==');
         $returnto = isset($_POST['returnto']) ? htmlentities($_POST['returnto']) : '';
@@ -170,11 +170,11 @@ $res = mysql_query("SELECT * FROM news ORDER BY sticky, added DESC") or sqlerr(_
         - [<a href='admin.php?action=news&amp;mode=delete&amp;newsid=$newsid&amp;sure=1&amp;h=$hash'><b>Delete</b></a>]
         </td></tr></table>\n";
         $HTMLOUT .= begin_table(true);
-        $HTMLOUT .="<tr valign='top'><td class='comment'><b>" . htmlentities($title) . "</b><br />" . format_comment($body) . "</td></tr>\n";
+        $HTMLOUT .="<tr valign='top'><td class='comment'><b>" .$title . "</b><br />" . format_comment($body) . "</td></tr>\n";
         $HTMLOUT .= end_table();
     }
     $HTMLOUT .= end_frame();
     $HTMLOUT .= end_main_frame();
-print  stdhead('News Page') . $HTMLOUT . stdfoot();
+echo stdhead('News Page') . $HTMLOUT . stdfoot();
 die;
 ?>

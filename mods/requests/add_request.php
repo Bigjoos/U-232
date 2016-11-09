@@ -13,7 +13,7 @@ if ($CURUSER['class'] < $TBDEV['req_min_class']) {
     <b>".$TBDEV['site_name']." staff</b></div>";
 
     /////////////////////// HTML OUTPUT //////////////////////////////
-    print stdhead('Requests Page').$HTMLOUT.stdfoot();
+    echo stdhead('Requests Page').$HTMLOUT.stdfoot();
     die();
 }
 
@@ -31,7 +31,7 @@ $HTMLOUT .= "<h3>{$lang['add_rules']}</h3>";
 
 $HTMLOUT .= "{$lang['add_rules1']}<b> ".$TBDEV['req_min_ratio']."</b>{$lang['add_rules2']}<b>".$TBDEV['req_gigs_upped']." GB</b>.<br />".
 ($TBDEV['karma'] ? "{$lang['add_rules3']}<b><a class='altlink' href='mybonus.php'>".$TBDEV['req_cost_bonus']." Karma Points</a></b>....<br /><br />" :'')." 
-{$lang['add_rules4']}<a class='altlink' href='userdetails.php?id=".$CURUSER['id']."'>".$CURUSER['username']."</a>, ";	
+{$lang['add_rules4']}<a class='altlink' href='userdetails.php?id=".intval($CURUSER['id'])."'>".htmlspecialchars($CURUSER['username'])."</a>, ";	
 
 
     if ($TBDEV['karma'] && isset($CURUSER['seedbonus']) && $CURUSER['seedbonus'] < $TBDEV['req_cost_bonus']) {
@@ -64,8 +64,8 @@ $HTMLOUT .= "<form method='get' action='browse.php'><table width='750px' border=
 
 $catdropdown = '';
 foreach ($cats as $cat) {
-   $catdropdown .= "<option value='".$cat['id']."'";
-   if ($cat['id'] == (isset($_GET['cat']) ? $_GET['cat'] : ''))
+   $catdropdown .= "<option value='".intval($cat['id'])."'";
+   if ($cat['id'] == (isset($_GET['cat']) ? intval($_GET['cat']) : ''))
    $catdropdown .= " selected='selected'";
    $catdropdown .= ">".htmlspecialchars($cat['name'])."</option>\n";
 }
@@ -85,13 +85,13 @@ $HTMLOUT .= "<form method='post' name='compose' action='viewrequests.php?new_req
 <tr><td align='right'><b>{$lang['add_title']}</b></td><td align='left'><input type='text' size='40' name='requesttitle' />
 <select name='category'><option value='0'>{$lang['add_select_cat']}</option>\n";
 
-$res2 = mysql_query('SELECT id, name FROM categories order by name');
-$num  = mysql_num_rows($res2);
+$res2 = sql_query('SELECT id, name FROM categories order by name') or sqlerr(__FILE__, __LINE__);
+$num  = mysqli_num_rows($res2);
 
 $catdropdown2 = '';
 for ($i = 0; $i < $num; ++$i) {
- $cats2 = mysql_fetch_assoc($res2);  
- $catdropdown2 .= "<option value='".$cats2['id']."'";
+ $cats2 = mysqli_fetch_assoc($res2);  
+ $catdropdown2 .= "<option value='".intval($cats2['id'])."'";
  $catdropdown2 .= ">".htmlspecialchars($cats2['name'])."</option>\n";
    }
    
@@ -121,12 +121,12 @@ $HTMLOUT .= "</td></tr>
 <br /><br />\n";
 }
 
-$rescount = mysql_query('SELECT id FROM requests LIMIT 1') or sqlerr(__FILE__, __LINE__);
+$rescount = sql_query('SELECT id FROM requests LIMIT 1') or sqlerr(__FILE__, __LINE__);
 
-if (mysql_num_rows($rescount) > 0) {
+if (mysqli_num_rows($rescount) > 0) {
 
-$res = mysql_query("SELECT users.username, requests.id, requests.userid, requests.cat, requests.request, requests.added, categories.name, categories.image, uploaded, downloaded FROM users inner join requests ON requests.userid = users.id left join categories ON requests.cat = categories.id order by requests.id desc LIMIT 10") or sqlerr();
-$num = mysql_num_rows($res);
+$res = sql_query("SELECT users.username, requests.id, requests.userid, requests.cat, requests.request, requests.added, categories.name, categories.image, uploaded, downloaded FROM users inner join requests ON requests.userid = users.id left join categories ON requests.cat = categories.id order by requests.id desc LIMIT 10") or sqlerr(__FILE__, __LINE__);
+$num = mysqli_num_rows($res);
 
     $HTMLOUT .= "<table border='1' cellspacing='0' width='750px' cellpadding='5'>
     <tr><td width='50px' class='colhead' align='left'>{$lang['add_cat']}</td>
@@ -136,16 +136,16 @@ $num = mysql_num_rows($res);
 foreach($cats as $key => $value)
     $change[$value['id']]=array('id' => $value['id'], 'name' => $value['name'], 'image' => $value['image']);
       
-while($arr = mysql_fetch_assoc($res)) {
+while($arr = mysqli_fetch_assoc($res)) {
     
-    $addedby  = "<td style='padding: 0px' align='center'><b><a href='userdetails.php?id=$arr[userid]'>$arr[username]</a></b></td>";
+    $addedby  = "<td style='padding: 0px' align='center'><b><a href='userdetails.php?id=".intval($arr['userid'])."'>".htmlspecialchars($arr['username'])."</a></b></td>";
     $catname  = htmlspecialchars($change[$arr['cat']]['name']);
     $catpic   = htmlspecialchars($change[$arr['cat']]['image']);       	
     $catimage = "<img src='pic/caticons/".$catpic."' title='$catname' alt='$catname' />";
     
     $HTMLOUT .= "<tr>
     <td align='center'>".$catimage."</td>
-    <td align='left'><a href='viewrequests.php?id=$arr[id]&amp;req_details'>
+    <td align='left'><a href='viewrequests.php?id=".intval($arr['id'])."&amp;req_details'>
     <b>".htmlspecialchars($arr['request'])."</b></a></td>
     <td align='center'>".get_date($arr['added'], '')."</td>
     $addedby
@@ -160,5 +160,5 @@ $HTMLOUT .= "<tr><td align='center' colspan='4'>
 }
 
 /////////////////////// HTML OUTPUT //////////////////////////////
-print stdhead('Requests Page').$HTMLOUT.stdfoot();
+echo stdhead('Requests Page').$HTMLOUT.stdfoot();
 ?>

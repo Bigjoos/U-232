@@ -101,6 +101,6 @@ fclose($file);
 function happyLog($userid,$torrentid, $multi)
 {
 $time = sqlesc(time());
-sql_query("INSERT INTO happylog (userid, torrentid,multi, date) VALUES($userid, $torrentid, $multi, $time)") or sqlerr(__FILE__, __LINE__);
+sql_query("INSERT INTO happylog (userid, torrentid,multi, date) VALUES(".sqlesc($userid).", ".sqlesc($torrentid).", ".sqlesc($multi).", $time)") or sqlerr(__FILE__, __LINE__);
 }
 ?>

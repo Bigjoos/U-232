@@ -40,8 +40,8 @@ loggedinorreturn();
     $lang = array_merge( load_language('global'), load_language('edit') );
     $newpage = new page_verify(); 
     $newpage->create('teit');
-    $res = sql_query("SELECT * FROM torrents WHERE id = $id");
-    $row = mysql_fetch_assoc($res);
+    $res = sql_query("SELECT * FROM torrents WHERE id = $id") or sqlerr(__FILE__, __LINE__);
+    $row = mysqli_fetch_assoc($res);
     if (!$row)
       stderr($lang['edit_user_error'], $lang['edit_no_torrent']);
 
@@ -81,7 +81,7 @@ loggedinorreturn();
     $HTMLOUT  .= "<input type='hidden' name='returnto' value='" . htmlspecialchars($_GET["returnto"]) . "' />\n";
     $HTMLOUT  .=  "<table border='1' cellspacing='0' cellpadding='10'>\n";
     $HTMLOUT  .= $ismodd;
-    $HTMLOUT  .= tr("{$lang['edit_imdb_url']}", "<input type='text' name='url' size='80' value='".$row["url"]."' />", 1);
+    $HTMLOUT  .= tr("{$lang['edit_imdb_url']}", "<input type='text' name='url' size='80' value='".htmlspecialchars($row["url"])."' />", 1);
     $HTMLOUT .= tr($lang['edit_poster'], "<input type='text' name='poster' size='80' value='" . htmlspecialchars($row["poster"]) . "' /><br />{$lang['edit_poster1']}\n", 1);
     $HTMLOUT  .= tr($lang['edit_torrent_name'], "<input type='text' name='name' value='" . htmlspecialchars($row["name"]) . "' size='80' />", 1);
     $HTMLOUT  .= tr($lang['edit_nfo'], "<input type='radio' name='nfoaction' value='keep' checked='checked' />{$lang['edit_keep_current']}<br />".
@@ -103,7 +103,7 @@ loggedinorreturn();
     
     foreach ($cats as $subrow) 
     {
-      $s .= "<option value='" . $subrow["id"] . "'";
+      $s .= "<option value='" . intval($subrow["id"]) . "'";
       if ($subrow["id"] == $row["category"])
         $s .= " selected='selected'";
       $s .= ">" . htmlspecialchars($subrow["name"]) . "</option>\n";
@@ -194,6 +194,6 @@ loggedinorreturn();
 
 
 //////////////////////////// HTML OUTPIT ////////////////////////////////
-    print stdhead("{$lang['edit_stdhead']} '{$row["name"]}'") . $HTMLOUT . stdfoot();
+    echo stdhead("{$lang['edit_stdhead']} '{$row["name"]}'") . $HTMLOUT . stdfoot();
 
 ?>

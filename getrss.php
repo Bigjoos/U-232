@@ -6,27 +6,31 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
-require_once(INCL_DIR.'user_functions.php');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
+require_once(INCL_DIR . 'user_functions.php');
 dbconn();
 loggedinorreturn();
-$lang = array_merge( load_language('global'), load_language('getrss') );
+$lang = array_merge(load_language('global'), load_language('getrss'));
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$cats = isset($_POST['cats']) ? $_POST['cats'] : array();
-	if(count($cats) == 0)
-		stderr($lang['getrss_error'],$lang['getrss_nocat']);
-	$feed = isset($_POST['feed']) && $_POST['feed'] == 'dl' ? 'dl' : 'web';
-	
-	$rsslink = $TBDEV['baseurl'].'/rss.php?cats='.join(',',$cats).($feed == 'dl' ? '&amp;type=dl' : '').'&amp;passkey='.$CURUSER['passkey'];
-	$HTMLOUT = "<div align=\"center\"><h2>{$lang['getrss_result']}</h2><br/>
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    function mkint($x)
+    {
+        return (int) $x;
+    }
+    $cats = isset($_POST['cats']) ? array_map('mkint', $_POST['cats']) : array();
+    if (count($cats) == 0)
+        stderr($lang['getrss_error'], $lang['getrss_nocat']);
+    $feed = isset($_POST['feed']) && htmlspecialchars($_POST['feed']) == 'dl' ? 'dl' : 'web';
+    
+    $rsslink = $TBDEV['baseurl'] . '/rss.php?cats=' . join(',', $cats) . ($feed == 'dl' ? '&amp;type=dl' : '') . '&amp;passkey=' . $CURUSER['passkey'];
+    $HTMLOUT = "<div align=\"center\"><h2>{$lang['getrss_result']}</h2><br/>
 		<input type=\"text\" size=\"120\" readonly=\"readonly\" value=\"{$rsslink}\" onclick=\"select()\" />
 	</div>";
-	
-	print(stdhead($lang['getrss_head2']).$HTMLOUT.stdfoot());
-	
+    
+    echo (stdhead($lang['getrss_head2']) . $HTMLOUT . stdfoot());
+    
 } else {
-$HTMLOUT = <<<HTML
+    $HTMLOUT = <<<HTML
 <form action="{$_SERVER['PHP_SELF']}" method="post">
 <table width="500" cellpadding="2" cellspacing="0" align="center">
 <tr>
@@ -35,15 +39,15 @@ $HTMLOUT = <<<HTML
 <tr>
 	<td align="right" valign="top">{$lang['getrss_cat']}</td><td align="left" width="100%">
 HTML;
-	$q1 = sql_query('SELECT id,name,image FROM categories order by id') or sqlerr();
-	$i=0;
-	while($a = mysql_fetch_assoc($q1)) {
-		if($i%5 == 0 && $i>0)
-			$HTMLOUT .="<br/>";
-		$HTMLOUT .= "<label for=\"cat_{$a['id']}\"><img src=\"{$TBDEV['pic_base_url']}caticons/{$a['image']}\" alt=\"{$a['name']}\" title=\"{$a['name']}\" /><input type=\"checkbox\" name=\"cats[]\" id=\"cat_{$a['id']}\" value=\"{$a['id']}\" /></label>\n";
-		$i++;
-	}
-$HTMLOUT .= <<<HTML
+    $q1 = sql_query('SELECT id,name,image FROM categories order by id') or sqlerr(__FILE__, __LINE__);
+    $i = 0;
+    while ($a = mysqli_fetch_assoc($q1)) {
+        if ($i % 5 == 0 && $i > 0)
+            $HTMLOUT .= "<br/>";
+        $HTMLOUT .= "<label for=\"cat_{$a['id']}\"><img src=\"{$TBDEV['pic_base_url']}caticons/" . htmlspecialchars($a['image']) . "\" alt=\"" . htmlspecialchars($a['name']) . "\" title=\"" . htmlspecialchars($a['name']) . "\" /><input type=\"checkbox\" name=\"cats[]\" id=\"cat_" . intval($a['id']) . "\" value=\"" . intval($a['id']) . "\" /></label>\n";
+        $i++;
+    }
+    $HTMLOUT .= <<<HTML
 </td>
 </tr>
 <tr>
@@ -53,7 +57,7 @@ $HTMLOUT .= <<<HTML
 </table>
 </form>
 HTML;
-
-print(stdhead($lang['getrss_head2']).$HTMLOUT.stdfoot());
+    
+    echo (stdhead($lang['getrss_head2']) . $HTMLOUT . stdfoot());
 }
 ?>

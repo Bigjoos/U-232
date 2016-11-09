@@ -100,6 +100,6 @@ loggedinorreturn();
    
 ////////////////////////// HTML OUTPUT //////////////////////////
 
-    print stdhead($lang['upload_stdhead']) . $HTMLOUT . stdfoot();
+    echo stdhead($lang['upload_stdhead']) . $HTMLOUT . stdfoot();
 
 ?>

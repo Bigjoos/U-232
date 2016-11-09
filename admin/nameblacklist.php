@@ -19,7 +19,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -30,7 +30,7 @@ $blacklist = file_exists($TBDEV['nameblacklist']) && is_array(unserialize(file_g
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
-	$badnames = isset($_POST['badnames']) && !empty($_POST['badnames']) ? trim($_POST['badnames']) : '';
+	$badnames = isset($_POST['badnames']) && !empty($_POST['badnames']) ? trim(htmlspecialchars($_POST['badnames'])) : '';
 	if(empty($badnames))
 	stderr('Hmm','I think you forgot the name');
 	if(strpos($badnames,',')) {
@@ -54,6 +54,6 @@ $out .= stdmsg('Add word','<form action="admin.php?action=nameblacklist" method=
 	<tr> <td align="center"><input type="submit" value="Update"/></td></tr>
 	</table></form>');
 $out .= end_main_frame();
-print(stdhead('Username blacklist').$out.stdfoot());
+echo(stdhead('Username blacklist').$out.stdfoot());
 }
 ?>

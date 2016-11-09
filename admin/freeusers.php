@@ -39,33 +39,33 @@ if ($remove)
         die('WTF!');
 
 
-    $res = mysql_query("SELECT id, username, class FROM users WHERE free_switch != 0 AND id = ".
+    $res = sql_query("SELECT id, username, class FROM users WHERE free_switch != 0 AND id = ".
         sqlesc($remove)) or sqlerr(__file__, __line__);
         
     $msgs_buffer = $users_buffer = array();
     
-    if (mysql_num_rows($res) > 0)
+    if (mysqli_num_rows($res) > 0)
     { 
         $msg = sqlesc('Freeleech On All Torrents have been removed by '.$CURUSER['username'].'.');
 
-        while ($arr = mysql_fetch_assoc($res))
+        while ($arr = mysqli_fetch_assoc($res))
         {
             $modcomment = sqlesc(get_date(time(), 'DATE', 1).
             " - Freeleech On All Torrents removed by ".$CURUSER['username']." \n");
             
-			$msgs_buffer[] = '(0,'.$arr['id'].','.TIME_NOW.', '.sqlesc($msg).
+			$msgs_buffer[] = '(0,'.sqlesc($arr['id']).','.TIME_NOW.', '.sqlesc($msg).
 			', \'Freeleech Notice!\')';
 			
-            $users_buffer[] = '('.$arr['id'].',0,'.$modcomment.')';
+            $users_buffer[] = '('.sqlesc($arr['id']).',0,'.$modcomment.')';
             
-            $username = $arr['username'];
+            $username = htmlspecialchars($arr['username']);
         }
         if (sizeof($msgs_buffer) > 0)
         {
-            mysql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES ".
+            sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES ".
                 implode(', ', $msgs_buffer)) or sqlerr(__file__, __line__);
                 
-            mysql_query("INSERT INTO users (id, free_switch, modcomment) VALUES ".
+            sql_query("INSERT INTO users (id, free_switch, modcomment) VALUES ".
 			implode(', ', $users_buffer)." ON DUPLICATE key 
 			UPDATE free_switch=values(free_switch), 
 			modcomment=concat(values(modcomment),modcomment)") or sqlerr(__file__, __line__);
@@ -78,10 +78,10 @@ if ($remove)
 
 }
 
-$res2 = mysql_query("SELECT id, username, class, free_switch FROM users WHERE free_switch != 0 ORDER BY username ASC") or
+$res2 = sql_query("SELECT id, username, class, free_switch FROM users WHERE free_switch != 0 ORDER BY username ASC") or
     sqlerr(__file__, __line__);
 
-$count = mysql_num_rows($res2);
+$count = mysqli_num_rows($res2);
 $HTMLOUT .= "<h1>Freeleech Peeps ($count)</h1>";
 
 if ($count == 0)
@@ -92,10 +92,10 @@ else
           <tr><td class='colhead'>UserName</td><td class='colhead'>Class</td>
           <td class='colhead'>Expires</td><td class='colhead'>Remove Freeleech</td></tr>";
           
-    while ($arr2 = mysql_fetch_assoc($res2))
+    while ($arr2 = mysqli_fetch_assoc($res2))
     {
 
-        $HTMLOUT .= "<tr><td><a href='userdetails.php?id=$arr2[id]'>".$arr2['username'].
+        $HTMLOUT .= "<tr><td><a href='userdetails.php?id=".intval($arr2['id'])."'>".htmlspecialchars($arr2['username']).
             "</a></td><td align='left'>".get_user_class_name($arr2['class']);
         if ($arr2['class'] > UC_ADMINISTRATOR && $arr2['id'] != $CURUSER['id'])
             $HTMLOUT .= "</td><td align='left'>Until ".get_date($arr2['free_switch'], 'DATE')." 

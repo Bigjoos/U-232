@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -28,21 +28,20 @@ require_once(INCL_DIR.'user_functions.php');
     
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-      $username = trim($_POST["username"]);
-      $password = trim($_POST["password"]);
+      $username = trim(htmlspecialchars($_POST["username"]));
+      $password = trim(htmlspecialchars($_POST["password"]));
       if (!$username || !$password)
         stderr("{$lang['text_error']}", "{$lang['text_please']}");
         
-      $res = @mysql_query("SELECT * FROM users WHERE username=" . sqlesc($username) 
-                          . "AND passhash=md5(concat(secret,concat(" . sqlesc($password) . ",secret)))") 
-                          or sqlerr();
-      if (mysql_num_rows($res) != 1)
+      $res = sql_query("SELECT * FROM users WHERE username=" . sqlesc($username) 
+                          . "AND passhash=md5(concat(secret,concat(" . sqlesc($password) . ",secret)))") or sqlerr(__FILE__, __LINE__);
+      if (mysqli_num_rows($res) != 1)
         stderr("{$lang['text_error']}", "{$lang['text_bad']}");
-      $arr = mysql_fetch_assoc($res);
+      $arr = mysqli_fetch_assoc($res);
 
-      $id = $arr['id'];
-      $res = @mysql_query("DELETE FROM users WHERE id=$id") or sqlerr();
-      if (mysql_affected_rows() != 1)
+      $id = intval($arr['id']);
+      $res = sqli_query("DELETE FROM users WHERE id=".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) != 1)
         stderr("{$lang['text_error']}", "{$lang['text_unable']}");
         
       stderr("{$lang['stderr_success']}", "{$lang['text_success']}");
@@ -66,5 +65,5 @@ require_once(INCL_DIR.'user_functions.php');
     </table>
     </form>";
 
-    print stdhead("{$lang['stdhead_delete']}") . $HTMLOUT . stdfoot();
+    echo stdhead("{$lang['stdhead_delete']}") . $HTMLOUT . stdfoot();
 ?>

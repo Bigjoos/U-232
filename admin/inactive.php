@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 require_once(INCL_DIR.'user_functions.php');
@@ -33,7 +33,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 // made by putyn tbdev.net
 // email part by x0r tbdev.net
 // config
-$replyto = "".$TBDEV['site_email'].""; // The Reply-to email.
+$replyto = $TBDEV['site_email']; // The Reply-to email.
 $record_mail = true; // set this true or false . If you set this true every time whene you send a mail the time , userid , and the number of mail sent will be recorded
 $days = 50; //number of days of inactivity
 // end config
@@ -43,20 +43,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         stderr($lang['inactive_error'], "{$lang['inactive_selectuser']}");
 
     if ($action == "deluser" && (!empty($_POST["userid"]))) {
-        mysql_query("DELETE FROM users WHERE id IN (" . implode(", ", $_POST['userid']) . ") ");
+        sql_query("DELETE FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['userid'])) . ") ") or sqlerr(__FILE__, __LINE__);
         stderr($lang['inactive_success'], "{$lang['inactive_deleted']} <a href='".$TBDEV['baseurl']."/inactive.php'>{$lang['inactive_back']}</a>");
     }
     if ($action == "disable" && (!empty($_POST["userid"]))) {
-        mysql_query("UPDATE users SET enabled='no' WHERE id IN (" . implode(", ", $_POST['userid']) . ") ");
+        sql_query("UPDATE users SET enabled='no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['userid'])) . ") ") or sqlerr(__FILE__, __LINE__);
         stderr($lang['inactive_success'], "{$lang['inactive_disabled']} <a href='".$TBDEV['baseurl']."/inactive.php'>{$lang['inactive_back']}</a>");
     }
 
     if ($action == "mail" && (!empty($_POST["userid"]))) {
-        $res = sql_query("SELECT id, email , username, added, last_access FROM users WHERE id IN (" . implode(", ", $_POST['userid']) . ") ORDER BY last_access DESC ");
-        $count = mysql_num_rows($res);
-        while ($arr = mysql_fetch_array($res)) {
-            $id = $arr["id"];
-            $username = $arr["username"];
+        $res = sql_query("SELECT id, email , username, added, last_access FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['userid'])) . ") ORDER BY last_access DESC ") or sqlerr(__FILE__, __LINE__);
+        $count = mysqli_num_rows($res);
+        while ($arr = mysqli_fetch_array($res)) {
+            $id = intval($arr["id"]);
+            $username = htmlspecialchars($arr["username"]);
             $email = htmlspecialchars($arr["email"]);
             $added = get_date($arr["added"], 'DATE');
             $last_access = get_date($arr["last_access"], 'DATE');
@@ -76,9 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($record_mail) {
             $date = time();
-            $userid = $CURUSER["id"];
+            $userid = intval($CURUSER["id"]);
             if ($count > 0 && $mail)
-                mysql_query("update avps set value_i='$date', value_u='$count', value_s='$userid' WHERE arg='inactivemail' ") or sqlerr(__FILE__, __LINE__);
+                sql_query("UPDATE avps SET value_i=".sqlesc($date).", value_u=".sqlesc($count).", value_s=".sqlesc($userid)." WHERE arg='inactivemail'") or sqlerr(__FILE__, __LINE__);
         }
 
         if ($mail)
@@ -90,8 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $dt = time() - ($days * 86400);
-$res = sql_query("SELECT id,username,class,email,uploaded,downloaded,last_access FROM users WHERE last_access<$dt AND status='confirmed' AND enabled='yes' ORDER BY last_access DESC ") or sqlerr(__FILE__, __LINE__);
-$count = mysql_num_rows($res);
+$res = sql_query("SELECT id,username,class,email,uploaded,downloaded,last_access FROM users WHERE last_access<".sqlesc($dt)." AND status='confirmed' AND enabled='yes' ORDER BY last_access DESC ") or sqlerr(__FILE__, __LINE__);
+$count = mysqli_num_rows($res);
 if ($count > 0) {
 
   
@@ -113,7 +113,7 @@ return 'Check All'; }
 /*]]>*/
 </script>";
 
-    $HTMLOUT .="<h2>" . htmlspecialchars($count) . "{$lang['inactive_accounts']} " . htmlspecialchars($days) . " {$lang['inactive_days']}</h2>
+    $HTMLOUT .="<h2>" . intval($count) . "{$lang['inactive_accounts']} " . intval($days) . " {$lang['inactive_days']}</h2>
     <form method='post' action='admin.php?action=inactive'>
     <table class='main' border='1' cellspacing='0' cellpadding='5'>
     <tr>
@@ -124,17 +124,17 @@ return 'Check All'; }
     <td class='colhead'>{$lang['inactive_lastseen']}</td>
     <td class='colhead' align='center'>{$lang['inactive_x']}</td></tr>";
 
-    while ($arr = mysql_fetch_assoc($res)) {
+    while ($arr = mysqli_fetch_assoc($res)) {
         $ratio = ($arr["downloaded"] > 0 ? number_format($arr["uploaded"] / $arr["downloaded"], 3) : ($arr["uploaded"] > 0 ? "Inf." : "---"));
         $last_seen = (($arr["last_access"] == "0") ? "never" : "" . get_date($arr["last_access"], 'DATE') . "&nbsp;");
         $class = get_user_class_name($arr["class"]);
         $HTMLOUT .="<tr>
-        <td><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . $arr["id"] . "'>" . $arr["username"] . "</a></td>
+        <td><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "'>" . htmlspecialchars($arr["username"]) . "</a></td>
         <td>" . $class . "</td>
-        <td><a href='mailto:" . $arr["email"] . "'>" . htmlspecialchars($arr["email"]) . "</a></td>
+        <td><a href='mailto:" . htmlspecialchars($arr["email"]) . "'>" . htmlspecialchars($arr["email"]) . "</a></td>
         <td>" . $ratio . "</td>
         <td>" . $last_seen . "</td>
-        <td align='center' bgcolor='#FF0000'><input type='checkbox' name='userid[]' value='" . $arr["id"] . "' /></td></tr>
+        <td align='center' bgcolor='#FF0000'><input type='checkbox' name='userid[]' value='" . intval($arr["id"]) . "' /></td></tr>
         ";
     }
     $HTMLOUT .="<tr>
@@ -146,15 +146,15 @@ return 'Check All'; }
 </select>&nbsp;&nbsp;<input type='submit' name='submit' value='{$lang['inactive_apchanges']}' />&nbsp;&nbsp;<input type='button' value='Check all' onclick='this.value=check(form)' /></td></tr>";
 
     if ($record_mail) {
-        $ress = sql_query("SELECT avps.value_s AS userid, avps.value_i AS last_mail, avps.value_u AS mails, users.username FROM avps LEFT JOIN users ON avps.value_s=users.id WHERE avps.arg='inactivemail' LIMIT 1");
-        $date = mysql_fetch_assoc($ress);
+        $ress = sql_query("SELECT avps.value_s AS userid, avps.value_i AS last_mail, avps.value_u AS mails, users.username FROM avps LEFT JOIN users ON avps.value_s=users.id WHERE avps.arg='inactivemail' LIMIT 1") or sqlerr(__FILE__, __LINE__);
+        $date = mysqli_fetch_assoc($ress);
         if ($date["last_mail"] > 0)
-            $HTMLOUT .="<tr><td colspan='6' class='colhead' align='center' style='color:red;'>{$lang['inactive_lastmail']} <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . htmlspecialchars($date["userid"]) . "'>" . htmlspecialchars($date["username"]) . "</a> {$lang['inactive_on']} <b>" . get_date($date["last_mail"], 'DATE') . " -  " . $date["mails"] . "</b>{$lang['inactive_email']} " . ($date["mails"] > 1 ? "s" : "") . "  {$lang['inactive_sent']}</td></tr>";
+            $HTMLOUT .="<tr><td colspan='6' class='colhead' align='center' style='color:red;'>{$lang['inactive_lastmail']} <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($date["userid"]) . "'>" . htmlspecialchars($date["username"]) . "</a> {$lang['inactive_on']} <b>" . get_date($date["last_mail"], 'DATE') . " -  " . intval($date["mails"]) . "</b>{$lang['inactive_email']} " . ($date["mails"] > 1 ? "s" : "") . "  {$lang['inactive_sent']}</td></tr>";
     }
     $HTMLOUT .="</table></form>";
 } else {
     $HTMLOUT .="<h2>{$lang['inactive_noaccounts']} " . $days . " {$lang['inactive_days']}</h2>";
 }
 
-print stdhead($lang['inactive_users']) . $HTMLOUT . stdfoot();
+echo stdhead($lang['inactive_users']) . $HTMLOUT . stdfoot();
 ?>

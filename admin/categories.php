@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -89,17 +89,17 @@ function move_cat() {
     $new_cat_id = intval($params['new_cat_id']);
     
     // make sure both categories exist
-    $q = @mysql_query( "SELECT id FROM categories WHERE id IN($old_cat_id, $new_cat_id)" );
+    $q = sql_query("SELECT id FROM categories WHERE id IN($old_cat_id, $new_cat_id)" ) or sqlerr(__FILE__, __LINE__);
     
-    if( 2 != mysql_num_rows($q) )
+    if( 2 != mysqli_num_rows($q) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
     
     //all go
-    @mysql_query( "UPDATE torrents SET category = $new_cat_id WHERE category = $old_cat_id" );
+    sql_query("UPDATE torrents SET category = ".sqlesc($new_cat_id)." WHERE category = ".sqlesc($old_cat_id)) or sqlerr(__FILE__, __LINE__);
     
-    if( -1 != mysql_affected_rows() )
+    if( -1 != mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
       header( "Location: {$TBDEV['baseurl']}/admin.php?action=categories" );
     }
@@ -120,14 +120,14 @@ function move_cat_form() {
       stderr( 'MOD ERROR', 'No category ID selected' );
     }
     
-    $q = @mysql_query( "SELECT * FROM categories WHERE id = ".intval($params['id']) );
+    $q = sql_query("SELECT * FROM categories WHERE id = ".sqlesc(intval($params['id'])) ) or sqlerr(__FILE__, __LINE__);
     
-    if( false == mysql_num_rows($q) )
+    if( false == mysqli_num_rows($q) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
     
-    $r = mysql_fetch_assoc($q);
+    $r = mysqli_fetch_assoc($q);
     
     
     $check = '';
@@ -138,7 +138,7 @@ function move_cat_form() {
   
     foreach ($cats as $c)
     {
-      $select .= ($c['id'] != $r['id']) ? "<option value='{$c["id"]}'>" . htmlentities($c['name'], ENT_QUOTES) . "</option>\n" : "";
+      $select .= ($c['id'] != $r['id']) ? "<option value='".intval($c["id"])."'>" . htmlentities($c['name'], ENT_QUOTES) . "</option>\n" : "";
     }
     
     $select .= "</select>\n";
@@ -153,7 +153,7 @@ function move_cat_form() {
     
     $htmlout .= "<form action='admin.php?action=categories' method='post'>
       <input type='hidden' name='mode' value='takemove_cat' />
-      <input type='hidden' name='id' value='{$r['id']}' />
+      <input type='hidden' name='id' value='".intval($r['id'])."' />
     
       <table class='torrenttable' align='center' width='80%' bgcolor='#cecece' cellspacing='2' cellpadding='4px'>
       <tr>
@@ -174,7 +174,7 @@ function move_cat_form() {
       </table>
       </form>";
       
-      print stdhead("Move category {$r['name']}") . $htmlout . stdfoot();
+      echo stdhead("Move category ".htmlentities($r['name'], ENT_QUOTES)) . $htmlout . stdfoot();
 }
 
 
@@ -193,14 +193,14 @@ function add_cat() {
 					stderr( 'MOD ERROR', 'File name is not allowed' );
     }
     
-    $cat_name = sqlesc($params['new_cat_name']);
-    $cat_desc = sqlesc($params['new_cat_desc']);
-    $cat_image = sqlesc($params['new_cat_image']);
+    $cat_name = sqlesc(htmlentities($params['new_cat_name'], ENT_QUOTES));
+    $cat_desc = sqlesc(htmlentities($params['new_cat_desc'], ENT_QUOTES));
+    $cat_image = sqlesc(htmlentities($params['new_cat_image'], ENT_QUOTES));
     
-    @mysql_query( "INSERT INTO categories (name, cat_desc, image)
-                  VALUES($cat_name, $cat_desc, $cat_image)" );
+    sql_query("INSERT INTO categories (name, cat_desc, image)
+                  VALUES($cat_name, $cat_desc, $cat_image)" ) or sqlerr(__FILE__, __LINE__);
       
-    if( -1 == mysql_affected_rows() )
+    if( -1 == mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
@@ -219,14 +219,14 @@ function delete_cat() {
       stderr( 'MOD ERROR', 'No category ID selected' );
     }
     
-    $q = @mysql_query( "SELECT * FROM categories WHERE id = ".intval($params['id']) );
+    $q = sql_query("SELECT * FROM categories WHERE id = ".sqlesc(intval($params['id']))) or sqlerr(__FILE__, __LINE__);
     
-    if( false == mysql_num_rows($q) )
+    if( false == mysqli_num_rows($q) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
     
-    $r = mysql_fetch_assoc($q);
+    $r = mysqli_fetch_assoc($q);
     
     $old_cat_id = intval($r['id']);
     
@@ -240,9 +240,9 @@ function delete_cat() {
       $new_cat_id = intval($params['new_cat_id']);
       
       //make sure category isn't out of range before moving torrents! else orphans!
-      $q = @mysql_query( "SELECT COUNT(*) FROM categories WHERE id = $new_cat_id" );
+      $q = sql_query("SELECT COUNT(*) FROM categories WHERE id = ".sqlesc($new_cat_id)) or sqlerr(__FILE__, __LINE__);
       
-      $count = mysql_fetch_array($q, MYSQL_NUM);
+      $count = mysqli_fetch_array($q,  MYSQLI_NUM);
       
       if( !$count[0] )
       {
@@ -250,12 +250,12 @@ function delete_cat() {
       }
       
       //all go
-      @mysql_query( "UPDATE torrents SET category = $new_cat_id WHERE category = $old_cat_id" );
+      sql_query("UPDATE torrents SET category = ".sqlesc($new_cat_id)." WHERE category = ".sqlesc($old_cat_id)) or sqlerr(__FILE__, __LINE__);
     }
     
-    @mysql_query( "DELETE FROM categories WHERE id = $old_cat_id" );
+    sql_query("DELETE FROM categories WHERE id = ".sqlesc($old_cat_id)) or sqlerr(__FILE__, __LINE__);
     
-    if( mysql_affected_rows() )
+    if( mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
       header( "Location: {$TBDEV['baseurl']}/admin.php?action=categories" );
     }
@@ -276,18 +276,18 @@ function delete_cat_form() {
       stderr( 'MOD ERROR', 'No category ID selected' );
     }
     
-    $q = @mysql_query( "SELECT * FROM categories WHERE id = ".intval($params['id']) );
+    $q = sql_query("SELECT * FROM categories WHERE id = ".sqlesc(intval($params['id']))) or sqlerr(__FILE__, __LINE__);
     
-    if( false == mysql_num_rows($q) )
+    if( false == mysqli_num_rows($q) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
     
-    $r = mysql_fetch_assoc($q);
+    $r = mysqli_fetch_assoc($q);
     
-    $q = @mysql_query( "SELECT COUNT(*) FROM torrents WHERE category = ".intval($r['id']) );
+    $q = sql_query("SELECT COUNT(*) FROM torrents WHERE category = ".sqlesc(intval($r['id']))) or sqlerr(__FILE__, __LINE__);
     
-    $count = mysql_fetch_array($q, MYSQL_NUM);
+    $count = mysqli_fetch_array($q,  MYSQLI_NUM);
     
     $check = '';
     
@@ -299,7 +299,7 @@ function delete_cat_form() {
     
       foreach ($cats as $c)
       {
-        $select .= ($c['id'] != $r['id']) ? "<option value='{$c["id"]}'>" . htmlentities($c['name'], ENT_QUOTES) . "</option>\n" : "";
+        $select .= ($c['id'] != $r['id']) ? "<option value='".intval($c["id"])."'>" . htmlentities($c['name'], ENT_QUOTES) . "</option>\n" : "";
       }
       
       $select .= "</select>\n";
@@ -314,7 +314,7 @@ function delete_cat_form() {
     
     $htmlout .= "<form action='admin.php?action=categories' method='post'>
       <input type='hidden' name='mode' value='takedel_cat' />
-      <input type='hidden' name='id' value='{$r['id']}' />
+      <input type='hidden' name='id' value='".intval($r['id'])."' />
     
       <table class='torrenttable' align='center' width='80%' bgcolor='#cecece' cellspacing='2' cellpadding='2'>
       <tr>
@@ -340,7 +340,7 @@ function delete_cat_form() {
       </table>
       </form>";
       
-      print stdhead("Deleting category {$r['name']}") . $htmlout . stdfoot();
+      echo stdhead("Deleting category ".htmlentities($r['name'], ENT_QUOTES)) . $htmlout . stdfoot();
 }
 
 
@@ -364,14 +364,14 @@ function edit_cat() {
 					stderr( 'MOD ERROR', 'File name is not allowed' );
     }
     
-    $cat_name = sqlesc($params['cat_name']);
-    $cat_desc = sqlesc($params['cat_desc']);
-    $cat_image = sqlesc($params['cat_image']);
+    $cat_name = sqlesc(htmlentities($params['cat_name']));
+    $cat_desc = sqlesc(htmlentities($params['cat_desc']));
+    $cat_image = sqlesc(htmlentities($params['cat_image']));
     $cat_id = intval($params['id']);
     
-    @mysql_query( "UPDATE categories SET name = $cat_name, cat_desc = $cat_desc, image = $cat_image WHERE id = $cat_id" );
+    sql_query("UPDATE categories SET name = $cat_name, cat_desc = $cat_desc, image = $cat_image WHERE id = ".sqlesc($cat_id)) or sqlerr(__FILE__, __LINE__);
       
-    if( -1 == mysql_affected_rows() )
+    if( -1 == mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
@@ -394,14 +394,14 @@ function edit_cat_form() {
     
     $htmlout = '';
     
-    $q = @mysql_query( "SELECT * FROM categories WHERE id = ".intval($params['id']) );
+    $q = sql_query("SELECT * FROM categories WHERE id = ".sqlesc(intval($params['id']))) or sqlerr(__FILE__, __LINE__);
     
-    if( false == mysql_num_rows($q) )
+    if( false == mysqli_num_rows($q) )
     {
       stderr( 'MOD ERROR', 'That category does not exist or has been deleted' );
     }
     
-    $r = mysql_fetch_assoc($q);
+    $r = mysqli_fetch_assoc($q);
     
     $dh = opendir( $TBDEV['pic_base_url'].'caticons' );
 		
@@ -448,7 +448,7 @@ function edit_cat_form() {
  		
     $htmlout .= "<form action='admin.php?action=categories' method='post'>
       <input type='hidden' name='mode' value='takeedit_cat' />
-      <input type='hidden' name='id' value='{$r['id']}' />
+      <input type='hidden' name='id' value='".intval($r['id'])."' />
     
       <table class='torrenttable' align='center' width='80%' bgcolor='#cecece' cellspacing='2' cellpadding='2'>
       <tr>
@@ -467,7 +467,7 @@ function edit_cat_form() {
       </table>
       </form>";
 
-      print stdhead( "Editing category: {$r['name']}") . $htmlout . stdfoot();
+      echo stdhead( "Editing category: ".htmlentities($r['name'], ENT_QUOTES)) . $htmlout . stdfoot();
 }
 
 
@@ -566,28 +566,28 @@ function show_categories() {
     </tr>";
              
 
-    $query = @mysql_query( "SELECT * FROM categories" );
+    $query = sql_query("SELECT * FROM categories") or sqlerr(__FILE__, __LINE__);
    
-    if( false == mysql_num_rows($query) ) 
+    if( false == mysqli_num_rows($query) ) 
     {
       $htmlout = '<h1>Ooops!!</h1>';
     } 
     else 
     {
-      while($row = mysql_fetch_assoc($query))
+      while($row = mysqli_fetch_assoc($query))
       {
         $cat_image = file_exists($TBDEV['pic_base_url'].'caticons/'.$row['image']) ? "<img border='0' src='{$TBDEV['pic_base_url']}caticons/{$row['image']}' alt='{$row['id']}' />" : "No Image";
         
         $htmlout .= "<tr>
-          <td height='48' width='60'><b>ID({$row['id']})</b></td>
-          <td width='120'>{$row['name']}</td>
-          <td width='250'>{$row['cat_desc']}</td>
-          <td align='center' width='45'>$cat_image</td>
-          <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=edit_cat&amp;id={$row['id']}'>
+          <td height='48' width='60'><b>ID(".intval($row['id']).")</b></td>
+          <td width='120'>".htmlspecialchars($row['name'])."</td>
+          <td width='250'>".htmlspecialchars($row['cat_desc'])."</td>
+          <td align='center' width='45'>".htmlspecialchars($cat_image)."</td>
+          <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=edit_cat&amp;id=".intval($row['id'])."'>
             <img src='{$TBDEV['pic_base_url']}aff_tick.gif' alt='Edit Category' title='Edit' width='12' height='12' border='0' /></a></td>
-          <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=del_cat&amp;id={$row['id']}'>
+          <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=del_cat&amp;id=".intval($row['id'])."'>
             <img src='{$TBDEV['pic_base_url']}aff_cross.gif' alt='Delete Category' title='Delete' width='12' height='12' border='0' /></a></td>
-          <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=move_cat&amp;id={$row['id']}'>
+          <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=move_cat&amp;id=".intval($row['id'])."'>
             <img src='{$TBDEV['pic_base_url']}plus.gif' alt='Move Category' title='Move' width='12' height='12' border='0' /></a></td>
         </tr>";
       }
@@ -597,7 +597,7 @@ function show_categories() {
     
     $htmlout .= '</table>';
     
-    print stdhead('Admin Categories') . $htmlout . stdfoot();
+    echo stdhead('Admin Categories') . $htmlout . stdfoot();
 }
 
 ?>

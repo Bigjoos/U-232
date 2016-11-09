@@ -95,7 +95,7 @@ if ($CURUSER['class'] <> $required_class)
 stderr("Error", "Access denied!");
 }
 
-$mode = (isset($_GET['mode']) ? $_GET['mode'] : (isset($_POST['mode']) ? $_POST['mode'] : ''));
+$mode = (isset($_GET['mode']) ? htmlspecialchars($_GET['mode']) : (isset($_POST['mode']) ? htmlspecialchars($_POST['mode']) : ''));
 
 if (empty($mode))
 {
@@ -135,11 +135,11 @@ $HTMLOUT.="<script type='text/javascript'>
  
  $HTMLOUT.="<br /><h1 align='center'></h1>";
  
- $res = mysql_query('SELECT db.id, db.name, db.added, u.id AS uid, u.username '.
+ $res = sql_query('SELECT db.id, db.name, db.added, u.id AS uid, u.username '.
 					   'FROM dbbackup AS db '.
 					   'LEFT JOIN users AS u ON u.id = db.userid '.
 					   'ORDER BY db.added DESC') or sqlerr(__FILE__, __LINE__);
-	if (mysql_num_rows($res) > 0)
+	if (mysqli_num_rows($res) > 0)
 	{
 	$HTMLOUT.="<form method='post' action='admin.php?action=backup&amp;mode=delete'>
     <input type='hidden' name='action' value='delete' />
@@ -150,7 +150,7 @@ $HTMLOUT.="<script type='text/javascript'>
     <td class='colhead' style='white-space:nowrap;'>Added by</td>
 		<td class='colhead' align='center'><input style='margin:0' type='checkbox' title='Mark All' onclick=\"this.value=check(form);\" /></td>
 		</tr>";
-		while ($arr = mysql_fetch_assoc($res))
+		while ($arr = mysqli_fetch_assoc($res))
 		{
 		$HTMLOUT.="<tr>
 			<td><a href='admin.php?action=backup&amp;mode=download&amp;id=".(int)$arr['id']."'>".htmlspecialchars($arr['name'])."</a></td>
@@ -158,7 +158,7 @@ $HTMLOUT.="<script type='text/javascript'>
       <td align='center'>";
 			if (!empty($arr['username']))
 			{
-			$HTMLOUT.="<a href='{$TBDEV['baseurl']}/userdetails.php?id=".(int)$arr['uid']."'>".$arr['username']."</a>";
+			$HTMLOUT.="<a href='{$TBDEV['baseurl']}/userdetails.php?id=".(int)$arr['uid']."'>".htmlspecialchars($arr['username'])."</a>";
 			}
 			else
 			{
@@ -213,13 +213,13 @@ else if ($mode == "backup")
 	if ($use_gzip)
 		exec($gzip_path.' '.$filepath);
 	
-	mysql_query("INSERT INTO dbbackup (name, added, userid) VALUES (".sqlesc($ext.($use_gzip ? '.gz' : '')).", ".sqlesc(time()).", ".sqlesc($CURUSER['id']).")") or sqlerr(__FILE__, __LINE__);
+	sql_query("INSERT INTO dbbackup (name, added, userid) VALUES (".sqlesc($ext.($use_gzip ? '.gz' : '')).", ".sqlesc(time()).", ".sqlesc($CURUSER['id']).")") or sqlerr(__FILE__, __LINE__);
 	
 	$location = 'action=backup';
 	
 	if ($autodl)
 	{
-		$id = mysql_insert_id();
+		$id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 		
 		$location = 'action=backup&mode=download&id='.$id;
 	}
@@ -235,8 +235,8 @@ else if ($mode == "download")
 	if (!is_valid_id($id))
 		stderr('Error', 'Invalid ID!');
 	
-	$res = mysql_query("SELECT name FROM dbbackup WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
-	$arr = mysql_fetch_assoc($res);
+	$res = sql_query("SELECT name FROM dbbackup WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+	$arr = mysqli_fetch_assoc($res);
 	
 	$filename = $backupdir.'/'.$arr['name'];
 	
@@ -283,21 +283,21 @@ else if ($mode == 'delete')
 		foreach ($ids as $id)
 			if (!is_valid_id($id))
 				stderr('Error', 'Invalid ID!');
-		
-		$res = mysql_query("SELECT name FROM dbbackup WHERE id IN (".implode(', ', $ids).")") or sqlerr(__FILE__, __LINE__);
-		$count = mysql_num_rows($res);
+		                                                        
+		$res = sql_query("SELECT name FROM dbbackup WHERE id IN (".implode(", ", array_map("sqlesc", $ids)).")") or sqlerr(__FILE__, __LINE__);
+		$count = mysqli_num_rows($res);
 		
 		if ($count > 0)
 		{
-			while ($arr = mysql_fetch_assoc($res))
+			while ($arr = mysqli_fetch_assoc($res))
 			{
 				$filename = $backupdir.'/'.$arr['name'];
 				
 				if (is_file($filename))
 					unlink($filename);
 			}
-		
-			mysql_query('DELETE FROM dbbackup WHERE id IN ('.implode(', ', $ids).')') or sqlerr(__FILE__, __LINE__);
+		                    
+			sql_query('DELETE FROM dbbackup WHERE id IN ('.implode(', ', array_map('sqlesc', $ids)).')') or sqlerr(__FILE__, __LINE__);
 			
 			if ($write2log)
 				write_log($CURUSER['username'].'('.get_user_class_name($CURUSER['class']).') successfully deleted '.$count.' database'.($count > 1 ? 's' : '').'.');
@@ -356,7 +356,7 @@ else if ($mode == "check")
    <td width='1%' align='center'><b>". ($write2log ? "<font color='green'>Yes</font>" : "<font color='red'>No</font>")."</b></td>
 	 </tr></table>";
 	 $HTMLOUT.= end_main_frame();
-	 print stdhead('Backup Manager Config Checker') . $HTMLOUT . stdfoot();
+	 echo stdhead('Backup Manager Config Checker') . $HTMLOUT . stdfoot();
 }
 else
 stderr('Sorry', 'Unknown action!');

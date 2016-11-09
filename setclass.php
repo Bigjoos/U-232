@@ -23,7 +23,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "editclass") //Process the quer
 //then the actual class mean absoluetly nothing.
 $newclass = 0 + $_GET['class'];
 $returnto = $_GET['returnto'];
-sql_query("UPDATE users SET override_class = ".sqlesc($newclass)." WHERE id = ".$CURUSER['id']); // Set temporary class
+sql_query("UPDATE users SET override_class = ".sqlesc($newclass)." WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__); // Set temporary class
 header("Location: {$TBDEV['baseurl']}/".$returnto);
 die();
 }
@@ -35,7 +35,7 @@ $HTMLOUT .="<br />
 <br /><br />
 <form method='get' action='{$TBDEV['baseurl']}/setclass.php'>
 	<input type='hidden' name='action' value='editclass' />
-	<input type='hidden' name='returnto' value='userdetails.php?id=".$CURUSER['id']."' />
+	<input type='hidden' name='returnto' value='userdetails.php?id=".intval($CURUSER['id'])."' />
 	<table width='150' border='2' cellspacing='5' cellpadding='5'>
 	<tr>
 	<td>Class</td>
@@ -52,5 +52,5 @@ $HTMLOUT .="<br />
 </form>
 <br />";
 
-print stdhead("{$lang['set_class_temp']}") . $HTMLOUT . stdfoot();
+echo stdhead("{$lang['set_class_temp']}") . $HTMLOUT . stdfoot();
 ?>

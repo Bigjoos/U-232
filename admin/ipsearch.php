@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 require_once(INCL_DIR.'user_functions.php');
@@ -78,7 +78,7 @@ if ($ip)
 	{
 		$HTMLOUT .= stdmsg("Error", "Invalid IP.");
 		$HTMLOUT .= end_main_frame();
-		print stdhead("IP Search") . $HTMLOUT . stdfoot();
+		echo stdhead("IP Search") . $HTMLOUT . stdfoot();
 		die();
 	}
   $mask = isset($_GET["mask"]) ? htmlspecialchars(trim($_GET["mask"])) : '';
@@ -101,7 +101,7 @@ if ($ip)
 		 {
 			$HTMLOUT .= stdmsg("Error", "Invalid subnet mask.");
    	  $HTMLOUT .= end_main_frame();
-			print stdhead("IP Search") . $HTMLOUT . stdfoot();
+			echo stdhead("IP Search") . $HTMLOUT . stdfoot();
 			die();
 		 }
 		 else
@@ -111,7 +111,7 @@ if ($ip)
 	   {
 		  $HTMLOUT .= stdmsg("Error", "Invalid subnet mask.");
 		  $HTMLOUT .= end_main_frame();
-		  print stdhead("IP Search") . $HTMLOUT . stdfoot();
+		  echo stdhead("IP Search") . $HTMLOUT . stdfoot();
 		  die();
 	   }
 	   $where1 = "INET_ATON(u.ip) & INET_ATON('$mask') = INET_ATON('$ip') & INET_ATON('$mask')";
@@ -127,7 +127,7 @@ if ($ip)
 		   ) AS ipsearch";
 		   
   $res = sql_query($queryc) or sqlerr(__FILE__, __LINE__);
-  $row = mysql_fetch_array($res);
+  $row = mysqli_fetch_array($res);
   $count = $row[0];
   
   if ($count == 0)
@@ -138,7 +138,7 @@ if ($ip)
 	  die;
   }
 	  
-  $order= isset($_GET['order']) &&  $_GET['order'];
+  $order= isset($_GET['order']) &&  htmlspecialchars($_GET['order']);
   $page = isset($_GET['page']) && 0 + $_GET['page'];
   $perpage = 20;
   $pager = pager($perpage, $count, "admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=$order&amp;");
@@ -189,7 +189,7 @@ if ($ip)
 		"<td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=added'>Added</a></td>".
 		"<td class='colhead'>Invited by</td></tr>";
 
-	while ($user = mysql_fetch_array($res))
+	while ($user = mysqli_fetch_array($res))
 	{
 		if ($user['added'] == '0')
 		  $user['added'] = '---';
@@ -200,7 +200,7 @@ if ($ip)
 	  {
 		$nip = ip2long($user['last_ip']);
 		$res1 = sql_query("SELECT COUNT(*) FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
-		$array = mysql_fetch_row($res1);
+		$array = mysqli_fetch_row($res1);
    		if ($array[0] == 0)
 			  $ipstr = $user['last_ip'];
 		else
@@ -210,24 +210,24 @@ if ($ip)
 		  $ipstr = "---";
 		  
 		$resip = sql_query("SELECT ip FROM iplog WHERE userid=" . sqlesc($user["id"]) . " GROUP BY iplog.ip") or sqlerr(__FILE__, __LINE__);
-		$iphistory = mysql_num_rows($resip);
+		$iphistory = mysqli_num_rows($resip);
 		
 		
 		if ($user["invitedby"] > 0)
 		{
 		   $res2 = sql_query("SELECT username FROM users WHERE id=".sqlesc($user["invitedby"])."");
-		   $array = mysql_fetch_array($res2);
+		   $array = mysqli_fetch_array($res2);
 		   $invitedby = $array["username"];
 		   if ($invitedby == "")
 			  $invitedby = "<i>[Deleted]</i>";
 		   else
-			  $invitedby = "<a href='{$TBDEV['baseurl']}/userdetails.php?id=$user[invitedby]'>".htmlspecialchars($invitedby)."</a>";
+			  $invitedby = "<a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($user['invitedby'])."'>".htmlspecialchars($invitedby)."</a>";
 		}
 		else
 		   $invitedby = "--";
 
 	   	$HTMLOUT .= "<tr>
-	   	<td><b><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . $user['id'] . "'></a></b>" . format_username($user) . "</td>".
+	   	<td><b><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($user['id']) . "'></a></b>" . format_username($user) . "</td>".
 		  "<td>" . ratios($user['uploaded'], $user['downloaded']) . "</td>
 		  <td>" . $user['email'] . "</td><td>" . $ipstr . "</td>
 		  <td><div align='center'>" . get_date($user['last_access'],'DATE' ,1,0) . "</div></td>
@@ -248,6 +248,6 @@ if ($ip)
 }
 
 $HTMLOUT .= end_main_frame();
-print stdhead("Ip Search") . $HTMLOUT . stdfoot();
+echo stdhead("Ip Search") . $HTMLOUT . stdfoot();
 die;
 ?>

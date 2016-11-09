@@ -121,19 +121,19 @@ function localisedDate($timestamp = -1, $format = '') {
     $HTMLOUT .="<h2>Mysql Server Status</h2>";
 
 
-    //$res = @mysql_query('SHOW STATUS') or sqlerr(__FILE__,__LINE__);
-    $res = @mysql_query('SHOW GLOBAL STATUS') or sqlerr(__FILE__,__LINE__);
-    while ($row = mysql_fetch_row($res)) 
+    //$res = sql_query('SHOW STATUS') or sqlerr(__FILE__,__LINE__);
+    $res = sql_query('SHOW GLOBAL STATUS') or sqlerr(__FILE__,__LINE__);
+    while ($row = mysqli_fetch_row($res)) 
     {
       $serverStatus[$row[0]] = $row[1];
     }
-    @mysql_free_result($res);
+    @((mysqli_free_result($res) || (is_object($res) && (get_class($res) == "mysqli_result"))) ? true : false);
     unset($res);
     unset($row);
 
 
-    $res = @mysql_query('SELECT UNIX_TIMESTAMP() - ' . $serverStatus['Uptime']);
-    $row = mysql_fetch_row($res);
+    $res = sql_query('SELECT UNIX_TIMESTAMP() - ' . $serverStatus['Uptime']);
+    $row = mysqli_fetch_row($res);
 
     $HTMLOUT .= "<table class='torrenttable' border='1'>
       <tr>
@@ -145,7 +145,7 @@ function localisedDate($timestamp = -1, $format = '') {
       </table><br />";
 
 
-    mysql_free_result($res);
+    ((mysqli_free_result($res) || (is_object($res) && (get_class($res) == "mysqli_result"))) ? true : false);
     unset($res);
     unset($row);
     
@@ -316,5 +316,5 @@ function localisedDate($timestamp = -1, $format = '') {
     </tr>
     </table>";
 
-    print stdhead("Stats Overview") . $HTMLOUT . stdfoot();
+    echo stdhead("Stats Overview") . $HTMLOUT . stdfoot();
 ?>

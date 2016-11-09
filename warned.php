@@ -29,16 +29,17 @@ $HTMLOUT ="";
         if (!empty($_POST["usernw"])) {
             $msg = sqlesc("Your Warning Has Been Removed By: " . $CURUSER['username'] . ".");
             $added = sqlesc(time());
-            $userid = implode(", ", $_POST["usernw"]);
-             mysql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".$TBDEV['bot_id'].", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);
-            $r = mysql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", $_POST["usernw"]) . ")")or sqlerr(__FILE__, __LINE__);
-            $user = mysql_fetch_assoc($r);
-            $exmodcomment = $user["modcomment"];
+            $userid = implode(", ", array_map("sqlesc", $_POST['usernw']));
+            //$userid = implode(", ", $_POST["usernw"]);
+             sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($TBDEV['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
+            $r = sql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernw'])) . ")") or sqlerr(__FILE__, __LINE__);
+            $user = mysqli_fetch_assoc($r);
+            $exmodcomment = htmlspecialchars($user["modcomment"]);
             $modcomment='';
             $modcomment = get_date( time(), 'DATE', 1 ) . " - Warning Removed By " . $CURUSER['username'] . ".\n" . $modcomment . $exmodcomment;
-            mysql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", $_POST["usernw"]) . ")") or sqlerr(__FILE__, __LINE__);
-            $do = "UPDATE users SET warned='0' WHERE id IN (" . implode(", ", $_POST["usernw"]) . ")";
-            $res = mysql_query($do);
+            sql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernw'])) . ")") or sqlerr(__FILE__, __LINE__);
+            $do = "UPDATE users SET warned='0' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernw'])) . ")";
+            $res = sql_query($do) or sqlerr(__FILE__, __LINE__); 
             header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
             stderr("Success","Warning Removed - Redirecting in 3..2..1");
             }
@@ -47,16 +48,17 @@ $HTMLOUT ="";
         if (!empty($_POST["usernlw"])) {
             $msg = sqlesc("Your Leech Warning Has Been Removed By: " . $CURUSER['username'] . ".");
             $added = sqlesc(time());
-            $userid = implode(", ", $_POST["usernlw"]);
-             mysql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".$TBDEV['bot_id'].", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);
-            $r = mysql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", $_POST["usernlw"]) . ")")or sqlerr(__FILE__, __LINE__);
-            $user = mysql_fetch_assoc($r);
+            //$userid = implode(", ", $_POST["usernlw"]);
+            $userid = implode(", ", array_map("sqlesc", $_POST['usernlw']));
+             sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($TBDEV['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
+            $r = sql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernlw'])) . ")")or sqlerr(__FILE__, __LINE__);
+            $user = mysqli_fetch_assoc($r);
             $exmodcomment = $user["modcomment"];
             $modcomment='';
             $modcomment = get_date( time(), 'DATE', 1 ) . " - Leech Warning Removed By " . $CURUSER['username'] . ".\n" . $modcomment . $exmodcomment;
-            mysql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", $_POST["usernlw"]) . ")") or sqlerr(__FILE__, __LINE__);
-            $do = "UPDATE users SET leechwarn='0' WHERE id IN (" . implode(", ", $_POST["usernlw"]) . ")";
-            $res = mysql_query($do);
+            sql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernlw'])) . ")") or sqlerr(__FILE__, __LINE__);
+            $do = "UPDATE users SET leechwarn='0' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernlw'])) . ")";
+            $res = sql_query($do) or sqlerr(__FILE__, __LINE__);
             header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
             stderr("Success","Leech Warning Removed - Redirecting in 3..2..1");
             }
@@ -66,22 +68,23 @@ $HTMLOUT ="";
             $msg = sqlesc("Your Hit And Run Warning Has Been Removed By: " . $CURUSER['username'] . ".");
             $added = sqlesc(time());
             $userid = implode(", ", $_POST["usernhnr"]);
-             mysql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".$TBDEV['bot_id'].", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);
-            $r = mysql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", $_POST["usernhnr"]) . ")")or sqlerr(__FILE__, __LINE__);
-            $user = mysql_fetch_assoc($r);
+            $userid = implode(", ", array_map("sqlesc", $_POST['usernhnr']));
+            sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($TBDEV['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
+            $r = sql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernhnr'])) . ")")or sqlerr(__FILE__, __LINE__);
+            $user = mysqli_fetch_assoc($r);
             $exmodcomment = $user["modcomment"];
             $modcomment='';
             $modcomment = get_date( time(), 'DATE', 1 ) . " - Hit and Run Warning Removed By " . $CURUSER['username'] . ".\n" . $modcomment . $exmodcomment;
-            mysql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", $_POST["usernhnr"]) . ")") or sqlerr(__FILE__, __LINE__);
-            $do = "UPDATE users SET hnrwarn='no' WHERE id IN (" . implode(", ", $_POST["usernhnr"]) . ")";
-            $res = mysql_query($do);
+            mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", $_POST["usernhnr"]) . ")") or sqlerr(__FILE__, __LINE__);
+            $do = "UPDATE users SET hnrwarn='no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernhnr'])) . ")";
+            $res = sql_query($do) or sqlerr(__FILE__, __LINE__);
             header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
             stderr("Success","Hit And Run Warning Removed - Redirecting in 3..2..1");
             }
 
-        if (!empty($_POST["desact"])) {
-            $do = "UPDATE users SET enabled='no' WHERE id IN (" . implode(", ", $_POST['desact']) . ")";
-            $res = mysql_query($do);
+        if (!empty($_POST["desact"])) {                       
+            $do = "UPDATE users SET enabled='no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['desact'])) . ")";
+            $res = sql_query($do) or sqlerr(__FILE__, __LINE__);
             header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
             stderr("Success","Member Disabled - Redirecting in 3..2..1");
             }
@@ -95,10 +98,10 @@ $warned = number_format(get_row_count("users", "WHERE warned >=1"));
 $leechwarn = number_format(get_row_count("users", "WHERE leechwarn >=1"));
 $hnrwarn = number_format(get_row_count("users", "WHERE hnrwarn ='yes'"));
 
-$HTMLOUT .= begin_frame("Warned Users: ($warned) - Leech Warned Users: ($leechwarn) - Hit And Run Warned: ($hnrwarn)", true);
+$HTMLOUT .= begin_frame("Warned Users: (".intval($warned).") - Leech Warned Users: (".intval($leechwarn).") - Hit And Run Warned: (".intval($hnrwarn).")", true);
 
-$res = mysql_query("SELECT * FROM users WHERE warned >=1 OR leechwarn >=1 OR hnrwarn ='yes' AND enabled='yes' ORDER BY (users.uploaded/users.downloaded)") or sqlerr();
-$num = mysql_num_rows($res);
+$res = sql_query("SELECT * FROM users WHERE warned >=1 OR leechwarn >=1 OR hnrwarn ='yes' AND enabled='yes' ORDER BY (users.uploaded/users.downloaded)") or sqlerr(__FILE__, __LINE__);
+$num = mysqli_num_rows($res);
 $HTMLOUT .="<form action='{$_SERVER["PHP_SELF"]}' method='post'>
 <table border='1' width='750' cellspacing='0' cellpadding='2'>
 <tr align='center'><td class='colhead' width='90'>User Name</td>
@@ -116,7 +119,7 @@ $HTMLOUT .="<form action='{$_SERVER["PHP_SELF"]}' method='post'>
 <td class='colhead' width='65'>Remove<br />HnR Warning</td>
 <td class='colhead' width='65'>Disable<br />Account</td></tr>\n";
 for ($i = 1; $i <= $num; $i++) {
-    $arr = mysql_fetch_assoc($res);
+    $arr = mysqli_fetch_assoc($res);
     if ($arr['added'] == 0)
         $arr['added'] = '-';
     if ($arr['last_access'] == 0)
@@ -134,7 +137,7 @@ for ($i = 1; $i <= $num; $i++) {
     $last_access = get_date($arr['last_access'], 'LONG', 1,0);
     $class = get_user_class_name($arr["class"]);
 
-$HTMLOUT .="<tr><td align='left'><a href='{$TBDEV['baseurl']}/userdetails.php?id=$arr[id]'><b>$arr[username]</b></a>" . ($arr["donor"] == "yes" ? "<img src='/pic/star.gif' border='0' alt='Donor' />" : "") . "</td>
+$HTMLOUT .="<tr><td align='left'><a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($arr['id'])."'><b>".htmlspecialchars($arr['username'])."</b></a>" . ($arr["donor"] == "yes" ? "<img src='/pic/star.gif' border='0' alt='Donor' />" : "") . "</td>
 <td align='center'>$added</td>
 <td align='center'>$last_access</td>
 <td align='center'>$class</td>
@@ -144,10 +147,10 @@ $HTMLOUT .="<tr><td align='left'><a href='{$TBDEV['baseurl']}/userdetails.php?id
 <td align='center'>".mkprettytime($arr['warned'] - time()). "</td>
 <td align='center'>".mkprettytime($arr['leechwarn'] - time()). "</td>
 <td align='center'>".$arr['hnrwarn']. "</td>
-<td bgcolor=\"#008000\" align=\"center\"><input type=\"checkbox\" name=\"usernw[]\" value=\"$arr[id]\" /></td>
-<td bgcolor=\"#008000\" align=\"center\"><input type=\"checkbox\" name=\"usernlw[]\" value=\"$arr[id]\" /></td>
-<td bgcolor=\"#008000\" align=\"center\"><input type=\"checkbox\" name=\"usernhnr[]\" value=\"$arr[id]\" /></td>
-<td bgcolor=\"#FF0000\" align=\"center\"><input type=\"checkbox\" name=\"desact[]\" value=\"$arr[id]\" /></td>
+<td bgcolor=\"#008000\" align=\"center\"><input type=\"checkbox\" name=\"usernw[]\" value=\"".intval($arr['id'])."\" /></td>
+<td bgcolor=\"#008000\" align=\"center\"><input type=\"checkbox\" name=\"usernlw[]\" value=\"".intval($arr['id']."\" /></td>
+<td bgcolor=\"#008000\" align=\"center\"><input type=\"checkbox\" name=\"usernhnr[]\" value=\"".intval($arr['id']."\" /></td>
+<td bgcolor=\"#FF0000\" align=\"center\"><input type=\"checkbox\" name=\"desact[]\" value=\"".intval($arr['id']."\" /></td>
 </tr>\n";
 }
 if ($CURUSER["class"] >= UC_ADMINISTRATOR) {
@@ -158,5 +161,5 @@ if ($CURUSER["class"] >= UC_ADMINISTRATOR) {
 
 $HTMLOUT .= end_frame();
 
-print stdhead('Warned') . $HTMLOUT . stdfoot();
+echo stdhead('Warned') . $HTMLOUT . stdfoot();
 ?>

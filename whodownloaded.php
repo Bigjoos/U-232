@@ -19,8 +19,8 @@ $lang = array_merge( load_language('global'));
 
 $fileid = (int)$_GET['fileid'];
 
-$res = sql_query("SELECT * FROM attachmentdownloads WHERE fileid=" . sqlesc($fileid."")) or sqlerr(__FILE__, __LINE__);
-if (mysql_num_rows($res) == 0)
+$res = sql_query("SELECT * FROM attachmentdownloads WHERE fileid=".sqlesc($fileid)) or sqlerr(__FILE__, __LINE__);
+if (mysqli_num_rows($res) == 0)
     die("Nothing found!");
 else {
     
@@ -30,16 +30,16 @@ else {
     <td class='colhead' align='center'>Downloaded from</td>
     <td class='colhead' align='center'>Downloads</td>
     <td class='colhead' align='center'>Date</td></tr>\n";
-    while ($arr = mysql_fetch_assoc($res)) {
-    $HTMLOUT.="<tr><td align='center'>".$arr["fileid"]."</td><td align='center'>
+    while ($arr = mysqli_fetch_assoc($res)) {
+    $HTMLOUT.="<tr><td align='center'>".intval($arr["fileid"])."</td><td align='center'>
     " . htmlspecialchars($arr["filename"]) . "</td>
-    <td align='center'><a href=\"#\" onclick=\"opener.location=('userdetails.php?id=".$arr["userid"]."'); self.close();\">".$arr["username"]."</a></td>
-    <td align='center'>".$arr["downloads"]."</td><td align='center'>".get_date($arr["date"], 'LONG',1,0)."</td></tr>";
+    <td align='center'><a href=\"#\" onclick=\"opener.location=('userdetails.php?id=".intval($arr["userid"])."'); self.close();\">".htmlspecialchars($arr["username"])."</a></td>
+    <td align='center'>".intval($arr["downloads"])."</td><td align='center'>".get_date($arr["date"], 'LONG',1,0)."</td></tr>";
     }
-    $res = sql_query("SELECT downloads FROM attachments WHERE id=" . sqlesc($fileid."")) or sqlerr(__FILE__, __LINE__);
-    $arr = mysql_fetch_assoc($res);
-    $HTMLOUT.="<tr><td colspan='5'><div class='error'><font color='blue'>Total Downloads: ".$arr["downloads"]."</font></div></td</tr>";
+    $res = sql_query("SELECT downloads FROM attachments WHERE id=" . sqlesc($fileid)) or sqlerr(__FILE__, __LINE__);
+    $arr = mysqli_fetch_assoc($res);
+    $HTMLOUT.="<tr><td colspan='5'><div class='error'><font color='blue'>Total Downloads: ".intval($arr["downloads"])."</font></div></td</tr>";
     $HTMLOUT.="</table>\n";
 }
-print stdhead("Who Downloaded") . $HTMLOUT . stdfoot();
+echo stdhead("Who Downloaded") . $HTMLOUT . stdfoot();
 ?>

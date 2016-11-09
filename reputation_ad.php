@@ -84,7 +84,7 @@ function show_level()
 		$query = sql_query( 'SELECT * FROM reputationlevel ORDER BY minimumreputation ASC' );
 		
 
-		if( ! mysql_num_rows( $query ) )
+		if( ! mysqli_num_rows( $query ) )
 		{
 			do_update( 'new' );
 			return;
@@ -104,7 +104,7 @@ function show_level()
 
 		
 
-		while( $res = mysql_fetch_assoc( $query ) )
+		while( $res = mysqli_fetch_assoc( $query ) )
 		{
 			$html .= "<tr>\n".
 					"	<td>#".$res['reputationlevelid']."</td>\n".
@@ -138,7 +138,7 @@ function show_form($type='edit')
 			$query = sql_query( 'SELECT * FROM reputationlevel WHERE reputationlevelid='.intval($input['reputationlevelid']) ) or sqlerr(__LINE__,__FILE__);
 			
 
-			if( ! $res = mysql_fetch_assoc( $query ) )
+			if( ! $res = mysqli_fetch_assoc( $query ) )
 			{
 				stderr( "Error:", "Please specify an ID." );
 			}
@@ -228,7 +228,7 @@ function do_update($type="")
 			$query = sql_query( "SELECT reputationlevelid FROM reputationlevel WHERE 
 									reputationlevelid={$levelid}" );
 
-			if( ! mysql_num_rows( $query ) )
+			if( ! mysqli_num_rows( $query ) )
 			{
 				stderr( '', 'Not a valid ID.' );
 			}
@@ -276,7 +276,7 @@ function do_delete()
 
 		$query = sql_query( "SELECT reputationlevelid FROM reputationlevel WHERE reputationlevelid=$levelid" );
 		
-		if( ! mysql_num_rows( $query ) )
+		if( ! mysqli_num_rows( $query ) )
 		{
 			stderr( '', 'Rep ID doesn\'t exist' );
 		}
@@ -313,7 +313,7 @@ function show_form_rep()
 					WHERE reputationid = ".intval($input['reputationid']) );
 		
 
-		if( ! $res = mysql_fetch_assoc( $query ) )
+		if( ! $res = mysqli_fetch_assoc( $query ) )
 		{
 			stderr( '', 'Erm, it\'s not there!' );
 		}
@@ -421,11 +421,11 @@ function view_list()
 			{
 				$left_b = @sql_query( "SELECT id FROM users WHERE username = ".sqlesc($input['leftby']) );
 
-				if( ! mysql_num_rows($left_b) )
+				if( ! mysqli_num_rows($left_b) )
 				{
 					stderr( 'DB ERROR', 'Could not find user '.htmlentities($input['leftby'], ENT_QUOTES) );
 				}
-				$leftby = mysql_fetch_assoc($left_b);
+				$leftby = mysqli_fetch_assoc($left_b);
 				$who  = $leftby['id'];
 				$cond = "r.whoadded=".$who;
 			}
@@ -434,11 +434,11 @@ function view_list()
 			{
 				$left_f = @sql_query( "SELECT id FROM users WHERE username = ".sqlesc($input['leftfor']) );
 
-				if( ! mysql_num_rows($left_f) )
+				if( ! mysqli_num_rows($left_f) )
 				{
 					stderr( 'DB ERROR', 'Could not find user '.htmlentities($input['leftfor'], ENT_QUOTES) );
 				}
-				$leftfor = mysql_fetch_assoc($left_f);
+				$leftfor = mysqli_fetch_assoc($left_f);
 				$user  = $leftfor['id'];
 				$cond .= ($cond ? " AND" : "")." r.userid=".$user;
 			}
@@ -485,7 +485,7 @@ function view_list()
 			// do the count for pager etc
 			$query = sql_query( "SELECT COUNT(*) AS cnt FROM reputation r WHERE $cond" );
 			//print_r($input); exit;
-			$total = mysql_fetch_assoc( $query );
+			$total = mysqli_fetch_assoc( $query );
 
 			if( ! $total['cnt'] )
 			{
@@ -520,9 +520,9 @@ function view_list()
 									left join users leftby on leftby.id=r.whoadded 
 									WHERE $cond ORDER BY $order LIMIT $first,$deflimit" );
 			
-			if( ! mysql_num_rows( $query ) ) stderr('DB ERROR', 'Nothing here');
+			if( ! mysqli_num_rows( $query ) ) stderr('DB ERROR', 'Nothing here');
 
-			while( $r = mysql_fetch_assoc( $query ) )
+			while( $r = mysqli_fetch_assoc( $query ) )
 			{
 				$r['dateadd'] = date( "M j, Y, g:i a", $r['dateadd'] );
 
@@ -555,7 +555,7 @@ function do_delete_rep()
 		// check it's a valid ID.
 		$query = sql_query( "SELECT reputationid, reputation, userid FROM reputation WHERE reputationid=".intval($input['reputationid'] ) );
 
-		if( false === ( $r = mysql_fetch_assoc($query) ) )
+		if( false === ( $r = mysqli_fetch_assoc($query) ) )
 		{
 			stderr( 'DELETE', 'No valid ID.' );
 		}
@@ -598,7 +598,7 @@ function do_edit_rep()
 		// valid ID?
 		$query = sql_query( "SELECT reputationid, reason, userid FROM reputation WHERE reputationid=".intval($input['reputationid'] ) );
 
-		if( false === $r = mysql_fetch_assoc($query) )
+		if( false === $r = mysqli_fetch_assoc($query) )
 		{
 			stderr( 'INPUT', 'No ID' );
 		}
@@ -693,13 +693,13 @@ function rep_cache()
 		
 		$query = @sql_query( "SELECT * FROM reputationlevel" );
 		
-		if( ! mysql_num_rows($query) )
+		if( ! mysqli_num_rows($query) )
 			stderr( 'CACHE', 'No items to cache' );
 		
 		$rep_cache_file = "cache/rep_cache.php";
 		$rep_out = "<"."?php\n\n\$reputations = array(\n";
 		
-		while( $row = mysql_fetch_assoc($query) )
+		while( $row = mysqli_fetch_assoc($query) )
 		{
 			$rep_out .= "\t{$row['minimumreputation']} => '{$row['level']}',\n";
 		}

@@ -6,8 +6,8 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-$res = mysql_query('SELECT * FROM voted_requests WHERE requestid = '.$id.' and userid = '.$CURUSER['id']) or sqlerr(__FILE__,__LINE__);
-$arr = mysql_fetch_assoc($res);
+$res = sql_query('SELECT * FROM voted_requests WHERE requestid = '.sqlesc($id).' and userid = '.sqlesc($CURUSER['id'])) or sqlerr(__FILE__,__LINE__);
+$arr = mysqli_fetch_assoc($res);
 
 if ($arr) {
     $HTMLOUT .= "
@@ -18,9 +18,9 @@ if ($arr) {
 <br /><br />";
 }
 else {
-    mysql_query('UPDATE requests SET hits = hits+1 WHERE id='.$id) or sqlerr(__FILE__,__LINE__);
-    if (mysql_affected_rows()) {
-        mysql_query('INSERT INTO voted_requests VALUES(0, '.$id.', '.$CURUSER['id'].')') or sqlerr(__FILE__,__LINE__);
+    sql_query('UPDATE requests SET hits = hits+1 WHERE id='.sqlesc($id)) or sqlerr(__FILE__,__LINE__);
+    if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
+        sql_query('INSERT INTO voted_requests VALUES(0, '.sqlesc($id).', '.sqlesc($CURUSER['id']).')') or sqlerr(__FILE__,__LINE__);
         $HTMLOUT .=  "
 <h3>Vote accepted</h3>
 <p style='text-decoration:underline;'>{$lang['vote_success']}$id</p>
@@ -38,5 +38,5 @@ else {
 }
 
 /////////////////////// HTML OUTPUT //////////////////////////////
-print stdhead('Vote').$HTMLOUT.stdfoot();
+echo stdhead('Vote').$HTMLOUT.stdfoot();
 ?>

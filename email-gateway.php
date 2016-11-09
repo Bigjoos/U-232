@@ -6,65 +6,64 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
-require_once(INCL_DIR.'user_functions.php');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
+require_once(INCL_DIR . 'user_functions.php');
 dbconn();
 
 loggedinorreturn();
 
-    $lang = array_merge( load_language('global'), load_language('email-gateway') );
+$lang = array_merge(load_language('global'), load_language('email-gateway'));
+
+$id = intval($_GET["id"]);
+
+if (!is_valid_id($id))
+    stderr("{$lang['email_error']}", "{$lang['email_bad_id']}");
+
+$res = sql_query("SELECT username, class, email FROM users WHERE id=" . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$arr = mysqli_fetch_assoc($res) or stderr("{$lang['email_error']}", "{$lang['email_no_user']}");
+$username = htmlspecialchars($arr["username"]);
+
+if ($arr["class"] < UC_MODERATOR)
+    stderr("{$lang['email_error']}", "{$lang['email_email_staff']}");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $to = htmlspecialchars($arr["email"]);
     
-    $id = 0 + $_GET["id"];
+    $from = substr(trim($_POST["from"]), 0, 80);
+    if ($from == "")
+        $from = "{$lang['email_anon']}";
     
-    if ( !is_valid_id($id) )
-      stderr("{$lang['email_error']}", "{$lang['email_bad_id']}");
-
-    $res = sql_query("SELECT username, class, email FROM users WHERE id=$id");
-    $arr = mysql_fetch_assoc($res) or stderr("{$lang['email_error']}", "{$lang['email_no_user']}");
-    $username = $arr["username"];
+    $from_email = substr(trim($_POST["from_email"]), 0, 80);
     
-    if ($arr["class"] < UC_MODERATOR)
-      stderr("{$lang['email_error']}", "{$lang['email_email_staff']}");
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
-    {
-      $to = $arr["email"];
-
-      $from = substr(trim($_POST["from"]), 0, 80);
-      if ($from == "") $from = "{$lang['email_anon']}";
-
-      $from_email = substr(trim($_POST["from_email"]), 0, 80);
-      
-      if ($from_email == "") $from_email = "{$TBDEV['site_email']}";
-      if (!strpos($from_email, "@")) stderr("{$lang['email_error']}", "{$lang['email_invalid']}");
-
-      $from = "$from <$from_email>";
-
-      $subject = substr(trim($_POST["subject"]), 0, 80);
-      if ($subject == "") $subject = "(No subject)";
-      $subject = "Fw: $subject";
-
-      $message = trim($_POST["message"]);
-      if ($message == "") stderr("{$lang['email_error']}", "{$lang['email_no_text']}");
-
-      $message = "Message submitted from {$_SERVER['REMOTE_ADDR']} at " . gmdate("Y-m-d H:i:s") . " GMT.\n" .
-        "{$lang['email_note']}\n" .
-        "---------------------------------------------------------------------\n\n" .
-        $message . "\n\n" .
-        "---------------------------------------------------------------------\n".
-        "{$TBDEV['site_name']}{$lang['email_gateway']}\n";
-
-      $success = mail($to, $subject, $message, "{$lang['email_from']}{$TBDEV['site_email']}");
-
-      if ($success)
+    if ($from_email == "")
+        $from_email = "{$TBDEV['site_email']}";
+    if (!strpos($from_email, "@"))
+        stderr("{$lang['email_error']}", "{$lang['email_invalid']}");
+    
+    $from = "$from <$from_email>";
+    
+    $subject = substr(trim(htmlspecialchars($_POST["subject"])), 0, 80);
+    if ($subject == "")
+        $subject = "(No subject)";
+    $subject = "Fw: $subject";
+    
+    $message = trim(htmlspecialchars($_POST["message"]));
+    if ($message == "")
+        stderr("{$lang['email_error']}", "{$lang['email_no_text']}");
+    
+    $message = "Message submitted from {$_SERVER['REMOTE_ADDR']} at " . gmdate("Y-m-d H:i:s") . " GMT.\n" . "{$lang['email_note']}\n" . "---------------------------------------------------------------------\n\n" . $message . "\n\n" . "---------------------------------------------------------------------\n" . "{$TBDEV['site_name']}{$lang['email_gateway']}\n";
+    
+    $success = mail($to, $subject, $message, "{$lang['email_from']}{$TBDEV['site_email']}");
+    
+    if ($success)
         stderr("{$lang['email_success']}", "{$lang['email_queued']}");
-      else
+    else
         stderr("{$lang['email_error']}", "{$lang['email_failed']}");
-    }
+}
 
-    $HTMLOUT = '';
+$HTMLOUT = '';
 
-    $HTMLOUT .= "<table border='0' class='main' cellspacing='0' cellpadding='0'>
+$HTMLOUT .= "<table border='0' class='main' cellspacing='0' cellpadding='0'>
     <tr>
       <td class='embedded'><img src='pic/email.gif' alt='' /></td>
       <td class='embedded' style='padding-left: 10px'><font size='3'><b>{$lang['email_send']}{$username}</b></font></td>
@@ -85,5 +84,5 @@ loggedinorreturn();
     </p>";
 
 ///////////////////////// HTML OUTPUT ////////////////////
-    print stdhead("{$lang['email_gateway']}") . $HTMLOUT . stdfoot(); 
+echo stdhead("{$lang['email_gateway']}") . $HTMLOUT . stdfoot();
 ?>

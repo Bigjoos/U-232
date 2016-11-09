@@ -63,7 +63,7 @@ if (isset($_SERVER['HTTP_COOKIE']) || isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ||
         fclose($fp); 
         /** log, shoutbot **/
         //$text = 'Next Crazyhour is at '.get_date($crazyhour['crazyhour']['var'], 'LONG', 0, 1);
-        mysql_query('INSERT INTO sitelog (added, txt) VALUES('.TIME_NOW.', '.sqlesc($text).')') or err("Crazyhour Err");     
+        mysqli_query($GLOBALS["___mysqli_ston"], 'INSERT INTO sitelog (added, txt) VALUES('.TIME_NOW.', '.sqlesc($text).')') or err("Crazyhour Err");     
         //mysql_query('INSERT INTO shoutbox (userid, date, text, text_parsed) VALUES (2, '.TIME_NOW.', '.sqlesc($text).', '.sqlesc($text).')') or err("Crazyhour Err 1");
         return false;
         }
@@ -77,16 +77,16 @@ function dbconn()
 {
     global $TBDEV;
 
-    if (!@mysql_connect($TBDEV['mysql_host'], $TBDEV['mysql_user'], $TBDEV['mysql_pass']))
+    if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'],  $TBDEV['mysql_user'],  $TBDEV['mysql_pass'])))
     {
 	  err('Please call back later');
     }
-    mysql_select_db($TBDEV['mysql_db']) or err('Please call back later');
+    ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE $TBDEV['mysql_db']")) or err('Please call back later');
 }
 
 function auto_enter_cheater($userid, $rate, $upthis, $diff, $torrentid, $client, $ip, $last_up)
 {
-mysql_query("INSERT INTO cheaters (added, userid, client, rate, beforeup, upthis, timediff, userip, torrentid) VALUES(" . sqlesc(time()) . ", " . sqlesc($userid) . ", " . sqlesc($client) . ", " . sqlesc($rate) . ", " . sqlesc($last_up) . ", " . sqlesc($upthis) . ", " . sqlesc($diff) . ", " . sqlesc($ip) . ", " . sqlesc($torrentid) . ")") or err("Cheaters Err");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO cheaters (added, userid, client, rate, beforeup, upthis, timediff, userip, torrentid) VALUES(" . sqlesc(time()) . ", " . sqlesc($userid) . ", " . sqlesc($client) . ", " . sqlesc($rate) . ", " . sqlesc($last_up) . ", " . sqlesc($upthis) . ", " . sqlesc($diff) . ", " . sqlesc($ip) . ", " . sqlesc($torrentid) . ")") or err("Cheaters Err");
 }
 
 function err($msg)
@@ -168,8 +168,11 @@ function hash_where($name, $hash) {
     return "($name = " . sqlesc($hash) . " OR $name = " . sqlesc($shhash) . ")";
 }
 
-function sqlesc($x) {
-    return "'".mysql_real_escape_string($x)."'";
+//== putyn  08/08/2011
+function sqlesc($x)
+{
+    if (is_integer($x)) return (int)$x;
+    return sprintf('\'%s\'', mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $x));
 }
 
 function portblacklisted($port)
@@ -230,17 +233,17 @@ $seeder = ($left == 0) ? "yes" : "no";
 
 dbconn();
 
-$user_query = mysql_query("SELECT id, uploaded, downloaded, class, downloadpos, parked, free_switch, highspeed, enabled FROM users WHERE passkey=".sqlesc($passkey)) or err("Tracker error 2");
+$user_query = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id, uploaded, downloaded, class, downloadpos, parked, free_switch, highspeed, enabled FROM users WHERE passkey=".sqlesc($passkey)) or err("Tracker error 2");
 
-if ( mysql_num_rows($user_query) != 1 )
+if ( mysqli_num_rows($user_query) != 1 )
 err("Unknown passkey. Please redownload the torrent from {$TBDEV['baseurl']}.");
  
-$user = mysql_fetch_assoc($user_query);
+$user = mysqli_fetch_assoc($user_query);
 if( $user['enabled'] == 'no' ) err('Permission denied, you\'re not enabled');
 	
-$res = mysql_query("SELECT torrents.id, torrents.banned, torrents.free, torrents.seeders + torrents.leechers AS numpeers, torrents.added AS ts, freeslots.free AS freeslot, freeslots.double AS doubleslot FROM torrents LEFT JOIN freeslots ON (torrents.id=freeslots.tid AND freeslots.uid=".sqlesc($user['id']).") WHERE info_hash = ".sqlesc($info_hash));//" . hash_where("info_hash", $info_hash));
+$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.id, torrents.banned, torrents.free, torrents.seeders + torrents.leechers AS numpeers, torrents.added AS ts, freeslots.free AS freeslot, freeslots.double AS doubleslot FROM torrents LEFT JOIN freeslots ON (torrents.id=freeslots.tid AND freeslots.uid=".sqlesc($user['id']).") WHERE info_hash = ".sqlesc($info_hash));//" . hash_where("info_hash", $info_hash));
 
-$torrent = mysql_fetch_assoc($res);
+$torrent = mysqli_fetch_assoc($res);
 if (!$torrent)
 	err("torrent not registered with this tracker CODE 2");
 
@@ -258,7 +261,7 @@ $limit = "ORDER BY RAND() LIMIT $rsize";
 $wantseeds = "";
 if ( $seeder == 'yes' )
 $wantseeds = "AND seeder = 'no'";
-$res = mysql_query( "SELECT $fields FROM peers WHERE torrent = $torrentid AND connectable = 'yes' $wantseeds $limit" ) or err( 'peers query failure' );
+$res = mysqli_query($GLOBALS["___mysqli_ston"],  "SELECT $fields FROM peers WHERE torrent = $torrentid AND connectable = 'yes' $wantseeds $limit" ) or err( 'peers query failure' );
 //////////////////// START NEW COMPACT MODE/////////////////////////////
 if($_GET['compact'] != 1)
 {
@@ -271,7 +274,7 @@ $resp = "d" . benc_str("interval") . "i" . $TBDEV['announce_interval'] ."e" . be
 
 $peer = array();
 $peer_num = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = mysqli_fetch_assoc($res))
 {
 if($_GET['compact'] != 1)
 {
@@ -318,8 +321,8 @@ $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
 ///////////////////////////// END NEW COMPACT MODE////////////////////////////////
 if (!isset($self))
 {
-	$res = mysql_query("SELECT $fields FROM peers WHERE $selfwhere");
-	$row = mysql_fetch_assoc($res);
+	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $fields FROM peers WHERE $selfwhere");
+	$row = mysqli_fetch_assoc($res);
 	if ($row)
 	{
 		$userid = $row["userid"];
@@ -329,7 +332,7 @@ if (!isset($self))
 //// Up/down stats ////////////////////////////////////////////////////////////
 if (!isset($self))
 {
-$valid = @mysql_fetch_row(@mysql_query("SELECT COUNT(*) FROM peers WHERE torrent=$torrentid AND passkey=" . sqlesc($passkey)));
+$valid = @mysqli_fetch_row(@mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM peers WHERE torrent=$torrentid AND passkey=" . sqlesc($passkey)));
 if ($valid[0] >= 1 && $seeder == 'no') err("Connection limit exceeded! You may only leech from one location at a time.");
 if ($valid[0] >= 3 && $seeder == 'yes') err("Connection limit exceeded!");
      $ratio = (($user["downloaded"] > 0) ? ($user["uploaded"] / $user["downloaded"]) : 1);
@@ -364,8 +367,8 @@ if ($valid[0] >= 3 && $seeder == 'yes') err("Connection limit exceeded!");
         	}	
          }
         if ($max > 0) {
-            $res = mysql_query("SELECT COUNT(*) AS num FROM peers WHERE userid='$userid' AND seeder='no'") or err("Tracker error 5");
-            $row = mysql_fetch_assoc($res);
+            $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) AS num FROM peers WHERE userid='$userid' AND seeder='no'") or err("Tracker error 5");
+            $row = mysqli_fetch_assoc($res);
             
             if ($row['num'] >= $max) 
                 err("Access denied (Torrents Limit exceeded - $max) See FAQ!");
@@ -381,9 +384,9 @@ else
   $announcetime = ($self["seeder"] == "yes" ? "seedtime = seedtime + $self[announcetime]" : "leechtime = leechtime + $self[announcetime]");
   
   ///////////////////happyhour by putyn
-  $happy = mysql_query( "SELECT id, multiplier from happyhour where userid=" . sqlesc( $userid ) . " AND torrentid=" . sqlesc( $torrentid ) . " " );
-  $happyhour = mysql_num_rows( $happy ) == 0 ? false : true;
-  $happy_multi = mysql_fetch_row( $happy );
+  $happy = mysqli_query($GLOBALS["___mysqli_ston"],  "SELECT id, multiplier from happyhour where userid=" . sqlesc( $userid ) . " AND torrentid=" . sqlesc( $torrentid ) . " " );
+  $happyhour = mysqli_num_rows( $happy ) == 0 ? false : true;
+  $happy_multi = mysqli_fetch_row( $happy );
   $multiplier = $happy_multi["multiplier"];
   if ( $happyhour ) {
   $upthis = $upthis * $multiplier;
@@ -391,8 +394,8 @@ else
   }
   
    //==freeleech/doubleupload system by ezero - recoded block by putyn
-   $q = mysql_query("SELECT * FROM events ORDER BY startTime DESC LIMIT 1") or err("Events Err");
-	 $a = mysql_fetch_assoc($q);
+   $q = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM events ORDER BY startTime DESC LIMIT 1") or err("Events Err");
+	 $a = mysqli_fetch_assoc($q);
 	 if($a["startTime"] < time() && $a["endTime"] >time())
 	 {
 	 if($a['freeleechEnabled'] == 1)
@@ -426,7 +429,7 @@ else
    else
    $updq[1] = "uploaded = uploaded + ".(($torrent['doubleslot'] != 0 || $isdouble) ? ($upthis*2) : $upthis);
    $udq=implode(',',$updq);
-   mysql_query("UPDATE users SET $udq WHERE id=".$user['id']) or err('Tracker error 3');
+   mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE users SET $udq WHERE id=".$user['id']) or err('Tracker error 3');
    }
 
       //=== abnormal upload detection
@@ -465,11 +468,11 @@ $finished = $finished1 = '';
 $updateset = array();
 
 if (isset($self) && $event == "stopped") {
- mysql_query("DELETE FROM peers WHERE $selfwhere") or err("Delete Err");
+ mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM peers WHERE $selfwhere") or err("Delete Err");
  
  //===09 sir_snuggles hit and run
- $res_snatch = mysql_query("SELECT seedtime, uploaded, downloaded, finished, start_date AS start_snatch FROM snatched WHERE torrentid = $torrentid AND userid = $userid") or err('Snatch Error 1');
- $a = mysql_fetch_array($res_snatch);
+ $res_snatch = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT seedtime, uploaded, downloaded, finished, start_date AS start_snatch FROM snatched WHERE torrentid = $torrentid AND userid = $userid") or err('Snatch Error 1');
+ $a = mysqli_fetch_array($res_snatch);
  //=== only run the function if the ratio is below 1
  if( ($a['uploaded'] + $upthis) < ($a['downloaded'] + $downthis) && $a['finished'] == 'yes')
  {
@@ -521,9 +524,9 @@ if (isset($self) && $event == "stopped") {
  $hit_and_run = ", hit_and_run = '0'";
  //=== end hit and run
  
- if (mysql_affected_rows()) {
+ if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
  $updateset[] = ($self["seeder"] == "yes" ? "seeders = seeders - 1" : "leechers = leechers - 1");
- mysql_query("UPDATE snatched SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', uploaded = uploaded + $upthis, downloaded = downloaded + $downthis, to_go = $left, upspeed = $upspeed, downspeed = $downspeed, $announcetime, last_action = ".time().", seeder = '$seeder', agent = ".sqlesc($agent)." $hit_and_run WHERE torrentid = $torrentid AND userid = {$user['id']}") or err("SL Err 1");
+ mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE snatched SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', uploaded = uploaded + $upthis, downloaded = downloaded + $downthis, to_go = $left, upspeed = $upspeed, downspeed = $downspeed, $announcetime, last_action = ".time().", seeder = '$seeder', agent = ".sqlesc($agent)." $hit_and_run WHERE torrentid = $torrentid AND userid = {$user['id']}") or err("SL Err 1");
  }
  } elseif (isset($self)) {
 
@@ -533,13 +536,13 @@ if (isset($self) && $event == "stopped") {
  $finished1 = ", complete_date = ".time().", finished = 'yes'";
  }
 
- mysql_query("UPDATE peers SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', uploaded = $uploaded, downloaded = $downloaded, to_go = $left, last_action = " . time() . ", seeder = '$seeder', agent = ".sqlesc($agent)." $finished WHERE $selfwhere") or err("PL Err 1");
+ mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE peers SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', uploaded = $uploaded, downloaded = $downloaded, to_go = $left, last_action = " . time() . ", seeder = '$seeder', agent = ".sqlesc($agent)." $finished WHERE $selfwhere") or err("PL Err 1");
 
- if (mysql_affected_rows()) {
+ if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
  if ($seeder <> $self["seeder"])
  $updateset[] = ($seeder == "yes" ? "seeders = seeders + 1, leechers = leechers - 1" : "seeders = seeders - 1, leechers = leechers + 1");
  $anntime = "timesann = timesann + 1";
- mysql_query("UPDATE snatched SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', uploaded = uploaded + $upthis, downloaded = downloaded + $downthis, to_go = $left, upspeed = $upspeed, downspeed = $downspeed, $announcetime, last_action = ".time().", seeder = '$seeder', agent = ".sqlesc($agent)." $finished1, $anntime WHERE torrentid = $torrentid AND userid = {$user['id']}") or err("SL Err 2");
+ mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE snatched SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', uploaded = uploaded + $upthis, downloaded = downloaded + $downthis, to_go = $left, upspeed = $upspeed, downspeed = $downspeed, $announcetime, last_action = ".time().", seeder = '$seeder', agent = ".sqlesc($agent)." $finished1, $anntime WHERE torrentid = $torrentid AND userid = {$user['id']}") or err("SL Err 2");
  }
  } else {
  if ($user["parked"] == "yes")
@@ -547,15 +550,15 @@ if (isset($self) && $event == "stopped") {
  elseif ($user["downloadpos"] == 0 OR $user["downloadpos"] > 1 )
  err("Your downloading priviledges have been disabled! (Read the rules)");
 
- mysql_query("INSERT INTO peers (torrent, userid, peer_id, ip, port, connectable, uploaded, downloaded, to_go, started, last_action, seeder, agent, downloadoffset, uploadoffset, passkey) VALUES ($torrentid, {$user['id']}, ".sqlesc($peer_id).", ".sqlesc($ip).", $port, '$connectable', $uploaded, $downloaded, $left, ".time().", ".time().", '$seeder', ".sqlesc($agent).", $downloaded, $uploaded, ".sqlesc($passkey).")") or err("PL Err 2");
+ mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO peers (torrent, userid, peer_id, ip, port, connectable, uploaded, downloaded, to_go, started, last_action, seeder, agent, downloadoffset, uploadoffset, passkey) VALUES ($torrentid, {$user['id']}, ".sqlesc($peer_id).", ".sqlesc($ip).", $port, '$connectable', $uploaded, $downloaded, $left, ".time().", ".time().", '$seeder', ".sqlesc($agent).", $downloaded, $uploaded, ".sqlesc($passkey).")") or err("PL Err 2");
 
- if (mysql_affected_rows()) {
+ if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
  $updateset[] = ($seeder == "yes" ? "seeders = seeders + 1" : "leechers = leechers + 1");
  $anntime = "timesann = timesann + 1";
- mysql_query("UPDATE snatched SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', to_go = $left, last_action = ".time().", seeder = '$seeder', agent = ".sqlesc($agent).", $anntime, hit_and_run = '0', mark_of_cain = 'no' WHERE torrentid = $torrentid AND userid = {$user['id']}") or err("SL Err 3");
+ mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE snatched SET ip = ".sqlesc($ip).", port = $port, connectable = '$connectable', to_go = $left, last_action = ".time().", seeder = '$seeder', agent = ".sqlesc($agent).", $anntime, hit_and_run = '0', mark_of_cain = 'no' WHERE torrentid = $torrentid AND userid = {$user['id']}") or err("SL Err 3");
 
- if (!mysql_affected_rows() && $seeder == "no")
- mysql_query("INSERT INTO snatched (torrentid, userid, peer_id, ip, port, connectable, uploaded, downloaded, to_go, start_date, last_action, seeder, agent) VALUES ($torrentid, {$user['id']}, ".sqlesc($peer_id).", ".sqlesc($ip).", $port, '$connectable', $uploaded, $downloaded, $left, ".time().", ".time().", '$seeder', ".sqlesc($agent).")") or err("SL Err 4");
+ if (!mysqli_affected_rows($GLOBALS["___mysqli_ston"]) && $seeder == "no")
+ mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO snatched (torrentid, userid, peer_id, ip, port, connectable, uploaded, downloaded, to_go, start_date, last_action, seeder, agent) VALUES ($torrentid, {$user['id']}, ".sqlesc($peer_id).", ".sqlesc($ip).", $port, '$connectable', $uploaded, $downloaded, $left, ".time().", ".time().", '$seeder', ".sqlesc($agent).")") or err("SL Err 4");
  }
  }
 
@@ -567,7 +570,7 @@ if ($seeder == "yes")
 }
 
 if (count($updateset))
-	mysql_query("UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
+	mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
 
 
 benc_resp_raw($resp);

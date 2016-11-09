@@ -32,11 +32,11 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 
 function mysql_fetch_all($query, $default_value = Array())
 {
-    $r = @mysql_query($query);
+    $r = sql_query($query);
     $result = Array();
-    if ($err = mysql_error())return $err;
-    if (@mysql_num_rows($r))
-        while ($row = mysql_fetch_array($r))$result[] = $row;
+    if ($err = ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)))return $err;
+    if (@mysqli_num_rows($r))
+        while ($row = mysqli_fetch_array($r))$result[] = $row;
     if (count($result) == 0)
         return $default_value;
     return $result;
@@ -44,8 +44,8 @@ function mysql_fetch_all($query, $default_value = Array())
 
 function get_user_name($userid){
 	
-  $res = mysql_query("SELECT `username` , `id` , `class`, `chatpost`, `leechwarn`, `warned`, `pirate`, `king`, `donor`, `enabled` FROM `users` WHERE `id` = $userid LIMIT 1")  or sqlerr(__FILE__, __LINE__);
-  $username = mysql_fetch_assoc($res);
+  $res = sql_query("SELECT `username` , `id` , `class`, `chatpost`, `leechwarn`, `warned`, `pirate`, `king`, `donor`, `enabled` FROM `users` WHERE `id` = ".sqlesc($userid)." LIMIT 1")  or sqlerr(__FILE__, __LINE__);
+  $username = mysqli_fetch_assoc($res);
   
   return $username;
 }
@@ -145,12 +145,12 @@ if(gettype($pos = strpos($key, "_"))!= 'boolean'){
 $id = (int)substr($key, $pos + 1);
 if(gettype(strpos($key, "removeEvent_"))!= 'boolean'){
 $sql = "DELETE FROM `events` WHERE `id` = $id LIMIT 1;";
-$res = mysql_query($sql);
-if(mysql_error()!=0)
-$HTMLOUT .="<p>Error Deleting Event: " . mysql_error() . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+$res = sql_query($sql);
+if(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))!=0)
+$HTMLOUT .="<p>Error Deleting Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
-if(mysql_affected_rows()==0)
-$HTMLOUT .="<p>Error Deleting Event: " . mysql_error() . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+if(mysqli_affected_rows($GLOBALS["___mysqli_ston"])==0)
+$HTMLOUT .="<p>Error Deleting Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
 $HTMLOUT .="<p>Deleted.</p>\n";
 header("Refresh: 2; url=admin.php?action=events");
@@ -202,11 +202,11 @@ $sql = "INSERT INTO `events`(`overlayText`, `startTime`, `endTime`, `displayDate
 else
 $sql = "UPDATE `events` SET `overlayText` = '$text',`startTime` = $start, `endTime` = $end, `displayDates` = $showDates, `freeleechEnabled` = $freeleech, `duploadEnabled` = $doubleupload, `hdownEnabled` = $halfdownload, `userid` = $userid  WHERE `id` = $id;";
 
-$res = mysql_query($sql);
-if(mysql_error()!=0)
-$HTMLOUT .="<p>Error Saving Event: " . mysql_error() . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+$res = sql_query($sql);
+if(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))!=0)
+$HTMLOUT .="<p>Error Saving Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
-if(mysql_affected_rows()==0)
+if(mysqli_affected_rows($GLOBALS["___mysqli_ston"])==0)
 $HTMLOUT .="<p>Possible Error Saving (No Changes)<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
 $HTMLOUT .="<p>Saved.</p>\n";

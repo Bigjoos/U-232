@@ -128,13 +128,13 @@ switch ($rep_locale)
 }
 
 // does it or don't it?
-if (!mysql_num_rows($forum))
+if (!mysqli_num_rows($forum))
     rep_output($this_rep.' Does Not Exist - Incorrect Access');
 
 ///////////////////////////////////////////////
 // ok, lets proceed
 ///////////////////////////////////////////////
-$res = mysql_fetch_assoc($forum) or sqlerr(__line__, __file__);
+$res = mysqli_fetch_assoc($forum) or sqlerr(__line__, __file__);
 
 if (isset($res['minclassread'])) // 'posts'
     if ($CURUSER['class'] < $res['minclassread'])
@@ -152,7 +152,7 @@ if (isset($res['minclassread'])) // 'posts'
 		//$repres = mysql_fetch_assoc( $forum ) or sqlerr(__LINE__,__FILE__);
 		
 
-		if(mysql_num_rows($repeat) > 0 && $rep_locale != 'users') // blOOdy eedjit check!
+		if(mysqli_num_rows($repeat) > 0 && $rep_locale != 'users') // blOOdy eedjit check!
                 {
                         rep_output('You have already added Rep to this '.$this_rep.'!'); // Is insane!
                 }
@@ -181,10 +181,10 @@ if (isset($res['minclassread'])) // 'posts'
 									LIMIT 0 , $klimit" );
 			
 
-			if( mysql_num_rows( $flood ) )
+			if( mysqli_num_rows( $flood ) )
 			{
 				$i = 0;
-				while( $check = mysql_fetch_assoc( $flood ) )
+				while( $check = mysqli_fetch_assoc( $flood ) )
 				{
 					if( ( $i < $GVARS['rep_repeat'] ) && ( $check['userid'] == $CURUSER['id'] ) )//$res['userid'] ) )
 					{
@@ -205,7 +205,7 @@ if (isset($res['minclassread'])) // 'posts'
 		// Note: if you use another forum type, you may already have this GLOBAL available
 		// So you can save a query here, else...
 		$r = sql_query("SELECT COUNT(*) FROM posts WHERE userid = {$CURUSER['id']}") or sqlerr();
-		$a = mysql_fetch_row($r) or sqlerr();
+		$a = mysqli_fetch_row($r) or sqlerr();
 		$CURUSER['posts'] = $a[0];
 ///////////////////////////////////////////////
 // What's the reason for bothering me?
@@ -258,7 +258,7 @@ if (isset($res['minclassread'])) // 'posts'
 
 			//print( join( ',', $save) );
 			//print( join(',', array_keys($save)));
-			@mysql_query( "INSERT INTO reputation (".join(',', array_keys($save)).") VALUES (".join( ',', $save).")" );
+			@mysqli_query($GLOBALS["___mysqli_ston"],  "INSERT INTO reputation (".join(',', array_keys($save)).") VALUES (".join( ',', $save).")" );
 
 			header( "Location: {$TBDEV['baseurl']}/reputation.php?pid={$input['pid']}&done=1" );
 		} // Move along, nothing to see here!
@@ -276,11 +276,11 @@ if (isset($res['minclassread'])) // 'posts'
 										
 				$reasonbits = '';
 				
-				if( false !== mysql_num_rows($query1) )
+				if( false !== mysqli_num_rows($query1) )
 				{
 					$total = 0;
 					
-					while( $postrep = mysql_fetch_assoc($query1) )
+					while( $postrep = mysqli_fetch_assoc($query1) )
 					{
 						$total += $postrep['reputation'];
 

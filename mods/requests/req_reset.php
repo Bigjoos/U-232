@@ -9,15 +9,15 @@
 $HTMLOUT .= "<table class='main' width='750px' border='0' cellspacing='0' cellpadding='0'>" .
       "<tr><td class='embedded'>\n";
 
-$res = mysql_query("SELECT userid, filledby, request, torrentid FROM requests WHERE id = $id") or sqlerr(__FILE__, __LINE__);
-$arr = mysql_fetch_assoc($res);
+$res = sql_query("SELECT userid, filledby, request, torrentid FROM requests WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$arr = mysqli_fetch_assoc($res);
 
 if (($CURUSER['id'] == $arr['userid']) || ($CURUSER['class'] >= UC_MODERATOR) || ($CURUSER['id'] == $arr['filledby'])) {
 
  if ($TBDEV['karma'] && isset($CURUSER['seedbonus']) && $arr['torrentid'] != 0)
-     mysql_query("UPDATE users SET seedbonus = seedbonus-".$TBDEV['req_comment_bonus']." WHERE id = $arr[filledby]") or sqlerr(__FILE__, __LINE__);
+     sql_query("UPDATE users SET seedbonus = seedbonus-".sqlesc($TBDEV['req_comment_bonus'])." WHERE id = ".sqlesc($arr['filledby'])) or sqlerr(__FILE__, __LINE__);
 
- mysql_query("UPDATE requests SET torrentid = 0, filledby = 0 WHERE id = $id") or sqlerr(__FILE__, __LINE__);
+ sql_query("UPDATE requests SET torrentid = 0, filledby = 0 WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
  
 $HTMLOUT .=  "<h1 align='center'>{$lang['reset_success']}</h1>".
 "<p align='center'>{$lang['add_request']} $id (".htmlspecialchars($arr['request'])."){$lang['reset_successfully']}</p>
@@ -34,5 +34,5 @@ $HTMLOUT .=  "<table>
 $HTMLOUT .= "</td></tr></table>\n"; 
 
 /////////////////////// HTML OUTPUT //////////////////////////////
-print stdhead('Reset Request').$HTMLOUT.stdfoot();
+echo stdhead('Reset Request').$HTMLOUT.stdfoot();
 ?>

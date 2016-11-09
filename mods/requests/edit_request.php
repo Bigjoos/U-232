@@ -6,21 +6,21 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-$rs = mysql_query("SELECT r.*, c.id AS catid, c.name AS catname FROM requests AS r LEFT JOIN categories AS c ON (c.id=r.cat) WHERE r.id = $id") or sqlerr(__FILE__, __LINE__);
-$numz = mysql_fetch_assoc($rs);	
+$rs = sql_query("SELECT r.*, c.id AS catid, c.name AS catname FROM requests AS r LEFT JOIN categories AS c ON (c.id=r.cat) WHERE r.id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$numz = mysqli_fetch_assoc($rs);	
 
 if ($CURUSER['id'] != $numz['userid'] && $CURUSER['class'] < UC_MODERATOR)
     stderr("{$lang['error_error']}", "{$lang['error_not_yours1']}");
 
 $s       = htmlspecialchars($numz['request']);
-$catid   = $numz['catid'];
+$catid   = intval($numz['catid']);
 $body    = htmlspecialchars($numz['descr']);
-$catname = $numz['catname'];
+$catname = htmlspecialchars($numz['catname']);
 
 $s2 = "<select name='category'><option value='$catid'> $catname </option>\n";
 
 foreach ($cats as $row)
-    $s2 .= "<option value='".$row['id']."'>".htmlspecialchars($row['name'])."</option>\n";
+    $s2 .= "<option value='".intval($row['id'])."'>".htmlspecialchars($row['name'])."</option>\n";
 $s2 .= "</select>\n";	
 
 $HTMLOUT .=  "<br />
@@ -59,5 +59,5 @@ if ($CURUSER['class'] >= UC_MODERATOR) {
 $HTMLOUT .=  "<tr><td align='center' colspan='2'><input type='submit' value='{$lang['details_edit']}' class='btn' /></td></tr></table></form><br />\n"; 
 
 /////////////////////// HTML OUTPUT //////////////////////////////
-print stdhead('Edit Request').$HTMLOUT.stdfoot();
+echo stdhead('Edit Request').$HTMLOUT.stdfoot();
 ?>

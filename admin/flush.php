@@ -28,7 +28,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -47,11 +47,11 @@ if (!is_valid_id($id))
 if ($CURUSER['class'] >= UC_MODERATOR) {
     
     $dt = time();
-    $res = sql_query("SELECT username FROM users WHERE id= $id") or sqlerr(__FILE__, __LINE__);
-    $arr = mysql_fetch_assoc($res);
-    $username = $arr['username'];
-    mysql_query("DELETE FROM peers WHERE userid=" . $id);
-    $effected = mysql_affected_rows();
+    $res = sql_query("SELECT username FROM users WHERE id= ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    $arr = mysqli_fetch_assoc($res);
+    $username = htmlspecialchars($arr['username']);
+    sql_query("DELETE FROM peers WHERE userid=" . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    $effected = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
     //=== write to log
     write_log("Staff flushed " . $username . "'s ghost torrents at " . get_date($dt, 'LONG',0,1) . ". $effected torrents where sucessfully cleaned.");
     //write_log("User " . $username . " just flushed torrents at " . get_date($dt, 'LONG',0,1) . ". $effected torrents where sucessfully cleaned.");

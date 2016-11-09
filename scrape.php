@@ -9,18 +9,18 @@
 require_once("include/config.php");
 
 
-if (!@mysql_connect($TBDEV['mysql_host'], $TBDEV['mysql_user'], $TBDEV['mysql_pass']))
+if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'],  $TBDEV['mysql_user'],  $TBDEV['mysql_pass'])))
   {
 	  exit();
   }
     
-  @mysql_select_db($TBDEV['mysql_db']) or exit();
+  @((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE $TBDEV['mysql_db']")) or exit();
 
-function hash_where($name, $hash) 
-  {
-    $shhash = preg_replace('/ *$/s', "", $hash);
-    return "$name = '" . mysql_real_escape_string($hash) . "'";
-  }
+function hash_where($name, $hash)
+{
+    $shhash = preg_replace('/ *$/s', '', $hash);
+    return "{$name} = '" . mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $hash) . '\'';
+}
 
 
   $r = 'd5:filesd';
@@ -32,9 +32,9 @@ function hash_where($name, $hash)
   else
     $query = "SELECT $fields FROM torrents WHERE " . hash_where( "info_hash", @pack('H*', stripslashes( $_GET["info_hash"] ) ));
 
-  $res = mysql_query($query);
+  $res = mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-  while ($row = mysql_fetch_assoc($res))
+  while ($row = mysqli_fetch_assoc($res))
   {
     $r .= '20:'.str_pad($row['info_hash'], 20).'d8:completei'.$row['seeders'].'e10:downloadedi'.$row['times_completed'].'e10:incompletei'.$row['leechers'].'ee';
   }
@@ -42,6 +42,6 @@ function hash_where($name, $hash)
   $r .= 'ee';
 
   header("Content-Type: text/plain");
-  print($r);
+  echo($r);
 
 ?>

@@ -26,12 +26,12 @@ function parse_poll()
                             LIMIT 1");
         
        //Did we find the poll?
-        if ( ! mysql_num_rows($query) )
+        if ( ! mysqli_num_rows($query) )
         {
         	return "";
         }
         
-        while( $row = mysql_fetch_assoc( $query ) )
+        while( $row = mysqli_fetch_assoc( $query ) )
         {
         	$poll_data = $row;
         }

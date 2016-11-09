@@ -28,7 +28,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -53,16 +53,16 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 	
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		$classes = isset($_POST["classes"])? $_POST["classes"] : "";
+		$classes = isset($_POST["classes"]) ? htmlspecialchars($_POST["classes"]) : "";
 		$all = ($classes[0] == 255 ? true : false );
 		if(empty($classes) && sizeof($classes) == 0 )
 		stderr("Err","You need at least one class selected");
 		$a_do = array("add","remove","remove_all");
-		$do = isset($_POST["do"]) && in_array($_POST["do"],$a_do) ? $_POST["do"] : "";
+		$do = isset($_POST["do"]) && in_array($_POST["do"],$a_do) ? htmlspecialchars($_POST["do"]) : "";
 		if(empty($do))
 			stderr("Err","wtf are you trying to do ");
 			
-		$freeslots = isset($_POST["freeslots"]) ? 0+$_POST["freeslots"] : 0;
+		$freeslots = isset($_POST["freeslots"]) ? 0 + $_POST["freeslots"] : 0;
 		if($freeslots == 0 && ($do == "add" || $do == "remove"))
 		stderr("Err","You can't remove/add 0");
 			
@@ -71,24 +71,24 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 		$pms = array();
 		$users = array();
 		//== Select the users
-		$q1 = mysql_query("SELECT id,freeslots FROM users ".($all ? "" : "WHERE class in (".join(",",$classes).")" )." ORDER BY id desc ") or sqlerr(__FILE__, __LINE__);
-		if(mysql_num_rows($q1) == 0)
+		$q1 = sqli_query("SELECT id,freeslots FROM users ".($all ? "" : "WHERE class in (".join(",",$classes).")" )." ORDER BY id desc ") or sqlerr(__FILE__, __LINE__);
+		if(mysqli_num_rows($q1) == 0)
 		stderr("Sorry","There are no users in the class(es) you selected");
-			while($a = mysql_fetch_assoc($q1))
+			while($a = mysqli_fetch_assoc($q1))
 			{
-				$users[] = "(".$a["id"].", ".($do == "remove_all" ? 0 : ($do == "add" ? $a["freeslots"] + $freeslots : mkpositive($a["freeslots"] - $freeslots))) .")";
+				$users[] = "(".sqlesc($a["id"]).", ".($do == "remove_all" ? 0 : ($do == "add" ? sqlesc($a["freeslots"]) + $freeslots : mkpositive($a["freeslots"] - $freeslots))) .")";
 				if($sendpm)
 				{
 					$subject = sqlesc($do == "remove_all" && $do == "remove" ?  "freeslots removed" : "freeslots added");
 					$body = sqlesc("Hey,\n we have decided to ". ($do == "remove_all" ?  "remove all freeslots from your group class" : ($do == "add" ? "add $freeslots freeslot".($freeslots > 1 ? "s" : "")." to your group class" : "remove $freeslots freeslot".($freeslots > 1 ? "s" : "")."  from your group class")). " !\n ".$TBDEV['site_name'] ." staff");
-					$pms[] = "(0,".$a["id"].",".sqlesc(time()).",$subject,$body)" ;
+					$pms[] = "(0,".sqlesc($a["id"]).",".sqlesc(time()).",$subject,$body)" ;
 				}
 			}
 			
 			if(sizeof($users) > 0)
-				$r = mysql_query("INSERT INTO users(id,freeslots) VALUES ".join(",",$users)." ON DUPLICATE key UPDATE freeslots=values(freeslots) ") or sqlerr(__FILE__, __LINE__);
+				$r = sql_query("INSERT INTO users(id,freeslots) VALUES ".join(",",$users)." ON DUPLICATE key UPDATE freeslots=values(freeslots) ") or sqlerr(__FILE__, __LINE__);
 			if(sizeof($pms) > 0)
-				$r1 = mysql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES ".join(",",$pms)." ") or sqlerr(__FILE__, __LINE__);
+				$r1 = sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES ".join(",",$pms)." ") or sqlerr(__FILE__, __LINE__);
 				
 			if($r && ($sendpm ? $r1 : true))
 			{
@@ -130,6 +130,6 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 	</form>";
 
  $HTMLOUT .= end_frame();
-print stdhead('Freeslot Manager') . $HTMLOUT . stdfoot();
+echo stdhead('Freeslot Manager') . $HTMLOUT . stdfoot();
 die;
 ?>

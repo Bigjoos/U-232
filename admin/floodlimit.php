@@ -19,7 +19,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -31,7 +31,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-	$limits = isset($_POST['limit']) && is_array($_POST['limit']) ? $_POST['limit'] : 0;
+	$limits = isset($_POST['limit']) && is_array($_POST['limit']) ? intval($_POST['limit']) : 0;
 	
 	foreach($limits as $class=>$limit)
 		if($limit == 0) unset($limits[$class]);
@@ -54,6 +54,6 @@ $out .= '<form method=\'post\' action=\'\' ><table width=\'60%\' align=\'center\
 $out .= '<tr><td colspan=\'2\'>Note if you want no limit for the user class set the limit to 0</td></tr><tr><td colspan=\'2\' class=\'colhead\'><input type=\'submit\' value=\'Save\' /></td></tr>';
 $out .= '</table></form>'.end_frame().end_main_frame();
 
-print(stdhead('Flood limit').$out.stdfoot());
+echo(stdhead('Flood limit').$out.stdfoot());
 }
 ?>

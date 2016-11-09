@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -46,7 +46,7 @@ class_check(UC_SYSOP);
       if (preg_match('@^(CHECK|ANALYZE|REPAIR|OPTIMIZE)[[:space:]]TABLE[[:space:]]'.$Table.'$@i', $sql)) 
       {
         //all good? Do it!
-        @mysql_query($sql) or sqlerr(__FILE__,__LINE__);
+        sql_query($sql) or sqlerr(__FILE__,__LINE__);
         
         header("Location: {$TBDEV['baseurl']}/admin.php?action=mysql_overview&Do=F");
         exit;
@@ -126,9 +126,9 @@ class_check(UC_SYSOP);
 
     $count = 0;
     
-    $res = @mysql_query("SHOW TABLE STATUS FROM {$TBDEV['mysql_db']}") or stderr(__FILE__,__LINE__);
+    $res = sql_query("SHOW TABLE STATUS FROM {$TBDEV['mysql_db']}") or stderr(__FILE__,__LINE__);
     
-    while ($row = mysql_fetch_array($res)) 
+    while ($row = mysqli_fetch_array($res)) 
     {
         list($formatted_Avg, $formatted_Abytes) = byteformat($row['Avg_row_length']);
         list($formatted_Dlength, $formatted_Dbytes) = byteformat($row['Data_length']);
@@ -170,5 +170,5 @@ class_check(UC_SYSOP);
     </table>";
 
 
-    print stdhead("MySQL Overview") . $HTMLOUT . stdfoot();
+    echo stdhead("MySQL Overview") . $HTMLOUT . stdfoot();
 ?>

@@ -16,7 +16,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
     if ($TBDEV['msg_alert'] && $msgalert && $CURUSER)
     {
       $res = sql_query("SELECT count(id) FROM messages WHERE receiver=" . $CURUSER["id"] . " && unread='yes'") or sqlerr(__FILE__,__LINE__);
-      $arr = mysql_fetch_row($res);
+      $arr = mysqli_fetch_row($res);
       $unread = $arr[0];
     }
    /** ZZZZZZZZZZZZZZZZZZZZZZZZZZip it! **/
@@ -143,17 +143,19 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
 	 }
    //==Big red staffmess thingy box:
    if($TBDEV['staffmsg_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
-		$num = mysql_result(sql_query('SELECT count(id) FROM staffmessages WHERE answeredby = 0'),0);
+		$staff_mess = sql_query('SELECT count(id) FROM staffmessages WHERE answeredby = 0') or sqlerr(__LINE__,__FILE__);
+                list($num) = mysqli_fetch_row($staff_mess);
 		if($num > 0)
 		$htmlout .= "<table border='0' cellspacing='0' cellpadding='10'>
                   <tr><td style='padding: 10px; background: #ccc'>\n
-                  <b><a href='staffbox.php'>".sprintf($lang['gl_staffmsg_alert'], $num). "!</a></b>
+                  <b><a href='staffbox.php'>".sprintf($lang['gl_staff_message_alert'], $num). "!</a></b>
                   </td></tr></table><br />";
 	}
   //==End
   //==Big red report thingy box:
    if($TBDEV['report_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
-		$num = mysql_result(sql_query('SELECT COUNT(id) FROM reports WHERE delt_with = 0'),0);
+		$reports = sql_query('SELECT COUNT(id) FROM reports WHERE delt_with = 0') or sqlerr(__LINE__,__FILE__);
+                list($num) = mysqli_fetch_row($reports);
 		if($num > 0)
 		$htmlout .= "<table border='0' cellspacing='0' cellpadding='10'>
                   <tr><td style='padding: 10px; background: #ccc'>\n
@@ -163,7 +165,8 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
 	//==End
 	//Big red uploadapp thingy box:
    if($TBDEV['uploadapp_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
-		$num = mysql_result(sql_query('SELECT count(id) FROM uploadapp WHERE status = "pending"'),0);
+		$upload_app = sql_query('SELECT count(id) FROM uploadapp WHERE status = "pending"') or sqlerr(__LINE__,__FILE__);
+                list($num) = mysqli_fetch_row($upload_app);
 		if($num > 0)
 		$htmlout .= "<table border='0' cellspacing='0' cellpadding='10'>
                   <tr><td style='padding: 10px; background: #ccc'>\n
@@ -302,12 +305,12 @@ function StatusBar() {
   $ratio = "<font color='$color'>$ratio</font>";
   }
   $res1 = @sql_query("SELECT count(id) FROM messages WHERE receiver=" . $CURUSER["id"] . " AND unread='yes'") or sqlerr(__LINE__,__FILE__);
-	$arr1 = mysql_fetch_row($res1);
+	$arr1 = mysqli_fetch_row($res1);
 	$unread = $arr1[0];
 	$inbox = ($unread == 1 ? "$unread&nbsp;{$lang['gl_msg_singular']}" : "$unread&nbsp;{$lang['gl_msg_plural']}");
 	$res2 = @sql_query("SELECT seeder, count(*) AS pCount FROM peers WHERE userid=".$CURUSER['id']." GROUP BY seeder") or sqlerr(__LINE__,__FILE__);
 	$seedleech = array('yes' => '0', 'no' => '0');
-	while( $row = mysql_fetch_assoc($res2) ) {
+	while( $row = mysqli_fetch_assoc($res2) ) {
 		if($row['seeder'] == 'yes')
 			$seedleech['yes'] = $row['pCount'];
 		else

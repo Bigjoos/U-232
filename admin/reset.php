@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     for($i = 0;$i < 10;$i++)
     $newpassword .= $chars[mt_rand(0, strlen($chars) - 1)];
     $passhash =  make_passhash( $secret, md5($newpassword) ) ;
-    $res = mysql_query('UPDATE users SET secret=' . sqlesc($secret) . ', passhash=' . sqlesc($passhash) . ' WHERE username=' . sqlesc($username) . ' AND class<' . $CURUSER['class']) or sqlerr();
-    if (mysql_affected_rows() != 1)
+    $res = sql_query('UPDATE users SET secret=' . sqlesc($secret) . ', passhash=' . sqlesc($passhash) . ' WHERE username=' . sqlesc($username) . ' AND class<' . sqlesc($CURUSER['class'])) or sqlerr(__FILE__, __LINE__);
+    if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) != 1)
         stderr('Error', 'Password not updated. User not found or higher/equal class to yourself');
     write_log('passwordreset', 'Password reset for ' . $username . ' by ' . $CURUSER['username']);
     stderr('Success', 'The password for account <b>' . htmlspecialchars($username) . '</b> is now <b>' . htmlspecialchars($newpassword) . '</b>.');
@@ -59,5 +59,5 @@ $HTMLOUT .="<h1>Reset User's Lost Password</h1>
 </tr>
 </table></form>";
 
-print stdhead("Reset Password") . $HTMLOUT . stdfoot();
+echo stdhead("Reset Password") . $HTMLOUT . stdfoot();
 ?>

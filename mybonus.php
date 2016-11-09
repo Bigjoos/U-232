@@ -42,14 +42,14 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 $CURUSER[username] you have set the tracker <b>Free Leech !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next freeleech period automatically!".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 } else {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
 "<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
 $CURUSER[username] you have set the tracker <b>Free Leech !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 }
 
 die;
@@ -60,7 +60,7 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 "$CURUSER[username] you have contributed towards making the tracker Free Leech ! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 }
 }
@@ -77,14 +77,14 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 $CURUSER[username] you have set the tracker <b>Double Up !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next Double upload period automatically!".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 } else {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
 "<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
 $CURUSER[username] you have set the tracker <b>Double Up !</b> <img src={$TBDEV['pic_base_url']}smilies/w00t.gif alt='w00t' title='W00t' /><br />".
 "<b /r> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 }
 
 die;
@@ -95,7 +95,7 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 "$CURUSER[username] you have contributed towards making the tracker Double Upload ! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 }
 }
@@ -112,14 +112,14 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 $CURUSER[username] you have set the tracker <b>Half Download !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next Half download period automatically!".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 } else {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
 "<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
 $CURUSER[username] you have set the tracker <b>Half Download !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 }
 
 die;
@@ -130,7 +130,7 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 "$CURUSER[username] you have contributed towards making the tracker Half Download ! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
 "<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 }
 }
@@ -176,7 +176,7 @@ $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='le
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just increased your upload amount by ".$amt."!
 <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
 <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['anonymous_success'])):{
@@ -187,7 +187,7 @@ $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='le
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just purchased Anonymous profile for 14 days!
 <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
 <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['freeyear_success'])):{
@@ -198,7 +198,7 @@ $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='le
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just purchased freeleech for one year!
 <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
 <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['freeslots_success'])):{
@@ -210,7 +210,7 @@ $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='le
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have got your self 3 freeleech slots!!
 <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
 <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['itrade_success'])):{
@@ -222,7 +222,7 @@ $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='le
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have got your self 200 points !!
 <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
 <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['itrade2_success'])):{
@@ -234,7 +234,7 @@ $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='le
 <td class='clearalt6' align='left'><b>Sorry ! </b>".$CURUSER['username']." you just got yourself 2 freeslots !!
 <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='W00t' title='W00t' /><br /><br /><br /><br /> click to go back to your 
 <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['pirate_success'])):{
@@ -244,7 +244,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/pirate2.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have got yourself Pirate Status and Freeleech for two weeks! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['king_success'])):{
@@ -254,7 +254,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/king.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have got yourself King Status and Freeleech for one month! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['dload_success']));{
@@ -279,7 +279,7 @@ $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'>
 "<td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just decreased your download amount by ".$amt."!".
 "<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' /><br /><br /><br /><br /> click to go back to your ".
 "<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['class_success'])):
@@ -289,7 +289,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have got yourself VIP Status for one month! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['smile_success'])):
@@ -299,7 +299,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have got yourself a set of custom smilies for one month! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['warning_success'])):
@@ -309,7 +309,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have removed your warning for the low price of 1000 points!! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['invite_success'])):
@@ -319,7 +319,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have got your self 3 new invites! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br />
 click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 
@@ -330,7 +330,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you have got your self 3 freeleech slots! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br />
 click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['title_success'])):
@@ -340,7 +340,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
 <b>Congratulations! </b>".$CURUSER['username']." you are now known as <b>".$CURUSER['title']."</b>! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['ratio_success'])):
@@ -351,7 +351,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 have gained a 1 to 1 ratio on the selected torrent, and the difference in MB has been added to your total upload! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
 <br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />
 </td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['gift_fail'])):
@@ -361,7 +361,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <img src='{$TBDEV['pic_base_url']}smilies/cry.gif' alt='bad_karma' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Not so fast there Mr. fancy pants!</b><br />
 <b>".$CURUSER['username']."...</b> you can not spread the karma to yourself...<br />If you want to spread the love, pick another user! <br />
 <br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 case (isset($_GET['gift_fail_user'])):
 I_smell_a_rat($_GET['gift_fail_user']);
@@ -370,7 +370,7 @@ $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='lef
 <img src='{$TBDEV['pic_base_url']}smilies/cry.gif' alt='bad_karma' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Sorry ".$CURUSER['username']."...</b>
 <br /> No User with that username <br /><br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.
 <br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 case (isset($_GET['gift_fail_points'])):
 I_smell_a_rat($_GET['gift_fail_points']);
@@ -378,7 +378,7 @@ I_smell_a_rat($_GET['gift_fail_points']);
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Oops!</h1></td></tr><tr><td align='left' class='clearalt6'>
 <img src='{$TBDEV['pic_base_url']}smilies/cry.gif' alt='oups' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Sorry </b>".$CURUSER['username']." you dont have enough Karma points
 <br /> go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
 case (isset($_GET['gift_success'])): 
@@ -389,7 +389,7 @@ $HTMLOUT  .="<table align='center' width='80%'><tr><td class='colhead' align='le
 you have spread the Karma well.<br /><br />Member <b>".htmlspecialchars($_GET['usernamegift'])."</b> will be pleased with your kindness!<br /><br />This is the message that was sent:<br />
 <b>Subject:</b> Someone Loves you!<br /> <p>You have been given a gift of <b>".(0 + $_GET['gift_amount_points'])."</b> Karma points by ".$CURUSER['username']."</p><br />
 You may also <a class='altlink' href='{$TBDEV['baseurl']}/sendmessage.php?receiver=".(0 + $_GET['gift_id'])."'>send ".htmlspecialchars($_GET['usernamegift'])." a message as well</a>, or go back to your <a class='altlink' href='mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 }
 
@@ -403,22 +403,22 @@ stderr("Error", "That is not your user ID!");
 
 $option = 0 + $_POST['option'];
 
-$res_points = sql_query("SELECT * FROM bonus WHERE id =" . sqlesc($option));
-$arr_points = mysql_fetch_assoc($res_points);
+$res_points = sql_query("SELECT * FROM bonus WHERE id =" . sqlesc($option)) or sqlerr(__FILE__, __LINE__);
+$arr_points = mysqli_fetch_assoc($res_points);
 
-$art = $arr_points['art'];
-$points = $arr_points['points'];
-$minpoints = $arr_points['minpoints'];
+$art = htmlspecialchars($arr_points['art']);
+$points = (float)$arr_points['points'];
+$minpoints = (float)$arr_points['minpoints'];
 
 if ($points <= 0)
 stderr("Error", "I smell a rat!");
 
-$seedbonus=htmlspecialchars($bonus-$points,1);
-$upload = $CURUSER['uploaded'];
-$download = $CURUSER['downloaded'];
-$bonuscomment = $CURUSER['bonuscomment'];
-$free_switch = $CURUSER['free_switch'];
-$warned = $CURUSER['warned'];
+$seedbonus = htmlspecialchars($bonus-$points,1);
+$upload = intval($CURUSER['uploaded']);
+$download = intval($CURUSER['downloaded']);
+$bonuscomment = htmlspecialchars($CURUSER['bonuscomment']);
+$free_switch = intval($CURUSER['free_switch']);
+$warned = htmlspecialchars($CURUSER['warned']);
 
 if($bonus < $minpoints)
 stderr("Sorry", "you do not have enough Karma points!");
@@ -428,7 +428,7 @@ case 'traffic':
 //=== trade for one upload credit
 $up = $upload + $arr_points['menge'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for upload bonus.\n " .$bonuscomment;
-sql_query("UPDATE users SET uploaded = $upload + $arr_points[menge], seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET uploaded = ".sqlesc($upload + $arr_points['menge']).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?up_success=1&amt=$points");
 die;
 break;
@@ -439,7 +439,7 @@ $anonymous_until = (86400 * 14 + time());
 if ($CURUSER['anonymous_until'] >= 1)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 14 days Anonymous profile.\n " .$bonuscomment;
-sql_query("UPDATE users SET anonymous_until = '$anonymous_until', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET anonymous_until = ".sqlesc($anonymous_until).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?anonymous_success=1");
 die;
 break;
@@ -450,7 +450,7 @@ $down = $download - $arr_points['menge'];
 if ($CURUSER['downloaded'] == 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for download credit removal.\n " .$bonuscomment;
-sql_query("UPDATE users SET downloaded = $download - $arr_points[menge], seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET downloaded = ".sqlesc($download - $arr_points['menge']).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?dload_success=1&amt=$points");
 die;
 break;
@@ -461,7 +461,7 @@ $free_switch = (365 * 86400 + time());
 if ($CURUSER['free_switch'] != 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for One year of freeleech.\n " .$bonuscomment;
-sql_query("UPDATE users SET free_switch = $free_switch, seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET free_switch = ".sqlesc($free_switch).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?freeyear_success=1");
 die;
 break;
@@ -471,31 +471,31 @@ case 'freeslots':
 $freeslots = $CURUSER['freeslots'];
 $slots = $freeslots+$arr_points['menge'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for freeslots.\n " .$bonuscomment;
-sql_query("UPDATE users SET freeslots = '$slots', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET freeslots = ".sqlesc($slots).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?freeslots_success=1");
 die;
 break;
 
 case 'itrade':
 //=== trade for points
-$invites = $CURUSER['invites'];
+$invites = intval($CURUSER['invites']);
 $inv = $invites+$arr_points['menge'];
 if ($CURUSER['invites'] == 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " invites for bonus points.\n" .$bonuscomment;
-sql_query("UPDATE users SET invites = invites - 1, seedbonus = seedbonus + 200 WHERE id = '$userid' AND invites = '$invites +1'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET invites = invites - 1, seedbonus = seedbonus + 200 WHERE id = ".sqlesc($userid)." AND invites = ".sqlesc($invites +1)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?itrade_success=1");
 die;
 break;
 
 case 'itrade2':
 //=== trade for slots
-$invites = $CURUSER['invites'];
+$invites = intval($CURUSER['invites']);
 $inv = $invites+$arr_points['menge'];
 if ($CURUSER['invites'] == 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " invites for bonus points.\n" .$bonuscomment;
-sql_query("UPDATE users SET invites = invites - 1, freeslots = freeslots + 2 WHERE id = '$userid' AND invites = '$invites +1'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET invites = invites - 1, freeslots = freeslots + 2 WHERE id = ".sqlesc($userid)." AND invites = ".sqlesc($invites +1)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?itrade2_success=1");
 die;
 break;
@@ -507,7 +507,7 @@ stderr("Error", "Now why would you want to add what you already have?<br />go ba
 $pirate = (86400 * 14 + time());
 $free_switch = (14 * 86400 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 2 weeks Pirate + freeleech Status.\n " .$bonuscomment;
-sql_query("UPDATE users SET free_switch = $free_switch, pirate = '$pirate', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET free_switch = ".sqlesc($free_switch).", pirate = ".sqlesc($pirate).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?pirate_success=1");
 die;
 break;
@@ -519,7 +519,7 @@ stderr("Error", "Now why would you want to add what you already have?<br />go ba
 $king = (86400 * 30 + time());
 $free_switch = (30 * 86400 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 month King + freeleech Status.\n " .$bonuscomment;
-sql_query("UPDATE users SET free_switch = $free_switch, king = '$king', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET free_switch = ".sqlesc($free_switch).", king = ".sqlesc($king).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?king_success=1");
 die;
 break;
@@ -527,7 +527,7 @@ break;
 //--- Freeleech
 case 'freeleech':
 $points2 = 59999; //== Adjust so that its you can only contribute 1 point under the the bonus option amount doubled - current 30000 x 2 = 60000 - 1 = 59999
-$pointspool = $arr_points['pointspool'];
+$pointspool = (float)$arr_points['pointspool'];
 $points= htmlspecialchars($points,1);
 $donation = 0 + $_POST['donate'];
 $seedbonus = ($bonus - $donation);
@@ -539,22 +539,22 @@ if(($pointspool+$donation) >= $arr_points["points"] ){
 $now = time();
 $end = (86400 * 3 + time());
 $message = "FreeLeech [ON]";
-$sql = "INSERT INTO `events`(`userid`,`overlayText`, `startTime`, `endTime`, `displayDates`, `freeleechEnabled`) VALUES ('$userid', '$message', '$now', '$end', '1', '1');";
+$sql = "INSERT INTO `events`(`userid`,`overlayText`, `startTime`, `endTime`, `displayDates`, `freeleechEnabled`) VALUES (".sqlesc($userid).", ".sqlesc($message).", ".sqlesc($now).", ".sqlesc($end).", '1', '1');";
 $norefund = ($donation + $pointspool) % $points;
 sql_query($sql)or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for freeleech.\n " .$bonuscomment;
-sql_query("UPDATE users SET seedbonus = '$seedbonus',  bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
-$sql2 = "UPDATE bonus SET pointspool = '$norefund' WHERE id = '11' LIMIT 1";
-sql_query($sql2)or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).",  bonuscomment = ".sqlesc($bonuscomment)." WHERE id = "sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+$sql2 = "UPDATE bonus SET pointspool = ".sqlesc($norefund)." WHERE id = '11' LIMIT 1";
+sql_query($sql2) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "freeleech");
 header("Refresh: 0; url={$TBDEV['baseurl']}//mybonus.php?freeleech_success=1&norefund=$norefund");
 die;
 } else {
 // add to the pool
-$sql = "UPDATE bonus SET pointspool = pointspool + '$donation' WHERE id = '11' LIMIT 1";
-sql_query($sql)or sqlerr(__FILE__, __LINE__);
+$sql = "UPDATE bonus SET pointspool = pointspool + ".sqlesc($donation)." WHERE id = '11' LIMIT 1";
+sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for freeleech.\n " .$bonuscomment;
-sql_query("UPDATE users SET seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "freeleech");
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?freeleech_success=2");
 die;
@@ -565,7 +565,7 @@ break;
 //--- doubleupload
 case 'doubleup':
 $points2 = 59999; //== Adjust so that its you can only contribute 1 point under the the bonus option amount doubled - current 30000 x 2 = 60000 - 1 = 59999
-$pointspool = $arr_points['pointspool'];
+$pointspool = (float)$arr_points['pointspool'];
 $points= htmlspecialchars($points,1);
 $donation = 0 + $_POST['donate'];
 $seedbonus = ($bonus - $donation);
@@ -577,22 +577,22 @@ if(($pointspool+$donation) >= $arr_points["points"] ){
 $now = time();
 $end = (86400 * 3 + time());
 $message = "DoubleUpload [ON]";
-$sql = "INSERT INTO `events`(`userid`,`overlayText`, `startTime`, `endTime`, `displayDates`, `duploadEnabled`) VALUES ('$userid', '$message', '$now', '$end', '1', '1');";
+$sql = "INSERT INTO `events`(`userid`,`overlayText`, `startTime`, `endTime`, `displayDates`, `duploadEnabled`) VALUES (".sqlesc($userid).", ".sqlesc($message).", ".sqlesc($now).", ".sqlesc($end).", '1', '1');";
 $norefund = ($donation + $pointspool) % $points;
-sql_query($sql)or sqlerr(__FILE__, __LINE__);
+sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for doubleupload.\n " .$bonuscomment;
-sql_query("UPDATE users SET seedbonus = '$seedbonus',  bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
-$sql2 = "UPDATE bonus SET pointspool = '$norefund' WHERE id = '12' LIMIT 1";
-sql_query($sql2)or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).",  bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+$sql2 = "UPDATE bonus SET pointspool = ".sqlesc($norefund)." WHERE id = '12' LIMIT 1";
+sql_query($sql2) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "doubleupload");
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?doubleup_success=1&norefund=$norefund");
 die;
 } else {
 // add to the pool
-$sql = "UPDATE bonus SET pointspool = pointspool + '$donation' WHERE id = '12' LIMIT 1";
-sql_query($sql)or sqlerr(__FILE__, __LINE__);
+$sql = "UPDATE bonus SET pointspool = pointspool + ".sqlesc($donation)." WHERE id = '12' LIMIT 1";
+sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for doubleupload.\n " .$bonuscomment;
-sql_query("UPDATE users SET seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "doubleupload");
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?doubleup_success=2");
 die;
@@ -603,7 +603,7 @@ break;
 //---Halfdownload
 case 'halfdown':
 $points2 = 59999; //== Adjust so that its you can only contribute 1 point under the the bonus option amount doubled - current 30000 x 2 = 60000 - 1 = 59999
-$pointspool = $arr_points['pointspool'];
+$pointspool = (float) $arr_points['pointspool'];
 $points= htmlspecialchars($points,1);
 $donation = 0 + $_POST['donate'];
 $seedbonus = ($bonus - $donation);
@@ -619,18 +619,18 @@ $sql = "INSERT INTO `events`(`userid`,`overlayText`, `startTime`, `endTime`, `di
 $norefund = ($donation + $pointspool) % $points;
 sql_query($sql)or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for Halfdownload.\n " .$bonuscomment;
-sql_query("UPDATE users SET seedbonus = '$seedbonus',  bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
-$sql2 = "UPDATE bonus SET pointspool = '$norefund' WHERE id = '13' LIMIT 1";
-mysql_query($sql2)or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).",  bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+$sql2 = "UPDATE bonus SET pointspool = ".sqlesc($norefund)." WHERE id = '13' LIMIT 1";
+sql_query($sql2) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "halfdownload");
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?halfdown_success=1&norefund=$norefund");
 die;
 } else {
 // add to the pool
-$sql = "UPDATE bonus SET pointspool = pointspool + '$donation' WHERE id = '13' LIMIT 1";
-sql_query($sql)or sqlerr(__FILE__, __LINE__);
+$sql = "UPDATE bonus SET pointspool = pointspool + ".sqlesc($donation)." WHERE id = '13' LIMIT 1";
+sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points contributed for halfdownload.\n " .$bonuscomment;
-sql_query("UPDATE users SET seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "halfdownload");
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?halfdown_success=2");
 die;
@@ -641,16 +641,17 @@ break;
 case 'ratio':
 //=== trade for one torrent 1:1 ratio
 $torrent_number = 0 + $_POST['torrent_id'];
-$res_snatched = sql_query("SELECT s.uploaded, s.downloaded, t.name FROM snatched AS s LEFT JOIN torrents AS t ON t.id = s.torrentid WHERE s.userid = '$userid' AND torrentid = ".sqlesc($torrent_number)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
-$arr_snatched = mysql_fetch_assoc($res_snatched);
+$res_snatched = sql_query("SELECT s.uploaded, s.downloaded, t.name FROM snatched AS s LEFT JOIN torrents AS t ON t.id = s.torrentid WHERE s.userid = ".sqlesc($userid)." AND torrentid = ".sqlesc($torrent_number)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
+$arr_snatched = mysqli_fetch_assoc($res_snatched);
 if ($arr_snatched['name'] == '')
 stderr("Error", "No torrent with that ID!<br />Back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.");
 if ($arr_snatched['uploaded'] >= $arr_snatched['downloaded'])
 stderr("Error", "Your ratio on that torrent is fine, you must have selected the wrong torrent ID.<br />Back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.");
-sql_query("UPDATE snatched SET uploaded = '$arr_snatched[downloaded]' WHERE userid = '$userid' AND torrentid = ".sqlesc($torrent_number)) or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE snatched SET uploaded = ".sqlesc($arr_snatched['downloaded'])." WHERE userid = ".sqlesc($userid)." AND torrentid = ".sqlesc($torrent_number)) or sqlerr(__FILE__, __LINE__);
 $difference = $arr_snatched['downloaded'] - $arr_snatched['uploaded'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 to 1 ratio on torrent: ".$arr_snatched['name']." ".$torrent_number.", ".$difference." added .\n " .$bonuscomment;
-sql_query("UPDATE users SET uploaded = $upload + $difference, bonuscomment = '$bonuscomment', seedbonus = '$seedbonus' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+$upload_to_add = $upload + $difference;
+sql_query("UPDATE users SET uploaded = ".sqlesc($upload_to_add).", bonuscomment = ".sqlesc($bonuscomment).", seedbonus = ".sqlesc($seedbonus)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?ratio_success=1");
 die;
 break;
@@ -661,7 +662,7 @@ if ($CURUSER['class'] > UC_VIP)
 stderr("Error", "Now why would you want to lower yourself to VIP?<br />go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
 $vip_until = (86400 * 28 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 month VIP Status.\n " .$bonuscomment;
-sql_query("UPDATE users SET class = ".UC_VIP.", vip_added = 'yes', vip_until = '$vip_until', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET class = ".UC_VIP.", vip_added = 'yes', vip_until = ".sqlesc($vip_until).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?class_success=1");
 die;
 break;
@@ -671,12 +672,12 @@ case 'warning':
 if ($CURUSER['warned'] == 0)
 stderr("Error", "How can we remove a warning that isn't there?<br />go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for removing warning.\n " .$bonuscomment;
-$res_warning = sql_query("SELECT modcomment FROM users WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
-$arr = mysql_fetch_assoc($res_warning);
+$res_warning = sql_query("SELECT modcomment FROM users WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+$arr = mysqli_fetch_assoc($res_warning);
 $modcomment = htmlspecialchars($arr['modcomment']);
 $modcomment = get_date( time(), 'DATE', 1 ) . " - Warning removed by - Bribe with Karma.\n". $modcomment;
 $modcom = sqlesc($modcomment);
-sql_query("UPDATE users SET warned = '0', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment', modcomment = $modcom WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET warned = '0', seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment).", modcomment = $modcom WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 $dt = sqlesc(time());
 $subject = sqlesc("Warning removed by Karma.");
 $msg = sqlesc("Your warning has been removed by the big Karma payoff... Please keep on your best behaviour from now on.\n");
@@ -689,7 +690,7 @@ case 'smile':
 //=== trade for one month special smilies :P
 $smile_until = (86400 * 28 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 month of custom smilies.\n " .$bonuscomment;
-sql_query("UPDATE users SET smile_until = '$smile_until', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET smile_until = ".sqlesc($smile_until).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?smile_success=1");
 die;
 break;
@@ -699,7 +700,7 @@ case 'invite':
 $invites = $CURUSER['invites'];
 $inv = $invites+$arr_points['menge'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for invites.\n " .$bonuscomment;
-sql_query("UPDATE users SET invites = '$inv', seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET invites = ".sqlesc($inv).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?invite_success=1");
 die;
 break;
@@ -713,7 +714,7 @@ $title = strip_tags($_POST['title']);
 $words = array('fuck', 'shit', 'Moderator', 'Administrator', 'Admin', 'pussy', 'Sysop', 'cunt', 'nigger', 'VIP', 'Super User', 'Power User', 'ADMIN', 'SYSOP', 'MODERATOR', 'ADMINISTRATOR');
 $title = str_replace($words, "I just wasted my karma", $title);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for custom title. Old title was $CURUSER[title] new title is ".$title.".\n " .$bonuscomment;
-sql_query("UPDATE users SET title = ".sqlesc($title).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)."") or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET title = ".sqlesc($title).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?title_success=1");
 die;
 break;
@@ -723,7 +724,7 @@ case 'gift_1':
 $points = 0 + $_POST['bonusgift'];
 $usernamegift = htmlentities(trim($_POST['username']));
 $res = sql_query("SELECT id,seedbonus,bonuscomment,username FROM users WHERE username=" . sqlesc($usernamegift));
-$arr = mysql_fetch_assoc($res);
+$arr = mysqli_fetch_assoc($res);
 $useridgift = $arr['id'];
 $userseedbonus = $arr['seedbonus'];
 $bonuscomment_gift = $arr['bonuscomment'];
@@ -747,10 +748,10 @@ if (!$useridgift){
 header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?gift_fail_user=1");
 die;
 }
-sql_query("SELECT bonuscomment,id FROM users WHERE id = '$useridgift'") or sqlerr(__FILE__, __LINE__);
+sql_query("SELECT bonuscomment,id FROM users WHERE id = ".sqlesc($useridgift)) or sqlerr(__FILE__, __LINE__);
 //=== and to post to the person who gets the gift!
-sql_query("UPDATE users SET seedbonus = '$seedbonus', bonuscomment = '$bonuscomment' WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
-sql_query("UPDATE users SET seedbonus = '$giftbonus1', bonuscomment = '$bonuscomment_gift' WHERE id = '$useridgift'");
+sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+sql_query("UPDATE users SET seedbonus = ".sqlesc($giftbonus1).", bonuscomment = ".sqlesc($bonuscomment_gift)." WHERE id = ".sqlesc($useridgift));
 //===send message
 $subject = sqlesc("Someone Loves you"); 
 $added = sqlesc(time());
@@ -788,9 +789,9 @@ function mysql_fetch_all($query, $default_value = Array())
 {
     $r = @sql_query($query);
     $result = Array();
-    if ($err = mysql_error())return $err;
-    if (@mysql_num_rows($r))
-        while ($row = mysql_fetch_array($r))$result[] = $row;
+    if ($err = ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)))return $err;
+    if (@mysqli_num_rows($r))
+        while ($row = mysqli_fetch_array($r))$result[] = $row;
     if (count($result) == 0)
         return $default_value;
     return $result;
@@ -799,7 +800,7 @@ function mysql_fetch_all($query, $default_value = Array())
 function write_bonus_log($userid, $amount, $type){
   $added = time();
   $donation_type = $type;
-  sql_query("INSERT INTO bonuslog (id, donation, type, added_at) VALUES('$userid', '$amount', '$donation_type', $added)") or sqlerr(__FILE__, __LINE__);
+  sql_query("INSERT INTO bonuslog (id, donation, type, added_at) VALUES(".sqlesc($userid).", ".sqlesc($amount).", ".sqlesc($donation_type).", ".sqlesc($added).")") or sqlerr(__FILE__, __LINE__);
 }
     
     $scheduled_events = mysql_fetch_all("SELECT * from `events` ORDER BY `startTime` DESC LIMIT 3;", array());
@@ -842,10 +843,10 @@ function write_bonus_log($userid, $amount, $type){
                         }
 
     $sql = "SELECT `pointspool`, `points` FROM `bonus` WHERE `art` = 'freeleech' OR `art` = 'doubleup' OR `art` = 'halfdown'";
-    $res = sql_query($sql)  or print (mysql_error());
-    $row = mysql_fetch_assoc($res);
-    $row2 = mysql_fetch_assoc($res);
-    $row3 = mysql_fetch_assoc($res);
+    $res = sql_query($sql) or sqlerr(__FILE__, __LINE__);
+    $row = mysqli_fetch_assoc($res);
+    $row2 = mysqli_fetch_assoc($res);
+    $row3 = mysqli_fetch_assoc($res);
     $fpointspool = $row["pointspool"];
     $dpointspool = $row2["pointspool"];
     $hpointspool = $row3["pointspool"];
@@ -894,8 +895,8 @@ function write_bonus_log($userid, $amount, $type){
     }
     //==09 Ezeros freeleech contribution top 10 - pdq.Bigjoos  
     $sql = "SELECT bonuslog.id, SUM(bonuslog.donation) as total, users.username FROM bonuslog left join users ON bonuslog.id=users.id WHERE bonuslog.type = 'freeleech' GROUP BY bonuslog.id ORDER BY total DESC LIMIT 10;";
-    $res2 = sql_query($sql);
-    while($row = mysql_fetch_assoc($res2)){
+    $res2 = sql_query($sql) or sqlerr(__FILE__, __LINE__);
+    while($row = mysqli_fetch_assoc($res2)){
     $top_donators_id = $row["id"];
     $damount_donated = $row["total"];
     $top_donators_username = $row['username'];
@@ -903,8 +904,8 @@ function write_bonus_log($userid, $amount, $type){
     }
 
     $sql = "SELECT bonuslog.id, SUM(bonuslog.donation) as total, users.username FROM bonuslog left join users ON bonuslog.id=users.id WHERE bonuslog.type = 'doubleupload' GROUP BY bonuslog.id ORDER BY total DESC LIMIT 10;";
-    $res2 = sql_query($sql);
-    while($row = mysql_fetch_assoc($res2)){
+    $res2 = sql_query($sql) or sqlerr(__FILE__, __LINE__);
+    while($row = mysqli_fetch_assoc($res2)){
     $top_donators_id = $row["id"];
     $damount_donated = $row["total"];
     $top_donators_username = $row['username'];
@@ -912,8 +913,8 @@ function write_bonus_log($userid, $amount, $type){
     }
 
     $sql = "SELECT bonuslog.id, SUM(bonuslog.donation) as total, users.username FROM bonuslog left join users ON bonuslog.id=users.id WHERE bonuslog.type = 'halfdownload' GROUP BY bonuslog.id ORDER BY total DESC LIMIT 10;";
-    $res2 = sql_query($sql);
-    while($row = mysql_fetch_assoc($res2)){
+    $res2 = sql_query($sql) or sqlerr(__FILE__, __LINE__);
+    while($row = mysqli_fetch_assoc($res2)){
     $top_donators_id = $row["id"];
     $damount_donated = $row["total"];
     $top_donators_username = $row['username'];
@@ -957,8 +958,8 @@ function write_bonus_log($userid, $amount, $type){
             <td style='background:transparent;height:25px;' align='center'>Points</td>
             <td style='background:transparent;height:25px;' align='center'>Trade</td></tr>";
 
-            $res = @sql_query("SELECT * FROM bonus WHERE enabled = 'yes' ORDER BY id ASC");
-            while ($gets = mysql_fetch_assoc($res)){
+            $res = sql_query("SELECT * FROM bonus WHERE enabled = 'yes' ORDER BY id ASC") or sqlerr(__FILE__, __LINE__);
+            while ($gets = mysqli_fetch_assoc($res)){
             //=======change colors
             $count1='';
             $count1= (++$count1)%2;
@@ -1077,5 +1078,5 @@ function write_bonus_log($userid, $amount, $type){
   <a class='altlink' href='{$TBDEV['baseurl']}/index.php'><b>Back to homepage</b></a></div>
   </td></tr></table></div>";
   
-print stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
+echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 ?>

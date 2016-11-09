@@ -20,7 +20,7 @@ $newpage = new page_verify();
 $newpage->create('tkIs');
 
 $res = sql_query("SELECT COUNT(*) FROM users") or sqlerr(__FILE__, __LINE__);
-$arr = mysql_fetch_row($res);
+$arr = mysqli_fetch_row($res);
 if ($arr[0] >= $TBDEV['maxusers'])
 stderr("Sorry", "The current user account limit (" . number_format($TBDEV['maxusers']) . ") has been reached. Inactive accounts are pruned all the time, please check back again later...");
 
@@ -67,6 +67,7 @@ $HTMLOUT .="<script type='text/javascript' src='scripts/jquery.js'></script>
 <form method='post' action='{$TBDEV['baseurl']}/take_invite_signup.php'>
 <noscript>Javascript must be enabled to login and use this site</noscript>
 <table border='1' cellspacing='0' cellpadding='10'>
+
 <tr><td align='right' class='heading'>Desired username:</td><td align='left'><input type='text' size='40' name='wantusername' id='wantusername' onblur='checkit();' /><div id='namecheck'></div></td></tr>
 <tr><td align='right' class='heading'>Pick a password:</td><td align='left'><input class='password' type='password' size='40' name='wantpassword' /></td></tr>
 <tr><td align='right' class='heading'>Enter password again:</td><td align='left'><input type='password' size='40' name='passagain' /></td></tr>
@@ -87,6 +88,7 @@ $HTMLOUT .="<script type='text/javascript' src='scripts/jquery.js'></script>
 		  $passhint .= "<option value='".$sph['id']."'>".$sph['question']."</option>\n"; 
 		  }
 		  $HTMLOUT .= "<tr><td align='right' class='heading'>{$lang['signup_select']}</td><td align='left'><select name='passhint'>\n$passhint\n</select></td></tr>
+
 		  <tr><td align='right' class='heading'>{$lang['signup_enter']}</td><td align='left'><input type='text' size='40'  name='hintanswer' /><br /><font class='small'>{$lang['signup_this_answer']}<br />{$lang['signup_this_answer1']}</font></td></tr>
 <tr><td align='right' class='heading'></td><td align='left'><input type='checkbox' name='rulesverify' value='yes' /> I will read the site rules page.<br />
 <input type='checkbox' name='faqverify' value='yes' /> I agree to read the FAQ before asking questions.<br />
@@ -99,5 +101,5 @@ $HTMLOUT .="<script type='text/javascript' src='scripts/jquery.js'></script>
  }
  $HTMLOUT .= "</td></tr></table></form>";
 
-print stdhead('Invites') . $HTMLOUT . stdfoot($stdfoot);
+echo stdhead('Invites') . $HTMLOUT . stdfoot($stdfoot);
 ?>

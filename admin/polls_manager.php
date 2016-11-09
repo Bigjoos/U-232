@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -77,8 +77,8 @@ function delete_poll() {
       stderr('USER WARNING', "<h2>You are about to delete a poll forever!</h2>
       <a href='javascript:history.back()' title='Cancel this operation!' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>&nbsp;<a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid={$pid}&amp;sure=1' title='Delete this poll, there is no going back!' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_tick.gif' alt='Delete' />Delete Sure?</span></a>");
     
-    @mysql_query("DELETE FROM polls WHERE pid = $pid");
-    @mysql_query("DELETE FROM poll_voters WHERE poll_id = $pid");
+    sql_query("DELETE FROM polls WHERE pid = ".sqlesc($pid)) or sqlerr(__FILE__, __LINE__);
+    sql_query("DELETE FROM poll_voters WHERE poll_id = ".sqlesc($pid)) or sqlerr(__FILE__, __LINE__);
     
     show_poll_archive();
 }
@@ -115,9 +115,9 @@ function update_poll() {
     
     $username = sqlesc($CURUSER['username']);
     
-    @mysql_query("UPDATE polls SET choices=$poll_data, starter_id={$CURUSER['id']}, starter_name=$username, votes=$total_votes, poll_question=$poll_title WHERE pid=$pid") or sqlerr(__FILE__,__LINE__);
+    sql_query("UPDATE polls SET choices=$poll_data, starter_id={$CURUSER['id']}, starter_name=$username, votes=$total_votes, poll_question=$poll_title WHERE pid=$pid") or sqlerr(__FILE__,__LINE__);
     
-    if( -1 == mysql_affected_rows() )
+    if( -1 == mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
       $msg = "<h2>An Error Occured!</h2>
       <a href='javascript:history.back()' title='Go back and fix the error' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>";
@@ -128,7 +128,7 @@ function update_poll() {
       <a href='admin.php?action=polls_manager' title='Return to Polls Manager' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_tick.gif' alt='Success' />Success</span></a>";
     }
     
-    print stdhead('Poll Manager::Add New Poll') . $msg . stdfoot();
+    echo stdhead('Poll Manager::Add New Poll') . $msg . stdfoot();
 
 }
 function insert_new_poll() {
@@ -153,9 +153,9 @@ function insert_new_poll() {
     
     $time = time();
     
-    @mysql_query("INSERT INTO polls (start_date, choices, starter_id, starter_name, votes, poll_question)VALUES($time, $poll_data, {$CURUSER['id']}, $username, 0, $poll_title)") or sqlerr(__FILE__,__LINE__);
+    sql_query("INSERT INTO polls (start_date, choices, starter_id, starter_name, votes, poll_question)VALUES($time, $poll_data, {$CURUSER['id']}, $username, 0, $poll_title)") or sqlerr(__FILE__,__LINE__);
     
-    if( false == mysql_insert_id() )
+    if( false == ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res) )
     {
       $msg = "<h2>An Error Occured!</h2>
       <a href='javascript:history.back()' title='Go back and fix the error' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>";
@@ -166,7 +166,7 @@ function insert_new_poll() {
       <a href='admin.php?action=polls_manager' title='Return to Polls Manager' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_tick.gif' alt='Success' />Success</span></a>";
     }
     
-    print stdhead('Poll Manager::Add New Poll') . $msg . stdfoot();
+    echo stdhead('Poll Manager::Add New Poll') . $msg . stdfoot();
 
 }
 
@@ -178,7 +178,7 @@ function show_poll_form() {
     
     $poll_box = poll_box($TBDEV['max_poll_questions'],$TBDEV['max_poll_choices_per_question'], 'poll_new');
 
-    print stdhead('Poll Manager::Add New Poll') . $poll_box . stdfoot();
+    echo stdhead('Poll Manager::Add New Poll') . $poll_box . stdfoot();
 
 }
 
@@ -192,12 +192,12 @@ function edit_poll_form() {
     $poll_choices = '';
     $poll_votes = '';
 
-    $query = mysql_query( "SELECT * FROM polls WHERE pid = ".intval($_GET['pid']) );
+    $query = sql_query("SELECT * FROM polls WHERE pid = ".sqlesc(intval($_GET['pid'])) ) or sqlerr(__FILE__, __LINE__);
 
-    if( false == mysql_num_rows($query) )
+    if( false == mysqli_num_rows($query) )
       return 'No poll with that ID';
       
-    $poll_data = mysql_fetch_assoc( $query );
+    $poll_data = mysqli_fetch_assoc( $query );
 
     $poll_answers = $poll_data['choices'] ? unserialize(stripslashes($poll_data['choices'])) : array();
 
@@ -229,7 +229,7 @@ function edit_poll_form() {
 
     $poll_box = poll_box( $TBDEV['max_poll_questions'], $TBDEV['max_poll_choices_per_question'], 'poll_update', $poll_questions, $poll_choices, $poll_votes, $show_open, $poll_question, $poll_multi );
 
-    print stdhead('Poll Manager::Edit Poll') . $poll_box . stdfoot();
+    echo stdhead('Poll Manager::Edit Poll') . $poll_box . stdfoot();
 }
 			
 			
@@ -238,9 +238,9 @@ function show_poll_archive() {
     global $TBDEV;
     
     $HTMLOUT = '';
-    $query = mysql_query( "SELECT * FROM polls ORDER BY start_date DESC");
+    $query = sql_query("SELECT * FROM polls ORDER BY start_date DESC") or sqlerr(__FILE__, __LINE__);
 
-    if( false == mysql_num_rows($query) )
+    if( false == mysqli_num_rows($query) )
     { 
       $HTMLOUT = "<h2>No polls defined</h2>
       <br />
@@ -262,18 +262,18 @@ function show_poll_archive() {
         <td>&nbsp;</td>
       </tr>";
       
-      while( $row = mysql_fetch_assoc($query) ) 
+      while( $row = mysqli_fetch_assoc($query) ) 
       {
         $row['start_date'] = get_date($row['start_date'], 'DATE');
         
         $HTMLOUT .= "<tr>
-          <td>{$row['pid']}</td>
-          <td>{$row['poll_question']}</td>
-          <td>{$row['votes']}</td>
-          <td>{$row['start_date']}</td>
-          <td><a href='userdetails.php?id={$row['starter_id']}'>{$row['starter_name']}</a></td>
-          <td><a href='admin.php?action=polls_manager&amp;mode=edit&amp;pid={$row['pid']}'><span class='btn' title='Edit poll'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_edit.gif' alt='Edit' />&nbsp;Edit</span></a>&nbsp;
-          <a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid={$row['pid']}'><span class='btn' title='Delete poll'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Delete' />&nbsp;Delete</span></a></td>
+          <td>".intval($row['pid'])."</td>
+          <td>".htmlspecialchars($row['poll_question'])."</td>
+          <td>".intval($row['votes'])."</td>
+          <td>".htmlspecialchars($row['start_date'])."</td>
+          <td><a href='userdetails.php?id=".intval($row['starter_id'])."'>".htmlspecialchars($row['starter_name'])."</a></td>
+          <td><a href='admin.php?action=polls_manager&amp;mode=edit&amp;pid=".intval($row['pid'])."'><span class='btn' title='Edit poll'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_edit.gif' alt='Edit' />&nbsp;Edit</span></a>&nbsp;
+          <a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid=".intval($row['pid'])."'><span class='btn' title='Delete poll'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Delete' />&nbsp;Delete</span></a></td>
         </tr>";
 
       }
@@ -281,7 +281,7 @@ function show_poll_archive() {
       $HTMLOUT .= "</table><br />";
       
     }
-    print stdhead('Poll manager::Poll Archive') . $HTMLOUT . stdfoot();
+    echo stdhead('Poll manager::Poll Archive') . $HTMLOUT . stdfoot();
 }
 
         

@@ -25,7 +25,7 @@ function docleanup() {
 	global $TBDEV, $queries, $C_queries;
    set_time_limit(1200);
    $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
-   while ($row = mysql_fetch_array($result)) {
+   while ($row = mysqli_fetch_array($result)) {
    if (($row["Time"] > 100) || ($row["Command"] == "Sleep")) {
    $sql = "kill " . $row["Id"] . "";
    sql_query($sql) or sqlerr(__FILE__, __LINE__);
@@ -36,7 +36,7 @@ function docleanup() {
 	do {
 		$res = sql_query("SELECT id FROM torrents");
 		$ar = array();
-		while ($row = mysql_fetch_array($res,MYSQL_NUM)) {
+		while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
 			$id = $row[0];
 			$ar[$id] = 1;
 		}
@@ -76,7 +76,7 @@ function docleanup() {
 
 		$res = sql_query("SELECT torrent FROM peers GROUP BY torrent");
 		$delids = array();
-		while ($row = mysql_fetch_array($res,MYSQL_NUM)) {
+		while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
 			$id = $row[0];
 			if (isset($ar[$id]) && $ar[$id])
 				continue;
@@ -87,7 +87,7 @@ function docleanup() {
 
 		$res = sql_query("SELECT torrent FROM files GROUP BY torrent");
 		$delids = array();
-		while ($row = mysql_fetch_array($res,MYSQL_NUM)) {
+		while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
 			$id = $row[0];
 			if (isset($ar[$id]) && $ar[$id])
 				continue;
@@ -129,12 +129,12 @@ ORDER BY t.id ASC';
 $updatetorrents = array();
 
 $tq = sql_query($tsql);
-	while ($t = mysql_fetch_assoc($tq)) {
+	while ($t = mysqli_fetch_assoc($tq)) {
  
     if ($t['seeders'] != $t['seeders_num'] || $t['leechers'] != $t['leechers_num'] || $t['comments'] != $t['comments_num'])
         $updatetorrents[] = '('.$t['id'].', '.$t['seeders_num'].', '.$t['leechers_num'].', '.$t['comments_num'].')';
 }
-mysql_free_result($tq);
+((mysqli_free_result($tq) || (is_object($tq) && (get_class($tq) == "mysqli_result"))) ? true : false);
 
 if (count($updatetorrents))
     sql_query('INSERT INTO torrents (id, seeders, leechers, comments) VALUES '.implode(', ', $updatetorrents).
@@ -145,15 +145,15 @@ unset($updatetorrents);
       //=== Using this will work for multiple torrents UP TO 5!... change the 5 to whatever... 1 to give the karma for only 1 torrent at a time, or 100 to make it unlimited (almost) your choice :P
       ///====== Seeding bonus per torrent
       $res = sql_query('SELECT COUNT(torrent) As tcount, userid FROM peers WHERE seeder =\'yes\' GROUP BY userid') or sqlerr(__FILE__, __LINE__);
-      if (mysql_num_rows($res) > 0) {
-        while ($arr = mysql_fetch_assoc($res)) {
+      if (mysqli_num_rows($res) > 0) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             if ($arr['tcount'] >= 1000)
                 $arr['tcount'] = 5;
             $users_buffer[] = '(' . $arr['userid'] . ',0.225 * ' . $arr['tcount'] . ')';
         }
         if (sizeof($users_buffer) > 0) {
             sql_query("INSERT INTO users (id,seedbonus) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE seedbonus=seedbonus+values(seedbonus)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup - " . $count / 2 . " users received seedbonus");
         }
         unset ($users_buffer);
@@ -164,15 +164,15 @@ unset($updatetorrents);
       ///====== Coins per torrent
       if($TBDEV['coins']){
       $res = sql_query('SELECT COUNT(torrent) As tcount, userid FROM peers WHERE seeder =\'yes\' GROUP BY userid') or sqlerr(__FILE__, __LINE__);
-      if (mysql_num_rows($res) > 0) {
-        while ($arr = mysql_fetch_assoc($res)) {
+      if (mysqli_num_rows($res) > 0) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             if ($arr['tcount'] >= 1000)
                 $arr['tcount'] = 5;
             $users_buffer[] = '(' . $arr['userid'] . ',0.500 * ' . $arr['tcount'] . ')';
         }
         if (sizeof($users_buffer) > 0) {
             sql_query("INSERT INTO users (id,coins) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE coins=coins+values(coins)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup - " . $count / 2 . " users received coins");
         }
         unset ($users_buffer);
@@ -194,7 +194,7 @@ unset($updatetorrents);
    sql_query("UPDATE stats SET regusers = '$registered', unconusers = '$unverified', torrents = '$torrents', seeders = '$seeders', leechers = '$leechers', unconnectables = '$unconnectables', torrentstoday = '$torrentstoday', donors = '$donors', forumposts = '$forumposts', forumtopics = '$forumtopics', numactive = '$numactive' WHERE id = '1' LIMIT 1");
    //== Cf's update forum post/topic count
    $forums = sql_query("SELECT t.forumid, count( DISTINCT p.topicid ) AS topics, count( * ) AS posts FROM posts p LEFT JOIN topics t ON t.id = p.topicid LEFT JOIN forums f ON f.id = t.forumid GROUP BY t.forumid");
-   while ($forum = mysql_fetch_assoc($forums)) {
+   while ($forum = mysqli_fetch_assoc($forums)) {
    sql_query("update forums set postcount={$forum['posts']}, topiccount={$forum['topics']} where id={$forum['forumid']}");
    }
    write_log("Autoclean-------------------- Auto cleanup Complete using $queries queries --------------------");
@@ -205,7 +205,7 @@ unset($updatetorrents);
   global $TBDEV, $queries, $C_queries;
   set_time_limit(1200);
   $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
-  while ($row = mysql_fetch_array($result)) {
+  while ($row = mysqli_fetch_array($result)) {
   if (($row["Time"] > 100) || ($row["Command"] == "Sleep")) {
   $sql = "kill " . $row["Id"] . "";
   sql_query($sql) or sqlerr(__FILE__, __LINE__);
@@ -237,10 +237,10 @@ unset($updatetorrents);
   //=== Updated remove custom smilies by Bigjoos:)
     $res = sql_query("SELECT id FROM users WHERE smile_until < ".TIME_NOW." AND smile_until <> '0'") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $subject = "Custom smilies expired.";
         $msg = "Your Custom smilies have timed out and has been auto-removed by the system. If you would like to have them again, exchange some Karma Bonus Points again. Cheers!\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Custom smilies Automatically Removed By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ','.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ' )';
             $users_buffer[] = '(' . $arr['id'] . ', \'0\', ' . $modcomment . ')';
@@ -248,7 +248,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, smile_until, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE smile_until=values(smile_until),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-        $count = mysql_affected_rows();
+        $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
         write_log("Cleanup - Removed Custom smilies from " . $count / 2 . " members");
         }
         unset ($users_buffer);
@@ -257,10 +257,10 @@ unset($updatetorrents);
     //=== Updated remove karma vip by Bigjoos - change class number '1' in the users_buffer to whatever is under your vip class number
     $res = sql_query("SELECT id, modcomment FROM users WHERE vip_added='yes' AND vip_until < ".TIME_NOW."") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
          $subject = "VIP status expired.";
          $msg = "Your VIP status has timed out and has been auto-removed by the system. Become a VIP again by donating to {$TBDEV['site_name']} , or exchanging some Karma Bonus Points. Cheers !\n";
-         while ($arr = mysql_fetch_assoc($res)) {
+         while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Vip status Automatically Removed By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ','.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ')';
             $users_buffer[] = '(' . $arr['id'] . ',1, \'no\', \'0\' , ' . $modcomment . ')';
@@ -268,7 +268,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, class, vip_added, vip_until, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE class=values(class),vip_added=values(vip_added),vip_until=values(vip_until),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-        $count = mysql_affected_rows();
+        $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
         write_log("Cleanup - Karma Vip status expired on - " . $count / 2 . " Member(s)");
         }
         unset ($users_buffer);
@@ -278,10 +278,10 @@ unset($updatetorrents);
   //=== Anonymous profile by Bigjoos:)
     $res = sql_query("SELECT id FROM users WHERE anonymous_until < ".TIME_NOW." AND anonymous_until <> '0'") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $subject = "Anonymous profile expired.";
         $msg = "Your Anonymous profile has timed out and has been auto-removed by the system. If you would like to have it again, exchange some Karma Bonus Points again. Cheers!\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Anonymous profile Automatically Removed By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ','.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ' )';
             $users_buffer[] = '(' . $arr['id'] . ', \'0\', \'no\', ' . $modcomment . ')';
@@ -289,7 +289,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, anonymous_until, anonymous, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE anonymous_until=values(anonymous_until),anonymous=values(anonymous), modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-        $count = mysql_affected_rows();
+        $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
         write_log("Cleanup - Removed Anonymous profile from " . $count / 2 . " members");
         }
         unset ($users_buffer);
@@ -300,7 +300,7 @@ unset($updatetorrents);
 	$days = 28;
 	$dt = (time() - ($days * 86400));
 	$res = sql_query("SELECT id, name FROM torrents WHERE added < $dt AND seeders='0'");
-	while ($arr = mysql_fetch_assoc($res))
+	while ($arr = mysqli_fetch_assoc($res))
 	{
 		@unlink("{$TBDEV['torrent_dir']}/{$arr['id']}.torrent");
 		sql_query("DELETE FROM torrents WHERE id={$arr['id']}");
@@ -322,10 +322,10 @@ unset($updatetorrents);
     //== Donation Progress Mod Updated For Tbdev 2009/2010 by Bigjoos
     $res = sql_query("SELECT id, modcomment, vipclass_before FROM users WHERE donor='yes' AND donoruntil < ".TIME_NOW." AND donoruntil <> '0'") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $subject = "Donor status removed by system.";
         $msg = "Your Donor status has timed out and has been auto-removed by the system, and your Vip status has been removed. We would like to thank you once again for your support to {$TBDEV['site_name']}. If you wish to re-new your donation, Visit the site paypal link. Cheers!\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Donation status Automatically Removed By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ','.time().', ' . sqlesc($msg) . ',' . sqlesc($subject) . ')';
@@ -334,7 +334,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, class, donor, donoruntil, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE class=values(class),donor=values(donor),donoruntil=values(donoruntil),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: Donation status expired - " . $count / 2 . " Member(s)");
         }
         unset ($users_buffer);
@@ -349,12 +349,12 @@ unset($updatetorrents);
     $length = 3 * 7; // Give 3 weeks to let them sort there shit
     $res = sql_query("SELECT id FROM users WHERE enabled='yes' AND class = ".UC_USER." AND leechwarn = '0' AND uploaded / downloaded < $minratio AND downloaded >= $downloaded AND immunity = '0'") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $dt = sqlesc(time());
         $subject = "Auto leech warned";
         $msg = "You have been warned and your download rights have been removed due to your low ratio. You need to get a ratio of 0.5 within the next 3 weeks or your Account will be disabled.";
         $leechwarn = sqlesc(time() + ($length * 86400));
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Automatically Leech warned and downloads disabled By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ', '.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ')';
             $users_buffer[] = '(' . $arr['id'] . ',' . $leechwarn . ',\'0\', ' . $modcomment . ')';
@@ -362,7 +362,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, leechwarn, downloadpos, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE leechwarn=values(leechwarn),downloadpos=values(downloadpos),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: System applied auto leech Warning(s) to  " . $count / 2 . " Member(s)");
         }
         unset ($users_buffer);
@@ -374,10 +374,10 @@ unset($updatetorrents);
     $minratio = 0.5; // ratio > 0.5
     $res = sql_query("SELECT id FROM users WHERE downloadpos = '0' AND leechwarn > '1' AND uploaded / downloaded >= $minratio") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
        $subject = "Auto leech warning removed";
         $msg = "Your warning for a low ratio has been removed and your downloads enabled. We highly recommend you to keep your ratio positive to avoid being automatically warned again.\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Leech warn removed and download enabled By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ','.time().', ' . sqlesc($msg) . ',  ' . sqlesc($subject) . ')';
             $users_buffer[] = '(' . $arr['id'] . ', \'0\', \'1\', ' . $modcomment . ')';
@@ -385,7 +385,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, leechwarn, downloadpos, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE leechwarn=values(leechwarn),downloadpos=values(downloadpos),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: System removed auto leech Warning(s) and renabled download(s) - " . $count / 2 . " Member(s)");
         }
         unset ($users_buffer);
@@ -396,14 +396,14 @@ unset($updatetorrents);
     //== Disabled expired leechwarns
     $res = sql_query("SELECT id FROM users WHERE leechwarn > '1' AND leechwarn < ".TIME_NOW." AND leechwarn <> '0' ") or sqlerr(__FILE__, __LINE__);
     $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
-        while ($arr = mysql_fetch_assoc($res)) {
+    if (mysqli_num_rows($res) > 0) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - User disabled - Low ratio\n");
             $users_buffer[] = '(' . $arr['id'] . ' , \'0\', \'no\', ' . $modcomment . ')';
         }
         if (sizeof($users_buffer) > 0) {
             sql_query("INSERT INTO users (id, leechwarn, enabled, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE class=values(class),leechwarn=values(leechwarn),enabled=values(enabled),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: Disabled " . $count / 2 . " Member(s) - Leechwarns expired");
         }
         unset ($users_buffer);
@@ -414,10 +414,10 @@ unset($updatetorrents);
 	$joined = (time() - 86400*90);
     $res = sql_query("SELECT id, uploaded, downloaded FROM users WHERE invites='1' AND class = ".UC_USER." AND uploaded / downloaded <= $ratiocheck AND enabled='yes' AND added < $joined") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $subject ="Auto Invites";
         $msg = "Congratulations, your user group met a set out criteria therefore you have been awarded 2 invites  :)\n Please use them carefully. Cheers ".$TBDEV['site_name']." staff.\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $ratio = number_format($arr['uploaded'] / $arr['downloaded'], 3);
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Awarded 2 bonus invites by System (UL=" . mksize($arr['uploaded']) . ", DL=" . mksize($arr['downloaded']) . ", R=" . $ratio . ") \n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ', '.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ')';
@@ -426,7 +426,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, invites, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE invites = invites+values(invites), modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: Awarded 2 bonus invites to " . $count / 2 . " member(s) ");
         }
         unset ($users_buffer);
@@ -440,7 +440,7 @@ unset($updatetorrents);
     global $TBDEV, $queries, $C_queries;
     set_time_limit(1200);
     $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
-    while ($row = mysql_fetch_array($result)) {
+    while ($row = mysqli_fetch_array($result)) {
     if (($row["Time"] > 100) || ($row["Command"] == "Sleep")) {
     $sql = "kill " . $row["Id"] . "";
     sql_query($sql) or sqlerr(__FILE__, __LINE__);
@@ -453,13 +453,13 @@ unset($updatetorrents);
     //$secs = 1 * 60; //== set to 60 secs for testing - 1 * 60
     $hnr = time() - $secs;
 	  $res = sql_query('SELECT id FROM snatched WHERE hit_and_run <> \'0\' AND hit_and_run < '.sqlesc($hnr).'') or sqlerr(__FILE__, __LINE__);	
-	  while ($arr = mysql_fetch_assoc($res))
+	  while ($arr = mysqli_fetch_assoc($res))
 	  {
 	  sql_query('UPDATE snatched SET mark_of_cain = \'yes\' WHERE id='.sqlesc($arr['id'])) or sqlerr(__FILE__, __LINE__);
 	  }
     //=== Hit and run... disable Downloading rights if they have 3 marks of cain if there not immune
 	  $res_fuckers = sql_query('SELECT count(*) AS poop, snatched.userid, users.username, users.modcomment, users.hit_and_run_total, users.downloadpos FROM snatched LEFT JOIN users ON snatched.userid = users.id WHERE snatched.mark_of_cain = \'yes\' AND users.hnrwarn = \'no\' AND users.immunity = \'0\' GROUP BY snatched.userid') or sqlerr(__FILE__, __LINE__);	
-	  while ($arr_fuckers = mysql_fetch_assoc($res_fuckers))
+	  while ($arr_fuckers = mysqli_fetch_assoc($res_fuckers))
 	  {
 		if ($arr_fuckers['poop'] > 10 && $arr_fuckers['downloadpos'] == 1)
 		{
@@ -475,10 +475,10 @@ unset($updatetorrents);
 	  }
     //=== Hit and run... turn their DLs back on if they start seeding again
     $res_good_boy = sql_query('SELECT id, username, modcomment FROM users WHERE hnrwarn = \'yes\' AND downloadpos = \'0\'') or sqlerr(__FILE__, __LINE__);
-    while ($arr_good_boy = mysql_fetch_assoc($res_good_boy))
+    while ($arr_good_boy = mysqli_fetch_assoc($res_good_boy))
 	  {
 	  $res_count = sql_query('SELECT count(*) FROM snatched WHERE userid = '.sqlesc($arr_good_boy['id']).' AND mark_of_cain = \'yes\'') or sqlerr(__FILE__, __LINE__);
-	  $arr_count = mysql_fetch_row($res_count);
+	  $arr_count = mysqli_fetch_row($res_count);
 		if ($arr_count[0] < 10)
 		{
 		//=== Set them to yes DLs
@@ -511,10 +511,10 @@ unset($updatetorrents);
   $days = 7;
   $backup_dir = 'C://AppServ/www/include/backup'; //-- path to the backup folder
   $res = sql_query("SELECT id, name FROM dbbackup WHERE added < ".sqlesc(time() - ($days * 86400))) or sqlerr(__FILE__, __LINE__);
-  if (mysql_num_rows($res) > 0)
+  if (mysqli_num_rows($res) > 0)
   {
   $ids = array();
-  while ($arr = mysql_fetch_assoc($res))
+  while ($arr = mysqli_fetch_assoc($res))
   {
   $ids[] = (int)$arr['id'];
   $filename = $backup_dir.'/'.$arr['name'];
@@ -544,10 +544,10 @@ unset($updatetorrents);
 	$maxdt = (time() - 86400*28);
     $res = sql_query("SELECT id, uploaded, downloaded FROM users WHERE class = 0 AND uploaded >= $limit AND uploaded / downloaded >= $minratio AND enabled='yes' AND added < $maxdt") or sqlerr(__FILE__, __LINE__);
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $subject ="Auto Promotion";
         $msg = "Congratulations, you have been Auto-Promoted to [b]Power User[/b]. :)\n You get one extra invite.\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $ratio = number_format($arr['uploaded'] / $arr['downloaded'], 3);
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Promoted to Power User by System (UL=" . mksize($arr['uploaded']) . ", DL=" . mksize($arr['downloaded']) . ", R=" . $ratio . ") \n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ', '.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ')';
@@ -556,7 +556,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, class, invites, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE class=values(class), invites = invites+values(invites), modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: Promoted " . $count / 2 . " member(s) from User to Power User");
         }
         unset ($users_buffer);
@@ -568,9 +568,9 @@ unset($updatetorrents);
     $res = sql_query("SELECT id, uploaded, downloaded FROM users WHERE class = 1 AND uploaded / downloaded < $minratio") or sqlerr(__FILE__, __LINE__);
     $subject ="Auto Demotion";
     $msgs_buffer = $users_buffer = array();
-    if (mysql_num_rows($res) > 0) {
+    if (mysqli_num_rows($res) > 0) {
         $msg = "You have been auto-demoted from [b]Power User[/b] to [b]User[/b] because your share ratio has dropped below  $minratio.\n";
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = mysqli_fetch_assoc($res)) {
             $ratio = number_format($arr['uploaded'] / $arr['downloaded'], 3);
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Demoted To User by System (UL=" . mksize($arr['uploaded']) . ", DL=" . mksize($arr['downloaded']) . ", R=" . $ratio . ") \n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ', '.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ')';
@@ -579,7 +579,7 @@ unset($updatetorrents);
         if (sizeof($msgs_buffer) > 0) {
             sql_query("INSERT INTO messages (sender,receiver,added,msg,subject) VALUES " . implode(', ', $msgs_buffer)) or sqlerr(__FILE__, __LINE__);
             sql_query("INSERT INTO users (id, class, modcomment) VALUES " . implode(', ', $users_buffer) . " ON DUPLICATE key UPDATE class=values(class),modcomment=concat(values(modcomment),modcomment)") or sqlerr(__FILE__, __LINE__);
-            $count = mysql_affected_rows();
+            $count = mysqli_affected_rows($GLOBALS["___mysqli_ston"]);
             write_log("Cleanup: Demoted " . $count / 2 . " member(s) from Power User to User");
             status_change($arr['id']);
         }
@@ -596,7 +596,7 @@ unset($updatetorrents);
   global $TBDEV, $queries, $C_queries;
   set_time_limit(1200);
   $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
-  while ($row = mysql_fetch_array($result)) {
+  while ($row = mysqli_fetch_array($result)) {
   if (($row["Time"] > 100) || ($row["Command"] == "Sleep")) {
   $sql = "kill " . $row["Id"] . "";
   sql_query($sql) or sqlerr(__FILE__, __LINE__);
@@ -604,15 +604,15 @@ unset($updatetorrents);
   }
   ignore_user_abort(1);
   $alltables = sql_query("SHOW TABLES") or sqlerr(__FILE__, __LINE__);
-  while ($table = mysql_fetch_assoc($alltables)) {
+  while ($table = mysqli_fetch_assoc($alltables)) {
   foreach ($table as $db => $tablename) {
   $sql = "OPTIMIZE TABLE $tablename";
   /* Preg match the sql incase it was hijacked somewhere!(will use CHECK|ANALYZE|REPAIR|later) */
   if (preg_match('@^(CHECK|ANALYZE|REPAIR|OPTIMIZE)[[:space:]]TABLE[[:space:]]' . $tablename . '$@i', $sql))
-   sql_query($sql) or die("<b>Something was not right!</b>.\n<br />Query: " . $sql . "<br />\nError: (" . mysql_errno() . ") " . htmlspecialchars(mysql_error()));
+   sql_query($sql) or die("<b>Something was not right!</b>.\n<br />Query: " . $sql . "<br />\nError: (" . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) . ") " . htmlspecialchars(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
    }
    }
-   @mysql_free_result($alltables);
+   @((mysqli_free_result($alltables) || (is_object($alltables) && (get_class($alltables) == "mysqli_result"))) ? true : false);
    write_log("Auto-optimizedb--------------------Auto Optimization Complete using $queries queries --------------------");
    }
 ?>

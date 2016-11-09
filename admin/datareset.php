@@ -28,7 +28,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -44,12 +44,12 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 
 function deletetorrent($id) {
     global $TBDEV;
-    mysql_query("DELETE FROM torrents WHERE id = $id");
-    mysql_query("DELETE FROM coins WHERE torrentid = $id");
-    mysql_query("DELETE FROM bookmarks WHERE torrentid = $id");
-    mysql_query("DELETE FROM snatched WHERE torrentid = $id");
+    sql_query("DELETE FROM torrents WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    sql_query("DELETE FROM coins WHERE torrentid = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    sql_query("DELETE FROM bookmarks WHERE torrentid = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    sql_query("DELETE FROM snatched WHERE torrentid = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     foreach(explode(".","peers.files.comments.ratings") as $x)
-        @mysql_query("DELETE FROM $x WHERE torrent = $id");
+        sql_query("DELETE FROM ".sqlesc($x)." WHERE torrent = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     unlink("{$TBDEV['torrent_dir']}/$id.torrent");
 }
 
@@ -58,24 +58,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$tid = (isset($_POST["tid"]) ? 0 + $_POST["tid"] : 0);
 	if($tid == 0)
 		stderr(":w00t:","wtf are your trying to do!?");
-	if (get_row_count("torrents","where id=".$tid) != 1)
+	if (get_row_count("torrents","where id=".sqlesc($tid)) != 1)
 		stderr(":w00t:","That is not a torrent !!!!");
 	
-	$q1 = mysql_query("SELECT s.downloaded as sd , t.id as tid, t.name,t.size, u.username,u.id as uid,u.downloaded as ud FROM torrents as t LEFT JOIN snatched as s ON s.torrentid = t.id LEFT JOIN users as u ON u.id = s.userid WHERE t.id =".$tid) or sqlerr(__FILE__, __LINE__);
-	while ($a = mysql_fetch_assoc($q1))
+	$q1 = sql_query("SELECT s.downloaded as sd , t.id as tid, t.name,t.size, u.username,u.id as uid,u.downloaded as ud FROM torrents as t LEFT JOIN snatched as s ON s.torrentid = t.id LEFT JOIN users as u ON u.id = s.userid WHERE t.id =".sqlesc($tid)) or sqlerr(__FILE__, __LINE__);
+	while ($a = mysqli_fetch_assoc($q1))
 	{
 		$newd = ($a["ud"] > 0 ? $a["ud"]-$a["sd"] : 0 );
-		$new_download[] = "(".$a["uid"].",".$newd.")";
-		$tname = $a["name"];
-		$msg = "Hey , ".$a["username"]."\n";
-		$msg .= "Looks like torrent [b]".$a["name"]."[/b] is nuked and we want to take back the data you downloaded\n";
+		$new_download[] = "(".sqlesc($a["uid"]).",".sqlesc($newd).")";
+		$tname = htmlspecialchars($a["name"]);
+		$msg = "Hey , ".htmlspecialchars($a["username"])."\n";
+		$msg .= "Looks like torrent [b]".htmlspecialchars($a["name"])."[/b] is nuked and we want to take back the data you downloaded\n";
 		$msg .= "So you downloaded ".mksize($a["sd"])." your new download will be ".mksize($newd)."\n";
-		$pms[] = "(0,".$a["uid"].",".sqlesc(time()).",".sqlesc($msg).")";
+		$pms[] = "(0,".sqlesc($a["uid"]).",".sqlesc(time()).",".sqlesc($msg).")";
 	}
 	//==Send the pm !!
-	mysql_query("INSERT into messages (sender, receiver, added, msg) VALUES ".join(",",$pms)) or sqlerr(__FILE__, __LINE__);
+	sql_query("INSERT into messages (sender, receiver, added, msg) VALUES ".join(",",$pms)) or sqlerr(__FILE__, __LINE__);
 	//==Update user download amount
-	mysql_query("INSERT INTO users (id,downloaded) VALUES ".join(",",$new_download)." ON DUPLICATE key UPDATE downloaded=values(downloaded)") or sqlerr(__FILE__, __LINE__);
+	sql_query("INSERT INTO users (id,downloaded) VALUES ".join(",",$new_download)." ON DUPLICATE key UPDATE downloaded=values(downloaded)") or sqlerr(__FILE__, __LINE__);
 	deletetorrent($tid);
 	write_log("Torrent $tname was deleted by ".$CURUSER["username"]." and all users were Re-Paid Download credit");
 	header("Refresh: 3; url=admin.php?action=datareset");
@@ -102,6 +102,6 @@ $HTMLOUT .="<form action='admin.php?action=datareset' method='post'>
 	</form>";
 
 $HTMLOUT .= end_frame();
-print stdhead('Data Reset Manager') . $HTMLOUT . stdfoot();
+echo stdhead('Data Reset Manager') . $HTMLOUT . stdfoot();
 }
 ?>

@@ -18,7 +18,7 @@ $HTMLOUT .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 <body>
 <div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 </body></html>";
-print $HTMLOUT;
+echo $HTMLOUT;
 exit();
 }
 
@@ -39,7 +39,7 @@ function is_set_not_empty($param) {
     return FALSE;
 }
 
-print stdhead($lang['usersearch_window_title']);
+echo stdhead($lang['usersearch_window_title']);
 echo "<h1>{$lang['usersearch_title']}</h1>\n";
 
 $where_is = $join_is = $q1 = $comment_is = $comments_exc = $email_is = '';
@@ -114,7 +114,7 @@ echo "<option value='$i' ".(((isset($_POST['st'])?$_POST['st']:"0")=="$i")?"sele
    $class = '';
   for ($i = 2;;++$i) {
 if ($c = get_user_class_name($i-2))
-        print("<option value='" . $i . "'".((isset($class)?$class:0) == $i? " selected='selected'" : "") . ">$c</option>\n");
+        echo("<option value='" . $i . "'".((isset($class)?$class:0) == $i? " selected='selected'" : "") . ">$c</option>\n");
 else
 break;
 }
@@ -789,8 +789,8 @@ u.class, u.uploaded, u.downloaded, u.donor, u.modcomment, u.enabled, u.warned";
   }
 // </temporary> /////////////////////////////////////////////////////
 
-  $res = sql_query($queryc) or sqlerr();
-  $arr = mysql_fetch_row($res);
+  $res = sql_query($queryc) or sqlerr(__FILE__, __LINE__);
+  $arr = mysqli_fetch_row($res);
   $count = $arr[0];
 
   $q1 = isset($q1)?($q1."&amp;"):"";
@@ -801,9 +801,9 @@ u.class, u.uploaded, u.downloaded, u.donor, u.modcomment, u.enabled, u.warned";
 
   $query1 .= $pager['limit'];
 
-  $res = sql_query($query1) or sqlerr();
+  $res = sql_query($query1) or sqlerr(__FILE__, __LINE__);
 
-  if (mysql_num_rows($res) == 0)
+  if (mysqli_num_rows($res) == 0)
    stdmsg($lang['usersearch_warn'],$lang['usersearch_nouser']);
   else
   {
@@ -823,7 +823,7 @@ u.class, u.uploaded, u.downloaded, u.donor, u.modcomment, u.enabled, u.warned";
         "<td class='colhead'>{$lang['usersearch_pDL']}</td>".
         "<td class='colhead'>{$lang['usersearch_history']}</td></tr>";
         $ids = '';
-    while ($user = mysql_fetch_array($res))
+    while ($user = mysqli_fetch_array($res))
     {
      //if ($user['added'] == '0000-00-00 00:00:00')
        //$user['added'] = '---';
@@ -834,7 +834,7 @@ u.class, u.uploaded, u.downloaded, u.donor, u.modcomment, u.enabled, u.warned";
       {
 $nip = ip2long($user['ip']);
         $auxres = sql_query("SELECT COUNT(*) FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
-        $array = mysql_fetch_row($auxres);
+        $array = mysqli_fetch_row($auxres);
      if ($array[0] == 0)
        $ipstr = $user['ip'];
 else
@@ -843,8 +843,8 @@ $ipstr = "<a href='staffpanel.php?tool=testip&amp;action=testip&amp;ip={$user['i
 else
        $ipstr = "---";
 
-      $auxres = sql_query("SELECT SUM(uploaded) AS pul, SUM(downloaded) AS pdl FROM peers WHERE userid = ".$user['id']) or sqlerr(__FILE__, __LINE__);
-      $array = mysql_fetch_array($auxres);
+      $auxres = sql_query("SELECT SUM(uploaded) AS pul, SUM(downloaded) AS pdl FROM peers WHERE userid = ".sqlesc($user['id'])) or sqlerr(__FILE__, __LINE__);
+      $array = mysqli_fetch_array($auxres);
 
       $pul = $array['pul'];
       $pdl = $array['pdl'];
@@ -862,27 +862,27 @@ else
       "SELECT COUNT(DISTINCT p.id)
 FROM posts AS p LEFT JOIN topics as t ON p.topicid = t.id
 LEFT JOIN forums AS f ON t.forumid = f.id
-WHERE p.userid = " . $user['id'] . " AND f.minclassread <= " . $CURUSER['class']) or sqlerr(__FILE__, __LINE__);
+WHERE p.userid = " . sqlesc($user['id']) . " AND f.minclassread <= " . sqlesc($CURUSER['class'])) or sqlerr(__FILE__, __LINE__);
 
-      $n = mysql_fetch_row($auxres);
+      $n = mysqli_fetch_row($auxres);
       $n_posts = $n[0];
 
-      $auxres = sql_query("SELECT COUNT(id) FROM comments WHERE user = ".$user['id']) or sqlerr(__FILE__, __LINE__);
+      $auxres = sql_query("SELECT COUNT(id) FROM comments WHERE user = ".sqlesc($user['id'])) or sqlerr(__FILE__, __LINE__);
 // Use LEFT JOIN to exclude orphan comments
       // $auxres = mysql_query("SELECT COUNT(c.id) FROM comments AS c LEFT JOIN torrents as t ON c.torrent = t.id WHERE c.user = '".$user['id']."'") or sqlerr(__FILE__, __LINE__);
-      $n = mysql_fetch_row($auxres);
+      $n = mysqli_fetch_row($auxres);
       $n_comments = $n[0];
       $ids .= $user['id'].':';
-     echo "<tr><td><b><a href='userdetails.php?id=" . $user['id'] . "'>" .
-       $user['username']."</a></b>" .
+     echo "<tr><td><b><a href='userdetails.php?id=" . intval($user['id']) . "'>" .
+       htmlspecialchars($user['username'])."</a></b>" .
        ($user["donor"] == "yes" ? "<img src='pic/star.gif' alt=\"Donor\" />" : "") .
 ($user["warned"] == "yes" ? "<img src=\"pic/warned.gif\" alt=\"Warned\" />" : "") . "</td>
 <td>" . ratios($user['uploaded'], $user['downloaded']) . "</td>
 <td>" . $ipstr . "</td><td>" . $user['email'] . "</td>
 <td><div align='center'>" . get_date($user['added'], '') . "</div></td>
 <td><div align='center'>" . get_date($user['last_access'], '',0,1) . "</div></td>
-<td><div align='center'>" . $user['status'] . "</div></td>
-<td><div align='center'>" . $user['enabled']."</div></td>
+<td><div align='center'>" . htmlspecialchars($user['status']) . "</div></td>
+<td><div align='center'>" . htmlspecialchars($user['enabled'])."</div></td>
 <td><div align='center'>" . ratios($pul,$pdl) . "</div></td>
 <td><div align='right'>" . number_format($pul / 1048576) . "</div></td>
 <td><div align='right'>" . number_format($pdl / 1048576) . "</div></td>
@@ -917,9 +917,9 @@ WHERE p.userid = " . $user['id'] . " AND f.minclassread <= " . $CURUSER['class']
 <tr>
 <td>
 <div align='center'>
-<input name='n_pms' type='hidden' value='<?php print($count);?>' />
-<input name='ann_query' type='hidden' value='<?php print($announcement_query);?>' />
-<input name='ann_hash' type='hidden' value ='<?php print(hashit($announcement_query, $count));?>' />
+<input name='n_pms' type='hidden' value='<?php echo($count);?>' />
+<input name='ann_query' type='hidden' value='<?php echo($announcement_query);?>' />
+<input name='ann_hash' type='hidden' value ='<?php echo(hashit($announcement_query, $count));?>' />
 <button type='submit'>Create New Announcement</button>
 </div></td>
 </tr>
@@ -929,8 +929,8 @@ WHERE p.userid = " . $user['id'] . " AND f.minclassread <= " . $CURUSER['class']
 }
 }
 if(isset($pagemenu))
-print("<p>$pagemenu<br />$browsemenu</p>");
-print stdfoot();
+echo("<p>$pagemenu<br />$browsemenu</p>");
+echo stdfoot();
 die;
 
 ?>

@@ -224,5 +224,5 @@ loggedinorreturn();
     </td></tr></table>";
 
     /////////////////////// HTML OUTPUT ///////////////////////
-    print stdhead('FAQ') . $HTMLOUT . stdfoot();
+    echo stdhead('FAQ') . $HTMLOUT . stdfoot();
 ?>

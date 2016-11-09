@@ -9,9 +9,12 @@
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
 dbconn();
 
-$passkey = (isset($_GET["passkey"]) ? $_GET["passkey"] : '');
-$feed = (isset($_GET["type"]) && $_GET['type'] == 'dl'? 'dl' : 'web');
-$cats = (isset($_GET["cats"]) ? $_GET["cats"] : "");
+$passkey = (isset($_GET["passkey"]) ? htmlspecialchars($_GET["passkey"]) : '');
+$feed = (isset($_GET["type"]) && htmlspecialchars($_GET['type']) == 'dl'? 'dl' : 'web');
+function mkint($x) {
+   return (int) $x;
+  }
+  $cats = isset($_GET['cats']) ? array_map('mkint', $_GET['cats']) : array();
 
 if(!empty($passkey))
 {
@@ -37,8 +40,8 @@ $HTMLOUT = "<?xml version=\"1.0\" encoding=\"windows-1251\" ?>\n<rss version=\"0
 "<width>16</width>\n<height>16</height>\n<description>" . $TBDEV['rssdescr'] . "</description>\n</image>\n";
 
 $res = sql_query("SELECT t.id,t.name,t.descr,t.size,t.category,t.seeders,t.leechers,t.added, c.name as catname FROM torrents as t LEFT JOIN categories as c ON t.category = c.id WHERE $where t.visible='yes' ORDER BY t.added DESC LIMIT 15") or sqlerr(__FILE__, __LINE__);
-while ($a = mysql_fetch_assoc($res)){
- $link = $TBDEV['baseurl'].($feed == "dl" ? "/download.php?torrent=".$a['id'].'&amp;passkey='.$passkey : "/details.php?id=".$a["id"]."&amp;hit=1");
+while ($a = mysqli_fetch_assoc($res)){
+ $link = $TBDEV['baseurl'].($feed == "dl" ? "/download.php?torrent=".intval($a['id']).'&amp;passkey='.$passkey : "/details.php?id=".intval($a["id"])."&amp;hit=1");
  $br = "&lt;br/&gt;";
  $HTMLOUT .= "<item><title>{$a["name"]}</title><link>{$link}</link><description>{$br}Category: {$a['catname']} {$br} Size: ".mksize($a["size"])." {$br} Leechers: {$a["leechers"]} {$br} Seeders: {$a["seeders"]} {$br} Added: ".get_date($a['added'],'DATE')." {$br} Description: ".htmlspecialchars(substr($a["descr"],0,450))." {$br}</description>\n</item>\n";
 }

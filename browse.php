@@ -165,7 +165,7 @@ header("Location: {$TBDEV['baseurl']}/browse.php");
       /////////////// SEARCH CLOUD MALARKY //////////////////////
 
         $searchcloud = sqlesc($cleansearchstr);
-        @sql_query("INSERT INTO searchcloud (searchedfor, howmuch) VALUES ($searchcloud, 1)
+        sql_query("INSERT INTO searchcloud (searchedfor, howmuch) VALUES ($searchcloud, 1)
                     ON DUPLICATE KEY UPDATE howmuch=howmuch+1");
       /////////////// SEARCH CLOUD MALARKY END ///////////////////
     }
@@ -178,8 +178,8 @@ header("Location: {$TBDEV['baseurl']}/browse.php");
     if ($where != "")
       $where = "WHERE $where";
 
-    $res = mysql_query("SELECT COUNT(*) FROM torrents $where") or die(mysql_error());
-    $row = mysql_fetch_array($res,MYSQL_NUM);
+    $res = sql_query("SELECT COUNT(*) FROM torrents $where") or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
+    $row = mysqli_fetch_array($res, MYSQLI_NUM);
     $count = $row[0];
 
     if (!$count && isset($cleansearchstr)) 
@@ -206,8 +206,8 @@ header("Location: {$TBDEV['baseurl']}/browse.php");
         $where = implode(" AND ", $wherea);
         if ($where != "")
           $where = "WHERE $where";
-        $res = mysql_query("SELECT COUNT(*) FROM torrents $where");
-        $row = mysql_fetch_array($res,MYSQL_NUM);
+        $res = sql_query("SELECT COUNT(*) FROM torrents $where");
+        $row = mysqli_fetch_array($res, MYSQLI_NUM);
         $count = $row[0];
       }
     }
@@ -234,7 +234,7 @@ header("Location: {$TBDEV['baseurl']}/browse.php");
     $query = "SELECT torrents.id, torrents.category, torrents.leechers, torrents.seeders, torrents.name, torrents.descr, torrents.times_completed, torrents.size, torrents.added, torrents.type, torrents.free, torrents.poster, torrents.comments, torrents.numfiles, torrents.filename, torrents.anonymous, torrents.sticky, torrents.nuked, torrents.nukereason, torrents.owner, torrents.checked_by, IF(torrents.nfo <> '', 1, 0) as nfoav," .
     //"IF(torrents.numratings < {$TBDEV['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, categories.name AS cat_name, categories.image AS cat_pic, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
     "categories.name AS cat_name, categories.image AS cat_pic, users.username, freeslots.tid, freeslots.uid, freeslots.free AS freeslot, freeslots.double AS doubleup FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id LEFT JOIN freeslots ON (torrents.id=freeslots.tid AND freeslots.uid={$CURUSER['id']}) $where $orderby {$pager['limit']}";
-    $res = sql_query($query) or die(mysql_error());
+    $res = sql_query($query) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
     }
     else
     {

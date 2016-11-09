@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -61,8 +61,8 @@ switch($do) {
 		#ipban check
 	break;
 	default :
-	$res = sql_query("SELECT username FROM users WHERE id =".sqlesc($uid)."") or sqlerr(__FILE__, __LINE__);
-	if (mysql_num_rows($res) == 0) {
+	$res = sql_query("SELECT username FROM users WHERE id =".sqlesc($uid)) or sqlerr(__FILE__, __LINE__);
+	if (mysqli_num_rows($res) == 0) {
 		stderr("Error", "User not found");
 		exit;
 	}
@@ -73,7 +73,7 @@ switch($do) {
 	$count = get_row_count("iplog", 'WHERE userid ='.$uid);
 
 	$pager = pager($perpage,$count,'admin.php?action=iphistory&amp;id='.$uid.'&amp;'.(($order == 'access' ? 'order=access' : 'order=ip').'&amp;'));
-	$q1 = sql_query('SELECT u.id,INET_ATON(u.ip) as cip, l.ip, l.access AS last_access, (SELECT count(u2.id) FROM users as u2 WHERE u2.id != u.id AND INET_ATON(u2.ip) = l.ip ) as log_count, (SELECT count(b.id) FROM bans as b WHERE l.ip >= first AND l.ip <= last ) as ban_count FROM users as u LEFT JOIN iplog as l ON u.id = l.userid WHERE u.id = '.$uid.' ORDER BY '.($order == 'access' ? 'l.access' : 'l.ip').' DESC '.$pager['limit']) or sqlerr(__FILE__,__LINE__);
+	$q1 = sql_query('SELECT u.id,INET_ATON(u.ip) as cip, l.ip, l.access AS last_access, (SELECT count(u2.id) FROM users as u2 WHERE u2.id != u.id AND INET_ATON(u2.ip) = l.ip ) as log_count, (SELECT count(b.id) FROM bans as b WHERE l.ip >= first AND l.ip <= last ) as ban_count FROM users as u LEFT JOIN iplog as l ON u.id = l.userid WHERE u.id = '.sqlesc($uid).' ORDER BY '.($order == 'access' ? 'l.access' : 'l.ip').' DESC '.$pager['limit']) or sqlerr(__FILE__,__LINE__);
 
 
 	$HTMLOUT = begin_main_frame().begin_frame("Historical IP addresses used by <a href='{$TBDEV['baseurl']}/userdetails.php?id=$uid'><b>".$username."</b></a>", true);
@@ -86,7 +86,7 @@ switch($do) {
 	<td class='colhead'><a class='colhead' href='{$TBDEV['baseurl']}/admin.php?action=iphistory&amp;id=".$uid."&amp;order=ip'>IP</a></td>\n
 	<td class='colhead'>Hostname</td>\n
 	</tr>\n";
-	while ($a = mysql_fetch_assoc($q1))
+	while ($a = mysqli_fetch_assoc($q1))
 	{
 		$HTMLOUT .="<tr><td>".get_date($a["last_access"], 'DATE', 1,0)."</td>\n";
 		$ip = long2ip($a['ip']);
@@ -109,7 +109,7 @@ switch($do) {
 	$HTMLOUT .= end_frame();
 
 	$HTMLOUT .= end_main_frame();
-	print stdhead("IP History Log for ".$username) . $HTMLOUT . stdfoot();
+	echo stdhead("IP History Log for ".$username) . $HTMLOUT . stdfoot();
 	break;
 }
 ?>

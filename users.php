@@ -36,14 +36,14 @@ loggedinorreturn();
 
       if ($letter == "" || strpos("abcdefghijklmnopqrstuvwxyz0123456789", $letter) === false)
         $letter = "";
-      $query1 = "username LIKE '$letter%' AND status='confirmed'";
+      $query1 = "username LIKE " . sqlesc("$letter%") . "  AND status='confirmed'";
       $q1 = "letter=$letter";
     }
 
     if (ctype_digit($class))
     {
-      $query1 .= " AND class=$class";
-      $q1 .= ($q1 ? "&amp;" : "") . "class=$class";
+      $query1 .= " AND class=".sqlesc($class)."";
+      $q1 .= ($q1 ? "&amp;" : "") . "class=".sqlesc($class)."";
     }
 
     
@@ -96,7 +96,7 @@ loggedinorreturn();
     $pagemenu = '';
 
     $res = sql_query("SELECT COUNT(*) FROM users WHERE $query1") or sqlerr(__FILE__,__LINE__);
-    $arr = mysql_fetch_row($res);
+    $arr = mysqli_fetch_row($res);
 
     if($arr[0] > $perpage) {
     $pages = floor($arr[0] / $perpage);
@@ -143,12 +143,12 @@ loggedinorreturn();
     $HTMLOUT  .= "<table border='1' cellspacing='0' cellpadding='5'>\n";
     $HTMLOUT  .= "<tr><td class='colhead' align='left'>User name</td><td class='colhead'>{$lang['users_regd']}</td><td class='colhead'>{$lang['users_la']}</td><td class='colhead' align='left'>{$lang['users_class']}</td><td class='colhead'>{$lang['users_country']}</td></tr>\n";
     
-    while($row = mysql_fetch_assoc($res))
+    while($row = mysqli_fetch_assoc($res))
     {
       
-      $country = ($row['name'] != NULL) ? "<td style='padding: 0px' align='center'><img src='{$TBDEV['pic_base_url']}flag/{$row['flagpic']}' alt='". htmlspecialchars($row['name']) ."' /></td>" : "<td align='center'>---</td>";
+      $country = ($row['name'] != NULL) ? "<td style='padding: 0px' align='center'><img src='{$TBDEV['pic_base_url']}flag/". htmlspecialchars($row['flagpic'])."' alt='". htmlspecialchars($row['name']) ."' /></td>" : "<td align='center'>---</td>";
    
-      $HTMLOUT .= "<tr><td align='left'><a href='userdetails.php?id={$row['id']}'><b>{$row['username']}</b></a>" .
+      $HTMLOUT .= "<tr><td align='left'><a href='userdetails.php?id=".intval($row['id'])."'><b>". htmlspecialchars($row['username'])."</b></a>" .
       ($row["donor"] > 0 ? "<img src='{$TBDEV['pic_base_url']}star.gif' border='0' alt='Donor' />" : "")."</td>" .
       "<td>".get_date( $row['added'],'' )."</td><td>".get_date( $row['last_access'], '')."</td>".
         "<td align='left'>" . get_user_class_name($row["class"]) . "</td>$country</tr>\n";

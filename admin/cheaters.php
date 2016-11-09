@@ -18,7 +18,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -34,25 +34,25 @@ $HTMLOUT="";
 if (!min_class(UC_MODERATOR)) // or just simply: if (!min_class(UC_STAFF))
 stderr($lang['cheaters_error'], "{$lang['cheaters_rc']}");
 
-if (isset($_POST["nowarned"]) && $_POST["nowarned"] == "nowarned") {
+if (isset($_POST["nowarned"]) && htmlspecialchars($_POST["nowarned"]) == "nowarned") {
     if (empty($_POST["desact"]) && empty($_POST["remove"]))
         stderr("Error...", "You must select a user.");
 
     if (!empty($_POST["remove"])) {
-        mysql_query("DELETE FROM cheaters WHERE id IN (" . implode(", ", $_POST["remove"]) . ")") or sqlerr(__FILE__, __LINE__);
+        sql_query("DELETE FROM cheaters WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST["remove"])) . ")") or sqlerr(__FILE__, __LINE__);
     }
 
     if (!empty($_POST["desact"])) {
-        mysql_query("UPDATE users SET enabled = 'no' WHERE id IN (" . implode(", ", $_POST["desact"]) . ")") or sqlerr(__FILE__, __LINE__);
+        sql_query("UPDATE users SET enabled = 'no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST["desact"])) . ")") or sqlerr(__FILE__, __LINE__);
     }
 }
 
 $HTMLOUT .= begin_main_frame();
 $HTMLOUT .= begin_frame("Cheating Users:", true);
 
-$res = sql_query("SELECT COUNT(*) FROM cheaters") or sqlerr();
-$row = mysql_fetch_array($res);
-$count = $row[0];
+$res = sql_query("SELECT COUNT(*) FROM cheaters") or sqlerr(__FILE__, __LINE__);
+$row = mysqli_fetch_array($res);
+$count = intval($row[0]);
 $perpage = 15;
 $pager = pager($perpage, $count, "admin.php?action=cheaters&amp;");
 
@@ -104,13 +104,13 @@ $HTMLOUT .="<table width=\"80%\">
 <td class=\"tableb\" width=\"10\" align=\"center\" valign=\"middle\">{$lang['cheaters_d']}</td>
 <td class=\"tableb\" width=\"10\" align=\"center\" valign=\"middle\">{$lang['cheaters_r']}</td></tr>\n";
 
-$res = mysql_query("SELECT * FROM cheaters ORDER BY added DESC ".$pager['limit']."") or sqlerr(__FILE__, __LINE__);
-while ($arr = mysql_fetch_assoc($res)) {
-    $rrr = mysql_query("SELECT id, username, class, downloaded, uploaded FROM users WHERE id = $arr[userid]");
-    $aaa = mysql_fetch_assoc($rrr);
+$res = sql_query("SELECT * FROM cheaters ORDER BY added DESC ".$pager['limit']) or sqlerr(__FILE__, __LINE__);
+while ($arr = mysqli_fetch_assoc($res)) {
+    $rrr = sql_query("SELECT id, username, class, downloaded, uploaded FROM users WHERE id = ".sqlesc($arr['userid'])) or sqlerr(__FILE__, __LINE__);
+    $aaa = mysqli_fetch_assoc($rrr);
 
-    $rrr2 = mysql_query("SELECT name FROM torrents WHERE id = $arr[torrentid]");
-    $aaa2 = mysql_fetch_assoc($rrr2);
+    $rrr2 = sql_query("SELECT name FROM torrents WHERE id = ".sqlesc($arr['torrentid'])) or sqlerr(__FILE__, __LINE__);
+    $aaa2 = mysqli_fetch_assoc($rrr2);
 
     if ($aaa["downloaded"] > 0) {
         $ratio = number_format($aaa["uploaded"] / $aaa["downloaded"], 3);
@@ -121,13 +121,13 @@ while ($arr = mysql_fetch_assoc($res)) {
 
     $uppd = mksize($arr["upthis"]);
 
-    $cheater = "<b><a href='{$TBDEV['baseurl']}/userdetails.php?id=$aaa[id]'>$aaa[username]</a></b>{$lang['cheaters_hbcc']}<br /><br />{$lang['cheaters_upped']} <b>$uppd</b><br />{$lang['cheaters_speed']} <b>".mksize($arr['rate'])."/s</b><br />{$lang['cheaters_within']} <b>$arr[timediff] {$lang['cheaters_sec']}</b><br />{$lang['cheaters_uc']} <b>$arr[client]</b><br />{$lang['cheaters_ipa']} <b>$arr[userip]</b>";
+    $cheater = "<b><a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($aaa['id'])."'>".htmlspecialchars($aaa['username'])."</a></b>{$lang['cheaters_hbcc']}<br /><br />{$lang['cheaters_upped']} <b>$uppd</b><br />{$lang['cheaters_speed']} <b>".mksize($arr['rate'])."/s</b><br />{$lang['cheaters_within']} <b>".intval($arr['timediff'])." {$lang['cheaters_sec']}</b><br />{$lang['cheaters_uc']} <b>".htmlspecialchars($arr['client'])."</b><br />{$lang['cheaters_ipa']} <b>".htmlspecialchars($arr['userip'])."</b>";
 
-    $HTMLOUT .="<tr><td class=\"tableb\" width=\"10\" align=\"center\">$arr[id]</td>
-    <td class=\"tableb\" align=\"left\"><a href=\"javascript:klappe('a1$arr[id]')\">$aaa[username]</a> - Added: ".get_date($arr['added'], 'DATE')."
+    $HTMLOUT .="<tr><td class=\"tableb\" width=\"10\" align=\"center\">".intval($arr['id'])."</td>
+    <td class=\"tableb\" align=\"left\"><a href=\"javascript:klappe('a1".intval($arr['id'])."')\">".htmlspecialchars($aaa['username'])."</a> - Added: ".get_date($arr['added'], 'DATE')."
     <div id=\"ka1$arr[id]\" style=\"display: none;\"><font color=\"red\">$cheater</font></div></td>
-    <td class=\"tableb\" valign=\"top\" width=\"10\"><input type=\"checkbox\" name=\"desact[]\" value=\"" . $aaa["id"] . "\"/></td>
-    <td class=\"tableb\" valign=\"top\" width=\"10\"><input type=\"checkbox\" name=\"remove[]\" value=\"" . $arr["id"] . "\"/></td></tr>";
+    <td class=\"tableb\" valign=\"top\" width=\"10\"><input type=\"checkbox\" name=\"desact[]\" value=\"" . intval($aaa["id"]) . "\"/></td>
+    <td class=\"tableb\" valign=\"top\" width=\"10\"><input type=\"checkbox\" name=\"remove[]\" value=\"" . intval($arr["id"]) . "\"/></td></tr>";
 }
 
 $HTMLOUT .="<tr>
@@ -141,6 +141,6 @@ $HTMLOUT .= $pager['pagerbottom'];
 
 $HTMLOUT .= end_frame();
 $HTMLOUT .= end_main_frame();
-print stdhead('Ratio Cheats') . $HTMLOUT . stdfoot();
+echo stdhead('Ratio Cheats') . $HTMLOUT . stdfoot();
 die;
 ?>

@@ -32,16 +32,16 @@ require_once(INCL_DIR.'html_functions.php');
 
     $HTMLOUT .= begin_main_frame();
 
-    $res = mysql_query("SELECT COUNT(*) FROM torrents") or sqlerr(__FILE__, __LINE__);
-    $n = mysql_fetch_row($res);
+    $res = sql_query("SELECT COUNT(*) FROM torrents") or sqlerr(__FILE__, __LINE__);
+    $n = mysqli_fetch_row($res);
     $n_tor = $n[0];
 
-    $res = mysql_query("SELECT COUNT(*) FROM peers") or sqlerr(__FILE__, __LINE__);
-    $n = mysql_fetch_row($res);
+    $res = sql_query("SELECT COUNT(*) FROM peers") or sqlerr(__FILE__, __LINE__);
+    $n = mysqli_fetch_row($res);
     $n_peers = $n[0];
 
-    $uporder = isset($_GET['uporder']) ? $_GET['uporder'] : '';
-    $catorder = isset($_GET["catorder"]) ? $_GET["catorder"] : '';
+    $uporder = isset($_GET['uporder']) ? htmlspecialchars($_GET['uporder']) : '';
+    $catorder = isset($_GET["catorder"]) ? htmlspecialchars($_GET["catorder"]) : '';
 
     if ($uporder == "lastul")
       $orderby = "last DESC, name";
@@ -56,11 +56,11 @@ require_once(INCL_DIR.'html_functions.php');
       FROM users as u LEFT JOIN torrents as t ON u.id = t.owner LEFT JOIN peers as p ON t.id = p.torrent WHERE u.class = ". UC_UPLOADER ."
       GROUP BY u.id UNION SELECT u.id, u.username AS name, MAX(t.added) AS last, COUNT(DISTINCT t.id) AS n_t, COUNT(p.id) as n_p
       FROM users as u LEFT JOIN torrents as t ON u.id = t.owner LEFT JOIN peers as p ON t.id = p.torrent WHERE u.class > ". UC_UPLOADER ."
-      GROUP BY u.id ORDER BY $orderby";
+      GROUP BY u.id ORDER BY ".sqlesc($orderby);
 
-    $res = mysql_query($query) or sqlerr(__FILE__, __LINE__);
+    $res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
-    if (mysql_num_rows($res) == 0)
+    if (mysqli_num_rows($res) == 0)
       stdmsg($lang['stats_error'], $lang['stats_error1']);
     else
     {
@@ -76,12 +76,12 @@ require_once(INCL_DIR.'html_functions.php');
       <td class='colhead'>Perc.</td>
       </tr>\n";
       
-      while ($uper = mysql_fetch_assoc($res))
+      while ($uper = mysqli_fetch_assoc($res))
       {
         $HTMLOUT .= "<tr>
-        <td><a href='userdetails.php?id=".$uper['id']."'><b>".$uper['name']."</b></a></td>
+        <td><a href='userdetails.php?id=".intval($uper['id'])."'><b>".htmlspecialchars($uper['name'])."</b></a></td>
         <td " . ($uper['last']?(">".get_date( $uper['last'],'')." (".get_date( $uper['last'],'',0,1).")"):"align='center'>---") . "</td>
-        <td align='right'>{$uper['n_t']}</td>
+        <td align='right'>".intval($uper['n_t'])."</td>
         <td align='right'>" . ($n_tor > 0?number_format(100 * $uper['n_t']/$n_tor,1)."%":"---") . "</td>
         <td align='right'>" . $uper['n_p']."</td>
         <td align='right'>" . ($n_peers > 0?number_format(100 * $uper['n_p']/$n_peers,1)."%":"---") . "</td></tr>\n";
@@ -103,9 +103,9 @@ require_once(INCL_DIR.'html_functions.php');
       else
         $orderby = "c.name";
 
-      $res = mysql_query("SELECT c.name, MAX(t.added) AS last, COUNT(DISTINCT t.id) AS n_t, COUNT(p.id) AS n_p
+      $res = sql_query("SELECT c.name, MAX(t.added) AS last, COUNT(DISTINCT t.id) AS n_t, COUNT(p.id) AS n_p
       FROM categories as c LEFT JOIN torrents as t ON t.category = c.id LEFT JOIN peers as p
-      ON t.id = p.torrent GROUP BY c.id ORDER BY $orderby") or sqlerr(__FILE__, __LINE__);
+      ON t.id = p.torrent GROUP BY c.id ORDER BY ".sqlesc($orderby)) or sqlerr(__FILE__, __LINE__);
 
       $HTMLOUT .= begin_frame($lang['stats_title2'], True);
       $HTMLOUT .= begin_table();
@@ -118,7 +118,7 @@ require_once(INCL_DIR.'html_functions.php');
       <td class='colhead'>Perc.</td>
       </tr>\n";
       
-      while ($cat = mysql_fetch_assoc($res))
+      while ($cat = mysqli_fetch_assoc($res))
       {
         $HTMLOUT .= "<tr>
         <td class='rowhead'>{$cat['name']}</td>
@@ -134,6 +134,6 @@ require_once(INCL_DIR.'html_functions.php');
 
     $HTMLOUT .= end_main_frame();
     
-    print stdhead($lang['stats_window_title']) . $HTMLOUT . stdfoot();
+    echo stdhead($lang['stats_window_title']) . $HTMLOUT . stdfoot();
     die;
 ?>

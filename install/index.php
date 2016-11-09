@@ -98,11 +98,11 @@ function basic_query()
 	$sql_lines = implode(' ', file(dirname(__FILE__) . '/install.sql'));
 	$sql_lines = explode("\n", $sql_lines);
 	require_once('../include/config.php');
-	if( !mysql_connect($TBDEV['mysql_host'],$TBDEV['mysql_user'],$TBDEV['mysql_pass']) )
+	if( !($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'], $TBDEV['mysql_user'], $TBDEV['mysql_pass'])) )
 	{
 	die('Cant connect to databaseserver');
 	}
-	if( !mysql_select_db($TBDEV['mysql_db']) )
+	if( !((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$TBDEV['mysql_db']}")) )
 	{
 	die('Cant select database');
 	}
@@ -126,7 +126,7 @@ function basic_query()
 			continue;
 		}
 
-if (!mysql_query($current_statement))
+if (!mysqli_query($GLOBALS["___mysqli_ston"], $current_statement))
 {
  $error_message = 'wooOOpsie';
 			if (strpos($error_message, 'already exists') === false)

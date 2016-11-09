@@ -19,7 +19,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 		<body>
 	<div style='font-size:33px;color:white;background-color:red;text-align:center;'>Incorrect access<br />You cannot access this file directly.</div>
 	</body></html>";
-	print $HTMLOUT;
+	echo $HTMLOUT;
 	exit();
 }
 
@@ -30,7 +30,7 @@ if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
 header( "Location: {$TBDEV['baseurl']}/index.php");
 
 $lang = array_merge( $lang, load_language('forums') );
-$id = isset($_GET['id']) && is_valid_id($_GET['id']) ? $_GET['id'] : (isset($_POST['id']) && is_valid_id($_POST['id']) ? $_POST['id'] : 0);
+$id = isset($_GET['id']) && is_valid_id($_GET['id']) ? intval($_GET['id']) : (isset($_POST['id']) && is_valid_id($_POST['id']) ? intval($_POST['id']) : 0);
 $v_do = array('edit','process_edit','process_add','delete','');
 $do = isset($_GET['do']) && in_array($_GET['do'],$v_do) ? $_GET['do'] : (isset($_POST['do']) && in_array($_POST['do'],$v_do) ? $_POST['do'] : '');
 $this_url = 'admin.php?action=moforums';
@@ -38,11 +38,11 @@ switch($do) {
 case 'delete' : 
 	if(!$id)
 	stderr('Err','Fool what are you doing!?');
-	if(sql_query('DELETE FROM overforums where id = '.$id)) {
+	if(sql_query('DELETE FROM overforums where id = '.sqlesc($id))) {
 		header('Refresh:2; url='.$this_url);
 		stderr('Success','Over Forum was deleted! wait till redirect');
 	} else 
-		stderr('Err','Something happened! Mysql Error '.mysql_error());
+		stderr('Err','Something happened! Mysql Error '.((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 break;
 case 'process_add' :
 case 'process_edit' :
@@ -68,13 +68,13 @@ case 'process_edit' :
 		header('Refresh:2; url='.$this_url);
 		stderr('Success',$msg);
 	} else
-		stderr('Err','Something happened! Mysql Error '.mysql_error());
+		stderr('Err','Something happened! Mysql Error '.((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 break;
 case 'edit' : 
 default :
 $htmlout = begin_main_frame().begin_frame('Over Forum manage');
 $r1 = sql_query('select name, id, description, minclassview, forid, sort FROM overforums ORDER BY sort') or  sqlerr(__FILE__,__LINE__);
-$f_count = mysql_num_rows($r1);
+$f_count = mysqli_num_rows($r1);
 if(!$f_count)
 $htmlout .= stdmsg('Err','There are no overforums, maybe you should add some');
 else {
@@ -95,13 +95,13 @@ else {
 						<td class='colhead'>Read</td>
 						<td class='colhead' colspan='2'>Modify</td>
 					</tr>";
-	while($a = mysql_fetch_assoc($r1))
+	while($a = mysqli_fetch_assoc($r1))
 		$htmlout .="<tr onmouseover=\"this.bgColor='#999';\" onmouseout=\"this.bgColor='';\">
-						<td align='left'><a href='forums.php?action=viewforum&amp;forumid=".$a['id']."'>".htmlspecialchars($a['name'])."</a><br/><span class='small'>".$a['description']."</span></td>
+						<td align='left'><a href='forums.php?action=viewforum&amp;forumid=".intval($a['id'])."'>".htmlspecialchars($a['name'])."</a><br/><span class='small'>".htmlspecialchars($a['description'])."</span></td>
 						<td>".get_user_class_name($a['minclassview'])."</td>
 					
-						<td><a href='".$this_url."&amp;do=edit&amp;id=".$a['id']."#edit'>Edit</a></td>
-						<td><a href='javascript:confirm_delete(".$a['id'].");'>Delete</a></td>
+						<td><a href='".$this_url."&amp;do=edit&amp;id=".intval($a['id'])."#edit'>Edit</a></td>
+						<td><a href='javascript:confirm_delete(".intval($a['id']).");'>Delete</a></td>
 					</tr>";
 	$htmlout .="</table>";
 }
@@ -109,12 +109,12 @@ else {
 	if($do == 'edit' && !$id)
 		$htmlout .= stdmsg('Edit action','Im not sure what are you trying to do');
 	if($do =='edit' && $id) {
-		$r3 = sql_query('select name, id, description , minclassview ,forid, sort FROM overforums WHERE id ='.$id) or sqlerr(__FILE__,__LINE__);
-		if(!mysql_num_rows($r3))
+		$r3 = sql_query('select name, id, description , minclassview ,forid, sort FROM overforums WHERE id ='.sqlesc($id)) or sqlerr(__FILE__,__LINE__);
+		if(!mysqli_num_rows($r3))
 			$htmlout .= stdmsg('Edit action','The Over forum your looking for does not exist');
 		else {
 			$edit_action = true;
-			$a3 = mysql_fetch_assoc($r3);
+			$a3 = mysqli_fetch_assoc($r3);
 		}
 	}
 	$htmlout .= end_frame().begin_frame($edit_action ? 'Edit forum <u>'.htmlspecialchars($a3['name']).'</u>' : 'Add new Over forum');
@@ -122,7 +122,7 @@ else {
 	<table width='100%'  border='0' align='center' cellpadding='2' cellspacing='0' id='edit'>
 	<tr><td colspan='2' align='center' class='colhead'>".($edit_action ? 'Edit forum <u>'.htmlspecialchars($a3['name']).'</u>' : 'Add new Over forum')."</td></tr>
 	<tr><td align='right' valign='top'>Over Forum name</td><td align='left'><input type='text' value='".($edit_action ? $a3['name'] : '')."'name='name' size='40' /></td></tr>
-	<tr><td align='right' valign='top'>Over Forum description</td><td align='left'><textarea rows='3' cols='38' name='description'>".($edit_action ? $a3['description'] : '')."</textarea></td></tr>";
+	<tr><td align='right' valign='top'>Over Forum description</td><td align='left'><textarea rows='3' cols='38' name='description'>".($edit_action ? htmlspecialchars($a3['description']) : '')."</textarea></td></tr>";
 
 	$classes = "<select name='#name'>";
 	for($i=UC_USER;$i<=UC_SYSOP;$i++)
@@ -144,7 +144,7 @@ else {
 	</table></form>";
 
 	$htmlout .= end_frame().end_main_frame();
-	print(stdhead('Over Forum manager').$htmlout.stdfoot());
+	echo(stdhead('Over Forum manager').$htmlout.stdfoot());
 }
 
 ?>

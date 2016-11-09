@@ -138,9 +138,9 @@ $mm_template[3] = array( $lang['sendmessage_mm_template3_sub'], $lang['sendmessa
       if (($auto || $std ) && $CURUSER['class'] < UC_MODERATOR)
         stderr("{$lang['sendmessage_user_error']}", "{$lang['sendmessage_denied']}");
 
-      $res = mysql_query("SELECT * FROM users WHERE id=$receiver") or die(mysql_error());
+      $res = sql_query("SELECT * FROM users WHERE id=".sqlesc($receiver)) or sqlerr(__FILE__, __LINE__);
       
-      $user = mysql_fetch_assoc($res);
+      $user = mysqli_fetch_assoc($res);
       
       if (!$user)
         stderr("{$lang['sendmessage_user_error']}", "{$lang['sendmessage_no_id']}");
@@ -153,12 +153,12 @@ $mm_template[3] = array( $lang['sendmessage_mm_template3_sub'], $lang['sendmessa
       
       if ($replyto)
       {
-        $res = sql_query("SELECT * FROM messages WHERE id=$replyto") or sqlerr();
-        $msga = mysql_fetch_assoc($res);
+        $res = sql_query("SELECT * FROM messages WHERE id=".sqlesc($replyto)) or sqlerr(__FILE__, __LINE__);
+        $msga = mysqli_fetch_assoc($res);
         if ($msga['receiver'] != $CURUSER['id'])
           die;
-        $res = sql_query("SELECT username FROM users WHERE id={$msga['sender']}") or sqlerr();
-        $usra = mysql_fetch_assoc($res);
+        $res = sql_query("SELECT username FROM users WHERE id=".sqlesc($msga['sender'])) or sqlerr(__FILE__, __LINE__);
+        $usra = mysqli_fetch_assoc($res);
         $body = sprintf( $lang['sendmessage_user_wrote'], $usra['username'], $msga['msg'] );
         $subject = "{$lang['sendmessage_re']}" . htmlspecialchars($msga['subject']);
       }
@@ -236,5 +236,5 @@ $mm_template[3] = array( $lang['sendmessage_mm_template3_sub'], $lang['sendmessa
     }
 
 
-    print stdhead("{$lang['sendmessage_send_msg']}", false) . $HTMLOUT . stdfoot($stdfoot);
+    echo stdhead("{$lang['sendmessage_send_msg']}", false) . $HTMLOUT . stdfoot($stdfoot);
 ?>

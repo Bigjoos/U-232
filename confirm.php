@@ -6,51 +6,44 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'bittorrent.php');
-require_once(INCL_DIR.'user_functions.php');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
+require_once(INCL_DIR . 'user_functions.php');
 
-    $lang = array_merge( load_language('global'), load_language('confirm') );
-    
-    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    $md5 = isset($_GET['secret']) ? $_GET['secret'] : '';
+$lang = array_merge(load_language('global'), load_language('confirm'));
 
-    if (!is_valid_id($id))
-      stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_id']}");
-    
-    if (! preg_match( "/^(?:[\d\w]){32}$/", $md5 ) )
-		{
-			stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_key']}");
-		}
-		
-    dbconn();
+$id  = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$md5 = isset($_GET['secret']) ? htmlspecialchars($_GET['secret']) : '';
+
+if (!is_valid_id($id))
+    stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_id']}");
+
+if (!preg_match("/^(?:[\d\w]){32}$/", $md5)) {
+    stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_key']}");
+}
+
+dbconn();
 
 
-    $res = @mysql_query("SELECT passhash, editsecret, status FROM users WHERE id = $id");
-    $row = @mysql_fetch_assoc($res);
+$res = sql_query("SELECT passhash, editsecret, status FROM users WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$row = mysqli_fetch_assoc($res);
 
-    if (!$row)
-      stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_id']}");
+if (!$row)
+    stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_id']}");
 
-    if ($row['status'] != 'pending') 
-    {
-      header("Refresh: 0; url={$TBDEV['baseurl']}/ok.php?type=confirmed");
-      exit();
-    }
+if ($row['status'] != 'pending') {
+    header("Refresh: 0; url={$TBDEV['baseurl']}/ok.php?type=confirmed");
+    exit();
+}
 
-    //$sec = hash_pad($row['editsecret']);
-    $sec = $row['editsecret'];
-    if ($md5 != $sec)
-      stderr("{$lang['confirm_user_error']}", "{$lang['confirm_cannot_confirm']}");
+$sec = $row['editsecret'];
+if ($md5 != $sec)
+    stderr("{$lang['confirm_user_error']}", "{$lang['confirm_cannot_confirm']}");
 
-    @mysql_query("UPDATE users SET status='confirmed', editsecret='' WHERE id=$id AND status='pending'");
+sql_query("UPDATE users SET status='confirmed', editsecret='' WHERE id=" . sqlesc($id) . " AND status='pending'") or sqlerr(__FILE__, __LINE__);
 
-    if (!mysql_affected_rows())
-      stderr("{$lang['confirm_user_error']}", "{$lang['confirm_cannot_confirm']}");
-    
-    //$passh = md5($row["passhash"].$_SERVER["REMOTE_ADDR"]);
-    //logincookie($row["id"], $passh);
-    logincookie($id, $row['passhash']);
-    
-    header("Refresh: 0; url={$TBDEV['baseurl']}/ok.php?type=confirm");
+if (!mysqli_affected_rows($GLOBALS["___mysqli_ston"]))
+    stderr("{$lang['confirm_user_error']}", "{$lang['confirm_cannot_confirm']}");
 
+logincookie($id, $row['passhash']);
+header("Refresh: 0; url={$TBDEV['baseurl']}/ok.php?type=confirm");
 ?>

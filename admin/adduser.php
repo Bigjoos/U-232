@@ -39,17 +39,17 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
       if (!validemail($_POST['email']))
         stderr("{$lang['stderr_error']}", "{$lang['text_email']}");
       
-      $username = sqlesc($_POST["username"]);
-      $password = $_POST["password"];
-      $email = sqlesc($_POST["email"]);
+      $username = sqlesc(htmlspecialchars($_POST["username"]));
+      $password = htmlspecialchars($_POST["password"]);
+      $email = sqlesc(htmlspecialchars($_POST["email"]));
       $secret = mksecret();
       $passhash = sqlesc( make_passhash( $secret, md5($password) ) );
       $secret = sqlesc($secret);
-      $time_now = time();
+      $time_now = sqlesc(time());
       
-      @mysql_query("INSERT INTO users (added, last_access, secret, username, passhash, status, email) VALUES($time_now, $time_now, $secret, $username, $passhash, 'confirmed', $email)") or sqlerr(__FILE__, __LINE__);
-      $res = @mysql_query("SELECT id FROM users WHERE username=$username");
-      $arr = mysql_fetch_row($res);
+      sql_query("INSERT INTO users (added, last_access, secret, username, passhash, status, email) VALUES($time_now, $time_now, $secret, $username, $passhash, 'confirmed', $email)") or sqlerr(__FILE__, __LINE__);
+      $res = sql_query("SELECT id FROM users WHERE username=".sqlesc($username)) or sqlerr(__FILE__, __LINE__);
+      $arr = mysqli_fetch_row($res);
       if (!$arr)
         stderr("{$lang['stderr_error']}", "{$lang['text_username']}");
       header("Location: {$TBDEV['baseurl']}/userdetails.php?id=$arr[0]");
@@ -71,5 +71,5 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
     </table>
     </form>";
     
-    print stdhead("{$lang['stdhead_adduser']}") . $HTMLOUT . stdfoot(); 
+    echo stdhead("{$lang['stdhead_adduser']}") . $HTMLOUT . stdfoot(); 
 ?>
