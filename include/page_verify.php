@@ -15,35 +15,29 @@
 // this may appear dangerous, it still only allows a one shot at the receiving script, which
 // effectively stops flooding.
 // page verify by retro
-     
-      class page_verify
-      {
-      function page_verify ()
-      {
-      if (session_id () == '')
-      {
-      session_start ();
-      }
-      }
-    
-      function create ($task_name = 'Default')
-      {
-      global $CURUSER;
-      $_SESSION['Task_Time'] = time ();
-      $_SESSION['Task'] = md5('user_id:' . $CURUSER['id'] . '::taskname-' . $task_name . '::' . $_SESSION['Task_Time']);
-      $_SESSION['HTTP_USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
-      }
-      
-      function check ($task_name = 'Default')
-      {
-      global $CURUSER, $TBDEV, $lang;
-      $returl = (isset($CURUSER)?htmlspecialchars($_SERVER['HTTP_REFERER']):$TBDEV['baseurl']."/login.php"); 
-      $returl = str_replace('&amp;', '&', $returl); 
-      if (isset($_SESSION['HTTP_USER_AGENT']) && $_SESSION['HTTP_USER_AGENT'] != $_SERVER['HTTP_USER_AGENT'])
-      stderr("Error", "Please resubmit the form. <a href='".$returl."'>Click HERE</a>",false);
-      if ($_SESSION['Task'] != md5('user_id:' . $CURUSER['id'] . '::taskname-' . $task_name . '::' . $_SESSION['Task_Time']))
-      stderr("Error", "Please resubmit the form. <a href='".$returl."'>Click HERE</a>",false);
-      $this->create ();
-      }
-      }
+class page_verify
+{
+    function __construct()
+    {
+        if (session_id() == '') {
+            session_start();
+        }
+    }
+    function create($task_name = 'Default')
+    {
+        global $CURUSER, $_SESSION;
+        $_SESSION['Task_Time'] = TIME_NOW;
+        $_SESSION['Task'] = md5('user_id:'.$CURUSER['id'].'::taskname-'.$task_name.'::'.$_SESSION['Task_Time']);
+        $_SESSION['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    }
+    function check($task_name = 'Default')
+    {
+        global $CURUSER, $TBDEV, $lang, $_SESSION;
+        $returl = (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $TBDEV['baseurl']."/login.php");
+        $returl = str_replace('&amp;', '&', $returl);
+        if (isset($_SESSION['HTTP_USER_AGENT']) && $_SESSION['HTTP_USER_AGENT'] != $_SERVER['HTTP_USER_AGENT']) stderr("Error", "Please resubmit the form. <a href='".$returl."'>Click HERE</a>", false);
+        if (isset($_SESSION['Task']) && $_SESSION['Task'] != md5('user_id:'.$CURUSER['id'].'::taskname-'.$task_name.'::'.$_SESSION['Task_Time'])) stderr("Error", "Please resubmit the form. <a href='".$returl."'>Click HERE</a>", false);
+        $this->create();
+    }
+}
 ?>
