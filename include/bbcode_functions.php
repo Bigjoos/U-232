@@ -85,7 +85,7 @@ function _strlastpos ($haystack, $needle, $offset = 0)
         }
         
 function validate_imgs($s){
-    $start = "http://";
+    $start = "(http|https)://";
     $end = "+\.(?:jpe?g|png|gif)";
     preg_match_all("!" . $start . "(.*)" . $end . "!Ui", $s, $result);
     $array = $result[0];
@@ -205,8 +205,11 @@ function format_comment($text, $strip_html = true)
     }
     //==Media tag
     if (stripos($s, '[media=') !== false) {
-    $s = preg_replace( "#\[media=(youtube|liveleak|GameTrailers|imdb)\](.+?)\[/media\]#ies", "_MediaTag('\\2','\\1')" , $s );
-    $s = preg_replace( "#\[media=(youtube|liveleak|GameTrailers|vimeo)\](.+?)\[/media\]#ies", "_MediaTag('\\2','\\1')" , $s );
+    $s = preg_replace_callback("#\[media=(youtube|liveleak|GameTrailers|vimeo|imdb)\](.+?)\[/media\]#is",
+    function($media_tag) {
+      return _MediaTag($media_tag[2], $media_tag[1]);
+    },
+    $s);
     }
     //--img     
     if (stripos($s, '[img') !== false) {      
@@ -223,8 +226,10 @@ function format_comment($text, $strip_html = true)
     if (stripos($s, '[s]') !== false)
 	  $s = preg_replace("/\[s\](.+?)\[\/s\]/is", "<s>\\1</s>", $s);
     // the [you] tag
-    if (stripos($s, '[you]') !== false)
+    if (stripos($s, '[you]') !== false) {
+    $s = preg_replace("/https?:\/\/[^\s'\"<>]*\[you\][^\s'\"<>]*/i", " ", $s);
     $s = preg_replace("/\[you\]/i", $CURUSER['username'], $s);
+    }
     // Dynamic Vars
     $s = dynamic_user_vars($s);
     // [Spoiler]TEXT[/Spoiler]
