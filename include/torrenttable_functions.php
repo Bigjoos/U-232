@@ -116,7 +116,7 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
         {
             $htmlout .= "<a href='browse.php?cat=".intval($row['category'])."'>";
             if (isset($row["cat_pic"]) && $row["cat_pic"] != "")
-                $htmlout .= "<img border='0' src='{$TBDEV['pic_base_url']}caticons/".htmlspecialchars($row['cat_pic'])."' alt='".htmlspecialchars($row['cat_name']."' />";
+                $htmlout .= "<img border='0' src='{$TBDEV['pic_base_url']}caticons/".htmlspecialchars($row['cat_pic'])."' alt='".htmlspecialchars($row['cat_name'])."' />";
             else
             {
                 $htmlout .= htmlspecialchars($row["cat_name"]);
@@ -295,7 +295,7 @@ function commenttable($rows, $variant = 'torrent') {
     				$title = get_user_class_name($row["class"]);
     			else
     				$title = htmlspecialchars($title);
-                $htmlout .= "<a name='comm".intval($row["id"])."' href='userdetails.php?id=".intval($row["user"]."'><b>" .
+                $htmlout .= "<a name='comm".intval($row["id"])."' href='userdetails.php?id=".intval($row["user"])."'><b>" .
             	htmlspecialchars($row["username"]) . "</b></a>" . ($row["donor"] == "yes" ? "<img src='{$TBDEV['pic_base_url']}star.gif' alt='".$lang["commenttable_donor_alt"]."' />" : "") . ($row["warned"] == "yes" ? "<img src=".
         			"'{$TBDEV['pic_base_url']}warned.gif' alt='".$lang["commenttable_warned_alt"]."' />" : "") . " ($title)\n";
     		}

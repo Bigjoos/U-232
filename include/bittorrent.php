@@ -85,8 +85,6 @@ function dbconn($autoclean = false)
     }
     ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$TBDEV['mysql_db']}"))
         or die('dbconn: mysql_select_db: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
-    //mysql_query("SET NAMES utf8");
-    //mysql_set_charset('utf8');
     userlogin();
 
     if ($autoclean)
@@ -236,7 +234,7 @@ function userlogin() {
   function autoclean()
   {
 	global $TBDEV;
-	$now = time();
+	$now = sqlesc(time());
 	/* Better cleanup function with db-optimization and slow clean by x0r @ tbdev.net */
 	$w00p = sql_query("SELECT arg, value_u FROM avps") or sqlerr(__FILE__, __LINE__);
 	while ($row = mysqli_fetch_assoc($w00p))
@@ -504,11 +502,10 @@ function get_row_count($table, $suffix = "")
 {
   if ($suffix)
   $suffix = " $suffix";
-  ($r = sql_query("SELECT COUNT(*) FROM $table$suffix")) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
-  ($a = mysqli_fetch_row($r)) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
+  ($r = sql_query("SELECT COUNT(*) FROM $table$suffix")) or sqlerr(__FILE__, __LINE__);
+  ($a = mysqli_fetch_row($r));
   return $a[0];
 }
-
 
 function stderr($heading, $text)
 {
