@@ -40,7 +40,7 @@ require_once(INCL_DIR.'bbcode_functions.php');
 $lang = array_merge( $lang );
 
 if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $HTMLOUT ="";
 
@@ -65,9 +65,9 @@ $HTMLOUT .= begin_main_frame();
   if(($arr['to_user'] != $CURUSER['id'] && $arr['to_user'] != 0) && $arr['userid'] != $CURUSER['id']) 
   continue;
 	if($arr['to_user'] == $CURUSER['id'] || ($arr['userid'] == $CURUSER['id'] && $arr['to_user'] !=0) )
-	$private = "<img src='{$TBDEV['pic_base_url']}private-shout.png' alt='Private shout' title='Private shout!' width='16' style='padding-left:2px;padding-right:2px;' border='0' />";
+	$private = "<img src='{$INSTALLER09['pic_base_url']}private-shout.png' alt='Private shout' title='Private shout!' width='16' style='padding-left:2px;padding-right:2px;' border='0' />";
 	else
-	$private = "<img src='{$TBDEV['pic_base_url']}group.png' alt='Public shout' title='Public shout!' width='16' style='padding-left:2px;padding-right:2px;' border='0' />";
+	$private = "<img src='{$INSTALLER09['pic_base_url']}group.png' alt='Public shout' title='Public shout!' width='16' style='padding-left:2px;padding-right:2px;' border='0' />";
   $date = get_date($arr["date"], 0,1);
   $user_stuff = $arr;
   $user_stuff['id'] = intval($arr['userid']);

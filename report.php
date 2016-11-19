@@ -67,8 +67,8 @@ $HTMLOUT .= "<form method='post' action='report.php?type=$type$id_2b&amp;id=$id&
     <tr><td class='colhead' colspan='2'>
     <h1>Report: " . str_replace("_", " ", $type) . "</h1></td></tr>" . "
     <tr><td class='clearalt6' colspan='2' align='center'>
-    <img src='{$TBDEV['pic_base_url']}warned.gif' alt='warned' title='Warned' border='0' /> Are you sure you would like to report <b>" . str_replace("_", " ", $type) . "</b> with id: <b>$id</b>" . "
-    <img src='{$TBDEV['pic_base_url']}warned.gif' alt='warned' title='Warned' border='0' /><br />to the Staff for violation of the <a class='altlink' href='rules.php' target='_blank'>rules</a>?</td></tr>" . "
+    <img src='{$INSTALLER09['pic_base_url']}warned.gif' alt='warned' title='Warned' border='0' /> Are you sure you would like to report <b>" . str_replace("_", " ", $type) . "</b> with id: <b>$id</b>" . "
+    <img src='{$INSTALLER09['pic_base_url']}warned.gif' alt='warned' title='Warned' border='0' /><br />to the Staff for violation of the <a class='altlink' href='rules.php' target='_blank'>rules</a>?</td></tr>" . "
     <tr><td class='clearalt6' align='right'><b>Reason:</b></td><td class='clearalt6'><textarea name='reason' cols='70' rows='5'></textarea> [ required ]<br /></td></tr>" . "
     <tr><td class='clearalt6' colspan='2' align='center'><input type='submit' class='button' value='Confirm Report' /></td></tr></table></form>";
 echo stdhead("Report") . $HTMLOUT . stdfoot();

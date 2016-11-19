@@ -27,7 +27,7 @@ require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'html_functions.php');
 
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $lang = array_merge( $lang );
 
@@ -41,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else {
         sql_query("INSERT INTO forums(`name`,`description` ,`minclassread` ,`minclasswrite` ,`minclasscreate`,`place`,`forid`) VALUES(" . join(",", array_map("sqlesc", array($subforum, $descr, $minclassread, $minclasswrite, $minclasscreate, $place, $place))) . ")")or sqlerr(__FILE__, __LINE__);
         if (((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res)) {
-            header('Refresh: 3; url='.$TBDEV['baseurl'].'/admin.php?action=msubforums');
+            header('Refresh: 3; url='.$INSTALLER09['baseurl'].'/admin.php?action=msubforums');
             stderr("Success", "Forum added");
         } else
-            header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=msubforums');
+            header('Refresh: 2; url='.$INSTALLER09['baseurl'].'/admin.php?action=msubforums');
             stderr("Err", "Something was wrong");
     }
 } else {
@@ -72,14 +72,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
 		$HTMLOUT .="<tr>
-    <td width='100%' align='left' ><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=".intval($a["subid"])."' >".htmlspecialchars($a["subname"])."</a><br/>".htmlspecialchars($a["description"])."</td>
-    <td nowrap='nowrap' align='center'><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=".intval($a["parrentid"])."' >".htmlspecialchars($a["parrentname"])."</a></td>
+    <td width='100%' align='left' ><a href='{$INSTALLER09['baseurl']}/forums.php?action=viewforum&amp;forumid=".intval($a["subid"])."' >".htmlspecialchars($a["subname"])."</a><br/>".htmlspecialchars($a["description"])."</td>
+    <td nowrap='nowrap' align='center'><a href='{$INSTALLER09['baseurl']}/forums.php?action=viewforum&amp;forumid=".intval($a["parrentid"])."' >".htmlspecialchars($a["parrentname"])."</a></td>
     <td nowrap='nowrap'>".(get_user_class_name($a['minclassread']))."</td>
     <td nowrap='nowrap'>".(get_user_class_name($a['minclasswrite']))."</td>
     <td nowrap='nowrap'>".(get_user_class_name($a['minclasscreate']))."</td>
-		<td align='center' nowrap='nowrap' ><a href='{$TBDEV['baseurl']}/forums.php?action=deleteforum&amp;forumid=".intval($a['subid'])."'>
-		<img src='{$TBDEV['pic_base_url']}del.png' alt='Delete Forum' title='Delete Forum' style='border:none;padding:2px;' /></a>
-		<a href='{$TBDEV['baseurl']}/forums.php?action=editforum&amp;forumid=".intval($a['subid'])."'><img src='{$TBDEV['pic_base_url']}edit.png' alt='Edit Forum' title='Edit Forum' style='border:none;padding:2px;' /></a></td>
+		<td align='center' nowrap='nowrap' ><a href='{$INSTALLER09['baseurl']}/forums.php?action=deleteforum&amp;forumid=".intval($a['subid'])."'>
+		<img src='{$INSTALLER09['pic_base_url']}del.png' alt='Delete Forum' title='Delete Forum' style='border:none;padding:2px;' /></a>
+		<a href='{$INSTALLER09['baseurl']}/forums.php?action=editforum&amp;forumid=".intval($a['subid'])."'><img src='{$INSTALLER09['pic_base_url']}edit.png' alt='Edit Forum' title='Edit Forum' style='border:none;padding:2px;' /></a></td>
     </tr>";
     }
     

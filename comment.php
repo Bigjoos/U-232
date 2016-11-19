@@ -92,7 +92,7 @@ if ($action == 'add') {
         sql_query("UPDATE $table_type SET comments = comments + 1 WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
         
         
-        if ($TBDEV['karma'] && isset($CURUSER['seedbonus']))
+        if ($INSTALLER09['karma'] && isset($CURUSER['seedbonus']))
             sql_query("UPDATE users SET seedbonus = seedbonus+3.0 WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
         
         
@@ -118,7 +118,7 @@ if ($action == 'add') {
       <input type='hidden' name='tid' value='{$id}'/>
       <input type='hidden' name='locale' value='$name' />";
     
-    if ($TBDEV['textbbcode'] && function_exists('textbbcode'))
+    if ($INSTALLER09['textbbcode'] && function_exists('textbbcode'))
         $HTMLOUT .= textbbcode("add", "text", "");
     else
         $HTMLOUT .= "<textarea name='text' rows='10' cols='60'></textarea>";
@@ -185,7 +185,7 @@ if ($action == 'add') {
        <input type='hidden' name='tid' value='" . intval($arr['tid']) . "' />
       <input type='hidden' name='cid' value='$commentid' />";
     
-    if ($TBDEV['textbbcode'] && function_exists('textbbcode'))
+    if ($INSTALLER09['textbbcode'] && function_exists('textbbcode'))
         $HTMLOUT .= textbbcode("edit", "text", $arr["text"]);
     else
         $HTMLOUT .= "<textarea name='text' rows='10' cols='60'>" . htmlspecialchars($arr["text"]) . "</textarea>";
@@ -224,7 +224,7 @@ if ($action == 'add') {
     if ($id && mysqli_affected_rows($GLOBALS["___mysqli_ston"]) > 0)
         sql_query("UPDATE $table_type SET comments = comments - 1 WHERE id = " . sqlesc($id));
     
-    if ($TBDEV['karma'] && isset($CURUSER['seedbonus']))
+    if ($INSTALLER09['karma'] && isset($CURUSER['seedbonus']))
         sql_query("UPDATE users SET seedbonus = seedbonus+3.0 WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
     
     header("Refresh: 0; url=$locale_link.php?id=$tid$extra_link");

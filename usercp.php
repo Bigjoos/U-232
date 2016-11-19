@@ -43,7 +43,7 @@ while ($ct_a = mysqli_fetch_assoc($ct_r)) {
     $countries .= "<option value='" . intval($ct_a['id']) . "'" . ($CURUSER["country"] == $ct_a['id'] ? " selected='selected'" : "") . ">" . htmlspecialchars($ct_a['name']) . "</option>\n";
 }
 
-$offset      = ($CURUSER['time_offset'] != "") ? (string) $CURUSER['time_offset'] : (string) $TBDEV['time_offset'];
+$offset      = ($CURUSER['time_offset'] != "") ? (string) $CURUSER['time_offset'] : (string) $INSTALLER09['time_offset'];
 $time_select = "<select name='user_timezone'>";
 
 foreach ($TZ as $off => $words) {
@@ -105,7 +105,7 @@ if ($action == "avatar") {
     if (!($CURUSER["avatarpos"] == 0 OR $CURUSER["avatarpos"] != 1)) {
         $HTMLOUT .= "<tr><td class='rowhead'>{$lang['usercp_avatar']}</td><td><input name='avatar' size='50' value='" . htmlspecialchars($CURUSER["avatar"]) . "' /><br />
     <font class='small'>Width should be 150px. (Will be resized if necessary)\n<br />
-    If you need a host for the picture, try our  <a href='{$TBDEV['baseurl']}/bitbucket.php'>Bitbucket</a>.</font>
+    If you need a host for the picture, try our  <a href='{$INSTALLER09['baseurl']}/bitbucket.php'>Bitbucket</a>.</font>
     <br /><input type='checkbox' name='offavatar' " . ($CURUSER["offavatar"] == "yes" ? " checked='checked'" : "") . " /><b>This avatar may be offensive to some people.</b><br />
     <font class='small'>Please check this box if your avatar contains nudity or may otherwise be potentially offensive to or unsuitable for minors.</font></td></tr>";
     } else {
@@ -241,7 +241,7 @@ if (!empty($CURUSER['avatar']) && $CURUSER['av_w'] > 5 && $CURUSER['av_h'] > 5)
     <a href='users.php'>{$lang['usercp_search']}</a>
     </td></tr>";
 else
-    $HTMLOUT .= "<tr><td><img src='{$TBDEV['pic_base_url']}forumicons/default_avatar.gif' alt='' /><a href='mytorrents.php'>{$lang['usercp_edit_torrents']}</a><br />
+    $HTMLOUT .= "<tr><td><img src='{$INSTALLER09['pic_base_url']}forumicons/default_avatar.gif' alt='' /><a href='mytorrents.php'>{$lang['usercp_edit_torrents']}</a><br />
     <a href='friends.php'>{$lang['usercp_edit_friends']}</a><br />
     <a href='users.php'>{$lang['usercp_search']}</a></td></tr>";
 $HTMLOUT .= "<tr><td class='colhead' width='95' style='height:18px;'>" . htmlentities($CURUSER["username"], ENT_QUOTES) . "'s Menu</td></tr>";

@@ -15,7 +15,7 @@ $lang = array_merge(load_language('global'), load_language('coins'));
 
 $HTMLOUT = "";
 
-if (!$TBDEV['coins'])
+if (!$INSTALLER09['coins'])
     stderr($lang['err'], $lang['nocoin']);
 
 $FREE['id']    = 1;
@@ -145,7 +145,7 @@ foreach ($prizes as $P) {
 			<td>$VERD</td>
 			<td>" . $P['name'] . "</td>
 			<td>" . $P['desc'] . "</td>
-			<td><a href='{$TBDEV['baseurl']}/coins.php?kaupa=" . intval($P['id']) . "'><input type='submit' value='{$lang['pr_kaupa']}' /></a></td>
+			<td><a href='{$INSTALLER09['baseurl']}/coins.php?kaupa=" . intval($P['id']) . "'><input type='submit' value='{$lang['pr_kaupa']}' /></a></td>
 			</tr>";
 }
 

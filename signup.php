@@ -19,7 +19,7 @@ if (!$CURUSER) {
 
 
 if (isset($CURUSER)) {
-    header("Location: {$TBDEV['baseurl']}/index.php");
+    header("Location: {$INSTALLER09['baseurl']}/index.php");
     exit();
 }
 
@@ -33,7 +33,7 @@ $stdfoot = array(
     )
 );
 
-if (!$TBDEV['openreg'])
+if (!$INSTALLER09['openreg'])
     stderr('Sorry', 'Invite only - Signups are closed presently');
 
 $HTMLOUT = '';
@@ -57,12 +57,12 @@ $newpage->create('tesu');
 if (isset($_SESSION['captcha_time']))
     (time() - $_SESSION['captcha_time'] < 10) ? exit($lang['captcha_spam']) : NULL;
 
-if ($arr[0] >= $TBDEV['maxusers'])
-    stderr($lang['stderr_errorhead'], sprintf($lang['stderr_ulimit'], $TBDEV['maxusers']));
+if ($arr[0] >= $INSTALLER09['maxusers'])
+    stderr($lang['stderr_errorhead'], sprintf($lang['stderr_ulimit'], $INSTALLER09['maxusers']));
 
 
 // TIMEZONE STUFF
-$offset = (string) $TBDEV['time_offset'];
+$offset = (string) $INSTALLER09['time_offset'];
 
 $time_select = "<select name='user_timezone'>";
 

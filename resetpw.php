@@ -145,7 +145,7 @@ elseif ($step == '2') {
     if (!mysqli_affected_rows($GLOBALS["___mysqli_ston"]))
         stderr("{$lang['stderr_errorhead']}", "{$lang['stderr_error13']}");
     else
-        stderr("{$lang['stderr_successhead']}", "{$lang['stderr_error14']} <a href='{$TBDEV['baseurl']}/login.php' class='altlink'><b>{$lang['stderr_error15']}</b></a> {$lang['stderr_error16']}", FALSE);
+        stderr("{$lang['stderr_successhead']}", "{$lang['stderr_error14']} <a href='{$INSTALLER09['baseurl']}/login.php' class='altlink'><b>{$lang['stderr_error15']}</b></a> {$lang['stderr_error16']}", FALSE);
 } else {
     
     

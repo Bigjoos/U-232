@@ -29,7 +29,7 @@ if (!is_valid_id($id))
     stderr("{$lang['download_user_error']}", "{$lang['download_no_id']}");
 
 
-if ($TBDEV['coins'])
+if ($INSTALLER09['coins'])
     if ($CURUSER['coins'] < 200)
         stderr("Error!", "You do not have enough coins to download this torrent");
 coin(200, false);
@@ -37,7 +37,7 @@ coin(200, false);
 $res = sql_query("SELECT name, owner, category, filename FROM torrents WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 $row = mysqli_fetch_assoc($res);
 
-$fn = "{$TBDEV['torrent_dir']}/$id.torrent";
+$fn = "{$INSTALLER09['torrent_dir']}/$id.torrent";
 if (!$row || !is_file($fn) || !is_readable($fn))
     httperr();
 
@@ -64,12 +64,12 @@ if (!isset($CURUSER['passkey']) || strlen($CURUSER['passkey']) != 32) {
     sql_query("UPDATE users SET passkey='" . sqlesc($CURUSER['passkey']) . "' WHERE id=" . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 }
 $dict                                = bdec_file($fn, filesize($fn));
-$dict['value']['announce']['value']  = "{$TBDEV['announce_urls'][0]}?passkey={$CURUSER['passkey']}";
+$dict['value']['announce']['value']  = "{$INSTALLER09['announce_urls'][0]}?passkey={$CURUSER['passkey']}";
 $dict['value']['announce']['string'] = strlen($dict['value']['announce']['value']) . ":" . $dict['value']['announce']['value'];
 $dict['value']['announce']['strlen'] = strlen($dict['value']['announce']['string']);
 $dict['value']['created by']         = bdec(benc_str("" . $CURUSER['username'] . ""));
 
-header('Content-Disposition: attachment; filename="[' . $TBDEV['site_name'] . ']' . $row['filename'] . '"');
+header('Content-Disposition: attachment; filename="[' . $INSTALLER09['site_name'] . ']' . $row['filename'] . '"');
 header("Content-Type: application/x-bittorrent");
 echo (benc($dict));
 

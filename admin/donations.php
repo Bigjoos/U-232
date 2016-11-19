@@ -31,7 +31,7 @@ require_once(INCL_DIR.'html_functions.php');
 $HTMLOUT ="";
 
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 if (isset($_GET["total_donors"])) {
     $total_donors = 0 + $_GET["total_donors"];
@@ -69,7 +69,7 @@ if (isset($_GET["total_donors"])) {
     }
 
 $HTMLOUT .= begin_table();
-$HTMLOUT .="<tr><td colspan='9' align='center'><a class='altlink' href='{$TBDEV['baseurl']}/admin.php?action=donations'>Current Donors</a> || <a class='altlink' href='{$TBDEV['baseurl']}/admin.php?action=donations&amp;total_donors=1'>All Donations</a></td></tr>";
+$HTMLOUT .="<tr><td colspan='9' align='center'><a class='altlink' href='{$INSTALLER09['baseurl']}/admin.php?action=donations'>Current Donors</a> || <a class='altlink' href='{$INSTALLER09['baseurl']}/admin.php?action=donations&amp;total_donors=1'>All Donations</a></td></tr>";
 
 $HTMLOUT .= $pager['pagertop'];
 
@@ -86,7 +86,7 @@ while ($arr = mysqli_fetch_assoc($res)) {
         $class = "clearalt6";
     }
     // =======end
-    $HTMLOUT .="<tr><td valign='bottom' class='$class'><a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . intval($arr['id']) . "</a></td>" . "<td align='left' valign='bottom' class='$class'><a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'><b>" . htmlspecialchars($arr['username']) . "</b></a>" . "</td><td align='left' valign='bottom' class='$class'><a class='altlink' href='mailto:" . htmlspecialchars($arr['email']) . "'>" . htmlspecialchars($arr['email']) . "</a>" . "</td><td align='left' valign='bottom' class='$class'><font size=\"-3\"> ".get_date($arr['added'], 'DATE'). "</font>" . "</td><td align='left' valign='bottom' class='$class'>";
+    $HTMLOUT .="<tr><td valign='bottom' class='$class'><a class='altlink' href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . intval($arr['id']) . "</a></td>" . "<td align='left' valign='bottom' class='$class'><a class='altlink' href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'><b>" . htmlspecialchars($arr['username']) . "</b></a>" . "</td><td align='left' valign='bottom' class='$class'><a class='altlink' href='mailto:" . htmlspecialchars($arr['email']) . "'>" . htmlspecialchars($arr['email']) . "</a>" . "</td><td align='left' valign='bottom' class='$class'><font size=\"-3\"> ".get_date($arr['added'], 'DATE'). "</font>" . "</td><td align='left' valign='bottom' class='$class'>";
 
     $r = sql_query("SELECT donoruntil FROM users WHERE id=" . sqlesc($arr['id'])) or sqlerr(__FILE__, __LINE__);
     $user = mysqli_fetch_array($r);
@@ -96,7 +96,7 @@ while ($arr = mysqli_fetch_assoc($res)) {
     else
         $HTMLOUT .="<font size=\"-3\"> ".get_date($user['donoruntil'], 'DATE'). " [ " . mkprettytime($donoruntil - TIME_NOW) . " ] To go...</font>";
 
-    $HTMLOUT .="</td><td align='left' valign='bottom' class='$class'><b>&#163;" . intval($arr['donated']) . "</b></td>" . "<td align='left' valign='bottom' class='$class'><b>&#163;" . intval($arr['total_donated']) . "</b></td>" . "<td align='left' valign='bottom' class='$class'><b><a class='altlink' href='{$TBDEV['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "'>PM</a></b></td></tr>";
+    $HTMLOUT .="</td><td align='left' valign='bottom' class='$class'><b>&#163;" . intval($arr['donated']) . "</b></td>" . "<td align='left' valign='bottom' class='$class'><b>&#163;" . intval($arr['total_donated']) . "</b></td>" . "<td align='left' valign='bottom' class='$class'><b><a class='altlink' href='{$INSTALLER09['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "'>PM</a></b></td></tr>";
 }
 $HTMLOUT .= end_table();
 $HTMLOUT .= end_frame();

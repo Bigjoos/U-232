@@ -52,9 +52,9 @@ function _strlastpos ($haystack, $needle, $offset = 0)
 
         function islocal($link)
         {
-            global $TBDEV;
+            global $INSTALLER09;
             $flag = false;
-            $baseurl  = str_replace(array('http://','www','http://www'),'',$TBDEV['baseurl']);
+            $baseurl  = str_replace(array('http://','www','http://www'),'',$INSTALLER09['baseurl']);
             $limit = 60;
 
             if (false !== stristr($link[0], '[url=')) {
@@ -159,7 +159,7 @@ function validate_imgs($s){
 
 function format_comment($text, $strip_html = true)
 {
-	global $smilies, $CURUSER, $customsmilies, $TBDEV;
+	global $smilies, $CURUSER, $customsmilies, $INSTALLER09;
 	$s = $text;
   $s = validate_imgs($s);
   $s = str_replace("][" , "] [", $s); 
@@ -187,7 +187,7 @@ function format_comment($text, $strip_html = true)
   }
     // [*]
     if (stripos($s, '[*]') !== false)
-	  $s = preg_replace("/\[\*\]/", "<img src=\"".$TBDEV['pic_base_url']."list.gif\" alt=\"List\" title=\"List\" class=\"listitem\" />", $s);
+	  $s = preg_replace("/\[\*\]/", "<img src=\"".$INSTALLER09['pic_base_url']."list.gif\" alt=\"List\" title=\"List\" class=\"listitem\" />", $s);
 	// [b]Bold[/b] 
     if (stripos($s, '[b]') !== false)
         $s = preg_replace('/\[b\](.+?)\[\/b\]/is', "<b>\\1</b>", $s);
@@ -281,17 +281,17 @@ function format_comment($text, $strip_html = true)
     //==Smilies
     if (isset($smilies)) 
     foreach($smilies as $code => $url) {
-    $s = str_replace($code, "<img border='0' src=\"{$TBDEV['pic_base_url']}smilies/{$url}\" alt=\"" . htmlspecialchars($code) . "\" />", $s);
+    $s = str_replace($code, "<img border='0' src=\"{$INSTALLER09['pic_base_url']}smilies/{$url}\" alt=\"" . htmlspecialchars($code) . "\" />", $s);
     }
     if (isset($customsmilies)) 
     foreach($customsmilies as $code => $url) {
-    $s = str_replace($code, "<img border='0' src=\"{$TBDEV['pic_base_url']}smilies/{$url}\" alt=\"" . htmlspecialchars($code) . "\" />", $s);
+    $s = str_replace($code, "<img border='0' src=\"{$INSTALLER09['pic_base_url']}smilies/{$url}\" alt=\"" . htmlspecialchars($code) . "\" />", $s);
     }
     return $s;
     }
    
     function _MediaTag( $content, $type ) {
-	  global $TBDEV;
+	  global $INSTALLER09;
 	  if( $content == '' OR $type == '' )
  	  return;
 	  $return = '';
@@ -338,7 +338,7 @@ function format_comment($text, $strip_html = true)
  
 ////////////09 bbcode function by putyn///////////////
 function textbbcode($form,$text,$content="") {
-global $CURUSER, $TBDEV;
+global $CURUSER, $INSTALLER09;
 $custombutton = '';
 if(get_smile() != '0')
 $custombutton .=" <span style='font-weight:bold;font-size:8pt;'><a href=\"javascript:PopCustomSmiles('".$form."','".$text."')\">[ Custom Smilies ]</a></span>";
@@ -353,25 +353,25 @@ $bbcodebody =<<<HTML
 <table cellpadding="5" cellspacing="0" align="center"  border="1" class="bb_holder">
   <tr>
     <td width="100%" style="background:#CCCCCC; padding:0" colspan="2"><div style="float:left;padding:4px 0px 0px 2px;">
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/bold.png" onclick="tag('b')" title="Bold" alt="B" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/italic.png" onclick="tag('i')" title="Italic" alt="I" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/underline.png" onclick="tag('u')" title="Underline" alt="U" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/strike.png" onclick="tag('s')" title="Strike" alt="S" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/link.png" onclick="clink()" title="Link" alt="Link" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/picture.png" onclick="cimage()" title="Add image" alt="Image"/> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/colors.png" onclick="colorpicker();" title="Select Color" alt="Colors" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/email.png" onclick="mail()" title="Add email" alt="Email" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/bold.png" onclick="tag('b')" title="Bold" alt="B" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/italic.png" onclick="tag('i')" title="Italic" alt="I" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/underline.png" onclick="tag('u')" title="Underline" alt="U" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/strike.png" onclick="tag('s')" title="Strike" alt="S" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/link.png" onclick="clink()" title="Link" alt="Link" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/picture.png" onclick="cimage()" title="Add image" alt="Image"/> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/colors.png" onclick="colorpicker();" title="Select Color" alt="Colors" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/email.png" onclick="mail()" title="Add email" alt="Email" /> 
 HTML;
 if($CURUSER['class'] >= UC_MODERATOR)
 $bbcodebody .=<<<HTML
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/php.png" onclick="tag('php')" title="Add php" alt="Php" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/sql.png" onclick="tag('sql')" title="Add sql" alt="Sql" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/script.png" onclick="tag('html')" title="Add html" alt="Html" /> 
-	<img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/modcom.png" onclick="tag('mcom')" title="Mod comment" alt="Mod comment" />
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/php.png" onclick="tag('php')" title="Add php" alt="Php" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/sql.png" onclick="tag('sql')" title="Add sql" alt="Sql" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/script.png" onclick="tag('html')" title="Add html" alt="Html" /> 
+	<img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/modcom.png" onclick="tag('mcom')" title="Mod comment" alt="Mod comment" />
 HTML;
 $bbcodebody .=<<<HTML
 </div>
-      <div style="float:right;padding:4px 2px 0px 0px;"> <img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/align_center.png" onclick="wrap('align','','center')" title="Align - center" alt="Center" /> <img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/align_left.png" onclick="wrap('align','','left')" title="Align - left" alt="Left" /> <img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/align_justify.png" onclick="wrap('align','','justify')" title="Align - justify" alt="justify" /> <img class="bb_icon" src="{$TBDEV['pic_base_url']}bbcode/align_right.png" onclick="wrap('align','','right')" title="Align - right" alt="Right" /> </div></td>
+      <div style="float:right;padding:4px 2px 0px 0px;"> <img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/align_center.png" onclick="wrap('align','','center')" title="Align - center" alt="Center" /> <img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/align_left.png" onclick="wrap('align','','left')" title="Align - left" alt="Left" /> <img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/align_justify.png" onclick="wrap('align','','justify')" title="Align - justify" alt="justify" /> <img class="bb_icon" src="{$INSTALLER09['pic_base_url']}bbcode/align_right.png" onclick="wrap('align','','right')" title="Align - right" alt="Right" /> </div></td>
   </tr>
   <tr>
     <td width="100%" style="background:#CCCCCC; padding:0;" colspan="2"><div style="float:left;padding:4px 0px 0px 2px;">
@@ -412,52 +412,52 @@ $bbcodebody .=<<<HTML
     <td><textarea id="{$text}" name="{$text}" rows="2" cols="2" style="width:530px; height:250px;font-size:12px;">{$content}</textarea></td>
     <td align="center" valign="top"><table width="0" cellpadding="2" border="1" class="em_holder" cellspacing="2">
          <tr>
-          <td align="center"><a href="javascript:em(':-)');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/smile1.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':smile:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/smile2.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':-D');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/grin.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':w00t:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/w00t.gif" width="18" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':-)');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/smile1.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':smile:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/smile2.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':-D');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/grin.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':w00t:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/w00t.gif" width="18" height="20" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':-P');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/tongue.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(';-)');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/wink.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':-|');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/noexpression.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':-/');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/confused.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':-P');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/tongue.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(';-)');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/wink.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':-|');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/noexpression.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':-/');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/confused.gif" width="18" height="18" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':-(');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/sad.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':baby:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/baby.gif" width="20" height="22" /></a></td>
-          <td align="center"><a href="javascript:em(':-O');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/ohmy.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em('|-)');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/sleeping.gif" width="20" height="27" /></a></td>
+          <td align="center"><a href="javascript:em(':-(');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/sad.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':baby:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/baby.gif" width="20" height="22" /></a></td>
+          <td align="center"><a href="javascript:em(':-O');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/ohmy.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em('|-)');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/sleeping.gif" width="20" height="27" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':innocent:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/innocent.gif" width="18" height="22" /></a></td>
-          <td align="center"><a href="javascript:em(':unsure:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/unsure.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':closedeyes:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/closedeyes.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':cool:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/cool2.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':innocent:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/innocent.gif" width="18" height="22" /></a></td>
+          <td align="center"><a href="javascript:em(':unsure:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/unsure.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':closedeyes:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/closedeyes.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':cool:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/cool2.gif" width="20" height="20" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':thumbsdown:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/thumbsdown.gif" width="27" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':blush:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/blush.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':yes:');"><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/yes.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':no:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/no.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':thumbsdown:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/thumbsdown.gif" width="27" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':blush:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/blush.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':yes:');"><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/yes.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':no:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/no.gif" width="20" height="20" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':love:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/love.gif" width="19" height="19" /></a></td>
-          <td align="center"><a href="javascript:em(':?:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/question.gif" width="19" height="19" /></a></td>
-          <td align="center"><a href="javascript:em(':!:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/excl.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':idea:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/idea.gif" width="19" height="19" /></a></td>
+          <td align="center"><a href="javascript:em(':love:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/love.gif" width="19" height="19" /></a></td>
+          <td align="center"><a href="javascript:em(':?:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/question.gif" width="19" height="19" /></a></td>
+          <td align="center"><a href="javascript:em(':!:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/excl.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':idea:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/idea.gif" width="19" height="19" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':arrow:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/arrow.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':arrow2:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/arrow2.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':hmm:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/hmm.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':hmmm:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/hmmm.gif" width="25" height="23" /></a></td>
+          <td align="center"><a href="javascript:em(':arrow:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/arrow.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':arrow2:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/arrow2.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':hmm:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/hmm.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':hmmm:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/hmmm.gif" width="25" height="23" /></a></td>
         </tr>
         <tr>
-          <td align="center"><a href="javascript:em(':huh:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/huh.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':rolleyes:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/rolleyes.gif" width="20" height="20" /></a></td>
-          <td align="center"><a href="javascript:em(':kiss:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/kiss.gif" width="18" height="18" /></a></td>
-          <td align="center"><a href="javascript:em(':shifty:');" ><img border="0" alt="Smilies" src="{$TBDEV['pic_base_url']}smilies/shifty.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':huh:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/huh.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':rolleyes:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/rolleyes.gif" width="20" height="20" /></a></td>
+          <td align="center"><a href="javascript:em(':kiss:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/kiss.gif" width="18" height="18" /></a></td>
+          <td align="center"><a href="javascript:em(':shifty:');" ><img border="0" alt="Smilies" src="{$INSTALLER09['pic_base_url']}smilies/shifty.gif" width="20" height="20" /></a></td>
         </tr>
         <tr>
           <td colspan="4" align="center" style="white-space:nowrap;"><span style='font-weight:bold;font-size:8pt;'>{$smilebutton}</span>{$custombutton}</td>
@@ -474,7 +474,7 @@ function user_key_codes($key)
 
         function dynamic_user_vars($text)
         {
-            global $CURUSER, $TBDEV;
+            global $CURUSER, $INSTALLER09;
             if (!isset($CURUSER)) 
             return;
             $zone = 0;        // GMT

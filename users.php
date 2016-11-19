@@ -146,10 +146,10 @@ loggedinorreturn();
     while($row = mysqli_fetch_assoc($res))
     {
       
-      $country = ($row['name'] != NULL) ? "<td style='padding: 0px' align='center'><img src='{$TBDEV['pic_base_url']}flag/". htmlspecialchars($row['flagpic'])."' alt='". htmlspecialchars($row['name']) ."' /></td>" : "<td align='center'>---</td>";
+      $country = ($row['name'] != NULL) ? "<td style='padding: 0px' align='center'><img src='{$INSTALLER09['pic_base_url']}flag/". htmlspecialchars($row['flagpic'])."' alt='". htmlspecialchars($row['name']) ."' /></td>" : "<td align='center'>---</td>";
    
       $HTMLOUT .= "<tr><td align='left'><a href='userdetails.php?id=".intval($row['id'])."'><b>". htmlspecialchars($row['username'])."</b></a>" .
-      ($row["donor"] > 0 ? "<img src='{$TBDEV['pic_base_url']}star.gif' border='0' alt='Donor' />" : "")."</td>" .
+      ($row["donor"] > 0 ? "<img src='{$INSTALLER09['pic_base_url']}star.gif' border='0' alt='Donor' />" : "")."</td>" .
       "<td>".get_date( $row['added'],'' )."</td><td>".get_date( $row['last_access'], '')."</td>".
         "<td align='left'>" . get_user_class_name($row["class"]) . "</td>$country</tr>\n";
     }

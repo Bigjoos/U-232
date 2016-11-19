@@ -22,7 +22,7 @@ dbconn();
 
 $lang = array_merge(load_language('global'), load_language('forums'));
 
-if ($TBDEV['forums_online'] == 0 AND $CURUSER['class'] < UC_MODERATOR)
+if ($INSTALLER09['forums_online'] == 0 AND $CURUSER['class'] < UC_MODERATOR)
     stderr('Information', 'The forums are currently offline for maintainance work');
 
 if (function_exists('parked'))
@@ -215,11 +215,11 @@ if (!function_exists('highlight')) {
 
 function catch_up($id = 0)
 {
-    global $CURUSER, $TBDEV;
+    global $CURUSER, $INSTALLER09;
     
     $userid = (int) $CURUSER['id'];
     
-    $res = sql_query("SELECT t.id, t.lastpost, r.id AS r_id, r.lastpostread " . "FROM topics AS t " . "LEFT JOIN posts AS p ON p.id = t.lastpost " . "LEFT JOIN readposts AS r ON r.userid=" . sqlesc($userid) . " AND r.topicid=t.id " . "WHERE p.added > " . sqlesc(time() - $TBDEV['readpost_expiry']) . (!empty($id) ? ' AND t.id ' . (is_array($id) ? 'IN (' . implode(', ', $id) . ')' : '= ' . sqlesc($id)) : '')) or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT t.id, t.lastpost, r.id AS r_id, r.lastpostread " . "FROM topics AS t " . "LEFT JOIN posts AS p ON p.id = t.lastpost " . "LEFT JOIN readposts AS r ON r.userid=" . sqlesc($userid) . " AND r.topicid=t.id " . "WHERE p.added > " . sqlesc(time() - $INSTALLER09['readpost_expiry']) . (!empty($id) ? ' AND t.id ' . (is_array($id) ? 'IN (' . implode(', ', $id) . ')' : '= ' . sqlesc($id)) : '')) or sqlerr(__FILE__, __LINE__);
     
     while ($arr = mysqli_fetch_assoc($res)) {
         $postid = (int) $arr['lastpost'];
@@ -237,7 +237,7 @@ function forum_stats()
 {
     //== 09 Active users in forums
     $htmlout = '';
-    global $TBDEV, $forum_width, $lang, $CURUSER;
+    global $INSTALLER09, $forum_width, $lang, $CURUSER;
     $forum3 = "";
     $file   = "./cache/forum.txt";
     $expire = 30; // 30 seconds
@@ -271,19 +271,19 @@ function forum_stats()
             $warned  = $arr["warned"] === "yes";
             
             if ($CURUSER)
-                $forumusers .= "<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "'><b>" . $arr["username"] . "</b></a>";
+                $forumusers .= "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "'><b>" . $arr["username"] . "</b></a>";
             else
                 $forumusers .= "<b>" . $arr["username"] . "</b>";
             if ($arr["anonymous"] == "yes")
                 if ($CURUSER['class'] < UC_MODERATOR && $arr["id"] != $CURUSER["id"])
                     $forumusers .= "";
                 else if ($donator)
-                    $forumusers .= "<img src='{$TBDEV['pic_base_url']}star.gif' alt='Donated' />";
+                    $forumusers .= "<img src='{$INSTALLER09['pic_base_url']}star.gif' alt='Donated' />";
             if ($arr["anonymous"] == "yes")
                 if ($CURUSER['class'] < UC_MODERATOR && $arr["id"] != $CURUSER["id"])
                     $forumusers .= "";
                 else if ($warned)
-                    $forumusers .= "<img src='{$TBDEV['pic_base_url']}warned.gif' alt='Warned' />";
+                    $forumusers .= "<img src='{$INSTALLER09['pic_base_url']}warned.gif' alt='Warned' />";
             $forumusers .= "</span>";
         }
     if (!$forumusers)
@@ -314,7 +314,7 @@ function forum_stats()
 
 function show_forums($forid, $subforums = false, $sfa = "", $mods_array = "", $show_mods = false)
 {
-    global $CURUSER, $TBDEV;
+    global $CURUSER, $INSTALLER09;
     $htmlout = '';
     $forums_res = sql_query("SELECT f.id, f.name, f.description, f.postcount, f.topiccount, f.minclassread, p.added, p.topicid, p.anonymous, p.userid, p.id AS pid, u.username, t.subject, t.lastpost, r.lastpostread " . "FROM forums AS f " . "LEFT JOIN posts AS p ON p.id = (SELECT MAX(lastpost) FROM topics WHERE forumid = f.id) " . "LEFT JOIN users AS u ON u.id = p.userid " . "LEFT JOIN topics AS t ON t.id = p.topicid " . "LEFT JOIN readposts AS r ON r.userid = " . sqlesc($CURUSER['id']) . " AND r.topicid = p.topicid " . "WHERE " . ($subforums == false ? "f.forid = " . sqlesc($forid) . " AND f.place =-1 ORDER BY f.forid ASC" : "f.place=" . sqlesc($forid) . " ORDER BY f.id ASC") . "") or sqlerr(__FILE__, __LINE__);
     
@@ -331,9 +331,9 @@ function show_forums($forid, $subforums = false, $sfa = "", $mods_array = "", $s
                     if ($CURUSER['class'] < UC_MODERATOR && $sfa[$forumid]['lastpost']['userid'] != $CURUSER['id'])
                         $lastpost1 = "Anonymous<br />";
                     else
-                        $lastpost1 = "Anonymous(<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $sfa[$forumid]['lastpost']['userid'] . "'><b>" . htmlspecialchars($sfa[$forumid]['lastpost']['user']) . "</b></a>)<br />";
+                        $lastpost1 = "Anonymous(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $sfa[$forumid]['lastpost']['userid'] . "'><b>" . htmlspecialchars($sfa[$forumid]['lastpost']['user']) . "</b></a>)<br />";
                 } elseif ($sfa[$forumid]['lastpost']["anonymous"] == "no") {
-                    $lastpost1 = "<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $sfa[$forumid]['lastpost']['userid'] . "'><b>" . htmlspecialchars($sfa[$forumid]['lastpost']['user']) . "</b></a><br />";
+                    $lastpost1 = "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $sfa[$forumid]['lastpost']['userid'] . "'><b>" . htmlspecialchars($sfa[$forumid]['lastpost']['user']) . "</b></a><br />";
                 }
                 $lastpost = "" . get_date($sfa[$forumid]['lastpost']['added'], 'LONG', 1, 0) . "<br />" . "by $lastpost1" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $sfa[$forumid]['lastpost']['topic'] . "&amp;page=p" . $sfa[$forumid]['lastpost']['postid'] . "#p" . $sfa[$forumid]['lastpost']['postid'] . "'><b>" . htmlspecialchars($sfa[$forumid]['lastpost']['tname']) . "</b></a>";
             } elseif (($sfa[$forumid]['lastpost']['postid'] < $forums_arr['pid'])) {
@@ -341,9 +341,9 @@ function show_forums($forid, $subforums = false, $sfa = "", $mods_array = "", $s
                     if ($CURUSER['class'] < UC_MODERATOR && $forums_arr["userid"] != $CURUSER["id"])
                         $lastpost2 = "Anonymous<br />";
                     else
-                        $lastpost2 = "Anonymous(<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a>)<br />";
+                        $lastpost2 = "Anonymous(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a>)<br />";
                 } elseif ($forums_arr["anonymous"] == "no") {
-                    $lastpost2 = "<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a><br />";
+                    $lastpost2 = "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a><br />";
                 }
                 $lastpost = "" . get_date($forums_arr["added"], 'LONG', 1, 0) . "<br />" . "by $lastpost2" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $forums_arr["topicid"] . "&amp;page=p$lastpostid#p$lastpostid'><b>" . htmlspecialchars($forums_arr['subject']) . "</b></a>";
             } else
@@ -354,15 +354,15 @@ function show_forums($forid, $subforums = false, $sfa = "", $mods_array = "", $s
                     if ($CURUSER['class'] < UC_MODERATOR && $forums_arr["userid"] != $CURUSER["id"])
                         $lastpost = "" . get_date($forums_arr["added"], 'LONG', 1, 0) . "<br />" . "by <i>Anonymous</i><br />" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $forums_arr["topicid"] . "&amp;page=p$lastpostid#p$lastpostid'><b>" . htmlspecialchars($forums_arr['subject']) . "</b></a>";
                     else
-                        $lastpost = "" . get_date($forums_arr["added"], 'LONG', 1, 0) . "<br />" . "by <i>Anonymous</i>(<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a>)<br />" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $forums_arr["topicid"] . "&amp;page=p$lastpostid#p$lastpostid'><b>" . htmlspecialchars($forums_arr['subject']) . "</b></a>";
+                        $lastpost = "" . get_date($forums_arr["added"], 'LONG', 1, 0) . "<br />" . "by <i>Anonymous</i>(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a>)<br />" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $forums_arr["topicid"] . "&amp;page=p$lastpostid#p$lastpostid'><b>" . htmlspecialchars($forums_arr['subject']) . "</b></a>";
                 } else
-                    $lastpost = "" . get_date($forums_arr["added"], 'LONG', 1, 0) . "<br />" . "by <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a><br />" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $forums_arr["topicid"] . "&amp;page=p$lastpostid#p$lastpostid'><b>" . htmlspecialchars($forums_arr['subject']) . "</b></a>";
+                    $lastpost = "" . get_date($forums_arr["added"], 'LONG', 1, 0) . "<br />" . "by <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $forums_arr["userid"] . "'><b>" . htmlspecialchars($forums_arr['username']) . "</b></a><br />" . "in <a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $forums_arr["topicid"] . "&amp;page=p$lastpostid#p$lastpostid'><b>" . htmlspecialchars($forums_arr['subject']) . "</b></a>";
             else
                 $lastpost = "N/A";
         }
         
         if (is_valid_id($forums_arr['pid']))
-            $img = 'unlocked' . ((($forums_arr['added'] > (time() - $TBDEV['readpost_expiry'])) ? ((int) $forums_arr['pid'] > $forums_arr['lastpostread']) : 0) ? 'new' : '');
+            $img = 'unlocked' . ((($forums_arr['added'] > (time() - $INSTALLER09['readpost_expiry'])) ? ((int) $forums_arr['pid'] > $forums_arr['lastpostread']) : 0) ? 'new' : '');
         else
             $img = "unlocked";
         if ($subforums == false && !empty($sfa[$forumid])) {
@@ -378,7 +378,7 @@ function show_forums($forid, $subforums = false, $sfa = "", $mods_array = "", $s
 			<td align='left'>
 				<table border='0' cellspacing='0' cellpadding='0' style='border:none;'>
 					<tr>
-						<td class='embedded' style='padding-right: 5px'><img src='" . $TBDEV['pic_base_url'] . $img . ".gif' alt='' /></td>
+						<td class='embedded' style='padding-right: 5px'><img src='" . $INSTALLER09['pic_base_url'] . $img . ".gif' alt='' /></td>
 						<td class='embedded'>
 							<a href='" . $_SERVER['PHP_SELF'] . "?action=viewforum&amp;forumid=" . $forumid . "'><b>" . htmlspecialchars($forums_arr["name"]) . "</b></a>";
         if ($CURUSER['class'] >= UC_ADMINISTRATOR || isMod($forumid)) {
@@ -457,7 +457,7 @@ function get_forum_last_post($forumid)
 // -------- Inserts a quick jump menu
 function insert_quick_jump_menu($currentforum = 0)
 {
-    global $CURUSER, $TBDEV;
+    global $CURUSER, $INSTALLER09;
     $htmlout = '';
     $htmlout .= "
 	<form method='get' action='" . $_SERVER['PHP_SELF'] . "' name='jump'>
@@ -477,7 +477,7 @@ function insert_quick_jump_menu($currentforum = 0)
 // -------- Inserts a compose frame
 function insert_compose_frame($id, $newtopic = true, $quote = false, $attachment = false)
 {
-    global $maxsubjectlength, $CURUSER, $TBDEV, $maxfilesize, $use_attachment_mod, $forum_pics;
+    global $maxsubjectlength, $CURUSER, $INSTALLER09, $maxfilesize, $use_attachment_mod, $forum_pics;
     
     $htmlout = '';
     if ($newtopic) {
@@ -609,13 +609,13 @@ function insert_compose_frame($id, $newtopic = true, $quote = false, $attachment
                 $avatar = ($CURUSER["avatars"] == "all" ? htmlspecialchars($post["avatar"]) : ($CURUSER["avatars"] == "some" && $post["offavatar"] == "no" ? htmlspecialchars($post["avatar"]) : ""));
                 
                 if ($post['anonymous'] == 'yes') {
-                    $avatar = $TBDEV['pic_base_url'] . $forum_pics['default_avatar'];
+                    $avatar = $INSTALLER09['pic_base_url'] . $forum_pics['default_avatar'];
                 } else {
                     $avatar = ($CURUSER["avatars"] == "yes" ? htmlspecialchars($post["avatar"]) : '');
                 }
                 
                 if (empty($avatar))
-                    $avatar = $TBDEV['pic_base_url'] . $forum_pics['default_avatar'];
+                    $avatar = $INSTALLER09['pic_base_url'] . $forum_pics['default_avatar'];
                 
                 if ($post["anonymous"] == "yes")
                     if ($CURUSER['class'] < UC_MODERATOR && $post["uid"] != $CURUSER["id"]) {
@@ -663,7 +663,7 @@ if ($action == 'updatetopic') {
             if ((isset($_GET['sure']) ? htmlspecialchars($_GET['sure']) : (isset($_POST['sure']) ? htmlspecialchars($_POST['sure']) : '')) != 'yes')
                 stderr("Sanity check...", "You are about to delete this topic: <b>" . $subject . "</b>. Click <a href='" . $_SERVER['PHP_SELF'] . "?action=$action&amp;topicid=$topicid&amp;delete=yes&amp;sure=yes'>here</a> if you are sure.");
             
-            write_log("topicdelete", "Topic <b>" . $subject . "</b> was deleted by <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($CURUSER['id']) . "'>" . htmlspecialchars($CURUSER['username']) . "</a>.");
+            write_log("topicdelete", "Topic <b>" . $subject . "</b> was deleted by <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($CURUSER['id']) . "'>" . htmlspecialchars($CURUSER['username']) . "</a>.");
             
             if ($use_attachment_mod) {
                 $res = sql_query("SELECT attachments.filename " . "FROM posts " . "LEFT JOIN attachments ON attachments.postid = posts.id " . "WHERE posts.topicid = " . sqlesc($topicid)) or sqlerr(__FILE__, __LINE__);
@@ -742,7 +742,7 @@ if ($action == 'updatetopic') {
         $forum = mysqli_fetch_assoc($res);
         
         
-        if ($TBDEV['forums_online'] == 0)
+        if ($INSTALLER09['forums_online'] == 0)
             $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
         $HTMLOUT .= begin_main_frame();
         $HTMLOUT .= begin_frame("Edit Forum", "center");
@@ -856,7 +856,7 @@ if ($action == 'updatetopic') {
     
     
     $HTMLOUT .= begin_main_frame();
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= insert_compose_frame($forumid, true, false, true);
     $HTMLOUT .= end_main_frame();
@@ -920,11 +920,11 @@ if ($action == 'updatetopic') {
         sql_query("INSERT INTO posts (topicid, userid, added, body, anonymous, posticon) VALUES(" . sqlesc($topicid) . ", " . sqlesc($userid) . ", $added, $body, " . sqlesc($anonymous) . ", " . sqlesc($posticon) . ")") or sqlerr(__FILE__, __LINE__);
         $postid = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res) or stderr("Error", "No post ID returned!");
         update_topic_last_post($topicid);
-        if ($TBDEV['forums_autoshout_on'] == 1) {
+        if ($INSTALLER09['forums_autoshout_on'] == 1) {
             if ($anonymous == 'yes')
-                $message = "(Anonymous) Created a new forum thread [url={$TBDEV['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
+                $message = "(Anonymous) Created a new forum thread [url={$INSTALLER09['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
             else
-                $message = $CURUSER['username'] . " Created a new forum thread [url={$TBDEV['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
+                $message = $CURUSER['username'] . " Created a new forum thread [url={$INSTALLER09['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
             //////remember to edit the ids to your staffforum ids :)
             if (!in_array($forumid, array(
                 "18",
@@ -935,7 +935,7 @@ if ($action == 'updatetopic') {
                 autoshout($message);
             }
         }
-        if ($TBDEV['forums_seedbonus_on'] == 1) {
+        if ($INSTALLER09['forums_seedbonus_on'] == 1) {
             sql_query("UPDATE users SET seedbonus = seedbonus+3.0 WHERE id =  " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
         }
     } else {
@@ -953,9 +953,9 @@ if ($action == 'updatetopic') {
         while ($row = mysqli_fetch_assoc($res_sub)) {
             $res_yes = sql_query("SELECT subscription_pm, username FROM users WHERE id = " . sqlesc($row["userid"])) or sqlerr(__FILE__, __LINE__);
             $arr_yes = mysqli_fetch_array($res_yes);
-            $msg     = "Hey there!!! \n a thread you subscribed to: " . htmlspecialchars($arr["subject"]) . " has had a new post!\n click [url=" . $TBDEV['baseurl'] . "/forums.php?action=viewtopic&topicid=" . $topicid . "&page=last][b]HERE[/b][/url] to read it!\n\nTo view your subscriptions, or un-subscribe, click [url=" . $TBDEV['baseurl'] . "/subscriptions.php][b]HERE[/b][/url].\n\ncheers.";
+            $msg     = "Hey there!!! \n a thread you subscribed to: " . htmlspecialchars($arr["subject"]) . " has had a new post!\n click [url=" . $INSTALLER09['baseurl'] . "/forums.php?action=viewtopic&topicid=" . $topicid . "&page=last][b]HERE[/b][/url] to read it!\n\nTo view your subscriptions, or un-subscribe, click [url=" . $INSTALLER09['baseurl'] . "/subscriptions.php][b]HERE[/b][/url].\n\ncheers.";
             if ($arr_yes["subscription_pm"] == 'yes' && $row["userid"] != $CURUSER["id"])
-                sql_query("INSERT INTO messages (sender, subject, receiver, added, msg) VALUES(" . sqlesc($TBDEV['bot_id']) . ", 'New post in subscribed thread!', " . sqlesc($row['userid']) . ", '" . sqlesc(time()) . "', " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
+                sql_query("INSERT INTO messages (sender, subject, receiver, added, msg) VALUES(" . sqlesc($INSTALLER09['bot_id']) . ", 'New post in subscribed thread!', " . sqlesc($row['userid']) . ", '" . sqlesc(time()) . "', " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
         }
         // ===end
         //------ Check double post     
@@ -968,14 +968,14 @@ if ($action == 'updatetopic') {
             
             $postid = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res) or die("Post id n/a");
             
-            if ($TBDEV['forums_seedbonus_on'] == 1) {
+            if ($INSTALLER09['forums_seedbonus_on'] == 1) {
                 sql_query("UPDATE users SET seedbonus = seedbonus+2.0 WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
             }
-            if ($TBDEV['forums_autoshout_on'] == 1) {
+            if ($INSTALLER09['forums_autoshout_on'] == 1) {
                 if ($anonymous == 'yes')
-                    $message = "(Anonymous) replied to the thread [url={$TBDEV['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
+                    $message = "(Anonymous) replied to the thread [url={$INSTALLER09['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
                 else
-                    $message = $CURUSER['username'] . " replied to the thread [url={$TBDEV['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
+                    $message = $CURUSER['username'] . " replied to the thread [url={$INSTALLER09['baseurl']}/forums.php?action=viewtopic&topicid=$topicid&page=last]{$subject}[/url]";
                 //////remember to edit the ids to your staffforum ids :)
                 if (!in_array($forumid, array(
                     "18",
@@ -1232,9 +1232,9 @@ if ($action == 'updatetopic') {
                     $HTMLOUT .= "<tr>";
                     $HTMLOUT .= "<td width='1%' style='padding:3px;white-space:nowrap;' class='embedded" . $c . "'>" . htmlspecialchars($a[1]) . "</td>";
                     $HTMLOUT .= "<td width='99%' class='embedded" . $c . "' align='center'>";
-                    $HTMLOUT .= "<img src='{$TBDEV['pic_base_url']}bar_left.gif' alt='bar_left.gif' />
-					<img src='{$TBDEV['pic_base_url']}bar.gif' alt='bar.gif'  height='9' width='" . ($p * 3) . "' />
-					<img src='{$TBDEV['pic_base_url']}bar_right.gif'  alt='bar_right.gif' />&nbsp;" . $p . "%</td>
+                    $HTMLOUT .= "<img src='{$INSTALLER09['pic_base_url']}bar_left.gif' alt='bar_left.gif' />
+					<img src='{$INSTALLER09['pic_base_url']}bar.gif' alt='bar.gif'  height='9' width='" . ($p * 3) . "' />
+					<img src='{$INSTALLER09['pic_base_url']}bar_right.gif'  alt='bar_right.gif' />&nbsp;" . $p . "%</td>
 					</tr>";
                 }
                 $HTMLOUT .= "</table>";
@@ -1263,9 +1263,9 @@ if ($action == 'updatetopic') {
                             if ($CURUSER['class'] < UC_MODERATOR && $arr4["userid"] != $CURUSER["id"])
                                 $voters = "<i>Anonymous</i>";
                             else
-                                $voters = "<i>Anonymous</i>(<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $arr4['userid'] . "'><b>" . $arr4['username'] . "</b></a>)";
+                                $voters = "<i>Anonymous</i>(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $arr4['userid'] . "'><b>" . $arr4['username'] . "</b></a>)";
                         } else
-                            $voters .= "<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $arr4['userid'] . "'><b>" . htmlspecialchars($arr4['username']) . "</b></a>";
+                            $voters .= "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $arr4['userid'] . "'><b>" . htmlspecialchars($arr4['username']) . "</b></a>";
                     }
                     $HTMLOUT .= $voters . "<br />(<font class='small'><a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=$topicid'>hide</a></font>)";
                 }
@@ -1279,7 +1279,7 @@ if ($action == 'updatetopic') {
     }
     $HTMLOUT .= "<a name='top'></a>
         <h1 align='left'><a href='" . $_SERVER['PHP_SELF'] . "?action=viewforum&amp;forumid=" . $forumid . "'>{$forum}</a> &gt; " . htmlspecialchars($subject) . "</h1>";
-    $HTMLOUT .= "<br /><a href='{$TBDEV['baseurl']}/subscriptions.php?topicid=$topicid&amp;subscribe=1'><b><font color='red'>Subscribe to Forum</font></b></a>";
+    $HTMLOUT .= "<br /><a href='{$INSTALLER09['baseurl']}/subscriptions.php?topicid=$topicid&amp;subscribe=1'><b><font color='red'>Subscribe to Forum</font></b></a>";
     $HTMLOUT .= "<br /><br />";
     
     
@@ -1329,7 +1329,7 @@ function confirm_att(id)
             $ratio = "&infin;";
         else
             $ratio = "---";
-        if (($postid > $lpr) && ($postadd > (time() - $TBDEV['readpost_expiry']))) {
+        if (($postid > $lpr) && ($postadd > (time() - $INSTALLER09['readpost_expiry']))) {
             $newp = "&nbsp;&nbsp;<span class='red'>(New)</span>";
         }
         foreach ($mood as $key => $value)
@@ -1350,12 +1350,12 @@ function confirm_att(id)
             if ($CURUSER['class'] < UC_MODERATOR && $arr['userid'] != $CURUSER["id"])
                 $by = "<i>Anonymous</i>";
             else
-                $by = "<i>Anonymous</i>(<a href='{$TBDEV['baseurl']}/userdetails.php?id=$posterid'>" . $postername . "</a>)" . ($arr['donor'] == "yes" ? "<img src='" . $TBDEV['pic_base_url'] . "star.gif' alt='Donor' />" : '') . ($arr['enabled'] == 'no' ? "<img src='" . $TBDEV['pic_base_url'] . "disabled.gif' alt='This account is disabled' style='margin-left: 2px' />" : ($arr['warned'] == 'yes' ? "<img src='" . $TBDEV['pic_base_url'] . "warned.gif' alt='Warned' border='0' />" : '')) . "$title";
+                $by = "<i>Anonymous</i>(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$posterid'>" . $postername . "</a>)" . ($arr['donor'] == "yes" ? "<img src='" . $INSTALLER09['pic_base_url'] . "star.gif' alt='Donor' />" : '') . ($arr['enabled'] == 'no' ? "<img src='" . $INSTALLER09['pic_base_url'] . "disabled.gif' alt='This account is disabled' style='margin-left: 2px' />" : ($arr['warned'] == 'yes' ? "<img src='" . $INSTALLER09['pic_base_url'] . "warned.gif' alt='Warned' border='0' />" : '')) . "$title";
         } else {
-            $by = (!empty($postername) ? "<a href='{$TBDEV['baseurl']}/userdetails.php?id=$posterid'>" . $postername . "</a>" . ($arr['donor'] == "yes" ? "<img src='" . $TBDEV['pic_base_url'] . "star.gif' alt='Donor' />" : '') . ($arr['enabled'] == 'no' ? "<img src='" . $TBDEV['pic_base_url'] . "disabled.gif' alt='This account is disabled' style='margin-left: 2px' />" : ($arr['warned'] == 'yes' ? "<img src='" . $TBDEV['pic_base_url'] . "warned.gif' alt='Warned' border='0' />" : '')) : "unknown[" . $posterid . "]") . "$title";
+            $by = (!empty($postername) ? "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$posterid'>" . $postername . "</a>" . ($arr['donor'] == "yes" ? "<img src='" . $INSTALLER09['pic_base_url'] . "star.gif' alt='Donor' />" : '') . ($arr['enabled'] == 'no' ? "<img src='" . $INSTALLER09['pic_base_url'] . "disabled.gif' alt='This account is disabled' style='margin-left: 2px' />" : ($arr['warned'] == 'yes' ? "<img src='" . $INSTALLER09['pic_base_url'] . "warned.gif' alt='Warned' border='0' />" : '')) : "unknown[" . $posterid . "]") . "$title";
         }
         if (empty($avatar))
-            $avatar = $TBDEV['pic_base_url'] . $forum_pics['default_avatar'];
+            $avatar = $INSTALLER09['pic_base_url'] . $forum_pics['default_avatar'];
         $HTMLOUT .= "" . ($pn == $pc ? '<a name=\'last\'></a>' : '');
         
         $HTMLOUT .= begin_table();
@@ -1366,13 +1366,13 @@ function confirm_att(id)
             $HTMLOUT .= "$newp";
         }
         
-        $HTMLOUT .= "</td><td style='border:none;'><a href='#top'><img align='right' src='{$TBDEV['pic_base_url']}" . $forum_pics['arrow_up'] . "' alt='Top' /></a></td></tr></table></td></tr>";
+        $HTMLOUT .= "</td><td style='border:none;'><a href='#top'><img align='right' src='{$INSTALLER09['pic_base_url']}" . $forum_pics['arrow_up'] . "' alt='Top' /></a></td></tr></table></td></tr>";
         
         $highlight = (isset($_GET['highlight']) ? $_GET['highlight'] : '');
         $body      = (!empty($highlight) ? highlight(htmlspecialchars(trim($highlight)), format_comment($arr['body'])) : format_comment($arr['body']));
         
         if (is_valid_id($arr['editedby']))
-            $body .= "<p><font size='1' class='small'>Last edited by <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . $arr['editedby'] . "'><b>" . $arr['u2_username'] . "</b></a> at " . get_date($arr['editedat'], 'LONG', 1, 0) . " GMT</font></p>";
+            $body .= "<p><font size='1' class='small'>Last edited by <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . $arr['editedby'] . "'><b>" . $arr['u2_username'] . "</b></a> at " . get_date($arr['editedat'], 'LONG', 1, 0) . " GMT</font></p>";
         
         if ($use_attachment_mod && ((!empty($arr['at_filename']) && is_valid_id($arr['at_id'])) && $arr['at_postid'] == $postid)) {
             foreach ($allowed_file_extensions as $allowed_file_extension)
@@ -1384,7 +1384,7 @@ function confirm_att(id)
 					<legend>Attached Files</legend>
 					<table cellpadding='0' cellspacing='3' border='0'>
 					<tr>
-					<td><img class='inlineimg' src='{$TBDEV['pic_base_url']}$aimg.gif' alt='' width='16' height='16' border='0' style='vertical-align:baseline' />&nbsp;</td>
+					<td><img class='inlineimg' src='{$INSTALLER09['pic_base_url']}$aimg.gif' alt='' width='16' height='16' border='0' style='vertical-align:baseline' />&nbsp;</td>
 					<td><a href='" . $_SERVER['PHP_SELF'] . "?action=attachment&amp;attachmentid=" . intval($arr['at_id']) . "' target='_blank'>" . htmlspecialchars($arr['at_filename']) . "</a> (" . mksize($arr['at_size']) . ", " . intval($arr['at_downloads']) . " downloads)</td>
 					<td>&nbsp;&nbsp;<input type='button' class='none' value='See who downloaded' tabindex='1' onclick=\"window.open('" . $_SERVER['PHP_SELF'] . "?action=whodownloaded&amp;fileid=" . intval($arr['at_id']) . "','whodownloaded','toolbar=no, scrollbars=yes, resizable=yes, width=600, height=250, top=50, left=50'); return false;\" />" . ($CURUSER['class'] >= UC_MODERATOR ? "&nbsp;&nbsp;<input type='button' class='gobutton' value='Delete' tabindex='2' onclick=\"window.open('" . $_SERVER['PHP_SELF'] . "?action=attachment&amp;subaction=delete&amp;attachmentid=" . intval($arr['at_id']) . "','attachment','toolbar=no, scrollbars=yes, resizable=yes, width=600, height=250, top=50, left=50'); return false;\" />" : "") . "</td>
 					</tr>
@@ -1424,18 +1424,18 @@ function confirm_att(id)
             if ($CURUSER['class'] < UC_MODERATOR)
                 $HTMLOUT .= "";
             else
-                $HTMLOUT .= "<img src='" . $TBDEV['pic_base_url'] . $forum_pics[($last_access > (time() - 360) || $posterid == $CURUSER['id'] ? 'on' : 'off') . 'line_btn'] . "' border='0' alt='' />&nbsp;<a href='{$TBDEV['baseurl']}/sendmessage.php?receiver=" . $posterid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['pm_btn'] . "' border='0' alt='Pm " . htmlspecialchars($postername) . "' /></a>";
+                $HTMLOUT .= "<img src='" . $INSTALLER09['pic_base_url'] . $forum_pics[($last_access > (time() - 360) || $posterid == $CURUSER['id'] ? 'on' : 'off') . 'line_btn'] . "' border='0' alt='' />&nbsp;<a href='{$INSTALLER09['baseurl']}/sendmessage.php?receiver=" . $posterid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['pm_btn'] . "' border='0' alt='Pm " . htmlspecialchars($postername) . "' /></a>";
         } else {
-            $HTMLOUT .= "<img src='" . $TBDEV['pic_base_url'] . $forum_pics[($last_access > (time() - 360) || $posterid == $CURUSER['id'] ? 'on' : 'off') . 'line_btn'] . "' border='0' alt='' />&nbsp;<a href='{$TBDEV['baseurl']}/sendmessage.php?receiver=" . $posterid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['pm_btn'] . "' border='0' alt='Pm " . htmlspecialchars($postername) . "' /></a>";
+            $HTMLOUT .= "<img src='" . $INSTALLER09['pic_base_url'] . $forum_pics[($last_access > (time() - 360) || $posterid == $CURUSER['id'] ? 'on' : 'off') . 'line_btn'] . "' border='0' alt='' />&nbsp;<a href='{$INSTALLER09['baseurl']}/sendmessage.php?receiver=" . $posterid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['pm_btn'] . "' border='0' alt='Pm " . htmlspecialchars($postername) . "' /></a>";
         }
         
-        $HTMLOUT .= "<a href='{$TBDEV['baseurl']}/report.php?type=Post&amp;id=" . $postid . "&amp;id_2=" . $topicid . "&amp;id_3=" . $posterid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['p_report_btn'] . "' border='0' alt='Report Post' /></a>";
+        $HTMLOUT .= "<a href='{$INSTALLER09['baseurl']}/report.php?type=Post&amp;id=" . $postid . "&amp;id_2=" . $topicid . "&amp;id_3=" . $posterid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['p_report_btn'] . "' border='0' alt='Report Post' /></a>";
         
         $mooduser = (isset($arr['username']) ? ("<b>" . htmlspecialchars($arr['username']) . "</b>") : "(unknown)");
         $moodanon = ($arr['anonymous'] == 'yes' ? ($CURUSER['class'] < UC_MODERATOR && $arr['userid'] != $CURUSER['id'] ? '' : $mooduser . ' - ') . "<i>Anonymous</i>" : $mooduser);
-        $HTMLOUT .= "&nbsp;&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/usermood.php' onclick=\"return popitup('usermood.php')\">
+        $HTMLOUT .= "&nbsp;&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/usermood.php' onclick=\"return popitup('usermood.php')\">
       <span class='tool'>
-      <img border='0' src='{$TBDEV['pic_base_url']}smilies/" . htmlspecialchars($moodupic) . "' alt='" . htmlspecialchars($mooduname) . "' />
+      <img border='0' src='{$INSTALLER09['pic_base_url']}smilies/" . htmlspecialchars($moodupic) . "' alt='" . htmlspecialchars($mooduname) . "' />
       <span class='tip'>" . $moodanon . "&nbsp;" . htmlspecialchars($mooduname) . "&nbsp;!</span></span></a></td>";
         
         
@@ -1446,17 +1446,17 @@ function confirm_att(id)
                 if ($CURUSER['class'] < UC_MODERATOR)
                     $HTMLOUT .= "";
             } else
-                $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=quotepost&amp;topicid=" . $topicid . "&amp;postid=" . $postid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['p_quote_btn'] . "' border='0' alt='Quote Post' /></a>";
+                $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=quotepost&amp;topicid=" . $topicid . "&amp;postid=" . $postid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['p_quote_btn'] . "' border='0' alt='Quote Post' /></a>";
         } else {
-            $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=quotepost&amp;topicid=" . $topicid . "&amp;postid=" . $postid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['p_quote_btn'] . "' border='0' alt='Quote Post' /></a>";
+            $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=quotepost&amp;topicid=" . $topicid . "&amp;postid=" . $postid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['p_quote_btn'] . "' border='0' alt='Quote Post' /></a>";
         }
         
         if ($CURUSER['class'] >= UC_MODERATOR || isMod($forumid)) {
-            $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=deletepost&amp;postid=" . $postid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['p_delete_btn'] . "' border='0' alt='Delete Post' /></a>";
+            $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=deletepost&amp;postid=" . $postid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['p_delete_btn'] . "' border='0' alt='Delete Post' /></a>";
         }
         
         if (($CURUSER["id"] == $posterid && !$locked) || $CURUSER['class'] >= UC_MODERATOR || isMod($forumid)) {
-            $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=editpost&amp;postid=" . $postid . "'><img src='" . $TBDEV['pic_base_url'] . $forum_pics['p_edit_btn'] . "' border='0' alt='Edit Post' /></a>";
+            $HTMLOUT .= "<a href='" . $_SERVER['PHP_SELF'] . "?action=editpost&amp;postid=" . $postid . "'><img src='" . $INSTALLER09['pic_base_url'] . $forum_pics['p_edit_btn'] . "' border='0' alt='Edit Post' /></a>";
         }
         
         $HTMLOUT .= "</td></tr>";
@@ -1483,7 +1483,7 @@ function confirm_att(id)
         
     }
     
-    if (($postid > $lpr) && ($postadd > (time() - $TBDEV['readpost_expiry']))) {
+    if (($postid > $lpr) && ($postadd > (time() - $INSTALLER09['readpost_expiry']))) {
         if ($lpr)
             sql_query("UPDATE readposts SET lastpostread = " . sqlesc($postid) . " WHERE userid = " . sqlesc($userid) . " AND topicid = " . sqlesc($topicid)) or sqlerr(__FILE__, __LINE__);
         else
@@ -1628,7 +1628,7 @@ function confirm_att(id)
         stderr('Error', 'Invalid ID!');
     
     $HTMLOUT .= begin_main_frame();
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= insert_compose_frame($topicid, false, true);
     $HTMLOUT .= end_main_frame();
@@ -1640,7 +1640,7 @@ function confirm_att(id)
         stderr('Error', 'Invalid ID!');
     
     $HTMLOUT .= begin_main_frame();
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= insert_compose_frame($topicid, false, false, true);
     $HTMLOUT .= end_main_frame();
@@ -1676,7 +1676,7 @@ function confirm_att(id)
         exit();
     }
     
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= begin_main_frame();
     $HTMLOUT .= "<h3>Edit Post</h3>";
@@ -1724,7 +1724,7 @@ function confirm_att(id)
         if (!$sure)
             stderr("Sanity check...", "You are about to delete topic " . htmlspecialchars($a["subject"]) . ". Click <a href='" . $_SERVER['PHP_SELF'] . "?action=deletetopic&amp;topicid=$topicid&amp;sure=1'>here</a> if you are sure.");
         else {
-            write_log("topicdelete", "Topic <b>" . htmlspecialchars($a["subject"]) . "</b> was deleted by <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($CURUSER['id']) . "'>" . htmlspecialchars($CURUSER['username']) . "</a>.");
+            write_log("topicdelete", "Topic <b>" . htmlspecialchars($a["subject"]) . "</b> was deleted by <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($CURUSER['id']) . "'>" . htmlspecialchars($CURUSER['username']) . "</a>.");
             
             if ($use_attachment_mod) {
                 $res = sql_query("SELECT attachments.filename " . "FROM posts " . "LEFT JOIN attachments ON attachments.postid = posts.id " . "WHERE posts.topicid = " . sqlesc($topicid)) or sqlerr(__FILE__, __LINE__);
@@ -2061,7 +2061,7 @@ else if ($use_attachment_mod && $action == "whodownloaded") {
     $r_subforums = sql_query("SELECT id FROM forums where place=" . $forumid) or sqlerr(__FILE__, __LINE__);
     $subforums = mysqli_num_rows($r_subforums);
     $HTMLOUT .= begin_main_frame();
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     
     if ($subforums > 0) {
@@ -2103,7 +2103,7 @@ else if ($use_attachment_mod && $action == "whodownloaded") {
                 ++$tpages;
             
             if ($tpages > 1) {
-                $topicpages = "&nbsp;(<img src='" . $TBDEV['pic_base_url'] . "multipage.gif' alt='Multiple pages' title='Multiple pages' />";
+                $topicpages = "&nbsp;(<img src='" . $INSTALLER09['pic_base_url'] . "multipage.gif' alt='Multiple pages' title='Multiple pages' />";
                 $split      = ($tpages > 10) ? true : false;
                 $flag       = false;
                 
@@ -2125,17 +2125,17 @@ else if ($use_attachment_mod && $action == "whodownloaded") {
                 if ($CURUSER['class'] < UC_MODERATOR && $topic_arr["p_userid"] != $CURUSER["id"])
                     $lpusername = "<i>Anonymous</i>";
                 else
-                    $lpusername = "<i>Anonymous</i><br />(<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $topic_arr['p_userid'] . "'><b>" . htmlspecialchars($topic_arr['u2_username']) . "</b></a>)";
+                    $lpusername = "<i>Anonymous</i><br />(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $topic_arr['p_userid'] . "'><b>" . htmlspecialchars($topic_arr['u2_username']) . "</b></a>)";
             } else
-                $lpusername = (is_valid_id($topic_arr['p_userid']) && !empty($topic_arr['u2_username']) ? "<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . (int) $topic_arr['p_userid'] . "'><b>" . htmlspecialchars($topic_arr['u2_username']) . "</b></a>" : "unknown[$topic_userid]");
+                $lpusername = (is_valid_id($topic_arr['p_userid']) && !empty($topic_arr['u2_username']) ? "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . (int) $topic_arr['p_userid'] . "'><b>" . htmlspecialchars($topic_arr['u2_username']) . "</b></a>" : "unknown[$topic_userid]");
             if ($topic_arr["anonymous"] == "yes") {
                 if ($CURUSER['class'] < UC_MODERATOR && $topic_arr["userid"] != $CURUSER["id"])
                     $lpauthor = "<i>Anonymous</i>";
                 else
-                    $lpauthor = "<i>Anonymous</i><br />(<a href='{$TBDEV['baseurl']}/userdetails.php?id=$topic_userid'><b>" . htmlspecialchars($topic_arr['username']) . "</b></a>)";
+                    $lpauthor = "<i>Anonymous</i><br />(<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$topic_userid'><b>" . htmlspecialchars($topic_arr['username']) . "</b></a>)";
             } else
-                $lpauthor = (is_valid_id($topic_arr['userid']) && !empty($topic_arr['username']) ? "<a href='{$TBDEV['baseurl']}/userdetails.php?id=$topic_userid'><b>" . htmlspecialchars($topic_arr['username']) . "</b></a>" : "unknown[$topic_userid]");
-            $new       = ($topic_arr["p_added"] > (time() - $TBDEV['readpost_expiry'])) ? ((int) $topic_arr['p_id'] > $topic_arr['lastpostread']) : 0;
+                $lpauthor = (is_valid_id($topic_arr['userid']) && !empty($topic_arr['username']) ? "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$topic_userid'><b>" . htmlspecialchars($topic_arr['username']) . "</b></a>" : "unknown[$topic_userid]");
+            $new       = ($topic_arr["p_added"] > (time() - $INSTALLER09['readpost_expiry'])) ? ((int) $topic_arr['p_id'] > $topic_arr['lastpostread']) : 0;
             $topicpic  = ($topic_arr['locked'] == "yes" ? ($new ? "lockednew" : "locked") : ($new ? "unlockednew" : "unlocked"));
             $post_icon = ($sticky ? "<img src=\"pic/sticky.gif\" alt=\"Sticky topic\" title=\"Sticky topic\"/>" : ($topic_arr["posticon"] > 0 ? "<img src=\"pic/post_icons/icon" . htmlspecialchars($topic_arr["posticon"]) . ".gif\" alt=\"post icon\" title=\"post icon\" />" : "&nbsp;"));
             
@@ -2143,8 +2143,8 @@ else if ($use_attachment_mod && $action == "whodownloaded") {
 				<td align='left' width='100%'>
 				<table border='0' cellspacing='0' cellpadding='0'>
 				<tr>
-				<td class='embedded' style='padding-right: 5px'><img src='" . $TBDEV['pic_base_url'] . $topicpic . ".gif' alt='' /></td>
-				<td align='center' nowrap='nowrap' style='padding-right: 5px;border:none'>" . ($pollim ? "<img src='{$TBDEV['pic_base_url']}poll.gif' alt='Topic Poll' title='Topic Poll' />&nbsp;" : '') . "" . $post_icon . "</td>
+				<td class='embedded' style='padding-right: 5px'><img src='" . $INSTALLER09['pic_base_url'] . $topicpic . ".gif' alt='' /></td>
+				<td align='center' nowrap='nowrap' style='padding-right: 5px;border:none'>" . ($pollim ? "<img src='{$INSTALLER09['pic_base_url']}poll.gif' alt='Topic Poll' title='Topic Poll' />&nbsp;" : '') . "" . $post_icon . "</td>
 				<td class='embedded' align='left'>" . ($sticky ? 'Sticky:&nbsp;' : '') . "<a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . $topicid . "'>" . htmlspecialchars($topic_arr['subject']) . "</a>{$topicpages}</td>
 				</tr>
 				</table>
@@ -2164,9 +2164,9 @@ else if ($use_attachment_mod && $action == "whodownloaded") {
     
     $HTMLOUT .= "<table class='main' border='0' cellspacing='0' cellpadding='0' align='center'>
 	<tr align='center'>
-		<td class='embedded'><img src='" . $TBDEV['pic_base_url'] . "unlockednew.gif' alt='New Unlocked' style='margin-right: 5px' /></td>
+		<td class='embedded'><img src='" . $INSTALLER09['pic_base_url'] . "unlockednew.gif' alt='New Unlocked' style='margin-right: 5px' /></td>
 		<td class='embedded'>New posts</td>
-		<td class='embedded'><img src='" . $TBDEV['pic_base_url'] . "locked.gif' alt='Locked' style='margin-left: 10px; margin-right: 5px' /></td>
+		<td class='embedded'><img src='" . $INSTALLER09['pic_base_url'] . "locked.gif' alt='Locked' style='margin-left: 10px; margin-right: 5px' /></td>
 		<td class='embedded'>Locked topic</td>
 	</tr>
 	</table>";
@@ -2217,7 +2217,7 @@ else if ($action == 'viewunread') { // -------- Action: View unread posts
         header('Location: ' . $_SERVER['PHP_SELF'] . '?action=' . $action);
         exit();
     } else {
-        $added = (time() - $TBDEV['readpost_expiry']);
+        $added = (time() - $INSTALLER09['readpost_expiry']);
         $res = sql_query('SELECT t.lastpost, r.lastpostread, f.minclassread ' . 'FROM topics AS t ' . 'LEFT JOIN posts AS p ON t.lastpost=p.id ' . 'LEFT JOIN readposts AS r ON r.userid=' . sqlesc((int) $CURUSER['id']) . ' AND r.topicid=t.id ' . 'LEFT JOIN forums AS f ON f.id=t.forumid ' . 'WHERE p.added > ' . sqlesc($added)) or sqlerr(__FILE__, __LINE__);
         $count = 0;
         while ($arr = mysqli_fetch_assoc($res)) {
@@ -2233,7 +2233,7 @@ else if ($action == 'viewunread') { // -------- Action: View unread posts
             $pager   = pager($perpage, $count, $_SERVER['PHP_SELF'] . '?action=' . $action . '&amp;');
             
             
-            if ($TBDEV['forums_online'] == 0)
+            if ($INSTALLER09['forums_online'] == 0)
                 $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
             $HTMLOUT .= begin_main_frame();
             $HTMLOUT .= "<h1 align='center'>Topics with unread posts</h1>";
@@ -2263,7 +2263,7 @@ else if ($action == 'viewunread') { // -------- Action: View unread posts
 			/*]]>*/
 			</script>";
             
-            $HTMLOUT .= "<form method='post' action='{$TBDEV['baseurl']}/forums.php?action=viewunread'>
+            $HTMLOUT .= "<form method='post' action='{$INSTALLER09['baseurl']}/forums.php?action=viewunread'>
 			<input type='hidden' name='viewunread' value='clear' />";
             $HTMLOUT .= "<table cellpadding='5' width='{$forum_width}'>
 			<tr align='left'>
@@ -2280,7 +2280,7 @@ else if ($action == 'viewunread') { // -------- Action: View unread posts
                 
                 $HTMLOUT .= "<tr>
 					<td align='center' width='1%'>
-						<img src='" . $TBDEV['pic_base_url'] . "unlockednew.gif' alt='New Posts' title='New Posts' />
+						<img src='" . $INSTALLER09['pic_base_url'] . "unlockednew.gif' alt='New Posts' title='New Posts' />
 					</td>
 					<td align='left'>
 						<a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;topicid=" . (int) $arr['id'] . "&amp;page=last#last'>" . htmlspecialchars($arr['subject']) . "</a><br />in&nbsp;<font class='small'><a href='" . $_SERVER['PHP_SELF'] . "?action=viewforum&amp;forumid=" . (int) $arr['forumid'] . "'>" . htmlspecialchars($arr['name']) . "</a></font>
@@ -2329,7 +2329,7 @@ else if ($action == "getdaily") {
         stderr('Sorry', 'No posts in the last 24 hours.');
     
     
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= begin_main_frame();
     $perpage = 20;
@@ -2361,7 +2361,7 @@ else if ($action == "getdaily") {
       <td align='center'>";
         
         if (!empty($getdaily['username'])) {
-            $HTMLOUT .= "<a href='{$TBDEV['baseurl']}/userdetails.php?id=" . $posterid . "'>" . htmlspecialchars($getdaily['username']) . "</a>";
+            $HTMLOUT .= "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . $posterid . "'>" . htmlspecialchars($getdaily['username']) . "</a>";
         } else {
             $HTMLOUT .= "<b>unknown[" . $posterid . "]</b>";
         }
@@ -2415,7 +2415,7 @@ else if ($action == "getdaily") {
                     continue;
                 }
                 
-                $HTMLOUT .= "<tr>" . "<td align='center'>" . $post['id'] . "</td>" . "<td align='left' width='100%'><a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;highlight=$keywords&amp;topicid=" . $post['topicid'] . "&amp;page=p" . intval($post['id']) . "#" . intval($post['id']) . "'><b>" . htmlspecialchars($post['subject']) . "</b></a></td>" . "<td align='left' style='white-space: nowrap;'>" . (empty($post['name']) ? 'unknown[' . intval($post['forumid']) . ']' : "<a href='" . $_SERVER['PHP_SELF'] . "?action=viewforum&amp;forumid=" . intval($post['forumid']) . "'><b>" . htmlspecialchars($post['name']) . "</b></a>") . "</td>" . "<td align='left' style='white-space: nowrap;'>" . (empty($post['username']) ? 'unknown[' . intval($post['userid']) . ']' : "<b><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . htmlspecialchars($post['userid']) . "'>" . htmlspecialchars($post['username']) . "</a></b>") . "<br />at " . get_date($post['added'], 'DATE', 1, 0) . "</td>" . "</tr>";
+                $HTMLOUT .= "<tr>" . "<td align='center'>" . $post['id'] . "</td>" . "<td align='left' width='100%'><a href='" . $_SERVER['PHP_SELF'] . "?action=viewtopic&amp;highlight=$keywords&amp;topicid=" . $post['topicid'] . "&amp;page=p" . intval($post['id']) . "#" . intval($post['id']) . "'><b>" . htmlspecialchars($post['subject']) . "</b></a></td>" . "<td align='left' style='white-space: nowrap;'>" . (empty($post['name']) ? 'unknown[' . intval($post['forumid']) . ']' : "<a href='" . $_SERVER['PHP_SELF'] . "?action=viewforum&amp;forumid=" . intval($post['forumid']) . "'><b>" . htmlspecialchars($post['name']) . "</b></a>") . "</td>" . "<td align='left' style='white-space: nowrap;'>" . (empty($post['username']) ? 'unknown[' . intval($post['userid']) . ']' : "<b><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . htmlspecialchars($post['userid']) . "'>" . htmlspecialchars($post['username']) . "</a></b>") . "<br />at " . get_date($post['added'], 'DATE', 1, 0) . "</td>" . "</tr>";
             }
             $HTMLOUT .= end_table();
             
@@ -2462,7 +2462,7 @@ else if ($action == "getdaily") {
     sql_query("UPDATE users SET forum_access = " . sqlesc(time()) . " WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
     
     
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= begin_main_frame();
     
@@ -2534,11 +2534,11 @@ else if ($action == "getdaily") {
     }
     
     
-    if ($TBDEV['forums_online'] == 0)
+    if ($INSTALLER09['forums_online'] == 0)
         $HTMLOUT .= stdmsg('Warning', 'Forums are currently in maintainance mode');
     $HTMLOUT .= begin_main_frame();
     
-    $HTMLOUT .= "<h1 align='center'><b>{$TBDEV['site_name']} - Forum</b></h1>
+    $HTMLOUT .= "<h1 align='center'><b>{$INSTALLER09['site_name']} - Forum</b></h1>
 	<br />
 	<table border='1' cellspacing='0' cellpadding='5' width='{$forum_width}'>";
     $ovf_res = sql_query("SELECT id, name, minclassview FROM overforums ORDER BY sort ASC") or sqlerr(__FILE__, __LINE__);

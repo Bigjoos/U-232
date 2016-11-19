@@ -28,7 +28,7 @@ require_once(INCL_DIR.'user_functions.php');
 $lang = array_merge( $lang );
 
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $htmlout ="";
 
@@ -93,7 +93,7 @@ function sql_get_version()
     return $mysql_version . " (" . $true_version . ")";
 }
 
-$php_version = phpversion() . " (" . @php_sapi_name() . ") ( <a href='{$TBDEV['baseurl']}/admin.php?action=system_view&amp;phpinfo=1'>PHP INFO</a> )";
+$php_version = phpversion() . " (" . @php_sapi_name() . ") ( <a href='{$INSTALLER09['baseurl']}/admin.php?action=system_view&amp;phpinfo=1'>PHP INFO</a> )";
 $server_software = php_uname();
 // print $php_version ." ".$server_software;
 $load_limit = "--";

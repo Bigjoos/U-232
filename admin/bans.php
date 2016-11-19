@@ -62,7 +62,7 @@ require_once(INCL_DIR.'user_functions.php');
         sql_query("INSERT INTO bans (added, addedby, first, last, comment) 
                       VALUES($added, ".sqlesc($CURUSER['id']).", ".sqlesc($first).", ".sqlesc($last).", $comment)") or sqlerr(__FILE__, __LINE__);
         $doUpdate = true;
-        //header("Location: {$TBDEV['baseurl']}/bans.php");
+        //header("Location: {$INSTALLER09['baseurl']}/bans.php");
         //die;
       }
     }

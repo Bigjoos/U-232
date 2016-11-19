@@ -24,9 +24,9 @@ $HTMLOUT = "";
 //== View applications
 if (!$action || $action == "show") {
     if ($action == "show")
-        $hide = "[<a href='{$TBDEV['baseurl']}/uploadapps.php'>{$lang['uploadapps_hide']}</a>]";
+        $hide = "[<a href='{$INSTALLER09['baseurl']}/uploadapps.php'>{$lang['uploadapps_hide']}</a>]";
     else {
-        $hide   = "[<a href='{$TBDEV['baseurl']}/uploadapps.php?action=show'>{$lang['uploadapps_show']}</a>]";
+        $hide   = "[<a href='{$INSTALLER09['baseurl']}/uploadapps.php?action=show'>{$lang['uploadapps_show']}</a>]";
         $where  = "WHERE status = 'pending'";
         $where1 = "WHERE uploadapp.status = 'pending'";
     }
@@ -91,7 +91,7 @@ if (!$action || $action == "show") {
             $HTMLOUT .= "<tr>
             <td>{$elapsed}</td>
             <td><a href='?action=viewapp&amp;id=" . intval($arr['id']) . "'>{$lang['uploadapps_viewapp']}</a></td>
-            <td><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['uid']) . "'>" . htmlspecialchars($arr['username']) . "</a></td>
+            <td><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['uid']) . "'>" . htmlspecialchars($arr['username']) . "</a></td>
             <td>{$membertime}</td>
             <td>" . get_user_class_name($arr["class"]) . "</td>
             <td>" . mksize($arr["uploaded"]) . "</td>
@@ -124,7 +124,7 @@ if ($action == "viewapp") {
     $HTMLOUT .= "<h1 align='center'>Uploader application</h1>
     <table width='750' border='1' cellspacing='0' cellpadding='5'>
     <tr>
-    <td class='rowhead' width='25%'>{$lang['uploadapps_username1']} </td><td><a href='{$TBDEV['baseurl']}/userdetails.php?id=$arr[uid]'>$arr[username]</a></td>
+    <td class='rowhead' width='25%'>{$lang['uploadapps_username1']} </td><td><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$arr[uid]'>$arr[username]</a></td>
     </tr>
     <tr>
     <td class='rowhead'>{$lang['uploadapps_joined']} </td><td>" . htmlspecialchars($membertime) . "</td>
@@ -170,7 +170,7 @@ if ($action == "viewapp") {
         $HTMLOUT .= "<tr><td align='center' colspan='2'><form method='post' action='?action=acceptapp'><input name='id' type='hidden' value='" . intval($arr["id"]) . "' /><b>Note: (optional)</b><br /><input type='text' name='note' size='40' /> <input type='submit' value='Accept' style='height: 20px' /></form><br /><form method='post' action='?action=rejectapp'><input name='id' type='hidden' value='" . intval($arr["id"]) . "' /><b>Reason: (optional)</b><br /><input type='text' name='reason' size='40' /> <input type='submit' value='Reject' style='height: 20px' /></form></td></tr></table>";
     else
         $HTMLOUT .= "<tr><td colspan='2' align='center'>{$lang['uploadapps_application']} " . ($arr["status"] == "accepted" ? "accepted" : "rejected") . " by <b>" . htmlspecialchars($arr["moderator"]) . "</b><br />Comment: " . htmlspecialchars($arr["comment"]) . "</td></tr></table>
-    <div align='center'><a href='{$TBDEV['baseurl']}/uploadapps.php'>Return to uploader applications page</a></div>";
+    <div align='center'><a href='{$INSTALLER09['baseurl']}/uploadapps.php'>Return to uploader applications page</a></div>";
 }
 
 //== Accept application
@@ -182,8 +182,8 @@ if ($action == "acceptapp") {
     $arr        = mysqli_fetch_assoc($res);
     $note       = htmlspecialchars($_POST["note"]);
     $subject    = sqlesc("Uploader Promotion");
-    $msg        = sqlesc("Congratulations, your uploader application has been accepted! You have been promoted to Uploader and you are now able to upload torrents. Please make sure you have read the [url={$TBDEV['baseurl']}/rules.php]guidelines on uploading[/url] before you do.\n\nNote: $note");
-    $msg1       = sqlesc("User [url={$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['uid']) . "][b]" . htmlspecialchars($arr['username']) . "[/b][/url] has been promoted to Uploader by " . htmlspecialchars($CURUSER['username']) . ".");
+    $msg        = sqlesc("Congratulations, your uploader application has been accepted! You have been promoted to Uploader and you are now able to upload torrents. Please make sure you have read the [url={$INSTALLER09['baseurl']}/rules.php]guidelines on uploading[/url] before you do.\n\nNote: $note");
+    $msg1       = sqlesc("User [url={$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['uid']) . "][b]" . htmlspecialchars($arr['username']) . "[/b][/url] has been promoted to Uploader by " . htmlspecialchars($CURUSER['username']) . ".");
     $modcomment = get_date(time(), 'DATE', 1) . " - Promoted to 'Uploader' by " . $CURUSER["username"] . "." . ($arr["modcomment"] != "" ? "\n" : "") . "{$arr['modcomment']}";
     $dt         = sqlesc(time());
     sql_query("UPDATE uploadapp SET status = 'accepted', comment = " . sqlesc($note) . ", moderator = " . sqlesc($CURUSER["username"]) . " WHERE id=" . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
@@ -192,7 +192,7 @@ if ($action == "acceptapp") {
     $subres = sql_query("SELECT id FROM users WHERE class = 6") or sqlerr(__FILE__, __LINE__);
     while ($subarr = mysqli_fetch_assoc($subres))
         sql_query("INSERT INTO messages(sender, receiver, added, msg, subject, poster) VALUES(0, " . sqlesc($subarr['id']) . ", " . sqlesc($dt) . ", $msg1, $subject, 0)") or sqlerr(__FILE__, __LINE__);
-    stderr("Application accepted", "The application was succesfully accepted. The user has been promoted and has been sent a PM notification. Click <a href='{$TBDEV['baseurl']}/uploadapps.php'><b>Here</b></a> to return to the upload applications page.");
+    stderr("Application accepted", "The application was succesfully accepted. The user has been promoted and has been sent a PM notification. Click <a href='{$INSTALLER09['baseurl']}/uploadapps.php'><b>Here</b></a> to return to the upload applications page.");
 }
 
 //== Reject application
@@ -208,7 +208,7 @@ if ($action == "rejectapp") {
     $dt      = sqlesc(time());
     sql_query("UPDATE uploadapp SET status = 'rejected', comment = " . sqlesc($reason) . ", moderator = " . sqlesc($CURUSER["username"]) . " WHERE id=" . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("INSERT INTO messages(sender, receiver, added, msg, subject, poster) VALUES(0, " . sqlesc($arr['uid']) . ", " . sqlesc($dt) . ", $msg, $subject, 0)") or sqlerr(__FILE__, __LINE__);
-    stderr("Application rejected", "The application was succesfully rejected. The user has been sent a PM notification. Click <a href='{$TBDEV['baseurl']}/uploadapps.php'><b>Here</b></a> to return to the upload applications page.");
+    stderr("Application rejected", "The application was succesfully rejected. The user has been sent a PM notification. Click <a href='{$INSTALLER09['baseurl']}/uploadapps.php'><b>Here</b></a> to return to the upload applications page.");
 }
 
 //== Delete applications
@@ -218,7 +218,7 @@ if ($action == "takeappdelete") {
     $res = sql_query("SELECT id FROM uploadapp WHERE id IN (" . implode(", ", $_POST["deleteapp"]) . ")") or sqlerr(__FILE__, __LINE__);
     while ($arr = mysqli_fetch_assoc($res))
         sql_query("DELETE FROM uploadapp WHERE id=" . sqlesc($arr['id'])) or sqlerr(__FILE__, __LINE__);
-    stderr("Deleted", "The upload applications were succesfully deleted. Click <a href='{$TBDEV['baseurl']}/uploadapps.php'><b>Here</b></a> to return to the upload applications page.");
+    stderr("Deleted", "The upload applications were succesfully deleted. Click <a href='{$INSTALLER09['baseurl']}/uploadapps.php'><b>Here</b></a> to return to the upload applications page.");
 }
 echo stdhead('Uploader application page') . $HTMLOUT . stdfoot();
 ?>

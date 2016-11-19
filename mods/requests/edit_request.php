@@ -37,7 +37,7 @@ $HTMLOUT .=  "<br />
 
 <td align='left'>";
 
-if ($TBDEV['textbbcode'] && function_exists('textbbcode')) {
+if ($INSTALLER09['textbbcode'] && function_exists('textbbcode')) {
     require_once('include/bbcode_functions.php');
     $HTMLOUT .= textbbcode('edit_request', 'body', $body);
 }

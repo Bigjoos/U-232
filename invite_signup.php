@@ -21,14 +21,14 @@ $newpage->create('tkIs');
 
 $res = sql_query("SELECT COUNT(*) FROM users") or sqlerr(__FILE__, __LINE__);
 $arr = mysqli_fetch_row($res);
-if ($arr[0] >= $TBDEV['maxusers'])
-stderr("Sorry", "The current user account limit (" . number_format($TBDEV['maxusers']) . ") has been reached. Inactive accounts are pruned all the time, please check back again later...");
+if ($arr[0] >= $INSTALLER09['maxusers'])
+stderr("Sorry", "The current user account limit (" . number_format($INSTALLER09['maxusers']) . ") has been reached. Inactive accounts are pruned all the time, please check back again later...");
 
-if(!$TBDEV['openreg'])
+if(!$INSTALLER09['openreg'])
     stderr('Sorry', 'Invite only - Signups are closed presently');
 
 // TIMEZONE STUFF
-        $offset = (string)$TBDEV['time_offset'];
+        $offset = (string)$INSTALLER09['time_offset'];
         
         $time_select = "<select name='user_timezone'>";
         
@@ -64,7 +64,7 @@ $HTMLOUT .="<script type='text/javascript' src='scripts/jquery.js'></script>
     });
     </script>
 <p>Note: You need cookies enabled to sign up or log in.</p>
-<form method='post' action='{$TBDEV['baseurl']}/take_invite_signup.php'>
+<form method='post' action='{$INSTALLER09['baseurl']}/take_invite_signup.php'>
 <noscript>Javascript must be enabled to login and use this site</noscript>
 <table border='1' cellspacing='0' cellpadding='10'>
 

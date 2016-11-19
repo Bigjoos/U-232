@@ -50,7 +50,7 @@ if ($action == 'add') {
     
     
     sql_query("INSERT INTO $table_is VALUES (0," . sqlesc($userid) . ", " . sqlesc($targetid) . ")") or sqlerr(__FILE__, __LINE__);
-    header("Location: {$TBDEV['baseurl']}/friends.php?id=$userid#$frag");
+    header("Location: {$INSTALLER09['baseurl']}/friends.php?id=$userid#$frag");
     die;
 }
 
@@ -80,7 +80,7 @@ if ($action == 'delete') {
     } else
         stderr($lang['friends_error'], $lang['friends_unknown']);
     
-    header("Location: {$TBDEV['baseurl']}/friends.php?id=$userid#$frag");
+    header("Location: {$INSTALLER09['baseurl']}/friends.php?id=$userid#$frag");
     die;
 }
 
@@ -92,8 +92,8 @@ $user = mysqli_fetch_assoc($res) or stderr($lang['friends_error'], $lang['friend
 
 $HTMLOUT = '';
 
-$donor  = ($user["donor"] == "yes") ? "<img src='{$TBDEV['pic_base_url']}starbig.gif' alt='{$lang['friends_donor']}' style='margin-left: 4pt' />" : '';
-$warned = ($user["warned"] == "yes") ? "<img src='{$TBDEV['pic_base_url']}warnedbig.gif' alt='{$lang['friends_warned']}' style='margin-left: 4pt' />" : '';
+$donor  = ($user["donor"] == "yes") ? "<img src='{$INSTALLER09['pic_base_url']}starbig.gif' alt='{$lang['friends_donor']}' style='margin-left: 4pt' />" : '';
+$warned = ($user["warned"] == "yes") ? "<img src='{$INSTALLER09['pic_base_url']}warnedbig.gif' alt='{$lang['friends_warned']}' style='margin-left: 4pt' />" : '';
 
 /////////////////////// FRIENDS BLOCK ///////////////////////////////////////
 
@@ -120,7 +120,7 @@ if (!$count) {
         
         $avatar = ($CURUSER["avatars"] == "all" ? htmlspecialchars($friend["avatar"]) : ($CURUSER["avatars"] == "some" && $friend["offavatar"] == "no" ? htmlspecialchars($friend["avatar"]) : ""));
         if (!$avatar)
-            $avatar = "{$TBDEV['pic_base_url']}default_avatar.gif";
+            $avatar = "{$INSTALLER09['pic_base_url']}default_avatar.gif";
         
         $friends .= "<div style='border: 1px solid black;padding:5px;'>" . ($avatar ? "<img width='50px' src='$avatar' style='float:right;' alt='' />" : "") . "<p >{$userlink}<br /><br />{$delete}{$pm}</p></div><br />";
         

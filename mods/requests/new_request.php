@@ -28,7 +28,7 @@ if (!empty($_POST['picture'])) {
 //    $picture2 = trim(urldecode($_POST['picture']));
 //    $headers  = get_headers($picture2);
 //    if (strpos($headers[0], '200') === false)
-//        $picture = $TBDEV['baseurl'].'/pic/notfound.png';
+//        $picture = $INSTALLER09['baseurl'].'/pic/notfound.png';
     $pic = "[img]".$picture."[/img]\n";
 }
 
@@ -42,8 +42,8 @@ $id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) 
 
 sql_query("INSERT INTO voted_requests VALUES(0, ".sqlesc($id).", ".sqlesc($CURUSER['id']).")") or sqlerr(__FILE__,__LINE__);
 
-if ($TBDEV['karma'] && isset($CURUSER['seedbonus']))
-    sql_query("UPDATE users SET seedbonus = seedbonus-".sqlesc($TBDEV['req_cost_bonus'])." WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
+if ($INSTALLER09['karma'] && isset($CURUSER['seedbonus']))
+    sql_query("UPDATE users SET seedbonus = seedbonus-".sqlesc($INSTALLER09['req_cost_bonus'])." WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 
 write_log("Request (".$request.") was added to the Request section by ".$CURUSER['username']);
 

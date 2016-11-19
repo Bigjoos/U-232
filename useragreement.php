@@ -18,7 +18,7 @@ dbconn();
     $HTMLOUT = '';
     
     $HTMLOUT .= begin_main_frame();
-    $HTMLOUT .= begin_frame($TBDEV['site_name']." {$lang['frame_usragrmnt']}");
+    $HTMLOUT .= begin_frame($INSTALLER09['site_name']." {$lang['frame_usragrmnt']}");
 
     $HTMLOUT .= "<p></p> {$lang['text_usragrmnt']}"; 
 

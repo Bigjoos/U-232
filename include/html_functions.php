@@ -85,7 +85,7 @@
 
 function insert_smilies_frame()
   {
-    global $smilies, $TBDEV;
+    global $smilies, $INSTALLER09;
     
     $htmlout = '';
     
@@ -97,7 +97,7 @@ function insert_smilies_frame()
 
     foreach($smilies as $code => $url)
     {
-      $htmlout .= "<tr><td>$code</td><td><img src=\"{$TBDEV['pic_base_url']}smilies/{$url}\" alt='' /></td></tr>\n";
+      $htmlout .= "<tr><td>$code</td><td><img src=\"{$INSTALLER09['pic_base_url']}smilies/{$url}\" alt='' /></td></tr>\n";
     }
     
     $htmlout .= end_table();

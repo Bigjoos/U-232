@@ -64,8 +64,8 @@ function klappe(id)
 {var klappText=document.getElementById('k'+id);var klappBild=document.getElementById('pic'+id);if(klappText.style.display=='none'){klappText.style.display='block';}
 else{klappText.style.display='none';}}
 function klappe_news(id)
-{var klappText=document.getElementById('k'+id);var klappBild=document.getElementById('pic'+id);if(klappText.style.display=='none'){klappText.style.display='block';klappBild.src='{$TBDEV['pic_base_url']}minus.gif';}
-else{klappText.style.display='none';klappBild.src='{$TBDEV['pic_base_url']}plus.gif';}}	
+{var klappText=document.getElementById('k'+id);var klappBild=document.getElementById('pic'+id);if(klappText.style.display=='none'){klappText.style.display='block';klappBild.src='{$INSTALLER09['pic_base_url']}minus.gif';}
+else{klappText.style.display='none';klappBild.src='{$INSTALLER09['pic_base_url']}plus.gif';}}	
 </script>
 <script type='text/javascript'>
 var checkflag = 'false';
@@ -121,7 +121,7 @@ while ($arr = mysqli_fetch_assoc($res)) {
 
     $uppd = mksize($arr["upthis"]);
 
-    $cheater = "<b><a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($aaa['id'])."'>".htmlspecialchars($aaa['username'])."</a></b>{$lang['cheaters_hbcc']}<br /><br />{$lang['cheaters_upped']} <b>$uppd</b><br />{$lang['cheaters_speed']} <b>".mksize($arr['rate'])."/s</b><br />{$lang['cheaters_within']} <b>".intval($arr['timediff'])." {$lang['cheaters_sec']}</b><br />{$lang['cheaters_uc']} <b>".htmlspecialchars($arr['client'])."</b><br />{$lang['cheaters_ipa']} <b>".htmlspecialchars($arr['userip'])."</b>";
+    $cheater = "<b><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=".intval($aaa['id'])."'>".htmlspecialchars($aaa['username'])."</a></b>{$lang['cheaters_hbcc']}<br /><br />{$lang['cheaters_upped']} <b>$uppd</b><br />{$lang['cheaters_speed']} <b>".mksize($arr['rate'])."/s</b><br />{$lang['cheaters_within']} <b>".intval($arr['timediff'])." {$lang['cheaters_sec']}</b><br />{$lang['cheaters_uc']} <b>".htmlspecialchars($arr['client'])."</b><br />{$lang['cheaters_ipa']} <b>".htmlspecialchars($arr['userip'])."</b>";
 
     $HTMLOUT .="<tr><td class=\"tableb\" width=\"10\" align=\"center\">".intval($arr['id'])."</td>
     <td class=\"tableb\" align=\"left\"><a href=\"javascript:klappe('a1".intval($arr['id'])."')\">".htmlspecialchars($aaa['username'])."</a> - Added: ".get_date($arr['added'], 'DATE')."

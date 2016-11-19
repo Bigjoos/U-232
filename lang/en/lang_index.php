@@ -30,7 +30,7 @@ $lang = array(
 'news_edit' 		    => "Edit",
 'news_delete' 			=> "Delete",
 #latest forum posts
-'latestposts_title' => $TBDEV['latest_posts_limit']." Latest Forum Posts",
+'latestposts_title' => $INSTALLER09['latest_posts_limit']." Latest Forum Posts",
 'latestposts_topic_title' => "Topic&nbsp;Title",
 'latestposts_replies' => "Replies",
 'latestposts_views' => "Views",

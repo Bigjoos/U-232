@@ -179,14 +179,14 @@ if ($ip)
    $HTMLOUT .= $pager['pagertop'];
 	 $HTMLOUT .= "<table border='1' cellspacing='0' cellpadding='5'>\n";
 	 $HTMLOUT .= "<tr>
-	  <td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=username'>Username</a></td>".
+	  <td class='colhead'><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=username'>Username</a></td>".
 		"<td class='colhead'>Ratio</td>".
-		"<td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=email'>Email</a></td>".
-		"<td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=last_ip'>Last IP</a></td>".
-		"<td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=last_access'>Last access</a></td>".
+		"<td class='colhead'><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=email'>Email</a></td>".
+		"<td class='colhead'><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=last_ip'>Last IP</a></td>".
+		"<td class='colhead'><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=last_access'>Last access</a></td>".
 		"<td class='colhead'>Num of IP's</td>".
-		"<td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask'>Last access on <br />".htmlspecialchars($ip)."</a></td>".
-		"<td class='colhead'><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=added'>Added</a></td>".
+		"<td class='colhead'><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask'>Last access on <br />".htmlspecialchars($ip)."</a></td>".
+		"<td class='colhead'><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=$ip&amp;mask=$mask&amp;order=added'>Added</a></td>".
 		"<td class='colhead'>Invited by</td></tr>";
 
 	while ($user = mysqli_fetch_array($res))
@@ -204,7 +204,7 @@ if ($ip)
    		if ($array[0] == 0)
 			  $ipstr = $user['last_ip'];
 		else
-			  $ipstr = "<a href='{$TBDEV['baseurl']}/admin.php?action=testip&amp;ip=" . $user['last_ip'] . "'><font color='#FF0000'><b>" .htmlspecialchars( $user["last_ip"]) . "</b></font></a>";
+			  $ipstr = "<a href='{$INSTALLER09['baseurl']}/admin.php?action=testip&amp;ip=" . $user['last_ip'] . "'><font color='#FF0000'><b>" .htmlspecialchars( $user["last_ip"]) . "</b></font></a>";
 			}
 			else
 		  $ipstr = "---";
@@ -221,17 +221,17 @@ if ($ip)
 		   if ($invitedby == "")
 			  $invitedby = "<i>[Deleted]</i>";
 		   else
-			  $invitedby = "<a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($user['invitedby'])."'>".htmlspecialchars($invitedby)."</a>";
+			  $invitedby = "<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=".intval($user['invitedby'])."'>".htmlspecialchars($invitedby)."</a>";
 		}
 		else
 		   $invitedby = "--";
 
 	   	$HTMLOUT .= "<tr>
-	   	<td><b><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($user['id']) . "'></a></b>" . format_username($user) . "</td>".
+	   	<td><b><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($user['id']) . "'></a></b>" . format_username($user) . "</td>".
 		  "<td>" . ratios($user['uploaded'], $user['downloaded']) . "</td>
 		  <td>" . $user['email'] . "</td><td>" . $ipstr . "</td>
 		  <td><div align='center'>" . get_date($user['last_access'],'DATE' ,1,0) . "</div></td>
-		  <td><div align='center'><b><a href='{$TBDEV['baseurl']}/admin.php?action=iphistory&amp;id=" . $user['id'] . "'>" . htmlspecialchars($iphistory). "</a></b></div></td>
+		  <td><div align='center'><b><a href='{$INSTALLER09['baseurl']}/admin.php?action=iphistory&amp;id=" . $user['id'] . "'>" . htmlspecialchars($iphistory). "</a></b></div></td>
 		  <td><div align='center'>" . get_date($user['access'],'DATE' ,1,0) . "</div></td>
 		  <td><div align='center'>" . get_date($user['added'],'DATE' ,1,0) . "</div></td>
 		  <td><div align='center'>" . $invitedby . "</div></td>

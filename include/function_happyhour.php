@@ -10,7 +10,7 @@
 //==09 Edits
 function happyHour($action)
 {
-global $TBDEV;
+global $INSTALLER09;
 //generate happy hour
 if ($action == "generate")
 {
@@ -29,7 +29,7 @@ return $happyHour;
 }
 
 
-$file = $TBDEV['happyhour'];
+$file = $INSTALLER09['happyhour'];
 $happy = unserialize(file_get_contents($file));
 $happyHour = strtotime($happy["time"]);
 $happyDate = $happyHour;
@@ -65,8 +65,8 @@ return $multiplier;
 }
 }
 function happyCheck($action, $id=NUll){
-global $TBDEV;
-$file = $TBDEV['happyhour'];
+global $INSTALLER09;
+$file = $INSTALLER09['happyhour'];
 $happy = unserialize(file_get_contents($file));
 $happycheck = $happy["catid"];
 if ($action == "check")
@@ -75,8 +75,8 @@ if ( $action == "checkid" && (($happycheck == "255") || $happycheck == $id ))
 return true;
 }
 function happyFile($act){
-global $TBDEV;
-$file = $TBDEV['happyhour'];
+global $INSTALLER09;
+$file = $INSTALLER09['happyhour'];
 $happy = unserialize(file_get_contents($file));
 if ($act == "set"){
 $array_happy = array (
@@ -92,7 +92,7 @@ $array_happy = array (
 );
 }
 $array_happy = serialize($array_happy);
-$file = $TBDEV['happyhour'];
+$file = $INSTALLER09['happyhour'];
 $file = fopen($file, 'w');
 ftruncate($file, 0);
 fwrite($file, $array_happy);

@@ -67,9 +67,9 @@ function getip() {
 
 function dbconn($autoclean = false)
 {
-    global $TBDEV;
+    global $INSTALLER09;
 
-    if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'],  $TBDEV['mysql_user'],  $TBDEV['mysql_pass'])))
+    if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($INSTALLER09['mysql_host'],  $INSTALLER09['mysql_user'],  $INSTALLER09['mysql_pass'])))
     {
 	  switch (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)))
 	  {
@@ -83,7 +83,7 @@ function dbconn($autoclean = false)
     	    die("[" . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) . "] dbconn: mysql_connect: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
       }
     }
-    ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$TBDEV['mysql_db']}"))
+    ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$INSTALLER09['mysql_db']}"))
         or die('dbconn: mysql_select_db: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
     userlogin();
 
@@ -101,7 +101,7 @@ return md5("Th15T3xt".$addtext.$var.$addtext."is5add3dto66uddy6he@water...");
 }
 
 function userlogin() {
-    global $TBDEV;
+    global $INSTALLER09;
     unset($GLOBALS["CURUSER"]);
     $dt = time();
     $ip = getip();
@@ -119,7 +119,7 @@ function userlogin() {
       unset($bans);
     }
 
-   if (!$TBDEV['site_online'] || !get_mycookie('uid') || !get_mycookie('pass')|| !get_mycookie('hashv') )
+   if (!$INSTALLER09['site_online'] || !get_mycookie('uid') || !get_mycookie('pass')|| !get_mycookie('hashv') )
        return;
     $id = 0 + get_mycookie('uid');
     if (!$id OR (strlen( get_mycookie('pass') ) != 32) OR (get_mycookie('hashv') != hashit($id,get_mycookie('pass'))))
@@ -233,31 +233,31 @@ function userlogin() {
 
   function autoclean()
   {
-	global $TBDEV;
+	global $INSTALLER09;
 	$now = sqlesc(time());
 	/* Better cleanup function with db-optimization and slow clean by x0r @ tbdev.net */
 	$w00p = sql_query("SELECT arg, value_u FROM avps") or sqlerr(__FILE__, __LINE__);
 	while ($row = mysqli_fetch_assoc($w00p))
 	{
-	if ($row['arg'] == "lastcleantime" && ($row['value_u'] + $TBDEV['autoclean_interval']) < $now)
+	if ($row['arg'] == "lastcleantime" && ($row['value_u'] + $INSTALLER09['autoclean_interval']) < $now)
 	{
 	sql_query("UPDATE avps SET value_u = '$now' WHERE arg = 'lastcleantime'") or sqlerr(__FILE__, __LINE__);
   require_once(INCL_DIR.'cleanup.php');
   docleanup();
   }
-	else if ($row['arg'] == "lastslowcleantime" && ($row['value_u'] + $TBDEV['autoslowclean_interval']) < $now)
+	else if ($row['arg'] == "lastslowcleantime" && ($row['value_u'] + $INSTALLER09['autoslowclean_interval']) < $now)
 	{
 	sql_query("UPDATE avps SET value_u = '$now' WHERE arg = 'lastslowcleantime'") or sqlerr(__FILE__, __LINE__);
 	require_once(INCL_DIR.'cleanup.php');
 	doslowcleanup();
 	}
-	else if ($row['arg'] == "lastslowcleantime2" && ($row['value_u'] + $TBDEV['autoslowclean_interval2']) < $now)
+	else if ($row['arg'] == "lastslowcleantime2" && ($row['value_u'] + $INSTALLER09['autoslowclean_interval2']) < $now)
 	{
 	sql_query("UPDATE avps SET value_u = '$now' WHERE arg = 'lastslowcleantime2'") or sqlerr(__FILE__, __LINE__);
 	require_once(INCL_DIR.'cleanup.php');
 	doslowcleanup2();
 	}
-	else if ($row['arg'] == "lastoptimizedbtime" && ($row['value_u'] + $TBDEV['optimizedb_interval']) < $now)
+	else if ($row['arg'] == "lastoptimizedbtime" && ($row['value_u'] + $INSTALLER09['optimizedb_interval']) < $now)
 	{
 	sql_query("UPDATE avps SET value_u = '$now' WHERE arg = 'lastoptimizedbtime'") or sqlerr(__FILE__, __LINE__);
 	require_once(INCL_DIR.'cleanup.php');
@@ -269,14 +269,14 @@ function userlogin() {
   }
 
   function get_template(){
-	global $CURUSER, $TBDEV;
+	global $CURUSER, $INSTALLER09;
 	if(isset($CURUSER)){
 		if(file_exists(TEMPLATE_DIR."{$CURUSER['stylesheet']}/template.php")){
 			require_once(TEMPLATE_DIR."{$CURUSER['stylesheet']}/template.php");
 		}else{
-			if(isset($TBDEV)){
-				if(file_exists(TEMPLATE_DIR."{$TBDEV['stylesheet']}/template.php")){
-			require_once(TEMPLATE_DIR."{$TBDEV['stylesheet']}/template.php");
+			if(isset($INSTALLER09)){
+				if(file_exists(TEMPLATE_DIR."{$INSTALLER09['stylesheet']}/template.php")){
+			require_once(TEMPLATE_DIR."{$INSTALLER09['stylesheet']}/template.php");
 				}else{
 					print("Sorry, Templates do not seem to be working properly and missing some code. Please report this to the programmers/owners.");
 				}
@@ -289,8 +289,8 @@ function userlogin() {
 			}
 		}
 	}else{
-	if(file_exists(TEMPLATE_DIR."{$TBDEV['stylesheet']}/template.php")){
-			require_once(TEMPLATE_DIR."{$TBDEV['stylesheet']}/template.php");
+	if(file_exists(TEMPLATE_DIR."{$INSTALLER09['stylesheet']}/template.php")){
+			require_once(TEMPLATE_DIR."{$INSTALLER09['stylesheet']}/template.php");
 		}else{
 			print("Sorry, Templates do not seem to be working properly and missing some code. Please report this to the programmers/owners.");
 		}
@@ -421,7 +421,7 @@ function logincookie($id, $passhash, $updatedb = 1, $expires = 0x7fffffff)
 
 function set_mycookie( $name, $value="", $expires_in=0, $sticky=1 )
     {
-		global $TBDEV;
+		global $INSTALLER09;
 		
 		if ( $sticky == 1 )
     {
@@ -436,34 +436,34 @@ function set_mycookie( $name, $value="", $expires_in=0, $sticky=1 )
 			$expires = FALSE;
 		}
 		
-		$TBDEV['cookie_domain'] = $TBDEV['cookie_domain'] == "" ? ""  : $TBDEV['cookie_domain'];
-    $TBDEV['cookie_path']   = $TBDEV['cookie_path']   == "" ? "/" : $TBDEV['cookie_path'];
+		$INSTALLER09['cookie_domain'] = $INSTALLER09['cookie_domain'] == "" ? ""  : $INSTALLER09['cookie_domain'];
+    $INSTALLER09['cookie_path']   = $INSTALLER09['cookie_path']   == "" ? "/" : $INSTALLER09['cookie_path'];
       	
 		if ( PHP_VERSION < 5.2 )
 		{
-      if ( $TBDEV['cookie_domain'] )
+      if ( $INSTALLER09['cookie_domain'] )
       {
-        @setcookie( $TBDEV['cookie_prefix'].$name, $value, $expires, $TBDEV['cookie_path'], $TBDEV['cookie_domain'] . '; HttpOnly' );
+        @setcookie( $INSTALLER09['cookie_prefix'].$name, $value, $expires, $INSTALLER09['cookie_path'], $INSTALLER09['cookie_domain'] . '; HttpOnly' );
       }
       else
       {
-        @setcookie( $TBDEV['cookie_prefix'].$name, $value, $expires, $TBDEV['cookie_path'] );
+        @setcookie( $INSTALLER09['cookie_prefix'].$name, $value, $expires, $INSTALLER09['cookie_path'] );
       }
     }
     else
     {
-      @setcookie( $TBDEV['cookie_prefix'].$name, $value, $expires, $TBDEV['cookie_path'], $TBDEV['cookie_domain'], NULL, TRUE );
+      @setcookie( $INSTALLER09['cookie_prefix'].$name, $value, $expires, $INSTALLER09['cookie_path'], $INSTALLER09['cookie_domain'], NULL, TRUE );
     }
 			
 }
 
 function get_mycookie($name) 
     {
-      global $TBDEV;
+      global $INSTALLER09;
       
-    	if ( isset($_COOKIE[$TBDEV['cookie_prefix'].$name]) AND !empty($_COOKIE[$TBDEV['cookie_prefix'].$name]) )
+    	if ( isset($_COOKIE[$INSTALLER09['cookie_prefix'].$name]) AND !empty($_COOKIE[$INSTALLER09['cookie_prefix'].$name]) )
     	{
-    		return urldecode($_COOKIE[$TBDEV['cookie_prefix'].$name]);
+    		return urldecode($_COOKIE[$INSTALLER09['cookie_prefix'].$name]);
     	}
     	else
     	{
@@ -478,9 +478,9 @@ function logoutcookie() {
 }
 
 function loggedinorreturn() {
-    global $CURUSER, $TBDEV;
+    global $CURUSER, $INSTALLER09;
     if (!$CURUSER) {
-        header("Location: {$TBDEV['baseurl']}/login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]));
+        header("Location: {$INSTALLER09['baseurl']}/login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]));
         exit();
     }
 }
@@ -519,7 +519,7 @@ function stderr($heading, $text)
 	
 // Basic MySQL error handler
 function sqlerr($file = '', $line = '') {
-    global $TBDEV, $CURUSER;
+    global $INSTALLER09, $CURUSER;
     
 		$the_error    = ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false));
 		$the_error_no = ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false));
@@ -528,7 +528,7 @@ function sqlerr($file = '', $line = '') {
     	{
 			exit();
     	}
-     	else if ( $TBDEV['sql_error_log'] AND SQL_DEBUG == 1 )
+     	else if ( $INSTALLER09['sql_error_log'] AND SQL_DEBUG == 1 )
 		{
 			$_error_string  = "\n===================================================";
 			$_error_string .= "\n Date: ". date( 'r' );
@@ -539,7 +539,7 @@ function sqlerr($file = '', $line = '') {
 			$_error_string .= "\n URL:".$_SERVER['REQUEST_URI'];
 			$_error_string .= "\n Username: {$CURUSER['username']}[{$CURUSER['id']}]";
 			
-			if ( $FH = @fopen( $TBDEV['sql_error_log'], 'a' ) )
+			if ( $FH = @fopen( $INSTALLER09['sql_error_log'], 'a' ) )
 			{
 				@fwrite( $FH, $_error_string );
 				@fclose( $FH );
@@ -572,8 +572,8 @@ function sqlerr($file = '', $line = '') {
 }
     
 function coin($coins, $add=true){
-	global $TBDEV, $CURUSER;
-	if($TBDEV['coins']){
+	global $INSTALLER09, $CURUSER;
+	if($INSTALLER09['coins']){
 	if ($add) 
         sql_query("UPDATE users SET coins=coins+".sqlesc($coins)." WHERE is=".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 	    else 
@@ -614,14 +614,14 @@ function unixstamp_to_human( $unix=0 )
     
 function get_time_offset() {
     
-    	global $CURUSER, $TBDEV;
+    	global $CURUSER, $INSTALLER09;
     	$r = 0;
     	
-    	$r = ( ($CURUSER['time_offset'] != "") ? $CURUSER['time_offset'] : $TBDEV['time_offset'] ) * 3600;
+    	$r = ( ($CURUSER['time_offset'] != "") ? $CURUSER['time_offset'] : $INSTALLER09['time_offset'] ) * 3600;
 			
-      if ( $TBDEV['time_adjust'] )
+      if ( $INSTALLER09['time_adjust'] )
       {
-        $r += ($TBDEV['time_adjust'] * 60);
+        $r += ($INSTALLER09['time_adjust'] * 60);
       }
       
       if ( $CURUSER['dst_in_use'] )
@@ -634,17 +634,17 @@ function get_time_offset() {
     
 function get_date($date, $method, $norelative=0, $full_relative=0)
     {
-        global $TBDEV;
+        global $INSTALLER09;
         
         static $offset_set = 0;
         static $today_time = 0;
         static $yesterday_time = 0;
         $time_options = array( 
-        'JOINED' => $TBDEV['time_joined'],
-        'SHORT'  => $TBDEV['time_short'],
-				'LONG'   => $TBDEV['time_long'],
-				'TINY'   => $TBDEV['time_tiny'] ? $TBDEV['time_tiny'] : 'j M Y - G:i',
-				'DATE'   => $TBDEV['time_date'] ? $TBDEV['time_date'] : 'j M Y'
+        'JOINED' => $INSTALLER09['time_joined'],
+        'SHORT'  => $INSTALLER09['time_short'],
+				'LONG'   => $INSTALLER09['time_long'],
+				'TINY'   => $INSTALLER09['time_tiny'] ? $INSTALLER09['time_tiny'] : 'j M Y - G:i',
+				'DATE'   => $INSTALLER09['time_date'] ? $INSTALLER09['time_date'] : 'j M Y'
 				);
         
         if ( ! $date )
@@ -661,7 +661,7 @@ function get_date($date, $method, $norelative=0, $full_relative=0)
         {
         	$GLOBALS['offset'] = get_time_offset();
 			
-          if ( $TBDEV['time_use_relative'] )
+          if ( $INSTALLER09['time_use_relative'] )
           {
             $today_time     = gmdate('d,m,Y', ( time() + $GLOBALS['offset']) );
             $yesterday_time = gmdate('d,m,Y', ( (time() - 86400) + $GLOBALS['offset']) );
@@ -670,7 +670,7 @@ function get_date($date, $method, $norelative=0, $full_relative=0)
           $offset_set = 1;
         }
         
-        if ( $TBDEV['time_use_relative'] == 3 )
+        if ( $INSTALLER09['time_use_relative'] == 3 )
         {
         	$full_relative = 1;
         }
@@ -719,11 +719,11 @@ function get_date($date, $method, $norelative=0, $full_relative=0)
             return gmdate($time_options[$method], ($date + $GLOBALS['offset']) );
           }
         }
-        else if ( $TBDEV['time_use_relative'] and ( $norelative != 1 ) )
+        else if ( $INSTALLER09['time_use_relative'] and ( $norelative != 1 ) )
         {
           $this_time = gmdate('d,m,Y', ($date + $GLOBALS['offset']) );
           
-          if ( $TBDEV['time_use_relative'] == 2 )
+          if ( $INSTALLER09['time_use_relative'] == 2 )
           {
             $diff = time() - $date;
           
@@ -742,11 +742,11 @@ function get_date($date, $method, $norelative=0, $full_relative=0)
           
             if ( $this_time == $today_time )
             {
-              return str_replace( '{--}', 'Today', gmdate($TBDEV['time_use_relative_format'], ($date + $GLOBALS['offset']) ) );
+              return str_replace( '{--}', 'Today', gmdate($INSTALLER09['time_use_relative_format'], ($date + $GLOBALS['offset']) ) );
             }
             else if  ( $this_time == $yesterday_time )
             {
-              return str_replace( '{--}', 'Yesterday', gmdate($TBDEV['time_use_relative_format'], ($date + $GLOBALS['offset']) ) );
+              return str_replace( '{--}', 'Yesterday', gmdate($INSTALLER09['time_use_relative_format'], ($date + $GLOBALS['offset']) ) );
             }
             else
             {
@@ -765,7 +765,7 @@ function hash_pad($hash) {
 }
 
     function load_language($file='') {
-    global $TBDEV;
+    global $INSTALLER09;
     if( !isset($GLOBALS['CURUSER']) OR empty($GLOBALS['CURUSER']['language']) )
     {
     if( !file_exists(LANG_DIR."lang_{$file}.php") )
@@ -787,16 +787,16 @@ function hash_pad($hash) {
 }
 
 function flood_limit($table) {
-global $CURUSER,$TBDEV,$lang;
-	if(!file_exists($TBDEV['flood_file']) || !is_array($max = unserialize(file_get_contents($TBDEV['flood_file']))))
+global $CURUSER,$INSTALLER09,$lang;
+	if(!file_exists($INSTALLER09['flood_file']) || !is_array($max = unserialize(file_get_contents($INSTALLER09['flood_file']))))
 		return;
 	if(!isset($max[$CURUSER['class']]))
 	return;
 	$tb = array('posts'=>'posts.userid','comments'=>'comments.user','messages'=>'messages.sender');
-	$q = sql_query('SELECT min('.$table.'.added) as first_post, count('.$table.'.id) as how_many FROM '.$table.' WHERE '.$tb[$table].' = '.$CURUSER['id'].' AND '.time().' - '.$table.'.added < '.$TBDEV['flood_time']) or sqlerr(__FILE__, __LINE__);
+	$q = sql_query('SELECT min('.$table.'.added) as first_post, count('.$table.'.id) as how_many FROM '.$table.' WHERE '.$tb[$table].' = '.$CURUSER['id'].' AND '.time().' - '.$table.'.added < '.$INSTALLER09['flood_time']) or sqlerr(__FILE__, __LINE__);
 	$a = mysqli_fetch_assoc($q);
 	if($a['how_many'] > $max[$CURUSER['class']])
-  stderr($lang['gl_sorry'] ,$lang['gl_flood_msg'].''.mkprettytime($TBDEV['flood_time'] - (time() - $a['first_post'])));
+  stderr($lang['gl_sorry'] ,$lang['gl_flood_msg'].''.mkprettytime($INSTALLER09['flood_time'] - (time() - $a['first_post'])));
 }
 
 //==Sql query count

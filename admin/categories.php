@@ -25,7 +25,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 require_once(INCL_DIR.'user_functions.php');
 
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
     $params = array_merge( $_GET, $_POST );
     
@@ -73,7 +73,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 
 function move_cat() {
     
-    global $TBDEV, $params;
+    global $INSTALLER09, $params;
     
     if( ( !isset($params['id']) OR !is_valid_id($params['id']) ) OR ( !isset($params['new_cat_id']) OR !is_valid_id($params['new_cat_id']) ) )
     {
@@ -101,7 +101,7 @@ function move_cat() {
     
     if( -1 != mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
-      header( "Location: {$TBDEV['baseurl']}/admin.php?action=categories" );
+      header( "Location: {$INSTALLER09['baseurl']}/admin.php?action=categories" );
     }
     else
     {
@@ -180,7 +180,7 @@ function move_cat_form() {
 
 function add_cat() {
 
-    global $TBDEV, $params;
+    global $INSTALLER09, $params;
     
     foreach( array( 'new_cat_name', 'new_cat_desc', 'new_cat_image') as $x )
     {
@@ -206,13 +206,13 @@ function add_cat() {
     }
     else
     {
-      header( "Location: {$TBDEV['baseurl']}/admin.php?action=categories" );
+      header( "Location: {$INSTALLER09['baseurl']}/admin.php?action=categories" );
     }
 }
 
 function delete_cat() {
 
-    global $TBDEV, $params;
+    global $INSTALLER09, $params;
     
     if( !isset($params['id']) OR !is_valid_id($params['id']) )
     {
@@ -257,7 +257,7 @@ function delete_cat() {
     
     if( mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
-      header( "Location: {$TBDEV['baseurl']}/admin.php?action=categories" );
+      header( "Location: {$INSTALLER09['baseurl']}/admin.php?action=categories" );
     }
     else
     {
@@ -346,7 +346,7 @@ function delete_cat_form() {
 
 function edit_cat() {
 
-    global $TBDEV, $params;
+    global $INSTALLER09, $params;
     
     if( !isset($params['id']) OR !is_valid_id($params['id']) )
     {
@@ -377,7 +377,7 @@ function edit_cat() {
     }
     else
     {
-      header( "Location: {$TBDEV['baseurl']}/admin.php?action=categories" );
+      header( "Location: {$INSTALLER09['baseurl']}/admin.php?action=categories" );
     }
 }
 
@@ -385,7 +385,7 @@ function edit_cat() {
 
 function edit_cat_form() {
 
-    global $TBDEV, $params;
+    global $INSTALLER09, $params;
     
     if( !isset($params['id']) OR !is_valid_id($params['id']) )
     {
@@ -403,7 +403,7 @@ function edit_cat_form() {
     
     $r = mysqli_fetch_assoc($q);
     
-    $dh = opendir( $TBDEV['pic_base_url'].'caticons' );
+    $dh = opendir( $INSTALLER09['pic_base_url'].'caticons' );
 		
 		$files = array();
 		
@@ -473,11 +473,11 @@ function edit_cat_form() {
 
 function show_categories() {
     
-    global $TBDEV;
+    global $INSTALLER09;
     
     $htmlout = '';
     
-    $dh = opendir( $TBDEV['pic_base_url'].'caticons' );
+    $dh = opendir( $INSTALLER09['pic_base_url'].'caticons' );
 		
 		$files = array();
 		
@@ -576,7 +576,7 @@ function show_categories() {
     {
       while($row = mysqli_fetch_assoc($query))
       {
-        $cat_image = file_exists($TBDEV['pic_base_url'].'caticons/'.$row['image']) ? "<img border='0' src='{$TBDEV['pic_base_url']}caticons/{$row['image']}' alt='{$row['id']}' />" : "No Image";
+        $cat_image = file_exists($INSTALLER09['pic_base_url'].'caticons/'.$row['image']) ? "<img border='0' src='{$INSTALLER09['pic_base_url']}caticons/{$row['image']}' alt='{$row['id']}' />" : "No Image";
         
         $htmlout .= "<tr>
           <td height='48' width='60'><b>ID(".intval($row['id']).")</b></td>
@@ -584,11 +584,11 @@ function show_categories() {
           <td width='250'>".htmlspecialchars($row['cat_desc'])."</td>
           <td align='center' width='45'>".htmlspecialchars($cat_image)."</td>
           <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=edit_cat&amp;id=".intval($row['id'])."'>
-            <img src='{$TBDEV['pic_base_url']}aff_tick.gif' alt='Edit Category' title='Edit' width='12' height='12' border='0' /></a></td>
+            <img src='{$INSTALLER09['pic_base_url']}aff_tick.gif' alt='Edit Category' title='Edit' width='12' height='12' border='0' /></a></td>
           <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=del_cat&amp;id=".intval($row['id'])."'>
-            <img src='{$TBDEV['pic_base_url']}aff_cross.gif' alt='Delete Category' title='Delete' width='12' height='12' border='0' /></a></td>
+            <img src='{$INSTALLER09['pic_base_url']}aff_cross.gif' alt='Delete Category' title='Delete' width='12' height='12' border='0' /></a></td>
           <td align='center' width='18'><a href='admin.php?action=categories&amp;mode=move_cat&amp;id=".intval($row['id'])."'>
-            <img src='{$TBDEV['pic_base_url']}plus.gif' alt='Move Category' title='Move' width='12' height='12' border='0' /></a></td>
+            <img src='{$INSTALLER09['pic_base_url']}plus.gif' alt='Move Category' title='Move' width='12' height='12' border='0' /></a></td>
         </tr>";
       }
           

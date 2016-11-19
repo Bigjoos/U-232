@@ -1,19 +1,19 @@
 <?php
 function stdhead($title = "", $msgalert = true, $stdhead = false) {
-    global $CURUSER, $TBDEV, $lang, $free, $_NO_COMPRESS, $mc;
-    if (!$TBDEV['site_online'])
+    global $CURUSER, $INSTALLER09, $lang, $free, $_NO_COMPRESS, $mc;
+    if (!$INSTALLER09['site_online'])
     die("Site is down for maintenance, please check back again later... thanks<br />");
     header('Content-Type: text/html; charset=utf-8');
     header('Content-Language content="en-us"');
     if ($title == "")
-    $title = $TBDEV['site_name'] .(isset($_GET['tbv'])?" (".TBVERSION.")":'');
+    $title = $INSTALLER09['site_name'] .(isset($_GET['tbv'])?" (".TBVERSION.")":'');
     else
-    $title = $TBDEV['site_name'].(isset($_GET['tbv'])?" (".TBVERSION.")":''). " :: " . htmlspecialchars($title); 
+    $title = $INSTALLER09['site_name'].(isset($_GET['tbv'])?" (".TBVERSION.")":''). " :: " . htmlspecialchars($title); 
     if ($CURUSER)
     {
-    $TBDEV['stylesheet'] = isset($CURUSER['stylesheet']) ? "{$CURUSER['stylesheet']}.css" : $TBDEV['stylesheet'];
+    $INSTALLER09['stylesheet'] = isset($CURUSER['stylesheet']) ? "{$CURUSER['stylesheet']}.css" : $INSTALLER09['stylesheet'];
     }
-    if ($TBDEV['msg_alert'] && $msgalert && $CURUSER)
+    if ($INSTALLER09['msg_alert'] && $msgalert && $CURUSER)
     {
       $res = sql_query("SELECT count(id) FROM messages WHERE receiver=" . $CURUSER["id"] . " && unread='yes'") or sqlerr(__FILE__,__LINE__);
       $arr = mysqli_fetch_row($res);
@@ -27,7 +27,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
     $js_incl = '<!-- javascript goes here or in footer -->';
     if ($stdhead['js'] != false) {
     foreach ($stdhead['js'] as $JS)
-    $js_incl .= "<script type='text/javascript' src='".$TBDEV['baseurl']."/scripts/".$JS.".js'></script>";
+    $js_incl .= "<script type='text/javascript' src='".$INSTALLER09['baseurl']."/scripts/".$JS.".js'></script>";
     }
     $htmlout = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
     \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
@@ -117,11 +117,11 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
    </tr>
    <tr>
      <td width="42" align="center">
-     <img src="'.$TBDEV['baseurl'].'/pic/cat_free.gif" alt="FREE!" /></td>
+     <img src="'.$INSTALLER09['baseurl'].'/pic/cat_free.gif" alt="FREE!" /></td>
      <td align="center">'.$fl['message'].' set by '.$fl['setby'].'<br />'.($fl['expires'] != 1 ? 
 'Until '.get_date($fl['expires'], 'DATE').' ('.mkprettytime($fl['expires'] - time()).' to go)' : '').'</td>
      <td width="42" align="center">
-     <img src="'.$TBDEV['baseurl'].'/pic/cat_free.gif" alt="FREE!" /></td>
+     <img src="'.$INSTALLER09['baseurl'].'/pic/cat_free.gif" alt="FREE!" /></td>
 </tr></table>
 <br />' : '');
    }
@@ -136,7 +136,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
    <font color='white'>{$lang['gl_tempdemotion']}</font></a></b></td></tr></table><br />\n";
    }
    //==End
-   if ($TBDEV['msg_alert'] && isset($unread) && !empty($unread))
+   if ($INSTALLER09['msg_alert'] && isset($unread) && !empty($unread))
    {
    $htmlout .= "<table border='0' cellspacing='0' cellpadding='10' bgcolor='red'>
    <tr><td style='padding: 10px; background: #890537'>\n
@@ -144,7 +144,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
    </td></tr></table><br />\n";
     }
    //==Big red staffmess thingy box:
-   if($TBDEV['staffmsg_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
+   if($INSTALLER09['staffmsg_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
 		$staff_mess = sql_query('SELECT count(id) FROM staffmessages WHERE answeredby = 0') or sqlerr(__LINE__,__FILE__);
                 list($num) = mysqli_fetch_row($staff_mess);
 		if($num > 0)
@@ -155,7 +155,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
 	}
   //==End
   //==Big red report thingy box:
-   if($TBDEV['report_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
+   if($INSTALLER09['report_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
 		$reports = sql_query('SELECT COUNT(id) FROM reports WHERE delt_with = 0') or sqlerr(__LINE__,__FILE__);
                 list($num) = mysqli_fetch_row($reports);
 		if($num > 0)
@@ -166,7 +166,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
 	}
 	//==End
 	//Big red uploadapp thingy box:
-   if($TBDEV['uploadapp_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
+   if($INSTALLER09['uploadapp_alert'] && $CURUSER['class'] >= UC_MODERATOR) {
 		$upload_app = sql_query('SELECT count(id) FROM uploadapp WHERE status = "pending"') or sqlerr(__LINE__,__FILE__);
                 list($num) = mysqli_fetch_row($upload_app);
 		if($num > 0)
@@ -186,17 +186,17 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
    }
    //==pdq crazyhour
 	 if (isset($CURUSER)) {
-   $transfer_filename  = $TBDEV['cache'].'/transfer_crazyhour.txt';
-   $crazyhour_filename = $TBDEV['cache'].'/crazy_hour.txt';
+   $transfer_filename  = $INSTALLER09['cache'].'/transfer_crazyhour.txt';
+   $crazyhour_filename = $INSTALLER09['cache'].'/crazy_hour.txt';
    $crazyhour_cache = fopen($crazyhour_filename,'r+');
-   $crazyhour_var = fread($crazyhour_cache, filesize($TBDEV['cache'].'/crazy_hour.txt'));
+   $crazyhour_var = fread($crazyhour_cache, filesize($INSTALLER09['cache'].'/crazy_hour.txt'));
    fclose($crazyhour_cache);
-   $cimg = '<img src=\''.$TBDEV["pic_base_url"].'cat_free.gif\' alt=\'FREE!\' />';
+   $cimg = '<img src=\''.$INSTALLER09["pic_base_url"].'cat_free.gif\' alt=\'FREE!\' />';
    if ($crazyhour_var >= TIME_NOW && $crazyhour_var < TIME_NOW + 3600) { // is crazyhour
        $htmlout .="<table width='50%'><tr><td class='colhead' colspan='3' align='center'>
-       ".$TBDEV['crazy_title']." Ends in ".mkprettytime($crazyhour_var - TIME_NOW)."</td></tr>
+       ".$INSTALLER09['crazy_title']." Ends in ".mkprettytime($crazyhour_var - TIME_NOW)."</td></tr>
        <tr><td width='42px' align='center' valign='middle'>". $cimg."</td>
-       <td><div align='center'>". $TBDEV['crazy_message']."</div></td>
+       <td><div align='center'>". $INSTALLER09['crazy_message']."</div></td>
        <td width='42px' align='center' valign='middle'>".$cimg."</td></tr></table><br />";
         if (is_file($transfer_filename))
             unlink($transfer_filename);
@@ -220,7 +220,7 @@ function stdhead($title = "", $msgalert = true, $stdhead = false) {
    } // stdhead
 
 function stdfoot($stdfoot = false) {
-global $querytime, $CURUSER, $TBDEV, $q, $queries, $query_stat;
+global $querytime, $CURUSER, $INSTALLER09, $q, $queries, $query_stat;
     $queries = (!empty($queries) ? $queries : 0);
     $q['debug']       = array(1, 8, 12, 19); //==Add ids
     $q['seconds']     = (microtime(true) - $q['start']);
@@ -233,7 +233,7 @@ global $querytime, $CURUSER, $TBDEV, $q, $queries, $query_stat;
     $htmlfoot='';
     if(isset($CURUSER)){
     $htmlfoot = "<p align='center'>
-    <span class='server'>The {$TBDEV['site_name']}
+    <span class='server'>The {$INSTALLER09['site_name']}
     Server killers generated this page in ".(round($q['seconds'], 4))." seconds and then took a nap.<br /> 
     They had to raid the server ".$queries." time'".$q['howmany']."using&nbsp;:&nbsp;<b>".$q['percentphp']."</b>&nbsp;&#37;&nbsp;php&nbsp;&#38;&nbsp;<b>".$q['percentsql']."</b>&nbsp;&#37;&nbsp;sql ".$q['serverkillers'].".</span></p>";
     
@@ -272,7 +272,7 @@ global $querytime, $CURUSER, $TBDEV, $q, $queries, $query_stat;
     $htmlfoot .= '<!-- javascript goes here -->';
     if ($stdfoot['js'] != false) {
     foreach ($stdfoot['js'] as $JS)
-    $htmlfoot .= '<script type="text/javascript" src="'.$TBDEV['baseurl'].'/scripts/'.$JS.'.js"></script>';
+    $htmlfoot .= '<script type="text/javascript" src="'.$INSTALLER09['baseurl'].'/scripts/'.$JS.'.js"></script>';
     }
     $htmlfoot .= "</body></html>\n";
     return $htmlfoot;
@@ -293,7 +293,7 @@ function stdmsg($heading, $text)
 }
 
 function StatusBar() {
-	global $CURUSER, $TBDEV, $lang, $mc;
+	global $CURUSER, $INSTALLER09, $lang, $mc;
 	if (!$CURUSER)
 		return "<p align='center'>Yeah Yeah!</p>";
 	$upped = mksize($CURUSER['uploaded']);
@@ -327,11 +327,11 @@ function StatusBar() {
 		"<div id='statusbar'>
     {$lang['gl_msg_welcome']}, ".format_username($CURUSER)."&nbsp;{$usrclass}&nbsp;$member_reputation
 		&nbsp;|";
-		if(!$TBDEV['coins'])
+		if(!$INSTALLER09['coins'])
 		$StatusBar .= "
 		&nbsp;Invites:&nbsp;<a href='./invite.php'>{$CURUSER['invites']}</a>
 		&nbsp;|&nbsp;&nbsp;{$lang['gl_uploaded']}:&nbsp;{$upped}&nbsp;&nbsp;|";
-		if($TBDEV['coins'])$StatusBar .= "&nbsp;|&nbsp;{$lang['gl_coins']}:<a href='{$TBDEV['baseurl']}/coins.php'>{$CURUSER['coins']}</a>&nbsp;&nbsp;";
+		if($INSTALLER09['coins'])$StatusBar .= "&nbsp;|&nbsp;{$lang['gl_coins']}:<a href='{$INSTALLER09['baseurl']}/coins.php'>{$CURUSER['coins']}</a>&nbsp;&nbsp;";
 		$StatusBar.="&nbsp;&nbsp;<a href='./messages.php'>$inbox</a>&nbsp;|&nbsp;[<a href='./logout.php'><b>{$lang['gl_logout']}</b></a>]&nbsp;
     </div>";
 	return $StatusBar;

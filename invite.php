@@ -68,7 +68,7 @@ if ($do == 'view_page') {
             if ($arr['status'] == 'pending')
                 $user = "<td align='center'>" . htmlspecialchars($arr['username']) . "</td>";
             else
-                $user = "<td align='center'><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['username']) . "</a>" . ($arr["warned"] == "yes" ? "&nbsp;<img src='{$TBDEV['pic_base_url']}warned.gif' border='0' alt='Warned' />" : "") . "&nbsp;" . ($arr["enabled"] == "no" ? "&nbsp;<img src='{$TBDEV['pic_base_url']}disabled.gif' border='0' alt='Disabled' />" : "") . "&nbsp;" . ($arr["donor"] == "yes" ? "<img src='{$TBDEV['pic_base_url']}star.gif' border='0' alt='Donor' />" : "") . "</td>";
+                $user = "<td align='center'><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['username']) . "</a>" . ($arr["warned"] == "yes" ? "&nbsp;<img src='{$INSTALLER09['pic_base_url']}warned.gif' border='0' alt='Warned' />" : "") . "&nbsp;" . ($arr["enabled"] == "no" ? "&nbsp;<img src='{$INSTALLER09['pic_base_url']}disabled.gif' border='0' alt='Disabled' />" : "") . "&nbsp;" . ($arr["donor"] == "yes" ? "<img src='{$INSTALLER09['pic_base_url']}star.gif' border='0' alt='Donor' />" : "") . "</td>";
             
             if ($arr['downloaded'] > 0) {
                 $ratio = number_format($arr['uploaded'] / $arr['downloaded'], 3);
@@ -89,7 +89,7 @@ if ($do == 'view_page') {
             $HTMLOUT .= "<tr class='tableb'>" . $user . "<td align='center'>" . mksize($arr['uploaded']) . "</td><td align='center'>" . mksize($arr['downloaded']) . "</td><td align='center'>" . $ratio . "</td><td align='center'>" . $status . "</td>";
             
             if ($arr['status'] == 'pending') {
-                $HTMLOUT .= "<td align='center'><a href='?do=confirm_account&amp;userid=" . intval($arr['id']) . "&amp;sender=" . intval($CURUSER['id']) . "'><img src='{$TBDEV['pic_base_url']}confirm.png' alt='confirm' title='Confirm' border='0' /></a></td></tr>";
+                $HTMLOUT .= "<td align='center'><a href='?do=confirm_account&amp;userid=" . intval($arr['id']) . "&amp;sender=" . intval($CURUSER['id']) . "'><img src='{$INSTALLER09['pic_base_url']}confirm.png' alt='confirm' title='Confirm' border='0' /></a></td></tr>";
             } else
                 $HTMLOUT .= "<td align='center'>---</td></tr>";
         }
@@ -110,9 +110,9 @@ if ($do == 'view_page') {
             $fetch_assoc = mysqli_fetch_assoc($select);
             
             $HTMLOUT .= "<tr class='tableb'>
-<td>" . htmlspecialchars($fetch_assoc['code']) . " <a href='?do=send_email&amp;id=" . (int) $fetch_assoc['id'] . "'><img src='{$TBDEV['pic_base_url']}email.gif' border='0' alt='Email' title='Send Email' /></a></td>
+<td>" . htmlspecialchars($fetch_assoc['code']) . " <a href='?do=send_email&amp;id=" . (int) $fetch_assoc['id'] . "'><img src='{$INSTALLER09['pic_base_url']}email.gif' border='0' alt='Email' title='Send Email' /></a></td>
 <td>" . get_date($fetch_assoc['invite_added'], '', 0, 1) . "</td>";
-            $HTMLOUT .= "<td><a href='?do=delete_invite&amp;id=" . intval($fetch_assoc['id']) . "&amp;sender=" . intval($CURUSER['id']) . "'><img src='{$TBDEV['pic_base_url']}del.png' border='0' alt='Delete'/></a></td>
+            $HTMLOUT .= "<td><a href='?do=delete_invite&amp;id=" . intval($fetch_assoc['id']) . "&amp;sender=" . intval($CURUSER['id']) . "'><img src='{$INSTALLER09['pic_base_url']}del.png' border='0' alt='Delete'/></a></td>
 <td>" . htmlspecialchars($fetch_assoc['status']) . "</td></tr>";
         }
     }
@@ -137,7 +137,7 @@ elseif ($do == 'create_invite') {
     
     $res = sql_query("SELECT COUNT(*) FROM users") or sqlerr(__FILE__, __LINE__);
     $arr = mysqli_fetch_row($res);
-    if ($arr[0] >= $TBDEV['invites'])
+    if ($arr[0] >= $INSTALLER09['invites'])
         stderr($lang['invites_error'], $lang['invites_limit']);
     
     $invite = md5(mksecret());
@@ -168,31 +168,31 @@ elseif ($do == 'create_invite') {
         
         $inviter = htmlspecialchars($CURUSER['username']);
         $body    = <<<EOD
-You have been invited to {$TBDEV['site_name']} by $inviter. They have
+You have been invited to {$INSTALLER09['site_name']} by $inviter. They have
 specified this address ($email) as your email. If you do not know this person, please ignore this email. Please do not reply.
 
 This is a private site and you must agree to the rules before you can enter:
 
-{$TBDEV['baseurl']}/useragreement.php
+{$INSTALLER09['baseurl']}/useragreement.php
 
-{$TBDEV['baseurl']}/rules.php
+{$INSTALLER09['baseurl']}/rules.php
 
-{$TBDEV['baseurl']}/faq.php
+{$INSTALLER09['baseurl']}/faq.php
 
 ------------------------------------------------------------
 
 To confirm your invitation, you have to follow this link and type the invite code:
 
-{$TBDEV['baseurl']}/invite_signup.php
+{$INSTALLER09['baseurl']}/invite_signup.php
 
 Invite Code: $invite
 
 ------------------------------------------------------------
 
 After you do this, your inviter need's to confirm your account. 
-We urge you to read the RULES and FAQ before you start using {$TBDEV['site_name']}.
+We urge you to read the RULES and FAQ before you start using {$INSTALLER09['site_name']}.
 EOD;
-        $sendit  = mail($email, "You have been invited to {$TBDEV['site_name']}", $body, "From: {$TBDEV['site_email']}", "-f{$TBDEV['site_email']}");
+        $sendit  = mail($email, "You have been invited to {$INSTALLER09['site_name']}", $body, "From: {$INSTALLER09['site_email']}", "-f{$INSTALLER09['site_email']}");
         
         if (!$sendit)
             stderr($lang['invites_error'], $lang['invites_unable']);
@@ -257,21 +257,21 @@ EOD;
     sql_query('UPDATE users SET status = "confirmed" WHERE id = ' . sqlesc($userid) . ' AND invitedby = ' . sqlesc($CURUSER['id']) . ' AND status="pending"') or sqlerr(__FILE__, __LINE__);
     //==pm to new invitee/////
     $msg     = sqlesc("Hey there :wave:
-Welcome to {$TBDEV['site_name']}!
+Welcome to {$INSTALLER09['site_name']}!
   
 We have made many changes to the site, and we hope you enjoy them! 
-We have been working hard to make {$TBDEV['site_name']} somethin' special!
+We have been working hard to make {$INSTALLER09['site_name']} somethin' special!
 
-{$TBDEV['site_name']} has a strong community (just check out forums), and is a feature rich site. We hope you'll join in on all the fun!
+{$INSTALLER09['site_name']} has a strong community (just check out forums), and is a feature rich site. We hope you'll join in on all the fun!
  
-Be sure to read the [url={$TBDEV['baseurl']}/rules.php]Rules[/url] and [url={$TBDEV['baseurl']}/faq.php]FAQ[/url] before you start using the site.
-We are a strong friendly community here :D {$TBDEV['site_name']} is so much more then just torrents.
+Be sure to read the [url={$INSTALLER09['baseurl']}/rules.php]Rules[/url] and [url={$INSTALLER09['baseurl']}/faq.php]FAQ[/url] before you start using the site.
+We are a strong friendly community here :D {$INSTALLER09['site_name']} is so much more then just torrents.
 Just for kicks, we've started you out with 200.0 Karma Bonus  Points, and a couple of bonus GB to get ya started! 
 so, enjoy  
 cheers, 
-{$TBDEV['site_name']} Staff");
+{$INSTALLER09['site_name']} Staff");
     $id      = intval(sqlesc($assoc["id"]));
-    $subject = sqlesc("Welcome to {$TBDEV['site_name']} !");
+    $subject = sqlesc("Welcome to {$INSTALLER09['site_name']} !");
     $added   = sqlesc(time());
     sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES (0, $subject, $id, $msg, $added)") or sqlerr(__FILE__, __LINE__);
     ///////////////////end////////////

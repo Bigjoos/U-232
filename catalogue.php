@@ -26,7 +26,7 @@ function readMore($text, $char, $link)
 
 function peer_list($array)
 {
-    global $TBDEV, $lang;
+    global $INSTALLER09, $lang;
     $htmlout = '';
     $htmlout .= "<table width='100%' border='1' cellpadding='5' style='border-collapse:collapse'>
 		        <tr>

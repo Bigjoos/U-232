@@ -49,7 +49,7 @@ sql_query("INSERT INTO coins (userid, torrentid, points) VALUES (" . sqlesc($CUR
 sql_query("UPDATE users SET seedbonus=seedbonus+" . sqlesc($points) . " WHERE id=" . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 sql_query("UPDATE users SET seedbonus=seedbonus-" . sqlesc($points) . " WHERE id=" . sqlesc($CURUSER["id"])) or sqlerr(__FILE__, __LINE__);
 sql_query("UPDATE torrents SET points=points+" . sqlesc($points) . " WHERE id=" . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
-$msg = sqlesc("You have been given " . $points . " points by " . $CURUSER["username"] . " for torrent [url=" . $TBDEV['baseurl'] . "/details.php?id=" . $id . "]" . htmlspecialchars($row["name"]) . "[/url].");
+$msg = sqlesc("You have been given " . $points . " points by " . $CURUSER["username"] . " for torrent [url=" . $INSTALLER09['baseurl'] . "/details.php?id=" . $id . "]" . htmlspecialchars($row["name"]) . "[/url].");
 sql_query("INSERT INTO messages (sender, receiver, msg, added, subject) VALUES(0, " . sqlesc($userid) . ", $msg, " . sqlesc(time()) . ", 'You have been given a gift')") or sqlerr(__FILE__, __LINE__);
 stderr("Done", "Successfully gave points to this torrent.");
 

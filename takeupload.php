@@ -12,7 +12,7 @@ require_once(INCL_DIR . 'user_functions.php');
 require_once(INCL_DIR . 'bbcode_functions.php');
 require_once(INCL_DIR . 'page_verify.php');
 
-@ini_set("upload_max_filesize", $TBDEV['max_torrent_size']);
+@ini_set("upload_max_filesize", $INSTALLER09['max_torrent_size']);
 
 
 dbconn();
@@ -23,7 +23,7 @@ $lang    = array_merge(load_language('global'), load_language('takeupload'));
 $newpage = new page_verify();
 $newpage->check('taud');
 if ($CURUSER['class'] < UC_UPLOADER OR $CURUSER["uploadpos"] == 0 || $CURUSER["uploadpos"] > 1)
-    header("Location: {$TBDEV['baseurl']}/upload.php");
+    header("Location: {$INSTALLER09['baseurl']}/upload.php");
 
 foreach (explode(":", "descr:type:name") as $v) {
     if (!isset($_POST[$v]))
@@ -123,7 +123,7 @@ if (!is_uploaded_file($tmpname))
 if (!filesize($tmpname))
     stderr($lang['takeupload_failed'], $lang['takeupload_no_file']);
 
-$dict = bdec_file($tmpname, $TBDEV['max_torrent_size']);
+$dict = bdec_file($tmpname, $INSTALLER09['max_torrent_size']);
 if (!isset($dict))
     stderr($lang['takeupload_failed'], $lang['takeupload_not_benc']);
 
@@ -216,9 +216,9 @@ if (isset($totallen)) {
 }
 
 
-$dict['value']['announce']                 = bdec(benc_str($TBDEV['announce_urls'][0])); // change announce url to local
+$dict['value']['announce']                 = bdec(benc_str($INSTALLER09['announce_urls'][0])); // change announce url to local
 $dict['value']['info']['value']['private'] = bdec('i1e'); // add private tracker flag
-$dict['value']['info']['value']['source']  = bdec(benc_str("{$TBDEV['baseurl']} {$TBDEV['site_name']}")); // add link for bitcomet users
+$dict['value']['info']['value']['source']  = bdec(benc_str("{$INSTALLER09['baseurl']} {$INSTALLER09['site_name']}")); // add link for bitcomet users
 unset($dict['value']['announce-list']); // remove multi-tracker capability
 unset($dict['value']['nodes']); // remove cached peers (Bitcomet & Azareus)
 $dict = bdec(benc($dict)); // double up on the becoding solves the occassional misgenerated infohash 
@@ -261,9 +261,9 @@ if (!$ret) {
 $id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 
 if ($CURUSER["anonymous"] == 'yes')
-    $message = "New Torrent : [url={$TBDEV['baseurl']}/details.php?id=$id] " . htmlspecialchars($torrent) . "[/url] Uploaded - Anonymous User";
+    $message = "New Torrent : [url={$INSTALLER09['baseurl']}/details.php?id=$id] " . htmlspecialchars($torrent) . "[/url] Uploaded - Anonymous User";
 else
-    $message = "New Torrent : [url={$TBDEV['baseurl']}/details.php?id=$id] " . htmlspecialchars($torrent) . "[/url] Uploaded by " . htmlspecialchars($CURUSER["username"]) . "";
+    $message = "New Torrent : [url={$INSTALLER09['baseurl']}/details.php?id=$id] " . htmlspecialchars($torrent) . "[/url] Uploaded by " . htmlspecialchars($CURUSER["username"]) . "";
 
 sql_query("DELETE FROM files WHERE torrent = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 
@@ -278,7 +278,7 @@ sql_query("INSERT INTO files (torrent, filename, size) VALUES " . file_list($fil
 
 coin(100, true);
 
-$fp = fopen("{$TBDEV['torrent_dir']}/$id.torrent", "w");
+$fp = fopen("{$INSTALLER09['torrent_dir']}/$id.torrent", "w");
 if ($fp) {
     @fwrite($fp, benc($dict), strlen(benc($dict)));
     fclose($fp);
@@ -296,7 +296,7 @@ if (($fd1 = @fopen("rss.xml", "w")) && ($fd2 = fopen("rssdd.xml", "w"))) {
     $res  = sql_query("SELECT id, name FROM categories");
     while ($arr = mysqli_fetch_assoc($res))
         $cats[$arr["id"]] = $arr["name"];
-    $s = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>\n<rss version=\"0.91\">\n<channel>\n" . "<title>{$TBDEV['site_name']}</title>\n<description>TBDev is the best!</description>\n<link>{$TBDEV['baseurl']}/</link>\n";
+    $s = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>\n<rss version=\"0.91\">\n<channel>\n" . "<title>{$INSTALLER09['site_name']}</title>\n<description>TBDev is the best!</description>\n<link>{$INSTALLER09['baseurl']}/</link>\n";
     @fwrite($fd1, $s);
     @fwrite($fd2, $s);
     $r = sql_query("SELECT id,name,descr,filename,category FROM torrents ORDER BY added DESC LIMIT 15") or sqlerr(__FILE__, __LINE__);
@@ -305,9 +305,9 @@ if (($fd1 = @fopen("rss.xml", "w")) && ($fd2 = fopen("rssdd.xml", "w"))) {
         $s   = "<item>\n<title>" . htmlspecialchars($a["name"] . " ($cat)") . "</title>\n" . "<description>" . htmlspecialchars($a["descr"]) . "</description>\n";
         @fwrite($fd1, $s);
         @fwrite($fd2, $s);
-        @fwrite($fd1, "<link>{$TBDEV['baseurl']}/details.php?id=$a[id]&amp;hit=1</link>\n</item>\n");
+        @fwrite($fd1, "<link>{$INSTALLER09['baseurl']}/details.php?id=$a[id]&amp;hit=1</link>\n</item>\n");
         $filename = htmlspecialchars($a["filename"]);
-        @fwrite($fd2, "<link>{$TBDEV['baseurl']}/download.php/$a[id]/$filename</link>\n</item>\n");
+        @fwrite($fd2, "<link>{$INSTALLER09['baseurl']}/download.php/$a[id]/$filename</link>\n</item>\n");
     }
     $s = "</channel>\n</rss>\n";
     @fwrite($fd1, $s);
@@ -343,10 +343,10 @@ $description
 
 You can use the URL below to download the torrent (you may have to login).
 
-{$TBDEV['baseurl']}/details.php?id=$id&hit=1
+{$INSTALLER09['baseurl']}/details.php?id=$id&hit=1
 
 -- 
-{$TBDEV['site_name']}
+{$INSTALLER09['site_name']}
 EOD;
 
 $to = "";
@@ -364,8 +364,8 @@ $to .= "," . $arr[0];
 ++$ntotal;
 if ($nthis == $nmax || $ntotal == $total)
 {
-if (!mail("Multiple recipients <{$TBDEV['site_email']}>", "New torrent - $torrent", $body,
-"From: {$TBDEV['site_email']}\r\nBcc: $to"))
+if (!mail("Multiple recipients <{$INSTALLER09['site_email']}>", "New torrent - $torrent", $body,
+"From: {$INSTALLER09['site_email']}\r\nBcc: $to"))
 stderr("Error", "Your torrent has been been uploaded. DO NOT RELOAD THE PAGE!\n" .
 "There was however a problem delivering the e-mail notifcations.\n" .
 "Please let an administrator know about this error!\n");
@@ -374,6 +374,6 @@ $nthis = 0;
 }
 *******************/
 
-header("Location: {$TBDEV['baseurl']}/details.php?id=$id&uploaded=1");
+header("Location: {$INSTALLER09['baseurl']}/details.php?id=$id&uploaded=1");
 
 ?>

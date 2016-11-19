@@ -31,7 +31,7 @@ $lang = array_merge( $lang, load_language('non_con') );
 $HTMLOUT ='';
 
 if (!min_class(UC_STAFF)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 if (isset($_GET["action1"]) && htmlspecialchars($_GET["action1"]) == "list") {
     $res2 = sql_query("SELECT userid, seeder, torrent, agent FROM peers WHERE connectable='no' ORDER BY userid DESC") or sqlerr(__FILE__,__LINE__);

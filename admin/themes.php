@@ -27,7 +27,7 @@ require_once(INCL_DIR.'user_functions.php');
 $lang = array_merge( $lang, load_language('ad_themes') );
 /** new way **/
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
     
 	$HTML="";
 	
@@ -49,7 +49,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 			$TEMPLATE=sql_query("SELECT * FROM stylesheets WHERE id=".sqlesc($ID)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
 			$TEM=mysqli_fetch_array($TEMPLATE);
 			$HTML.="
-			<form action='{$TBDEV['baseurl']}/admin.php?action=themes&amp;act=4' method='post'><input type='hidden' value='{$TEM['id']}' name='uri' /><table width='50%'>
+			<form action='{$INSTALLER09['baseurl']}/admin.php?action=themes&amp;act=4' method='post'><input type='hidden' value='{$TEM['id']}' name='uri' /><table width='50%'>
 			<tr><td colspan='2' class='colhead' align='center'>{$lang['themes_edit_tem']} ".htmlspecialchars($TEM['name'])."</td></tr>
 			<tr><td class='rowhead'>{$lang['themes_id']}<br/>{$lang['themes_explain_id']}</td><td><input type='text' value='".intval($TEM['id'])."' name='id' /></td></tr>
 			<tr><td class='rowhead'>{$lang['themes_uri']}</td><td><input type='text' value='".htmlspecialchars($TEM['uri'])."' name='uri' /></td></tr>
@@ -64,7 +64,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 			if(!isset($_GET['id']))stderr("{$lang['themes_error']}", "{$lang['themes_inv_id']}");
 			$ID = (int) $_GET['id'];
 			if(!is_valid_id($ID))stderr("{$lang['themes_error']}", "{$lang['themes_inv_id']}");
-			stderr("{$lang['themes_delete_q']}", "{$lang['themes_delete_sure_q']}<a href='{$TBDEV['baseurl']}/admin.php?action=themes&amp;act=5&amp;id=$ID&amp;sure=1'>
+			stderr("{$lang['themes_delete_q']}", "{$lang['themes_delete_sure_q']}<a href='{$INSTALLER09['baseurl']}/admin.php?action=themes&amp;act=5&amp;id=$ID&amp;sure=1'>
 			{$lang['themes_delete_sure_q2']}</a> {$lang['themes_delete_sure_q3']}");
 		}
 		if($ACT==3){//--ADD NEW
@@ -102,7 +102,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 			if($URI!=$CUR['uri'])$EDIT[]="uri=".sqlesc($URI);
 			if($NAME!=$CUR['name'])$EDIT[]="name=".sqlesc($NAME);
 			if(!sql_query("UPDATE stylesheets SET ".implode(", ", $EDIT)." WHERE id=".sqlesc($URI))) stderr("{$lang['themes_error']}", "{$lang['themes_some_wrong']}");
-			header("Location: {$TBDEV['baseurl']}/admin.php?action=themes&msg=1");
+			header("Location: {$INSTALLER09['baseurl']}/admin.php?action=themes&msg=1");
 		}
 		if($ACT==5){//--DELETE FINAL
 			if(!isset($_GET['id']))stderr("{$lang['themes_error']}", "{$lang['themes_inv_id']}");
@@ -113,17 +113,17 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 			sql_query("DELETE FROM stylesheets WHERE id=".sqlesc($ID)) or sqlerr(__FILE__, __LINE__);
 			$RANDSTYLE=mysqli_fetch_array(sql_query("SELECT id FROM stylesheets ORDER BY RAND() LIMIT 1")) or sqlerr(__FILE__, __LINE__);
 			sql_query("UPDATE users SET stylesheet=".sqlesc($RANDSTYLE['id'])." WHERE stylesheet=".sqlesc($ID)) or sqlerr(__FILE__, __LINE__);
-			header("Location: {$TBDEV['baseurl']}/admin.php?action=themes&msg=2");
+			header("Location: {$INSTALLER09['baseurl']}/admin.php?action=themes&msg=2");
 		}
 		if($ACT==6){//--ADD NEW SAVE
 			if(!isset($_POST['id']))stderr("{$lang['themes_error']}", "{$lang['themes_inv_id']}");
 			if(!isset($_POST['uri']))stderr("{$lang['themes_error']}", "{$lang['themes_inv_uri']}");
 			if(!isset($_POST['name']))stderr("{$lang['themes_error']}", "{$lang['themes_inv_name']}");
 			if(!file_exists("templates/".intval($_POST['id'])."/template.php"))stderr("{$lang['themes_nofile']}",
-			"{$lang['themes_inv_file']}<a href='{$TBDEV['baseurl']}/admin.php?action=themes&amp;act=7&amp;id=".intval($_POST['id'])."&amp;uri=".htmlspecialchars($_POST['uri'])."&amp;name=".htmlspecialchars($_POST['name'])."'>{$lang['themes_file_exists']}</a>/
-			<a href='{$TBDEV['baseurl']}/admin.php?action=themes'>{$lang['themes_not_exists']}</a>");
+			"{$lang['themes_inv_file']}<a href='{$INSTALLER09['baseurl']}/admin.php?action=themes&amp;act=7&amp;id=".intval($_POST['id'])."&amp;uri=".htmlspecialchars($_POST['uri'])."&amp;name=".htmlspecialchars($_POST['name'])."'>{$lang['themes_file_exists']}</a>/
+			<a href='{$INSTALLER09['baseurl']}/admin.php?action=themes'>{$lang['themes_not_exists']}</a>");
 			sql_query("INSERT INTO stylesheets(id, uri, name)VALUES(".sqlesc($_POST['id']).", ".sqlesc($_POST['uri']).", ".sqlesc($_POST['name']).")") or sqlerr(__FILE__, __LINE__);
-			header("Location: {$TBDEV['baseurl']}/admin.php?action=themes&msg=3");
+			header("Location: {$INSTALLER09['baseurl']}/admin.php?action=themes&msg=3");
 		}
 		if($ACT==7){//--ADD NEW IF FOLDER NO EXISTS
 			if(!isset($_GET['id']))stderr("{$lang['themes_error']}", "{$lang['themes_inv_id']}");
@@ -144,7 +144,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 	
 	if(!isset($_GET['act'])){
 		$HTML.="<table width='80%'>
-		<tr><td colspan='5'><a href='{$TBDEV['baseurl']}/admin.php?action=themes&amp;act=3'><span class='btn'>{$lang['themes_addnew']}</span></a></td></tr>
+		<tr><td colspan='5'><a href='{$INSTALLER09['baseurl']}/admin.php?action=themes&amp;act=3'><span class='btn'>{$lang['themes_addnew']}</span></a></td></tr>
 		<tr>
 		<td class='colhead'>{$lang['themes_id']}</td>
 		<td class='colhead'>{$lang['themes_uri']}</td>
@@ -161,8 +161,8 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 			<td align='left'>".html($TE['uri'])."</td>
 			<td align='left'>".html($TE['name'])."</td>
 			<td align='left'><b>".(file_exists("templates/".intval($TE['id'])."/template.php")?"{$lang['themes_file_exists']}":"{$lang['themes_not_exists']}")."</b></td>
-			<td align='left'><a href='{$TBDEV['baseurl']}/admin.php?action=themes&amp;act=1&amp;id=".intval($TE['id'])."'>[{$lang['themes_edit']}]</a>
-			<a href='{$TBDEV['baseurl']}/admin.php?action=themes&amp;act=2&amp;id=".intval($TE['id'])."'>[{$lang['themes_delete']}]</a></td>
+			<td align='left'><a href='{$INSTALLER09['baseurl']}/admin.php?action=themes&amp;act=1&amp;id=".intval($TE['id'])."'>[{$lang['themes_edit']}]</a>
+			<a href='{$INSTALLER09['baseurl']}/admin.php?action=themes&amp;act=2&amp;id=".intval($TE['id'])."'>[{$lang['themes_delete']}]</a></td>
 			</tr>
 			";
 		}

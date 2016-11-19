@@ -8,16 +8,16 @@
  **/
 error_reporting(0);
 ////////////////// GLOBAL VARIABLES ////////////////////////////	
-$TBDEV['baseurl'] = '#baseurl';
-$TBDEV['announce_interval'] = 60 * 30;
-$TBDEV['connectable_check'] = 1;
-$TBDEV['max_slots'] = 1; //1=On 0=Off
-$TBDEV['user_slots'] = 20;
-$TBDEV['p_user_slots'] = 30;
-$TBDEV['user_ratio1_slots'] = 2;
-$TBDEV['user_ratio2_slots'] = 3;
-$TBDEV['user_ratio3_slots'] = 5;
-$TBDEV['user_ratio4_slots'] = 10;
+$INSTALLER09['baseurl'] = '#baseurl';
+$INSTALLER09['announce_interval'] = 60 * 30;
+$INSTALLER09['connectable_check'] = 1;
+$INSTALLER09['max_slots'] = 1; //1=On 0=Off
+$INSTALLER09['user_slots'] = 20;
+$INSTALLER09['p_user_slots'] = 30;
+$INSTALLER09['user_ratio1_slots'] = 2;
+$INSTALLER09['user_ratio2_slots'] = 3;
+$INSTALLER09['user_ratio3_slots'] = 5;
+$INSTALLER09['user_ratio4_slots'] = 10;
 define('TIME_NOW', time());
 define ('UC_USER', 0);
 define ('UC_POWER_USER', 1);
@@ -27,11 +27,11 @@ define ('UC_MODERATOR', 4);
 define ('UC_ADMINISTRATOR', 5);
 define ('UC_SYSOP', 6);
 // DB setup
-$TBDEV['mysql_host'] = "#mysql_host";
-$TBDEV['mysql_user'] = "#mysql_user";
-$TBDEV['mysql_pass'] = "#mysql_pass";
-$TBDEV['mysql_db']   = "#mysql_db";
-$TBDEV['cache'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR;
+$INSTALLER09['mysql_host'] = "#mysql_host";
+$INSTALLER09['mysql_user'] = "#mysql_user";
+$INSTALLER09['mysql_pass'] = "#mysql_pass";
+$INSTALLER09['mysql_db']   = "#mysql_db";
+$INSTALLER09['cache'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR;
 ////////////////// GLOBAL VARIABLES ////////////////////////////
 $agent = $_SERVER["HTTP_USER_AGENT"];
 
@@ -41,9 +41,9 @@ if (isset($_SERVER['HTTP_COOKIE']) || isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ||
 
 /////////////////////// FUNCTION DEFS ///////////////////////////////////
    function crazyhour_announce() {
-   global $TBDEV;
-   $transfer_filename   = $TBDEV['cache'].'transfer_crazyhour.txt';
-   $crazyhour_filename = $TBDEV['cache'].'crazy_hour.txt';
+   global $INSTALLER09;
+   $transfer_filename   = $INSTALLER09['cache'].'transfer_crazyhour.txt';
+   $crazyhour_filename = $INSTALLER09['cache'].'crazy_hour.txt';
    $crazyhour_cache = fopen($crazyhour_filename,'r+');
    $crazyhour_var = fread($crazyhour_cache, filesize($crazyhour_filename));
    fclose($crazyhour_cache);
@@ -75,13 +75,13 @@ if (isset($_SERVER['HTTP_COOKIE']) || isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ||
 
 function dbconn()
 {
-    global $TBDEV;
+    global $INSTALLER09;
 
-    if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'],  $TBDEV['mysql_user'],  $TBDEV['mysql_pass'])))
+    if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($INSTALLER09['mysql_host'],  $INSTALLER09['mysql_user'],  $INSTALLER09['mysql_pass'])))
     {
 	  err('Please call back later');
     }
-    ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE $TBDEV['mysql_db']")) or err('Please call back later');
+    ((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE $INSTALLER09['mysql_db']")) or err('Please call back later');
 }
 
 function auto_enter_cheater($userid, $rate, $upthis, $diff, $torrentid, $client, $ip, $last_up)
@@ -236,7 +236,7 @@ dbconn();
 $user_query = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id, uploaded, downloaded, class, downloadpos, parked, free_switch, highspeed, enabled FROM users WHERE passkey=".sqlesc($passkey)) or err("Tracker error 2");
 
 if ( mysqli_num_rows($user_query) != 1 )
-err("Unknown passkey. Please redownload the torrent from {$TBDEV['baseurl']}.");
+err("Unknown passkey. Please redownload the torrent from {$INSTALLER09['baseurl']}.");
  
 $user = mysqli_fetch_assoc($user_query);
 if( $user['enabled'] == 'no' ) err('Permission denied, you\'re not enabled');
@@ -265,11 +265,11 @@ $res = mysqli_query($GLOBALS["___mysqli_ston"],  "SELECT $fields FROM peers WHER
 //////////////////// START NEW COMPACT MODE/////////////////////////////
 if($_GET['compact'] != 1)
 {
-$resp = "d" . benc_str("interval") . "i" . $TBDEV['announce_interval'] . "e" . benc_str("private") . 'i1e' . benc_str("peers") . "l";
+$resp = "d" . benc_str("interval") . "i" . $INSTALLER09['announce_interval'] . "e" . benc_str("private") . 'i1e' . benc_str("peers") . "l";
 }
 else
 {
-$resp = "d" . benc_str("interval") . "i" . $TBDEV['announce_interval'] ."e" . benc_str("private") . 'i1e'. benc_str("min interval") . "i" . 300 ."e5:"."peers" ;
+$resp = "d" . benc_str("interval") . "i" . $INSTALLER09['announce_interval'] ."e" . benc_str("private") . 'i1e'. benc_str("min interval") . "i" . 300 ."e5:"."peers" ;
 }
 
 $peer = array();
@@ -336,32 +336,32 @@ $valid = @mysqli_fetch_row(@mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COU
 if ($valid[0] >= 1 && $seeder == 'no') err("Connection limit exceeded! You may only leech from one location at a time.");
 if ($valid[0] >= 3 && $seeder == 'yes') err("Connection limit exceeded!");
      $ratio = (($user["downloaded"] > 0) ? ($user["uploaded"] / $user["downloaded"]) : 1);
-     if ($TBDEV['max_slots']) {
+     if ($INSTALLER09['max_slots']) {
         if ($ratio < 0.95) {
         	switch (true) {
         		case ($ratio < 0.5):
-        		$max = $TBDEV['user_ratio1_slots'];
+        		$max = $INSTALLER09['user_ratio1_slots'];
         		break;
         		case ($ratio < 0.65):
-        		$max = $TBDEV['user_ratio2_slots'];
+        		$max = $INSTALLER09['user_ratio2_slots'];
         		break;
         		case ($ratio < 0.8):
-        		$max = $TBDEV['user_ratio3_slots'];
+        		$max = $INSTALLER09['user_ratio3_slots'];
         		break;
         		case ($ratio < 0.95):
-        		$max = $TBDEV['user_ratio4_slots'];
+        		$max = $INSTALLER09['user_ratio4_slots'];
         		break;
         		default:
-        	   $max = $TBDEV['user_ratio1_slots'];
+        	   $max = $INSTALLER09['user_ratio1_slots'];
         	}
          }
          else {
          switch ($user['class']) {
         		case UC_USER:
-        		$max = $TBDEV['user_slots'];
+        		$max = $INSTALLER09['user_slots'];
         		break;
         		case UC_POWER_USER:
-        		$max = $TBDEV['p_user_slots'];
+        		$max = $INSTALLER09['p_user_slots'];
         		break;
         	  $max = 99;
         	}	
@@ -452,7 +452,7 @@ if (portblacklisted($port))
 		{
 	 err("Port $port is blacklisted.");
 		}
-		elseif ( $TBDEV['connectable_check'] )
+		elseif ( $INSTALLER09['connectable_check'] )
 		{
 			$sockres = @fsockopen($ip, $port, $errno, $errstr, 5);
 			if (!$sockres)

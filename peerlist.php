@@ -128,7 +128,7 @@ function seed_sort($a, $b)
 usort($seeders, "seed_sort");
 usort($downloaders, "leech_sort");
 
-$HTMLOUT .= "<h1>Peerlist for <a href='{$TBDEV['baseurl']}/details.php?id=$id'>" . htmlentities($row['name']) . "</a></h1>";
+$HTMLOUT .= "<h1>Peerlist for <a href='{$INSTALLER09['baseurl']}/details.php?id=$id'>" . htmlentities($row['name']) . "</a></h1>";
 $HTMLOUT .= dltable("{$lang['peerslist_seeders']}<a name='seeders'></a>", $seeders, $row);
 $HTMLOUT .= '<br />' . dltable("{$lang['peerslist_leechers']}<a name='leechers'></a>", $downloaders, $row);
 

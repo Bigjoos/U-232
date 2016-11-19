@@ -38,7 +38,7 @@ require_once(INCL_DIR.'bbcode_functions.php');
 $lang = array_merge( $lang );
 
 if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if (!is_valid_id($id))

@@ -26,8 +26,8 @@ loggedinorreturn();
    
     $HTMLOUT .= "<div align='center'>
     <form name='compose' enctype='multipart/form-data' action='./takeupload.php' method='post'>
-    <input type='hidden' name='MAX_FILE_SIZE' value='{$TBDEV['max_torrent_size']}' />
-    <p>{$lang['upload_announce_url']} <b>{$TBDEV['announce_urls'][0]}</b></p>";
+    <input type='hidden' name='MAX_FILE_SIZE' value='{$INSTALLER09['max_torrent_size']}' />
+    <p>{$lang['upload_announce_url']} <b>{$INSTALLER09['announce_urls'][0]}</b></p>";
 
 
     $HTMLOUT .= "<table border='1' cellspacing='0' cellpadding='10'>

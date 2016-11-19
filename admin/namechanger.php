@@ -39,7 +39,7 @@ $lang = array_merge( $lang );
 $HTMLOUT='';
 
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $mode = (isset($_GET['mode']) && htmlspecialchars($_GET['mode']));
 

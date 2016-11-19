@@ -17,11 +17,11 @@ dbconn(false);
 loggedinorreturn();
 
 function ratingpic($num) {
-    global $TBDEV;
+    global $INSTALLER09;
     $r = round($num * 2) / 2;
     if ($r < 1 || $r > 5)
         return;
-    return "<img src=\"{$TBDEV['pic_base_url']}ratings/{$r}.gif\" border=\"0\" alt=\"Rating: $num / 5\" title=\"Rating: $num / 5\" />";
+    return "<img src=\"{$INSTALLER09['pic_base_url']}ratings/{$r}.gif\" border=\"0\" alt=\"Rating: $num / 5\" title=\"Rating: $num / 5\" />";
 }
 
     $lang = array_merge( load_language('global'), load_language('details') );
@@ -36,11 +36,11 @@ function ratingpic($num) {
     if (isset($_GET["hit"])) 
     {
       sql_query("UPDATE torrents SET views = views + 1 WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
-        header("Location: {$TBDEV['baseurl']}/details.php?id=$id");
+        header("Location: {$INSTALLER09['baseurl']}/details.php?id=$id");
       exit();
     }
 	 
-$res = sql_query("SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.checked_by, torrents.filename, torrents.points, LENGTH(torrents.nfo) AS nfosz, torrents.last_action AS lastseed, torrents.numratings, torrents.name, IF(torrents.numratings < {$TBDEV['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, torrents.comments, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, torrents.added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.poster, torrents.url, torrents.numfiles, torrents.anonymous, torrents.free, torrents.allow_comments, torrents.nuked, torrents.nukereason, torrents.last_reseed, categories.name AS cat_name, users.username, users.reputation, freeslots.free AS freeslot, freeslots.double AS doubleslot, freeslots.tid AS slotid, freeslots.uid AS slotuid FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id LEFT JOIN freeslots ON (torrents.id=freeslots.tid AND freeslots.uid = ".sqlesc($CURUSER['id']).") WHERE torrents.id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$res = sql_query("SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.checked_by, torrents.filename, torrents.points, LENGTH(torrents.nfo) AS nfosz, torrents.last_action AS lastseed, torrents.numratings, torrents.name, IF(torrents.numratings < {$INSTALLER09['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, torrents.comments, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, torrents.added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.poster, torrents.url, torrents.numfiles, torrents.anonymous, torrents.free, torrents.allow_comments, torrents.nuked, torrents.nukereason, torrents.last_reseed, categories.name AS cat_name, users.username, users.reputation, freeslots.free AS freeslot, freeslots.double AS doubleslot, freeslots.tid AS slotid, freeslots.uid AS slotuid FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id LEFT JOIN freeslots ON (torrents.id=freeslots.tid AND freeslots.uid = ".sqlesc($CURUSER['id']).") WHERE torrents.id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 	
 $row = mysqli_fetch_assoc($res);
 
@@ -84,18 +84,18 @@ if (!$row || ($row["banned"] == "yes" && !$moderator))
     if ($CURUSER['class'] >= UC_MODERATOR) {
         if (isset($_GET["checked"]) &&  $_GET["checked"] == 1) {
             sql_query("UPDATE torrents SET checked_by = ".sqlesc($CURUSER['username'])." WHERE id =".sqlesc($id)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
-            write_log("Torrent <a href={$TBDEV['baseurl']}/details.php?id=$id>(".htmlspecialchars($row['name']).")</a> was checked by {$CURUSER['username']}");
-            header("Location: {$TBDEV["baseurl"]}/details.php?id=$id&checked=done#Success");		
+            write_log("Torrent <a href={$INSTALLER09['baseurl']}/details.php?id=$id>(".htmlspecialchars($row['name']).")</a> was checked by {$CURUSER['username']}");
+            header("Location: {$INSTALLER09["baseurl"]}/details.php?id=$id&checked=done#Success");		
         }
         elseif (isset($_GET["rechecked"]) &&  $_GET["rechecked"] == 1) {
             sql_query("UPDATE torrents SET checked_by = ".sqlesc($CURUSER['username'])." WHERE id =".sqlesc($id)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
-            write_log("Torrent <a href={$TBDEV['baseurl']}/details.php?id=$id>(".htmlspecialchars($row['name']).")</a> was re-checked by {$CURUSER['username']}");
-            header("Location: {$TBDEV["baseurl"]}/details.php?id=$id&rechecked=done#Success");		
+            write_log("Torrent <a href={$INSTALLER09['baseurl']}/details.php?id=$id>(".htmlspecialchars($row['name']).")</a> was re-checked by {$CURUSER['username']}");
+            header("Location: {$INSTALLER09["baseurl"]}/details.php?id=$id&rechecked=done#Success");		
         }
         elseif (isset($_GET["clearchecked"]) &&  $_GET["clearchecked"] == 1) {
             sql_query("UPDATE torrents SET checked_by = '' WHERE id =".sqlesc($id)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
-            write_log("Torrent <a href={$TBDEV["baseurl"]}/details.php?id=$id>(".htmlspecialchars($row['name']).")</a> was un-checked by {$CURUSER['username']}");
-            header("Location: {$TBDEV["baseurl"]}/details.php?id=$id&clearchecked=done#Success");		
+            write_log("Torrent <a href={$INSTALLER09["baseurl"]}/details.php?id=$id>(".htmlspecialchars($row['name']).")</a> was un-checked by {$CURUSER['username']}");
+            header("Location: {$INSTALLER09["baseurl"]}/details.php?id=$id&clearchecked=done#Success");		
         }
         if (isset($_GET["checked"]) &&  $_GET["checked"] == 'done')
             $HTMLOUT .="<h2><a name='Success'>Successfully checked {$CURUSER['username']}!</a></h2>";
@@ -135,20 +135,20 @@ if (!$row || ($row["banned"] == "yes" && !$moderator))
     $blasd = sql_query("SELECT points FROM coins WHERE torrentid=".sqlesc($id)." AND userid=" .sqlesc($CURUSER["id"])) or sqlerr(__FILE__, __LINE__);
     $sdsa = mysqli_fetch_assoc($blasd) or $sdsa["points"] = 0;
     $HTMLOUT .= tr("Points", "<b>In total " . intval($row["points"]) . " Points given to this torrent of which " . intval($sdsa["points"]) . " from you.<br /><br />By clicking on the coins you can give points to the uploader of this torrent.</b><br /><br />
-    <a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=10'>
-    <img src='{$TBDEV['pic_base_url']}10coin.jpg' alt='10 Points' title='10 Points' border='0' /></a>
-    &nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=20'>
-    <img src='{$TBDEV['pic_base_url']}20coin.jpg' alt='20 Points' title='20 Points' border='0' /></a>
-    &nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=50'>
-    <img src='{$TBDEV['pic_base_url']}50coin.jpg' alt='50 Points' title='50 Points' border='0' /></a>
-    &nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=100'>
-    <img src='{$TBDEV['pic_base_url']}100coin.jpg' alt='100 Points' title='100 Points' border='0' /></a>
-    &nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=200'>
-    <img src='{$TBDEV['pic_base_url']}200coin.gif' alt='200 Points' title='200 Points' border='0' /></a>
-    &nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=500'>
-    <img src='{$TBDEV['pic_base_url']}500coin.gif' alt='500 Points' title='500 Points' border='0' /></a>
-    &nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/coin.php?id=$id&amp;points=1000'>
-    <img src='{$TBDEV['pic_base_url']}1000coin.gif' alt='1000 Points' title='1000 Points' border='0' /></a>", 1);
+    <a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=10'>
+    <img src='{$INSTALLER09['pic_base_url']}10coin.jpg' alt='10 Points' title='10 Points' border='0' /></a>
+    &nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=20'>
+    <img src='{$INSTALLER09['pic_base_url']}20coin.jpg' alt='20 Points' title='20 Points' border='0' /></a>
+    &nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=50'>
+    <img src='{$INSTALLER09['pic_base_url']}50coin.jpg' alt='50 Points' title='50 Points' border='0' /></a>
+    &nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=100'>
+    <img src='{$INSTALLER09['pic_base_url']}100coin.jpg' alt='100 Points' title='100 Points' border='0' /></a>
+    &nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=200'>
+    <img src='{$INSTALLER09['pic_base_url']}200coin.gif' alt='200 Points' title='200 Points' border='0' /></a>
+    &nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=500'>
+    <img src='{$INSTALLER09['pic_base_url']}500coin.gif' alt='500 Points' title='500 Points' border='0' /></a>
+    &nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/coin.php?id=$id&amp;points=1000'>
+    <img src='{$INSTALLER09['pic_base_url']}1000coin.gif' alt='1000 Points' title='1000 Points' border='0' /></a>", 1);
     // //////////end bonus points for uploader///////
     /** pdq's ratio afer d/load **/
     $downl = ($CURUSER["downloaded"] + $row["size"]);
@@ -197,7 +197,7 @@ if (!$row || ($row["banned"] == "yes" && !$moderator))
 	 if (!empty($row["poster"]))
    $HTMLOUT .= tr("{$lang['details_poster']}", "<img src='".htmlspecialchars($row["poster"])."' alt='Poster' title='Poster' />", 1);
    else
-   $HTMLOUT .= tr("{$lang['details_poster']}", "<img src='{$TBDEV['pic_base_url']}noposter.png' alt='Poster' title='Poster' />", 1);
+   $HTMLOUT .= tr("{$lang['details_poster']}", "<img src='{$INSTALLER09['pic_base_url']}noposter.png' alt='Poster' title='Poster' />", 1);
 	 //auto imdb mod 
   $smallth = '';
   if (($row["url"] != "")AND(strpos($row["url"], 'imdb'))AND(strpos($row["url"], 'title')))
@@ -336,7 +336,7 @@ if (!$row || ($row["banned"] == "yes" && !$moderator))
 			$HTMLOUT .= tr("{$lang['details_banned']}", htmlspecialchars($row["banned"]));
 
     if ($row["nuked"] == "yes")
-    $HTMLOUT .= "<tr><td class='rowhead'><b>Nuked</b></td><td align='left'><img src='{$TBDEV['pic_base_url']}nuked.gif' alt='Nuked' title='Nuked' /></td></tr>\n";
+    $HTMLOUT .= "<tr><td class='rowhead'><b>Nuked</b></td><td align='left'><img src='{$INSTALLER09['pic_base_url']}nuked.gif' alt='Nuked' title='Nuked' /></td></tr>\n";
     if (!empty($row["nukereason"]))
     $HTMLOUT .= "<tr><td class='rowhead'><b>Nuke-Reason</b></td><td align='left'>".htmlspecialchars($row["nukereason"])."</td></tr>\n";
 
@@ -349,8 +349,8 @@ if (!$row || ($row["banned"] == "yes" && !$moderator))
 		$s = "";
 		$s .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td valign=\"top\" class=\"embedded\">";
 		if (!isset($row["rating"])) {
-			if ($TBDEV['minvotes'] > 1) {
-				$s .= "none yet (needs at least {$TBDEV['minvotes']} votes and has got ";
+			if ($INSTALLER09['minvotes'] > 1) {
+				$s .= "none yet (needs at least {$INSTALLER09['minvotes']} votes and has got ";
 				if ($row["numratings"])
 					$s .= "only " . intval($row["numratings"]);
 				else
@@ -428,15 +428,15 @@ if (!$row || ($row["banned"] == "yes" && !$moderator))
        if (!empty($row['checked_by'])) {
            $checked_by = sql_query("SELECT id FROM users WHERE username=".sqlesc($row['checked_by'])) or sqlerr(__FILE__, __LINE__);
            $checked = mysqli_fetch_array($checked_by);
-           $HTMLOUT .="<tr><td class='rowhead'>Checked by</td><td align='left'><a href='{$TBDEV["baseurl"]}/userdetails.php?id=".intval($checked['id'])."'><strong>
+           $HTMLOUT .="<tr><td class='rowhead'>Checked by</td><td align='left'><a href='{$INSTALLER09["baseurl"]}/userdetails.php?id=".intval($checked['id'])."'><strong>
            ".htmlspecialchars($row['checked_by'])."</strong></a> 
-           <img src='{$TBDEV['pic_base_url']}mod.gif' width='15' border='0' alt='Checked' title='Checked - by ".htmlspecialchars($row['checked_by'])."' />
-           <a href='{$TBDEV["baseurl"]}/details.php?id=".intval($row['id'])."&amp;rechecked=1'><small><em><strong>[Re-Check this torrent]</strong></em></small></a> 
-            <a href='{$TBDEV["baseurl"]}/details.php?id=".intval($row['id'])."&amp;clearchecked=1'><small><em><strong>[Un-Check this torrent]</strong></em></small></a>  * STAFF Eyes Only *</td></tr>";
+           <img src='{$INSTALLER09['pic_base_url']}mod.gif' width='15' border='0' alt='Checked' title='Checked - by ".htmlspecialchars($row['checked_by'])."' />
+           <a href='{$INSTALLER09["baseurl"]}/details.php?id=".intval($row['id'])."&amp;rechecked=1'><small><em><strong>[Re-Check this torrent]</strong></em></small></a> 
+            <a href='{$INSTALLER09["baseurl"]}/details.php?id=".intval($row['id'])."&amp;clearchecked=1'><small><em><strong>[Un-Check this torrent]</strong></em></small></a>  * STAFF Eyes Only *</td></tr>";
        }
        else {
        $HTMLOUT .="<tr><td class='rowhead'>Checked by</td><td align='left'><font color='#ff0000'><strong>NOT CHECKED!</strong></font> 
-       <a href='{$TBDEV["baseurl"]}/details.php?id=".intval($row['id'])."&amp;checked=1'>
+       <a href='{$INSTALLER09["baseurl"]}/details.php?id=".intval($row['id'])."&amp;checked=1'>
        <small><em><strong>[Check this torrent]</strong></em></small></a>  * STAFF Eyes Only *</td></tr>";
        }
    }

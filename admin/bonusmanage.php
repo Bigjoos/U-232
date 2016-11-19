@@ -29,7 +29,7 @@ $lang = array_merge( $lang, load_language('bonusmanager'));
 $HTMLOUT="";
  
 if (!min_class(UC_ADMINISTRATOR))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 	
 	  $res = sql_query("SELECT id, bonusname, points, pointspool, minpoints, description, art, menge, enabled FROM bonus") or sqlerr(__FILE__, __LINE__);
 	  if(isset($_POST["id"]) || isset($_POST["points"]) || isset($_POST["pointspool"]) || isset($_POST["minpoints"]) || isset($_POST["description"]) || isset($_POST["enabled"])){
@@ -166,10 +166,10 @@ while($arr = mysqli_fetch_assoc($res)) {
 		}
 		
   function makeithappen($sql){
-  global $TBDEV;
+  global $INSTALLER09;
 	$done = sql_query($sql) or sqlerr(__FILE__, __LINE__);
 	if($done){
-	header("Location: {$TBDEV['baseurl']}/admin.php?action=bonusmanage");
+	header("Location: {$INSTALLER09['baseurl']}/admin.php?action=bonusmanage");
 	} else {
 	stderr($lang['bonusmanager_oops'], "{$lang['bonusmanager_sql']}");
 	}

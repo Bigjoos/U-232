@@ -11,7 +11,7 @@ require_once(INCL_DIR.'user_functions.php');
 dbconn(false);
 loggedinorreturn();
 sql_query("UPDATE users SET override_class='255' WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__); 
-header("Location: {$TBDEV['baseurl']}/index.php");
+header("Location: {$INSTALLER09['baseurl']}/index.php");
 die();
 
 ?>

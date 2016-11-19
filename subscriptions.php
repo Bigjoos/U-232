@@ -40,14 +40,14 @@ if (isset($_GET["subscribe"])) {
     }
     
     if ((get_row_count("subscriptions", "WHERE userid=" . sqlesc($CURUSER['id']) . " AND topicid = " . sqlesc($topicid))) > 0)
-        stderr("Error", "Already subscribed to thread number <b>" . htmlspecialchars($topicid) . "</b> Click <a href='{$TBDEV['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid'> <b>Here</b></a> to go back to the thread. Or click <a href='{$TBDEV['baseurl']}/subscriptions.php'> <b>Here</b></a> to view your subscriptions.");
+        stderr("Error", "Already subscribed to thread number <b>" . htmlspecialchars($topicid) . "</b> Click <a href='{$INSTALLER09['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid'> <b>Here</b></a> to go back to the thread. Or click <a href='{$INSTALLER09['baseurl']}/subscriptions.php'> <b>Here</b></a> to view your subscriptions.");
     
     sql_query("INSERT INTO subscriptions (userid, topicid) VALUES (" . sqlesc($CURUSER['id']) . ", " . sqlesc($topicid) . ")") or sqlerr(__FILE__, __LINE__);
     
     $res = sql_query("SELECT subject FROM `topics` WHERE id=$topicid") or sqlerr(__FILE__, __LINE__);
     $arr = mysqli_fetch_assoc($res) or stderr("Error", "Bad forum id!");
     $forumname = htmlspecialchars($arr["subject"]);
-    stderr("Success", "Successfully subscribed to thread <b>" . htmlspecialchars($forumname) . "</b> Click <a href='{$TBDEV['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid'> <b>Here</b></a> to go back to the thread. Or click <a href='{$TBDEV['baseurl']}/subscriptions.php'> <b>Here</b></a> to view your subscriptions.");
+    stderr("Success", "Successfully subscribed to thread <b>" . htmlspecialchars($forumname) . "</b> Click <a href='{$INSTALLER09['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid'> <b>Here</b></a> to go back to the thread. Or click <a href='{$INSTALLER09['baseurl']}/subscriptions.php'> <b>Here</b></a> to view your subscriptions.");
 }
 // === End subscribe to thread
 // === Action: Delete subscription
@@ -60,7 +60,7 @@ if (isset($_GET["delete"])) {
         sql_query("DELETE FROM subscriptions WHERE userid = " . sqlesc($CURUSER['id']) . " AND topicid=" . sqlesc($delete)) or sqlerr(__FILE__, __LINE__);
     }
     
-    header("Refresh: 0; url={$TBDEV['baseurl']}/subscriptions.php?deleted=1");
+    header("Refresh: 0; url={$INSTALLER09['baseurl']}/subscriptions.php?deleted=1");
 }
 // ===End
 $res = sql_query("SELECT id, username, donor, warned, leechwarn, chatpost, pirate, king, class, enabled FROM users WHERE id=" . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
@@ -68,7 +68,7 @@ $res = sql_query("SELECT id, username, donor, warned, leechwarn, chatpost, pirat
 if (mysqli_num_rows($res) == 1) {
     $arr = mysqli_fetch_assoc($res);
     
-    $subject = "<a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=$userid'></a>" . format_username($arr, true);
+    $subject = "<a class='altlink' href='{$INSTALLER09['baseurl']}/userdetails.php?id=$userid'></a>" . format_username($arr, true);
     
 } else
     $subject = "unknown[$userid]";
@@ -82,7 +82,7 @@ $query     = "SELECT $select_is FROM $from_is WHERE $where_is ORDER BY $order_is
 $res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
 $HTMLOUT = '';
-$HTMLOUT .= "<h4>Subscribed Forums for {$subject}</h4><form action='subscriptions.php?delete=1' method='post'><p align='center'>To be notified via PM when there is a new post, go to your <a class='altlink' href='{$TBDEV['baseurl']}/my.php'>profile</a> and set <b><i>PM on Subscriptions</i></b> to yes</p>\n";
+$HTMLOUT .= "<h4>Subscribed Forums for {$subject}</h4><form action='subscriptions.php?delete=1' method='post'><p align='center'>To be notified via PM when there is a new post, go to your <a class='altlink' href='{$INSTALLER09['baseurl']}/my.php'>profile</a> and set <b><i>PM on Subscriptions</i></b> to yes</p>\n";
 
 if (isset($_GET["deleted"])) {
     $HTMLOUT .= "<h1>subscription(s) Deleted</h1>";
@@ -93,7 +93,7 @@ $HTMLOUT .= begin_main_frame();
 $HTMLOUT .= begin_frame();
 
 if (mysqli_num_rows($res) == 0)
-    $HTMLOUT .= "<p align='center'><font size=\"+2\"><b>No Subscriptions Found</b></font></p><p>You are not yet subscribed to any forums...</p><p>To subscribe to a forum at <b>" . $TBDEV['site_name'] . "</b>, click the <b><i>Subscribe to this Forum</i></b> link at the top of the thread page.</p>";
+    $HTMLOUT .= "<p align='center'><font size=\"+2\"><b>No Subscriptions Found</b></font></p><p>You are not yet subscribed to any forums...</p><p>To subscribe to a forum at <b>" . $INSTALLER09['site_name'] . "</b>, click the <b><i>Subscribe to this Forum</i></b> link at the top of the thread page.</p>";
 
 while ($arr = mysqli_fetch_assoc($res)) {
     $topicid    = intval($arr["t_id"]);
@@ -126,12 +126,12 @@ while ($arr = mysqli_fetch_assoc($res)) {
     $HTMLOUT .= "
     <table border='0' cellspacing='0' cellpadding='0' width='100%'>
     <tr><td class='colhead' width='100%'>" . ($newposts ? " <b><font color='red'>New Reply !</font></b>" : "") . "<br /><b>Forum: </b>
-    <a class='altlink' href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=$forumid'>{$forumname}</a>
+    <a class='altlink' href='{$INSTALLER09['baseurl']}/forums.php?action=viewforum&amp;forumid=$forumid'>{$forumname}</a>
     <b>Topic: </b>
-    <a class='altlink' href='{$TBDEV['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid'>{$topicname}</a>
+    <a class='altlink' href='{$INSTALLER09['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid'>{$topicname}</a>
     <b>Post: </b>
-    #<a class='altlink' href='{$TBDEV['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid&amp;page=p$postid#$postid'>{$postid}</a><br />
-    <b>Last Post By:</b><a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=$posterid'><b>".htmlspecialchars($res3['username'])."</b></a> added:{$added}</td>
+    #<a class='altlink' href='{$INSTALLER09['baseurl']}/forums.php?action=viewtopic&amp;topicid=$topicid&amp;page=p$postid#$postid'>{$postid}</a><br />
+    <b>Last Post By:</b><a class='altlink' href='{$INSTALLER09['baseurl']}/userdetails.php?id=$posterid'><b>".htmlspecialchars($res3['username'])."</b></a> added:{$added}</td>
     <td class='colhead' align='right' width='20%'>";
     // === Delete subscription
     if (isset($_GET["check"]) == "yes")
@@ -149,7 +149,7 @@ while ($arr = mysqli_fetch_assoc($res)) {
         $subres = sql_query("SELECT username FROM users WHERE id=" . sqlesc($arr['editedby'])) or sqlerr(__FILE__, __LINE__);
         if (mysqli_num_rows($subres) == 1) {
             $subrow = mysqli_fetch_assoc($subres);
-            $body .= "<p><font size='1' class='small'>Last edited by <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['editedby']) . "'><b>" . htmlspecialchars($subrow['username']) . "</b></a> at " . get_date($arr['editedat'], 'LONG', 1, 0) . " GMT</font></p>\n";
+            $body .= "<p><font size='1' class='small'>Last edited by <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['editedby']) . "'><b>" . htmlspecialchars($subrow['username']) . "</b></a> at " . get_date($arr['editedat'], 'LONG', 1, 0) . " GMT</font></p>\n";
         }
     }
     $HTMLOUT .= "<tr valign='top'><td class='$class'>{$body}</td></tr>\n";
@@ -158,8 +158,8 @@ while ($arr = mysqli_fetch_assoc($res)) {
 $HTMLOUT .= "<table width='100%'>
 <tr>
 <td align='right' class='colhead'>
-<a class='altlink' href='{$TBDEV['baseurl']}/subscriptions.php?action=" . isset($_GET["action"]) . "&amp;box=" . isset($_GET["box"]) . "&amp;check=yes'>select all</a> -
-<a class='altlink' href='{$TBDEV['baseurl']}/subscriptions.php?action=" . isset($_GET["action"]) . "&amp;box=" . isset($_GET["box"]) . "&amp;uncheck=yes'>un-select all</a>
+<a class='altlink' href='{$INSTALLER09['baseurl']}/subscriptions.php?action=" . isset($_GET["action"]) . "&amp;box=" . isset($_GET["box"]) . "&amp;check=yes'>select all</a> -
+<a class='altlink' href='{$INSTALLER09['baseurl']}/subscriptions.php?action=" . isset($_GET["action"]) . "&amp;box=" . isset($_GET["box"]) . "&amp;uncheck=yes'>un-select all</a>
 <input class='button' type='submit' name='delete' value='Delete Selected' /> selected</td></tr></table>";
 
 

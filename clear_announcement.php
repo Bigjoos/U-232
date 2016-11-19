@@ -16,5 +16,5 @@ $query1 = sprintf('UPDATE users SET curr_ann_id = 0, curr_ann_last_check = \'0\'
 
 sql_query($query1) or sqlerr(__FILE__, __LINE__);
 
-header("Location: {$TBDEV['baseurl']}/index.php");
+header("Location: {$INSTALLER09['baseurl']}/index.php");
 ?>

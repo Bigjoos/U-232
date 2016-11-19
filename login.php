@@ -25,12 +25,12 @@ $newpage->create('takelogin');
 //== 09 failed logins
 function left()
 {
-    global $TBDEV;
+    global $INSTALLER09;
     $total = 0;
     $ip    = sqlesc(getip());
     $fail = sql_query("SELECT SUM(attempts) FROM failedlogins WHERE ip=$ip") or sqlerr(__FILE__, __LINE__);
     list($total) = mysqli_fetch_row($fail);
-    $left = $TBDEV['failedlogins'] - $total;
+    $left = $INSTALLER09['failedlogins'] - $total;
     if ($left <= 2)
         $left = "<font color='red' size='4'>" . $left . "</font>";
     else
@@ -69,7 +69,7 @@ $HTMLOUT .= "<script type='text/javascript' src='scripts/jquery.js'></script>
     <form method='post' action='takelogin.php'>
     <noscript>Javascript must be enabled to login and use this site</noscript>
     <p>Note: You need cookies enabled to log in.</p>
-    <b>[{$TBDEV['failedlogins']}]</b> Failed logins in a row will ban your ip from access<br />You have <b> " . left() . " </b> login attempt(s) remaining.<br /><br />
+    <b>[{$INSTALLER09['failedlogins']}]</b> Failed logins in a row will ban your ip from access<br />You have <b> " . left() . " </b> login attempt(s) remaining.<br /><br />
     <table border='0' cellpadding='5'>
       <tr>
         <td class='rowhead'>{$lang['login_username']}</td>

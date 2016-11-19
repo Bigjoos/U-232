@@ -15,7 +15,7 @@ require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'html_functions.php');
 
 if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $lang = array_merge( $lang, load_language('ad_ipcheck') );
 

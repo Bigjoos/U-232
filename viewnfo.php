@@ -378,14 +378,14 @@ if ($view == "latin-1" || $view == "fonthack") {
 }
 
 $HTMLOUT = '';
-$HTMLOUT .= "<h1>nfo for <a href='{$TBDEV['baseurl']}/details.php?id=$id'>" . htmlentities($a["name"]) . "</a></h1>\n
+$HTMLOUT .= "<h1>nfo for <a href='{$INSTALLER09['baseurl']}/details.php?id=$id'>" . htmlentities($a["name"]) . "</a></h1>\n
 <table border='1' cellspacing='0' cellpadding='10' align='center'>
 <tr>
 <td align='center' width='50%'>
-<a href='{$TBDEV['baseurl']}/viewnfo.php?id=" . $id . "&amp;view=magic' title='Magisk IBM-437'>
+<a href='{$INSTALLER09['baseurl']}/viewnfo.php?id=" . $id . "&amp;view=magic' title='Magisk IBM-437'>
 <b>DOS-vy</b></a></td>
 <td align='center' width='50%'>
-<a href='{$TBDEV['baseurl']}/viewnfo.php?id=" . $id . "&amp;view=latin-1' title='Latin-1'><b>Windows-vy</b></a></td>
+<a href='{$INSTALLER09['baseurl']}/viewnfo.php?id=" . $id . "&amp;view=latin-1' title='Latin-1'><b>Windows-vy</b></a></td>
 </tr>
 <tr>
 <td colspan='3'>

@@ -27,7 +27,7 @@ require_once(INCL_DIR.'password_functions.php');
 $lang = array_merge( $lang, load_language('ad_adduser') );
 /** new way **/
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
       
     if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -52,7 +52,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
       $arr = mysqli_fetch_row($res);
       if (!$arr)
         stderr("{$lang['stderr_error']}", "{$lang['text_username']}");
-      header("Location: {$TBDEV['baseurl']}/userdetails.php?id=$arr[0]");
+      header("Location: {$INSTALLER09['baseurl']}/userdetails.php?id=$arr[0]");
       die;
     }
     

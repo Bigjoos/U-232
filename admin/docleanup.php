@@ -28,7 +28,7 @@ require_once(INCL_DIR.'html_functions.php');
 $lang = array_merge( $lang, load_language('ad_docleanup') );
  /** new way **/
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $HTMLOUT ='';
 
@@ -74,13 +74,13 @@ $HTMLOUT .="<tr><td class='colhead'>Cleanup Name</td>
 $res = sql_query("SELECT arg, value_u FROM avps") or sqlerr(__FILE__, __LINE__);
 while ($arr = mysqli_fetch_assoc($res)) {
     switch ($arr['arg']) {
-        case 'lastcleantime': $arg = $TBDEV['autoclean_interval'];
+        case 'lastcleantime': $arg = $INSTALLER09['autoclean_interval'];
             break;
-        case 'lastslowcleantime': $arg = $TBDEV['autoslowclean_interval'];
+        case 'lastslowcleantime': $arg = $INSTALLER09['autoslowclean_interval'];
             break;
-        case 'lastslowcleantime2': $arg = $TBDEV['autoslowclean_interval2'];
+        case 'lastslowcleantime2': $arg = $INSTALLER09['autoslowclean_interval2'];
             break;
-        case 'lastoptimizedbtime': $arg = $TBDEV['optimizedb_interval'];
+        case 'lastoptimizedbtime': $arg = $INSTALLER09['optimizedb_interval'];
             break;
     }
 
@@ -113,7 +113,7 @@ if (isset($_POST['docleanup'])) {
     sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastcleantime'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     docleanup();
-    header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
+    header('Refresh: 2; url='.$INSTALLER09['baseurl'].'/admin.php?action=docleanup');
     $HTMLOUT .="<br /><h1>Cleanup Done</h1>";
 }
 
@@ -121,7 +121,7 @@ if (isset($_POST['doslowcleanup'])) {
     sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastslowcleantime'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     doslowcleanup();
-    header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
+    header('Refresh: 2; url='.$INSTALLER09['baseurl'].'/admin.php?action=docleanup');
    $HTMLOUT .="<br /><h1>Slow Cleanup Done</h1>";
 }
 
@@ -129,7 +129,7 @@ if (isset($_POST['doslowcleanup2'])) {
     sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastslowcleantime2'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     doslowcleanup2();
-    header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
+    header('Refresh: 2; url='.$INSTALLER09['baseurl'].'/admin.php?action=docleanup');
    $HTMLOUT .="<br /><h1>Slow Cleanup 2 Done</h1>";
 }
 
@@ -137,7 +137,7 @@ if (isset($_POST['dooptimization'])) {
     sql_query("UPDATE avps SET value_u = " . sqlesc($now) . " WHERE arg = 'lastoptimizedbtime'") or sqlerr(__FILE__, __LINE__);
     require_once("include/cleanup.php");
     dooptimizedb();
-    header('Refresh: 2; url='.$TBDEV['baseurl'].'/admin.php?action=docleanup');
+    header('Refresh: 2; url='.$INSTALLER09['baseurl'].'/admin.php?action=docleanup');
     $HTMLOUT .="<br /><h1>Optimization Done</h1>";
 }
 

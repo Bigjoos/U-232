@@ -231,7 +231,7 @@ if (isset($res['minclassread'])) // 'posts'
 		
 //$input['do'] = 'addrep';
 //$input['reputation'] = 1;
-//$TBDEV['baseurl'] ='';
+//$INSTALLER09['baseurl'] ='';
 ///////////////////////////////////////////////
 //	Are we adding a rep or what?
 ///////////////////////////////////////////////
@@ -260,7 +260,7 @@ if (isset($res['minclassread'])) // 'posts'
 			//print( join(',', array_keys($save)));
 			@mysqli_query($GLOBALS["___mysqli_ston"],  "INSERT INTO reputation (".join(',', array_keys($save)).") VALUES (".join( ',', $save).")" );
 
-			header( "Location: {$TBDEV['baseurl']}/reputation.php?pid={$input['pid']}&done=1" );
+			header( "Location: {$INSTALLER09['baseurl']}/reputation.php?pid={$input['pid']}&done=1" );
 		} // Move along, nothing to see here!
 		else
 		{
@@ -299,7 +299,7 @@ if (isset($res['minclassread'])) // 'posts'
 
 						if( $GVARS['g_rep_seeown'] )
 						{
-							$postrep['reason'] = $postrep['reason']." <span class='desc'>{$lang["rep_left_by"]} <a href=\"{$TBDEV['baseurl']}/userdetails.php?id={$postrep['leftby_id']}\" target='_blank'>{$postrep['leftby_name']}</a></span>";
+							$postrep['reason'] = $postrep['reason']." <span class='desc'>{$lang["rep_left_by"]} <a href=\"{$INSTALLER09['baseurl']}/userdetails.php?id={$postrep['leftby_id']}\" target='_blank'>{$postrep['leftby_name']}</a></span>";
 						}
 
 						$reasonbits .= "<tr>
@@ -327,22 +327,22 @@ if (isset($res['minclassread'])) // 'posts'
 				switch ($rep_locale)
     {
         case 'comments':
-            $rep_info = sprintf("Your reputation on <a href='{$TBDEV['baseurl']}/details.php?id=%d&amp;viewcomm=%d#comm%d' target='_blank'>this Comment</a> is %s<br />Total: %s points.", $res['locale'], $input['pid'], $input['pid'], $rep, $total);
+            $rep_info = sprintf("Your reputation on <a href='{$INSTALLER09['baseurl']}/details.php?id=%d&amp;viewcomm=%d#comm%d' target='_blank'>this Comment</a> is %s<br />Total: %s points.", $res['locale'], $input['pid'], $input['pid'], $rep, $total);
             break;
         case 'torrents':
-            $rep_info = sprintf("Your reputation on <a href='{$TBDEV['baseurl']}/details.php?id=%d' target='_blank'>this Torrent</a> is %s<br />Total: %s points.", $input['pid'], $rep, $total);
+            $rep_info = sprintf("Your reputation on <a href='{$INSTALLER09['baseurl']}/details.php?id=%d' target='_blank'>this Torrent</a> is %s<br />Total: %s points.", $input['pid'], $rep, $total);
             break;
         case 'users':
-            $rep_info = sprintf("Your reputation on <a href='{$TBDEV['baseurl']}/userdetails.php?id=%d' target='_blank'>your profile</a> is %s<br />Total: %s points.", $input['pid'], $rep, $total);
+            $rep_info = sprintf("Your reputation on <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=%d' target='_blank'>your profile</a> is %s<br />Total: %s points.", $input['pid'], $rep, $total);
             break;
          default:
-            $rep_info = sprintf("Your reputation on <a href='{$TBDEV['baseurl']}/forums.php?action=viewtopic&amp;topicid=%d&amp;page=p%d#%d' target='_blank'>this Post</a> is %s<br />Total: %s points.", $res['locale'], $input['pid'], $input['pid'], $rep, $total);
+            $rep_info = sprintf("Your reputation on <a href='{$INSTALLER09['baseurl']}/forums.php?action=viewtopic&amp;topicid=%d&amp;page=p%d#%d' target='_blank'>this Post</a> is %s<br />Total: %s points.", $res['locale'], $input['pid'], $input['pid'], $rep, $total);
 }
 ///////////////////////////////////////////////
 //	Compile some HTML for the 'own post'/ 'user view' reputation
 //	Feel free to do ya own html/css here
 ///////////////////////////////////////////////
-				//$rep_info = sprintf("".$lang["info_your_rep_on"]." <a href='{$TBDEV['baseurl']}/forums.php?action=viewtopic&amp;topicid=%d&amp;page=p%d#%d' target='_blank'>".$lang["info_this_post"]."</a> ".$lang["info_is"]." %s.", $res['topicid'], $input['pid'], $input['pid'], $rep );
+				//$rep_info = sprintf("".$lang["info_your_rep_on"]." <a href='{$INSTALLER09['baseurl']}/forums.php?action=viewtopic&amp;topicid=%d&amp;page=p%d#%d' target='_blank'>".$lang["info_this_post"]."</a> ".$lang["info_is"]." %s.", $res['topicid'], $input['pid'], $input['pid'], $rep );
 				$rep_points = sprintf("".$lang["info_you_have"]." %d ".$lang["info_reputation_points"]."", $CURUSER['reputation'] );
 
 				$html = "<tr><td class='darkrow1'>{$rep_info}</td></tr>

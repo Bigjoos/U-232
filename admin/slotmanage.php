@@ -40,7 +40,7 @@ $lang = array_merge( $lang );
 $HTMLOUT="";
  
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
   //== Dont forget to edit this 
 	$maxclass = UC_SYSOP;
@@ -80,7 +80,7 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 				if($sendpm)
 				{
 					$subject = sqlesc($do == "remove_all" && $do == "remove" ?  "freeslots removed" : "freeslots added");
-					$body = sqlesc("Hey,\n we have decided to ". ($do == "remove_all" ?  "remove all freeslots from your group class" : ($do == "add" ? "add $freeslots freeslot".($freeslots > 1 ? "s" : "")." to your group class" : "remove $freeslots freeslot".($freeslots > 1 ? "s" : "")."  from your group class")). " !\n ".$TBDEV['site_name'] ." staff");
+					$body = sqlesc("Hey,\n we have decided to ". ($do == "remove_all" ?  "remove all freeslots from your group class" : ($do == "add" ? "add $freeslots freeslot".($freeslots > 1 ? "s" : "")." to your group class" : "remove $freeslots freeslot".($freeslots > 1 ? "s" : "")."  from your group class")). " !\n ".$INSTALLER09['site_name'] ." staff");
 					$pms[] = "(0,".sqlesc($a["id"]).",".sqlesc(time()).",$subject,$body)" ;
 				}
 			}

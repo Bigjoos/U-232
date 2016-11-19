@@ -24,14 +24,14 @@ if (!is_valid_id($id))
 
 function deletetorrent($id)
 {
-    global $TBDEV;
+    global $INSTALLER09;
     sql_query("DELETE FROM torrents WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM coins WHERE torrentid = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM bookmarks WHERE torrentid = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM snatched WHERE torrentid = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     foreach (explode(".", "peers.files.comments.ratings") as $x)
         sql_query("DELETE FROM $x WHERE torrent = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
-    unlink("{$TBDEV['torrent_dir']}/$id.torrent");
+    unlink("{$INSTALLER09['torrent_dir']}/$id.torrent");
 }
 
 $res = sql_query("SELECT name,owner,seeders FROM torrents WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
@@ -59,7 +59,7 @@ elseif ($rt == 3)
 elseif ($rt == 4) {
     if (!$reason[2])
         stderr("{$lang['delete_failed']}", "{$lang['delete_violated']}");
-    $reasonstr = $TBDEV['site_name'] . "{$lang['delete_rules']}" . trim($reason[2]);
+    $reasonstr = $INSTALLER09['site_name'] . "{$lang['delete_rules']}" . trim($reason[2]);
 } else {
     if (!$reason[3])
         stderr("{$lang['delete_failed']}", "{$lang['delete_reason']}");
@@ -74,7 +74,7 @@ sql_query("UPDATE users SET seedbonus = seedbonus-15.0 WHERE id = " . sqlesc($CU
 if (isset($_POST["returnto"]))
     $ret = "<a href='" . htmlspecialchars($_POST["returnto"]) . "'>{$lang['delete_go_back']}</a>";
 else
-    $ret = "<a href='{$TBDEV['baseurl']}/browse.php'>{$lang['delete_back_browse']}</a>";
+    $ret = "<a href='{$INSTALLER09['baseurl']}/browse.php'>{$lang['delete_back_browse']}</a>";
 $HTMLOUT = '';
 $HTMLOUT .= "<h2>{$lang['delete_deleted']}</h2>
     <p>$ret</p>";

@@ -25,15 +25,15 @@ if ($CURUSER["sendpmpos"] == 0|| $CURUSER["sendpmpos"] > 1 )
    stderr($lang['sendmessage_sorry'], $lang['sendmessage_no_auth']);
 
 // Standard Administrative PM Replies
-$pm_std_reply[1] = sprintf( $lang['sendmessage_std_reply1'], $TBDEV['baseurl'] );
+$pm_std_reply[1] = sprintf( $lang['sendmessage_std_reply1'], $INSTALLER09['baseurl'] );
 $pm_std_reply[2] = "{$lang['sendmessage_std_reply2']}";
 
 // Standard Administrative PMs
-$pm_template[1] = array( $lang['sendmessage_template1_sub'], sprintf($lang['sendmessage_template1_body'], $TBDEV['site_name']) );
-$pm_template[2] = array( $lang['sendmessage_template2_sub'], sprintf($lang['sendmessage_template2_body'], $TBDEV['baseurl']) );
+$pm_template[1] = array( $lang['sendmessage_template1_sub'], sprintf($lang['sendmessage_template1_body'], $INSTALLER09['site_name']) );
+$pm_template[2] = array( $lang['sendmessage_template2_sub'], sprintf($lang['sendmessage_template2_body'], $INSTALLER09['baseurl']) );
 
 // Standard Administrative MMs
-$mm_template[1] = array( $lang['sendmessage_mm_template1_sub'], sprintf($lang['sendmessage_mm_template1_body'], $TBDEV['site_name']) );
+$mm_template[1] = array( $lang['sendmessage_mm_template1_sub'], sprintf($lang['sendmessage_mm_template1_body'], $INSTALLER09['site_name']) );
 $mm_template[2] = array( $lang['sendmessage_mm_template2_sub'], $lang['sendmessage_mm_template2_body'] );
 $mm_template[3] = array( $lang['sendmessage_mm_template3_sub'], $lang['sendmessage_mm_template3_body'] );
     

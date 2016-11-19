@@ -6,18 +6,18 @@
  *   A bittorrent tracker source based on TBDev.net/tbsource/bytemonsoon.
  *   Project Leaders: Mindless,putyn.
  **/
-if ($CURUSER['class'] < $TBDEV['req_min_class']) {
+if ($CURUSER['class'] < $INSTALLER09['req_min_class']) {
     $HTMLOUT .= "<h1>Oops!</h1>
-    <div class='some class'>{$lang['add_must_be']}".get_user_class_name($TBDEV['req_min_class'])."{$lang['add_ratio_above']}".$TBDEV['req_min_ratio']."{$lang['add_make_req']}
+    <div class='some class'>{$lang['add_must_be']}".get_user_class_name($INSTALLER09['req_min_class'])."{$lang['add_ratio_above']}".$INSTALLER09['req_min_ratio']."{$lang['add_make_req']}
     <br /><br />{$lang['add_faq']}<br /><br />
-    <b>".$TBDEV['site_name']." staff</b></div>";
+    <b>".$INSTALLER09['site_name']." staff</b></div>";
 
     /////////////////////// HTML OUTPUT //////////////////////////////
     echo stdhead('Requests Page').$HTMLOUT.stdfoot();
     die();
 }
 
-$gigsneeded = ($TBDEV['req_gigs_upped']*1024*1024*1024);
+$gigsneeded = ($INSTALLER09['req_gigs_upped']*1024*1024*1024);
 $gigsupped = $CURUSER['uploaded'];
 $ratio = (($CURUSER['downloaded'] > 0) ? ($CURUSER['uploaded'] / $CURUSER['downloaded']) : 0); 
 
@@ -29,22 +29,22 @@ if ($CURUSER['class'] < UC_VIP) {
 
 $HTMLOUT .= "<h3>{$lang['add_rules']}</h3>";
 
-$HTMLOUT .= "{$lang['add_rules1']}<b> ".$TBDEV['req_min_ratio']."</b>{$lang['add_rules2']}<b>".$TBDEV['req_gigs_upped']." GB</b>.<br />".
-($TBDEV['karma'] ? "{$lang['add_rules3']}<b><a class='altlink' href='mybonus.php'>".$TBDEV['req_cost_bonus']." Karma Points</a></b>....<br /><br />" :'')." 
+$HTMLOUT .= "{$lang['add_rules1']}<b> ".$INSTALLER09['req_min_ratio']."</b>{$lang['add_rules2']}<b>".$INSTALLER09['req_gigs_upped']." GB</b>.<br />".
+($INSTALLER09['karma'] ? "{$lang['add_rules3']}<b><a class='altlink' href='mybonus.php'>".$INSTALLER09['req_cost_bonus']." Karma Points</a></b>....<br /><br />" :'')." 
 {$lang['add_rules4']}<a class='altlink' href='userdetails.php?id=".intval($CURUSER['id'])."'>".htmlspecialchars($CURUSER['username'])."</a>, ";	
 
 
-    if ($TBDEV['karma'] && isset($CURUSER['seedbonus']) && $CURUSER['seedbonus'] < $TBDEV['req_cost_bonus']) {
+    if ($INSTALLER09['karma'] && isset($CURUSER['seedbonus']) && $CURUSER['seedbonus'] < $INSTALLER09['req_cost_bonus']) {
         $HTMLOUT .= "{$lang['add_rules7']}<a class='altlink' href='mybonus.php'>Karma Points</a> ...
         {$lang['add_rules8']}<p>{$lang['add_rules9']}
         <a class='altlink' href='viewrequests.php'><b>{$lang['add_rules6']}</b></a></p>\n<br /><br />";
 }
 elseif ($gigsupped < $gigsneeded && $CURUSER['class'] < UC_VIP) {
-    $HTMLOUT .= "{$lang['add_rules10']}<b>".$TBDEV['req_gigs_upped']." GB</b>{$lang['add_rules11']}<p>
+    $HTMLOUT .= "{$lang['add_rules10']}<b>".$INSTALLER09['req_gigs_upped']." GB</b>{$lang['add_rules11']}<p>
     {$lang['add_rules9']}<a class='altlink' href='viewrequests.php'><b>{$lang['add_rules6']}</b></a></p>\n
     <br /><br />";
 }
-elseif ($ratio < $TBDEV['req_min_ratio'] && $CURUSER['class'] < UC_VIP) {
+elseif ($ratio < $INSTALLER09['req_min_ratio'] && $CURUSER['class'] < UC_VIP) {
         $sss = ($gigsupped < $gigsneeded ? 's' : '');
 	    $HTMLOUT .=
 	      "{$lang['add_rules15']}<b>".member_ratio($CURUSER['uploaded'], $CURUSER['downloaded'])."</b>".
@@ -81,7 +81,7 @@ $HTMLOUT .= " ".$catdropdown." </select> ".$deadchkbox."
 
 $HTMLOUT .= "<form method='post' name='compose' action='viewrequests.php?new_request'><a name='add' id='add'></a>
 <table border='1' cellspacing='0' width='750px' cellpadding='5'><tr><td class='colhead' align='left' colspan='2'>
-{$lang['add_good_ratio']}".$TBDEV['req_gigs_upped']."{$lang['add_share']}</td></tr>
+{$lang['add_good_ratio']}".$INSTALLER09['req_gigs_upped']."{$lang['add_share']}</td></tr>
 <tr><td align='right'><b>{$lang['add_title']}</b></td><td align='left'><input type='text' size='40' name='requesttitle' />
 <select name='category'><option value='0'>{$lang['add_select_cat']}</option>\n";
 
@@ -107,7 +107,7 @@ $HTMLOUT .= $catdropdown2." </select></td></tr>
 
 <tr><td align='right'><b>{$lang['add_description']}</b></td><td align='left'>\n";
 
-if ($TBDEV['textbbcode']) {
+if ($INSTALLER09['textbbcode']) {
      require_once('include/bbcode_functions.php');
     $HTMLOUT .= textbbcode('add_request', 'body', '');
 }

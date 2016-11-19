@@ -24,7 +24,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "editclass") //Process the quer
 $newclass = 0 + $_GET['class'];
 $returnto = $_GET['returnto'];
 sql_query("UPDATE users SET override_class = ".sqlesc($newclass)." WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__); // Set temporary class
-header("Location: {$TBDEV['baseurl']}/".$returnto);
+header("Location: {$INSTALLER09['baseurl']}/".$returnto);
 die();
 }
 
@@ -33,7 +33,7 @@ die();
 $HTMLOUT .="<br />
 <font size='4'><b>{$lang['set_class_allow']}</b></font>
 <br /><br />
-<form method='get' action='{$TBDEV['baseurl']}/setclass.php'>
+<form method='get' action='{$INSTALLER09['baseurl']}/setclass.php'>
 	<input type='hidden' name='action' value='editclass' />
 	<input type='hidden' name='returnto' value='userdetails.php?id=".intval($CURUSER['id'])."' />
 	<table width='150' border='2' cellspacing='5' cellpadding='5'>

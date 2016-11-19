@@ -17,12 +17,12 @@
 require_once(INCL_DIR.'bittorrent.php');
 
 function deadtime() {
-    global $TBDEV;
-    return time() - floor($TBDEV['announce_interval'] * 1.3);
+    global $INSTALLER09;
+    return time() - floor($INSTALLER09['announce_interval'] * 1.3);
 }
 
 function docleanup() {
-	global $TBDEV, $queries, $C_queries;
+	global $INSTALLER09, $queries, $C_queries;
    set_time_limit(1200);
    $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
    while ($row = mysqli_fetch_array($result)) {
@@ -44,7 +44,7 @@ function docleanup() {
 		if (!count($ar))
 			break;
 
-		$dp = opendir($TBDEV['torrent_dir']);
+		$dp = opendir($INSTALLER09['torrent_dir']);
 		if (!$dp)
 			break;
 
@@ -56,7 +56,7 @@ function docleanup() {
 			$ar2[$id] = 1;
 			if (isset($ar[$id]) && $ar[$id])
 				continue;
-			$ff = $TBDEV['torrent_dir'] . "/$file";
+			$ff = $INSTALLER09['torrent_dir'] . "/$file";
 			unlink($ff);
 		}
 		closedir($dp);
@@ -100,10 +100,10 @@ function docleanup() {
 	$deadtime = deadtime();
 	sql_query("DELETE FROM peers WHERE last_action < $deadtime");
 
-	$deadtime -= $TBDEV['max_dead_torrent_time'];
+	$deadtime -= $INSTALLER09['max_dead_torrent_time'];
 	sql_query("UPDATE torrents SET visible='no' WHERE visible='yes' AND last_action < $deadtime");
 
-	$deadtime = time() - $TBDEV['signup_timeout'];
+	$deadtime = time() - $INSTALLER09['signup_timeout'];
 	sql_query("DELETE FROM users WHERE status = 'pending' AND added < $deadtime AND last_login < $deadtime AND last_access < $deadtime");
 
 	/** sync torrent counts - pdq **/
@@ -162,7 +162,7 @@ unset($updatetorrents);
    // === Update coins by Bigjoos
       // === using this will work for multiple torrents UP TO 5!... change the 5 to whatever... 1 to give 1 Coin for only 1 torrent at a time, or 100 to make it unlimited (almost) your choice :P
       ///====== Coins per torrent
-      if($TBDEV['coins']){
+      if($INSTALLER09['coins']){
       $res = sql_query('SELECT COUNT(torrent) As tcount, userid FROM peers WHERE seeder =\'yes\' GROUP BY userid') or sqlerr(__FILE__, __LINE__);
       if (mysqli_num_rows($res) > 0) {
         while ($arr = mysqli_fetch_assoc($res)) {
@@ -202,7 +202,7 @@ unset($updatetorrents);
     
   function doslowcleanup()
   {
-  global $TBDEV, $queries, $C_queries;
+  global $INSTALLER09, $queries, $C_queries;
   set_time_limit(1200);
   $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
   while ($row = mysqli_fetch_array($result)) {
@@ -217,10 +217,10 @@ unset($updatetorrents);
   sql_query("DELETE FROM announcement_main WHERE expires < ".sqlesc(time()));
   sql_query("DELETE announcement_process FROM announcement_process LEFT JOIN announcement_main ON announcement_process.main_id = announcement_main.main_id WHERE announcement_main.main_id IS NULL");
   // Remove expired readposts...
-  $dt = time() - $TBDEV["readpost_expiry"];
+  $dt = time() - $INSTALLER09["readpost_expiry"];
   sql_query("DELETE readposts FROM readposts "."LEFT JOIN posts ON readposts.lastpostread = posts.id "."WHERE posts.added < $dt");
   //==Putyns HappyHour
-  $f = $TBDEV['happyhour'];
+  $f = $INSTALLER09['happyhour'];
   $happy = unserialize(file_get_contents($f));
   $happyHour = strtotime($happy["time"]);
   $curDate = time();
@@ -259,7 +259,7 @@ unset($updatetorrents);
     $msgs_buffer = $users_buffer = array();
     if (mysqli_num_rows($res) > 0) {
          $subject = "VIP status expired.";
-         $msg = "Your VIP status has timed out and has been auto-removed by the system. Become a VIP again by donating to {$TBDEV['site_name']} , or exchanging some Karma Bonus Points. Cheers !\n";
+         $msg = "Your VIP status has timed out and has been auto-removed by the system. Become a VIP again by donating to {$INSTALLER09['site_name']} , or exchanging some Karma Bonus Points. Cheers !\n";
          while ($arr = mysqli_fetch_assoc($res)) {
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Vip status Automatically Removed By System\n");
             $msgs_buffer[] = '(0,' . $arr['id'] . ','.time().', ' . sqlesc($msg) . ', ' . sqlesc($subject) . ')';
@@ -302,7 +302,7 @@ unset($updatetorrents);
 	$res = sql_query("SELECT id, name FROM torrents WHERE added < $dt AND seeders='0'");
 	while ($arr = mysqli_fetch_assoc($res))
 	{
-		@unlink("{$TBDEV['torrent_dir']}/{$arr['id']}.torrent");
+		@unlink("{$INSTALLER09['torrent_dir']}/{$arr['id']}.torrent");
 		sql_query("DELETE FROM torrents WHERE id={$arr['id']}");
 		sql_query("DELETE FROM snatched WHERE torrentid ={$arr['id']}");
 		sql_query("DELETE FROM bookmarks WHERE torrentid ={$arr['id']}");
@@ -324,7 +324,7 @@ unset($updatetorrents);
     $msgs_buffer = $users_buffer = array();
     if (mysqli_num_rows($res) > 0) {
         $subject = "Donor status removed by system.";
-        $msg = "Your Donor status has timed out and has been auto-removed by the system, and your Vip status has been removed. We would like to thank you once again for your support to {$TBDEV['site_name']}. If you wish to re-new your donation, Visit the site paypal link. Cheers!\n";
+        $msg = "Your Donor status has timed out and has been auto-removed by the system, and your Vip status has been removed. We would like to thank you once again for your support to {$INSTALLER09['site_name']}. If you wish to re-new your donation, Visit the site paypal link. Cheers!\n";
         while ($arr = mysqli_fetch_assoc($res)) {
             
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Donation status Automatically Removed By System\n");
@@ -416,7 +416,7 @@ unset($updatetorrents);
     $msgs_buffer = $users_buffer = array();
     if (mysqli_num_rows($res) > 0) {
         $subject ="Auto Invites";
-        $msg = "Congratulations, your user group met a set out criteria therefore you have been awarded 2 invites  :)\n Please use them carefully. Cheers ".$TBDEV['site_name']." staff.\n";
+        $msg = "Congratulations, your user group met a set out criteria therefore you have been awarded 2 invites  :)\n Please use them carefully. Cheers ".$INSTALLER09['site_name']." staff.\n";
         while ($arr = mysqli_fetch_assoc($res)) {
             $ratio = number_format($arr['uploaded'] / $arr['downloaded'], 3);
             $modcomment = sqlesc(get_date( time(), 'DATE', 1 ) . " - Awarded 2 bonus invites by System (UL=" . mksize($arr['uploaded']) . ", DL=" . mksize($arr['downloaded']) . ", R=" . $ratio . ") \n");
@@ -437,7 +437,7 @@ unset($updatetorrents);
 
   function doslowcleanup2()
   {
-    global $TBDEV, $queries, $C_queries;
+    global $INSTALLER09, $queries, $C_queries;
     set_time_limit(1200);
     $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
     while ($row = mysqli_fetch_array($result)) {
@@ -465,7 +465,7 @@ unset($updatetorrents);
 		{
 		//=== Set them to no DLs
 		$subject = sqlesc('Download disabled by System');
-		$msg = sqlesc("Sorry ".$arr_fuckers['username'].",\n Because you have 10 or more torrents that have not been seeded to either a 1:1 ratio, or for the expected seeding time, your downloading rights have been disabled by the Auto system !\nTo get your Downloading rights back is simple,\n just start seeding the torrents in your profile [ click your username, then click your [url=".$TBDEV['baseurl']."/userdetails.php?id=".$arr_fuckers['userid']."&completed=1]Completed Torrents[/url] link to see what needs seeding ] and your downloading rights will be turned back on by the Auto system after the next clean-time [ updates 4 times per hour ].\n\nDownloads are disabled after a member has three or more torrents that have not been seeded to either a 1 to 1 ratio, OR for the required seed time [ please see the [url=".$TBDEV['baseurl']."/faq.php]FAQ[/url] or [url=".$TBDEV['baseurl']."/rules.php]Site Rules[/url] for more info ]\n\nIf this message has been in error, or you feel there is a good reason for it, please feel free to PM a staff member with your concerns.\n\n we will do our best to fix this situation.\n\nBest of luck!\n ".$TBDEV['site_name']." staff.\n");
+		$msg = sqlesc("Sorry ".$arr_fuckers['username'].",\n Because you have 10 or more torrents that have not been seeded to either a 1:1 ratio, or for the expected seeding time, your downloading rights have been disabled by the Auto system !\nTo get your Downloading rights back is simple,\n just start seeding the torrents in your profile [ click your username, then click your [url=".$INSTALLER09['baseurl']."/userdetails.php?id=".$arr_fuckers['userid']."&completed=1]Completed Torrents[/url] link to see what needs seeding ] and your downloading rights will be turned back on by the Auto system after the next clean-time [ updates 4 times per hour ].\n\nDownloads are disabled after a member has three or more torrents that have not been seeded to either a 1 to 1 ratio, OR for the required seed time [ please see the [url=".$INSTALLER09['baseurl']."/faq.php]FAQ[/url] or [url=".$INSTALLER09['baseurl']."/rules.php]Site Rules[/url] for more info ]\n\nIf this message has been in error, or you feel there is a good reason for it, please feel free to PM a staff member with your concerns.\n\n we will do our best to fix this situation.\n\nBest of luck!\n ".$INSTALLER09['site_name']." staff.\n");
 		$modcomment = htmlspecialchars($arr_fuckers['modcomment']);
 		$modcomment =  get_date( time(), 'DATE', 1 ) . " - Download rights removed for H and R - AutoSystem.\n". $modcomment;
 		$modcom =  sqlesc($modcomment);
@@ -483,7 +483,7 @@ unset($updatetorrents);
 		{
 		//=== Set them to yes DLs
 		$subject = sqlesc('Download restored by System');
-		$msg = sqlesc("Hi ".$arr_good_boy['username'].",\n Congratulations ! Because you have seeded the torrents that needed seeding, your downloading rights have been restored by the Auto System !\n\nhave fun !\n ".$TBDEV['site_name']." staff.\n");
+		$msg = sqlesc("Hi ".$arr_good_boy['username'].",\n Congratulations ! Because you have seeded the torrents that needed seeding, your downloading rights have been restored by the Auto System !\n\nhave fun !\n ".$INSTALLER09['site_name']." staff.\n");
 		$modcomment = htmlspecialchars($arr_good_boy['modcomment']);
 		$modcomment =  get_date( time(), 'DATE', 1 ) . " - Download rights restored from H and R - AutoSystem.\n". $modcomment;
 		$modcom =  sqlesc($modcomment);
@@ -593,7 +593,7 @@ unset($updatetorrents);
   
   function dooptimizedb()
   {
-  global $TBDEV, $queries, $C_queries;
+  global $INSTALLER09, $queries, $C_queries;
   set_time_limit(1200);
   $result = sql_query("show processlist") or sqlerr(__FILE__, __LINE__);
   while ($row = mysqli_fetch_array($result)) {

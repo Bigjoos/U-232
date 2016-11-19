@@ -37,7 +37,7 @@ $pager   = pager($perpage, $count, "snatches.php?id=$id&amp;");
 if (!$count)
     stderr("No snatches", "It appears that there are currently no snatches for the torrent <a href='details.php?id=" . intval($arr['id']) . "'>$arr[name]</a>.");
 
-$HTMLOUT .= "<h1>Snatches for torrent <a href='{$TBDEV['baseurl']}/details.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['name']) . "</a></h1>\n";
+$HTMLOUT .= "<h1>Snatches for torrent <a href='{$INSTALLER09['baseurl']}/details.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['name']) . "</a></h1>\n";
 $HTMLOUT .= "<h2>Currently " . intval($row[0]) . " snatch" . ($row[0] == 1 ? "" : "es") . "</h2>\n";
 
 $HTMLOUT .= $pager['pagertop'];
@@ -70,7 +70,7 @@ while ($arr = mysqli_fetch_assoc($res)) {
     $completed = sprintf("%.2f%%", 100 * (1 - ($arr["to_go"] / $arr["size"])));
     
     $HTMLOUT .= "<tr>
-  <td align='left'><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['userid']) . "'>" . htmlspecialchars($arr['username']) . "</a></td>
+  <td align='left'><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['userid']) . "'>" . htmlspecialchars($arr['username']) . "</a></td>
   <td align='center'>" . ($arr["connectable"] == "yes" ? "<font color='green'>Yes</font>" : "<font color='red'>No</font>") . "</td>
   <td align='right'>" . mksize($arr["uploaded"]) . "</td>
   <td align='right'>$upspeed/s</td>

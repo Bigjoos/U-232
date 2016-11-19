@@ -28,7 +28,7 @@ require_once(INCL_DIR.'html_functions.php');
 $HTMLOUT="";
 
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 function mysql_fetch_all($query, $default_value = Array())
 {
@@ -147,10 +147,10 @@ if(gettype(strpos($key, "removeEvent_"))!= 'boolean'){
 $sql = "DELETE FROM `events` WHERE `id` = $id LIMIT 1;";
 $res = sql_query($sql);
 if(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))!=0)
-$HTMLOUT .="<p>Error Deleting Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+$HTMLOUT .="<p>Error Deleting Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$INSTALLER09['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
 if(mysqli_affected_rows($GLOBALS["___mysqli_ston"])==0)
-$HTMLOUT .="<p>Error Deleting Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+$HTMLOUT .="<p>Error Deleting Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$INSTALLER09['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
 $HTMLOUT .="<p>Deleted.</p>\n";
 header("Refresh: 2; url=admin.php?action=events");
@@ -204,10 +204,10 @@ $sql = "UPDATE `events` SET `overlayText` = '$text',`startTime` = $start, `endTi
 
 $res = sql_query($sql);
 if(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))!=0)
-$HTMLOUT .="<p>Error Saving Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+$HTMLOUT .="<p>Error Saving Event: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . "<br /> Click <a class='altlink' href='{$INSTALLER09['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
 if(mysqli_affected_rows($GLOBALS["___mysqli_ston"])==0)
-$HTMLOUT .="<p>Possible Error Saving (No Changes)<br /> Click <a class='altlink' href='{$TBDEV['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
+$HTMLOUT .="<p>Possible Error Saving (No Changes)<br /> Click <a class='altlink' href='{$INSTALLER09['baseurl']}/events.php'>Here</a> to go back.<br /></p>\n";
 else{
 $HTMLOUT .="<p>Saved.</p>\n";
 header("Refresh: 2; url=admin.php?action=events");
@@ -233,26 +233,26 @@ $doubleUpload = (bool)(int)$scheduled_event['duploadEnabled'];
 $halfdownload = (bool)(int)$scheduled_event['hdownEnabled'];
 
 if($freeleech){
-$freeleech = "<img src=\"{$TBDEV['pic_base_url']}on.gif\" alt=\"Freeleech Enabled\" title=\"Enabled\" />";
+$freeleech = "<img src=\"{$INSTALLER09['pic_base_url']}on.gif\" alt=\"Freeleech Enabled\" title=\"Enabled\" />";
 }else{
-$freeleech = "<img src=\"{$TBDEV['pic_base_url']}off.gif\" alt=\"Freeleech Disabled\" title=\"Disabled\" />";
+$freeleech = "<img src=\"{$INSTALLER09['pic_base_url']}off.gif\" alt=\"Freeleech Disabled\" title=\"Disabled\" />";
 }
 if($doubleUpload){
-$doubleUpload = "<img src=\"{$TBDEV['pic_base_url']}on.gif\" alt=\"Double Upload Enabled\" title=\"Enabled\" />";
+$doubleUpload = "<img src=\"{$INSTALLER09['pic_base_url']}on.gif\" alt=\"Double Upload Enabled\" title=\"Enabled\" />";
 }else{
-$doubleUpload = "<img src=\"{$TBDEV['pic_base_url']}off.gif\" alt=\"Double Upload Disabled\" title=\"Disabled\" />";
+$doubleUpload = "<img src=\"{$INSTALLER09['pic_base_url']}off.gif\" alt=\"Double Upload Disabled\" title=\"Disabled\" />";
 }
 
 if($halfdownload){
-$halfdownload = "<img src=\"{$TBDEV['pic_base_url']}on.gif\" alt=\"Halfdownload Enabled\" title=\"Enabled\" />";
+$halfdownload = "<img src=\"{$INSTALLER09['pic_base_url']}on.gif\" alt=\"Halfdownload Enabled\" title=\"Enabled\" />";
 }else{
-$halfdownload = "<img src=\"{$TBDEV['pic_base_url']}off.gif\" alt=\"Halfdownload Disabled\" title=\"Disabled\" />";
+$halfdownload = "<img src=\"{$INSTALLER09['pic_base_url']}off.gif\" alt=\"Halfdownload Disabled\" title=\"Disabled\" />";
 }
 $showdates = (bool)(int)$scheduled_event['displayDates'];
 if($showdates){
-$showdates = "<img src=\"{$TBDEV['pic_base_url']}on.gif\" alt=\"Showing of Dates Enabled\" title=\"Enabled\" />";
+$showdates = "<img src=\"{$INSTALLER09['pic_base_url']}on.gif\" alt=\"Showing of Dates Enabled\" title=\"Enabled\" />";
 }else{
-$showdates = "<img src=\"{$TBDEV['pic_base_url']}off.gif\" alt=\"Showing of Dates Disabled\" title=\"Disabled\" />";
+$showdates = "<img src=\"{$INSTALLER09['pic_base_url']}off.gif\" alt=\"Showing of Dates Disabled\" title=\"Disabled\" />";
 }
 $HTMLOUT .="<tr><td align=\"center\">".format_username($username)."</td><td align=\"center\">{$text}</td><td align=\"center\">{$start}</td><td align=\"center\">{$end}</td><td align=\"center\">{$freeleech}</td><td align=\"center\">{$doubleUpload}</td><td align=\"center\">{$halfdownload}</td><td align=\"center\">{$showdates}</td><td align=\"center\"><input type=\"submit\" name=\"editEvent_$id\" value=\"Edit\" /> <input type=\"submit\" onclick=\"return checkAllGood('$text')\" name=\"removeEvent_$id\" value=\"Remove\" /></td></tr>";
 }

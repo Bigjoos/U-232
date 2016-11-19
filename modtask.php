@@ -106,13 +106,13 @@ if ((isset($_POST['action'])) && ($_POST['action'] == "edituser")) {
             $dur         = $donorlength . " week" . ($donorlength > 1 ? "s" : "");
             $msg         = sqlesc("Dear " . htmlspecialchars($user['username']) . "
        :wave:
-       Thanks for your support to {$TBDEV['site_name']} !
+       Thanks for your support to {$INSTALLER09['site_name']} !
        Your donation helps us in the costs of running the site!
        As a donor, you are given some bonus gigs added to your uploaded amount, the status of VIP, and the warm fuzzy feeling you get inside for helping to support this site that we all know and love :smile:
 
        so, thanks again, and enjoy!
        cheers,
-       {$TBDEV['site_name']} Staff
+       {$INSTALLER09['site_name']} Staff
 
        PS. Your donator status will last for $dur and can be found on your user details page and can only be seen by you :smile: It was set by " . $CURUSER['username']);
             $subject     = sqlesc("Thank You for Your Donation!");
@@ -135,13 +135,13 @@ if ((isset($_POST['action'])) && ($_POST['action'] == "edituser")) {
         $dur        = $donorlengthadd . " week" . ($donorlengthadd > 1 ? "s" : "");
         $msg        = sqlesc("Dear " . htmlspecialchars($user['username']) . "
        :wave:
-       Thanks for your continued support to {$TBDEV['site_name']} !
+       Thanks for your continued support to {$INSTALLER09['site_name']} !
        Your donation helps us in the costs of running the site. Everything above the current running costs will go towards next months costs!
        As a donor, you are given some bonus gigs added to your uploaded amount, and, you have the the status of VIP, and the warm fuzzy feeling you get inside for helping to support this site that we all know and love :smile:
 
        so, thanks again, and enjoy!
        cheers,
-       {$TBDEV['site_name']} Staff
+       {$INSTALLER09['site_name']} Staff
 
         PS. Your donator status will last for an extra $dur on top of your current donation status, and can be found on your user details page and can only be seen by you :smile: It was set by " . $CURUSER['username']);
         
@@ -509,16 +509,16 @@ if ((isset($_POST['action'])) && ($_POST['action'] == "edituser")) {
         if (!empty($avatar)) {
             $img_size = @GetImageSize($avatar);
             
-            if ($img_size == FALSE || !in_array($img_size['mime'], $TBDEV['allowed_ext']))
+            if ($img_size == FALSE || !in_array($img_size['mime'], $INSTALLER09['allowed_ext']))
                 stderr("{$lang['modtask_user_error']}", "{$lang['modtask_not_image']}");
             
             if ($img_size[0] < 5 || $img_size[1] < 5)
                 stderr("{$lang['modtask_user_error']}", "{$lang['modtask_image_small']}");
             
-            if (($img_size[0] > $TBDEV['av_img_width']) OR ($img_size[1] > $TBDEV['av_img_height'])) {
+            if (($img_size[0] > $INSTALLER09['av_img_width']) OR ($img_size[1] > $INSTALLER09['av_img_height'])) {
                 $image = resize_image(array(
-                    'max_width' => $TBDEV['av_img_width'],
-                    'max_height' => $TBDEV['av_img_height'],
+                    'max_width' => $INSTALLER09['av_img_width'],
+                    'max_height' => $INSTALLER09['av_img_height'],
                     'cur_width' => $img_size[0],
                     'cur_height' => $img_size[1]
                 ));
@@ -548,16 +548,16 @@ if ((isset($_POST['action'])) && ($_POST['action'] == "edituser")) {
         if (!empty($signature)) {
             $img_size = @GetImageSize($signature);
             
-            if ($img_size == FALSE || !in_array($img_size['mime'], $TBDEV['allowed_ext']))
+            if ($img_size == FALSE || !in_array($img_size['mime'], $INSTALLER09['allowed_ext']))
                 stderr("{$lang['modtask_user_error']}", "{$lang['modtask_not_image']}");
             
             if ($img_size[0] < 5 || $img_size[1] < 5)
                 stderr("{$lang['modtask_user_error']}", "{$lang['modtask_image_small']}");
             
-            if (($img_size[0] > $TBDEV['sig_img_width']) OR ($img_size[1] > $TBDEV['sig_img_height'])) {
+            if (($img_size[0] > $INSTALLER09['sig_img_width']) OR ($img_size[1] > $INSTALLER09['sig_img_height'])) {
                 $image = resize_image(array(
-                    'max_width' => $TBDEV['sig_img_width'],
-                    'max_height' => $TBDEV['sig_img_height'],
+                    'max_width' => $INSTALLER09['sig_img_width'],
+                    'max_height' => $INSTALLER09['sig_img_height'],
                     'cur_width' => $img_size[0],
                     'cur_height' => $img_size[1]
                 ));
@@ -720,7 +720,7 @@ if ((isset($_POST['action'])) && ($_POST['action'] == "edituser")) {
     status_change($userid);
     
     $returnto = $_POST["returnto"];
-    header("Location: {$TBDEV['baseurl']}/$returnto");
+    header("Location: {$INSTALLER09['baseurl']}/$returnto");
     
     stderr("{$lang['modtask_user_error']}", "{$lang['modtask_try_again']}");
 }

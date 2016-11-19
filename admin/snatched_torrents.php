@@ -162,7 +162,7 @@ if ($row['complete_date'] > 0)
 $HTMLOUT .="<td align='center'><b>".get_date($row['complete_date'], 'LONG',0,1)."</b></td>";
 else
 $HTMLOUT .="<td align='center'><b><font color='red'>{$lang['ad_snatched_torrents_ncomplete']}</font></b></td></tr>";
-$HTMLOUT .="<td align='center'><b>".($row['seeder'] == 'yes' ? "<img src='".$TBDEV['pic_base_url']."online.gif' alt='Online' title='Online' />" : "<img src='".$TBDEV['pic_base_url']."offline.gif' alt='Offline' title='Offline' />")."</b></td></tr>";
+$HTMLOUT .="<td align='center'><b>".($row['seeder'] == 'yes' ? "<img src='".$INSTALLER09['pic_base_url']."online.gif' alt='Online' title='Online' />" : "<img src='".$INSTALLER09['pic_base_url']."offline.gif' alt='Offline' title='Offline' />")."</b></td></tr>";
 }
 $HTMLOUT .="</table>";
 }

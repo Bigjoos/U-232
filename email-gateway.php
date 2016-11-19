@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $from_email = substr(trim($_POST["from_email"]), 0, 80);
     
     if ($from_email == "")
-        $from_email = "{$TBDEV['site_email']}";
+        $from_email = "{$INSTALLER09['site_email']}";
     if (!strpos($from_email, "@"))
         stderr("{$lang['email_error']}", "{$lang['email_invalid']}");
     
@@ -51,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($message == "")
         stderr("{$lang['email_error']}", "{$lang['email_no_text']}");
     
-    $message = "Message submitted from {$_SERVER['REMOTE_ADDR']} at " . gmdate("Y-m-d H:i:s") . " GMT.\n" . "{$lang['email_note']}\n" . "---------------------------------------------------------------------\n\n" . $message . "\n\n" . "---------------------------------------------------------------------\n" . "{$TBDEV['site_name']}{$lang['email_gateway']}\n";
+    $message = "Message submitted from {$_SERVER['REMOTE_ADDR']} at " . gmdate("Y-m-d H:i:s") . " GMT.\n" . "{$lang['email_note']}\n" . "---------------------------------------------------------------------\n\n" . $message . "\n\n" . "---------------------------------------------------------------------\n" . "{$INSTALLER09['site_name']}{$lang['email_gateway']}\n";
     
-    $success = mail($to, $subject, $message, "{$lang['email_from']}{$TBDEV['site_email']}");
+    $success = mail($to, $subject, $message, "{$lang['email_from']}{$INSTALLER09['site_email']}");
     
     if ($success)
         stderr("{$lang['email_success']}", "{$lang['email_queued']}");

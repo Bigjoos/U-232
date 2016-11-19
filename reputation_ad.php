@@ -15,7 +15,7 @@ loggedinorreturn();
 	$lang = load_language('global');
 	
 	if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-  header( "Location: {$TBDEV['baseurl']}/index.php");
+  header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 	$input = array_merge($_GET, $_POST);
 	$input['mode'] = isset( $input['mode'] ) ? $input['mode'] : '';
@@ -644,19 +644,19 @@ function html_out( $html="", $title="" )
 
 function redirect($url, $text, $time=2)
 	{
-		global $TBDEV;
+		global $INSTALLER09;
 		
 		$page_title  = "Admin Rep Redirection";
 		$page_detail = "<em>Redirecting...</em>";
 		
-		$html = "<meta http-equiv='refresh' content=\"{$time}; url={$TBDEV['baseurl']}/{$url}\">
+		$html = "<meta http-equiv='refresh' content=\"{$time}; url={$INSTALLER09['baseurl']}/{$url}\">
 						    <div>
 							<div>Redirecting</div>
 							<div style='padding:8px'>
 							 <div style='font-size:12px'>$text
 							 <br />
 							 <br />
-							 <center><a href='{$TBDEV['baseurl']}/{$url}'>Click here if not redirected...</a></center>
+							 <center><a href='{$INSTALLER09['baseurl']}/{$url}'>Click here if not redirected...</a></center>
 							 </div>
 							</div>
 						   </div>";

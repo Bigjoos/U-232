@@ -30,7 +30,7 @@ $lang = array(
 'takeupload_already' => "torrent already uploaded!",
 'takeupload_log' => "Torrent %s (%s) was uploaded by %s",
 'takeupload_bucket_format' => "The image you are trying (%s) to upload is not allowed!",
-'takeupload_bucket_size' => "The image is to big (%s)! max size can be ".mksize($TBDEV['bucket_maxsize']),
+'takeupload_bucket_size' => "The image is to big (%s)! max size can be ".mksize($INSTALLER09['bucket_maxsize']),
 'takeupload_bucket_noimg' => "You forgot about the images!"
 );
 

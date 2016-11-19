@@ -233,7 +233,7 @@ if (isset($_GET['sent']) && ($_GET['sent'] == "yes")) {
     $text_parsed    = format_comment($text);
     $system_pattern = '/(^\/system)\s([\w\W\s]+)/is';
     if (preg_match($system_pattern, $text, $out) && $CURUSER["class"] >= UC_STAFF) {
-        $userid      = $TBDEV['bot_id'];
+        $userid      = $INSTALLER09['bot_id'];
         $text        = $out[2];
         $text_parsed = format_comment($text);
     }
@@ -342,20 +342,20 @@ else {
     while ($arr = mysqli_fetch_assoc($res)) {
         
         if ($arr['pms'] > 0 && $gotpm == 0) {
-            $HTMLOUT .= '<tr><td align=\'center\'><a href=\'' . $TBDEV['baseurl'] . '/messages.php\' target=\'_parent\'><font color=\'blue\'>You have ' . $arr['pms'] . ' new message' . ($arr['pms'] > 1 ? 's' : '') . '</font></a></td></tr>';
+            $HTMLOUT .= '<tr><td align=\'center\'><a href=\'' . $INSTALLER09['baseurl'] . '/messages.php\' target=\'_parent\'><font color=\'blue\'>You have ' . $arr['pms'] . ' new message' . ($arr['pms'] > 1 ? 's' : '') . '</font></a></td></tr>';
             $gotpm++;
         }
         
         if (($arr['to_user'] != $CURUSER['id'] && $arr['to_user'] != 0) && $arr['userid'] != $CURUSER['id'])
             continue;
         elseif ($arr['to_user'] == $CURUSER['id'] || ($arr['userid'] == $CURUSER['id'] && $arr['to_user'] != 0))
-            $private = "<a href=\"javascript:private_reply('" . htmlspecialchars($arr['username']) . "')\"><img src=\"{$TBDEV['pic_base_url']}private-shout.png\" alt=\"Private shout\" title=\"Private shout! click to reply to " . htmlspecialchars($arr['username']) . "\" width=\"16\" style=\"padding-left:2px;padding-right:2px;\" border=\"0\" /></a>";
+            $private = "<a href=\"javascript:private_reply('" . htmlspecialchars($arr['username']) . "')\"><img src=\"{$INSTALLER09['pic_base_url']}private-shout.png\" alt=\"Private shout\" title=\"Private shout! click to reply to " . htmlspecialchars($arr['username']) . "\" width=\"16\" style=\"padding-left:2px;padding-right:2px;\" border=\"0\" /></a>";
         else
             $private = '';
-        $edit             = ($CURUSER['class'] >= UC_STAFF || ($arr['userid'] == $CURUSER['id']) && ($CURUSER['class'] >= UC_POWER_USER && $CURUSER['class'] <= UC_STAFF) ? "<a href='{$TBDEV['baseurl']}/shoutbox.php?edit=" . intval($arr['id']) . "&amp;user=" . intval($arr['userid']) . "'><img src='{$TBDEV['pic_base_url']}button_edit2.gif' border='0' alt=\"Edit Shout\"  title=\"Edit Shout\" /></a> " : "");
-        $del              = ($CURUSER['class'] >= UC_STAFF ? "<a href='./shoutbox.php?del=" . intval($arr['id']) . "'><img src='{$TBDEV['pic_base_url']}button_delete2.gif' border='0' alt=\"Delete Single Shout\" title=\"Delete Single Shout\" /></a> " : "");
-        $delall           = ($CURUSER['class'] >= UC_SYSOP ? "<a href='./shoutbox.php?delall' onclick=\"confirm_delete(); return false;\"><img src='{$TBDEV['pic_base_url']}del.png' border='0' alt=\"Empty Shout\" title=\"Empty Shout\" /></a> " : "");
-        $pm               = "<span class='date' style=\"color:$dtcolor\"><a target='_blank' href='./sendmessage.php?receiver=" . intval($arr['userid']) . "'><img src='{$TBDEV['pic_base_url']}button_pm2.gif' border='0' alt=\"Pm User\" title=\"Pm User\" /></a></span>\n";
+        $edit             = ($CURUSER['class'] >= UC_STAFF || ($arr['userid'] == $CURUSER['id']) && ($CURUSER['class'] >= UC_POWER_USER && $CURUSER['class'] <= UC_STAFF) ? "<a href='{$INSTALLER09['baseurl']}/shoutbox.php?edit=" . intval($arr['id']) . "&amp;user=" . intval($arr['userid']) . "'><img src='{$INSTALLER09['pic_base_url']}button_edit2.gif' border='0' alt=\"Edit Shout\"  title=\"Edit Shout\" /></a> " : "");
+        $del              = ($CURUSER['class'] >= UC_STAFF ? "<a href='./shoutbox.php?del=" . intval($arr['id']) . "'><img src='{$INSTALLER09['pic_base_url']}button_delete2.gif' border='0' alt=\"Delete Single Shout\" title=\"Delete Single Shout\" /></a> " : "");
+        $delall           = ($CURUSER['class'] >= UC_SYSOP ? "<a href='./shoutbox.php?delall' onclick=\"confirm_delete(); return false;\"><img src='{$INSTALLER09['pic_base_url']}del.png' border='0' alt=\"Empty Shout\" title=\"Empty Shout\" /></a> " : "");
+        $pm               = "<span class='date' style=\"color:$dtcolor\"><a target='_blank' href='./sendmessage.php?receiver=" . intval($arr['userid']) . "'><img src='{$INSTALLER09['pic_base_url']}button_pm2.gif' border='0' alt=\"Pm User\" title=\"Pm User\" /></a></span>\n";
         $date             = get_date($arr["date"], 0, 1);
         $user_stuff       = $arr;
         $user_stuff['id'] = intval($arr['userid']);

@@ -15,7 +15,7 @@ loggedinorreturn();
 
 if (isset($_GET['clear_new']) && $_GET['clear_new'] == '1'){
 sql_query("UPDATE users SET last_browse=".TIME_NOW." where id=".$CURUSER['id']);
-header("Location: {$TBDEV['baseurl']}/browse.php");
+header("Location: {$INSTALLER09['baseurl']}/browse.php");
 }
 
     $stdfoot = array(/** include js **/'js' => array('java_klappe','wz_tooltip'));
@@ -232,7 +232,7 @@ header("Location: {$TBDEV['baseurl']}/browse.php");
       $pager = pager($torrentsperpage, $count, "browse.php?" . $addparam);
       
     $query = "SELECT torrents.id, torrents.category, torrents.leechers, torrents.seeders, torrents.name, torrents.descr, torrents.times_completed, torrents.size, torrents.added, torrents.type, torrents.free, torrents.poster, torrents.comments, torrents.numfiles, torrents.filename, torrents.anonymous, torrents.sticky, torrents.nuked, torrents.nukereason, torrents.owner, torrents.checked_by, IF(torrents.nfo <> '', 1, 0) as nfoav," .
-    //"IF(torrents.numratings < {$TBDEV['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, categories.name AS cat_name, categories.image AS cat_pic, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
+    //"IF(torrents.numratings < {$INSTALLER09['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, categories.name AS cat_name, categories.image AS cat_pic, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
     "categories.name AS cat_name, categories.image AS cat_pic, users.username, freeslots.tid, freeslots.uid, freeslots.free AS freeslot, freeslots.double AS doubleup FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id LEFT JOIN freeslots ON (torrents.id=freeslots.tid AND freeslots.uid={$CURUSER['id']}) $where $orderby {$pager['limit']}";
     $res = sql_query($query) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
     }
@@ -268,7 +268,7 @@ header("Location: {$TBDEV['baseurl']}/browse.php");
     {
       $HTMLOUT .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
       $HTMLOUT .= "<td class='bottom' style=\"padding-bottom: 2px;padding-left: 7px\">
-      <input name='c".$cat['id']."' type=\"checkbox\" " . (in_array($cat['id'],$wherecatina) ? "checked='checked' " : "") . "value='1' /><a class='catlink' href='browse.php?cat={$cat['id']}'><img src='{$TBDEV['pic_base_url']}caticons/" . htmlspecialchars($cat['image']) . "' alt='" . htmlspecialchars($cat['name']) . "' title='" . htmlspecialchars($cat['name']) . "' /></a></td>\n";
+      <input name='c".$cat['id']."' type=\"checkbox\" " . (in_array($cat['id'],$wherecatina) ? "checked='checked' " : "") . "value='1' /><a class='catlink' href='browse.php?cat={$cat['id']}'><img src='{$INSTALLER09['pic_base_url']}caticons/" . htmlspecialchars($cat['image']) . "' alt='" . htmlspecialchars($cat['name']) . "' title='" . htmlspecialchars($cat['name']) . "' /></a></td>\n";
       $i++;
     }
     $alllink = "<div align='left'>(<a href='./browse.php?all=1'><b>{$lang['browse_show_all']}</b></a>)</div>";

@@ -138,12 +138,12 @@ You have received a PM from $username!
 
 You can use the URL below to view the message (you may have to login).
 
-{$TBDEV['baseurl']}/messages.php
+{$INSTALLER09['baseurl']}/messages.php
 
 --
-{$TBDEV['site_name']}
+{$INSTALLER09['site_name']}
 EOD;
-            @mail($user["email"], "{$lang['takemessage_received']} " . $username . "!", $body, "{$lang['takemessage_from']} {$TBDEV['site_email']}");
+            @mail($user["email"], "{$lang['takemessage_received']} " . $username . "!", $body, "{$lang['takemessage_from']} {$INSTALLER09['site_email']}");
         }
     }
     $delete = isset($_POST["delete"]) ? htmlspecialchars($_POST["delete"]) : '';
@@ -167,7 +167,7 @@ EOD;
         
         
         if (!$returnto)
-            $returnto = "{$TBDEV['baseurl']}/messages.php";
+            $returnto = "{$INSTALLER09['baseurl']}/messages.php";
     }
     
     if ($returnto) {

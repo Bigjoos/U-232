@@ -28,7 +28,7 @@ if (!is_valid_id($id))
 			$ext = strtolower($ext[1]);
 			if (!file_exists("pic/icons/".$ext.".png")) $ext = "Unknown";
 			if($counter !== 0 && $counter % 10 == 0)
-			$HTMLOUT .= "<tr><td colspan='2' align='right'><a href='#top'><img src='{$TBDEV['pic_base_url']}/top.gif' alt='' /></a></td></tr>";
+			$HTMLOUT .= "<tr><td colspan='2' align='right'><a href='#top'><img src='{$INSTALLER09['pic_base_url']}/top.gif' alt='' /></a></td></tr>";
 			$HTMLOUT .= "<tr><td><img src='pic/icons/".htmlspecialchars($ext).".png' alt='".htmlspecialchars($ext)." file' title='".htmlspecialchars($ext)." file' /></td><td>" . htmlspecialchars($subrow["filename"]) ."</td><td align='right'>" . mksize($subrow["size"]) . "</td></tr>\n";
 			$counter++;
 			}

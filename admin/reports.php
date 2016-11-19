@@ -36,7 +36,7 @@ $delt_link='';
 $type='';
 
 if (!min_class(UC_STAFF)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 // === cute solved in thing taked from helpdesk mod
 function round_time($ts)

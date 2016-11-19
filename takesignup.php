@@ -16,13 +16,13 @@ if (!$CURUSER) {
 }
 dbconn();
 
-if (!$TBDEV['openreg'])
+if (!$INSTALLER09['openreg'])
     stderr('Sorry', 'Invite only - Signups are closed presently');
 
 $res = sql_query("SELECT COUNT(*) FROM users") or sqlerr(__FILE__, __LINE__);
 $arr = mysqli_fetch_row($res);
 
-if ($arr[0] >= $TBDEV['maxusers'])
+if ($arr[0] >= $INSTALLER09['maxusers'])
     stderr($lang['takesignup_error'], $lang['takesignup_limit']);
 
 $lang    = array_merge(load_language('global'), load_language('takesignup'));
@@ -120,7 +120,7 @@ if ($c[0] != 0)
 if (isset($_POST["user_timezone"]) && preg_match('#^\-?\d{1,2}(?:\.\d{1,2})?$#', $_POST['user_timezone'])) {
     $time_offset = sqlesc($_POST['user_timezone']);
 } else {
-    $time_offset = isset($TBDEV['time_offset']) ? sqlesc($TBDEV['time_offset']) : '0';
+    $time_offset = isset($INSTALLER09['time_offset']) ? sqlesc($INSTALLER09['time_offset']) : '0';
 }
 // have a stab at getting dst parameter?
 $dst_in_use = localtime(time() + ($time_offset * 3600), true);
@@ -142,7 +142,7 @@ $ret = sql_query("INSERT INTO users (username, passhash, secret, editsecret, pas
     (!$arr[0] ? 'confirmed' : 'pending')
 ))) . ", " . (!$arr[0] ? UC_SYSOP . ", " : "") . "" . time() . " ," . time() . " , $time_offset, {$dst_in_use['tm_isdst']})");
 
-$message = "Welcome New {$TBDEV['site_name']} Member : - " . htmlspecialchars($wantusername) . "";
+$message = "Welcome New {$INSTALLER09['site_name']} Member : - " . htmlspecialchars($wantusername) . "";
 
 if (!$ret) {
     if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) == 1062)
@@ -161,14 +161,14 @@ $body = str_replace(array(
     '<#IP_ADDRESS#>',
     '<#REG_LINK#>'
 ), array(
-    $TBDEV['site_name'],
+    $INSTALLER09['site_name'],
     $email,
     $_SERVER['REMOTE_ADDR'],
-    "{$TBDEV['baseurl']}/confirm.php?id=$id&secret=$psecret"
+    "{$INSTALLER09['baseurl']}/confirm.php?id=$id&secret=$psecret"
 ), $lang['takesignup_email_body']);
 
 if ($arr[0])
-    mail($email, "{$TBDEV['site_name']} {$lang['takesignup_confirm']}", $body, "{$lang['takesignup_from']} {$TBDEV['site_email']}");
+    mail($email, "{$INSTALLER09['site_name']} {$lang['takesignup_confirm']}", $body, "{$lang['takesignup_from']} {$INSTALLER09['site_email']}");
 else
     logincookie($id, $wantpasshash);
 

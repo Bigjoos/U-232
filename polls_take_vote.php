@@ -112,5 +112,5 @@ if (!$_POST['nullvote']) {
         stderr('DBERROR', 'Could not update records');
 }
 
-header("location: {$TBDEV['baseurl']}/index.php");
+header("location: {$INSTALLER09['baseurl']}/index.php");
 ?>

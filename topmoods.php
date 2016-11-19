@@ -35,7 +35,7 @@ while ($arr = mysqli_fetch_assoc($res)) {
     $moodupic  = htmlspecialchars($change[$arr['mood']]['image']);
     $moodcount = 0 + $arr['moodcount'];
     
-    $HTMLOUT .= "<tr><td align='center'>" . $moodcount . "</td><td align='center'>" . $mooduname . "</td><td align='center'><img src='" . $TBDEV['pic_base_url'] . "smilies/" . $moodupic . "' border='0' alt='" . $mooduname . "'  title='" . $mooduname . "'/></td></tr>\n";
+    $HTMLOUT .= "<tr><td align='center'>" . $moodcount . "</td><td align='center'>" . $mooduname . "</td><td align='center'><img src='" . $INSTALLER09['pic_base_url'] . "smilies/" . $moodupic . "' border='0' alt='" . $mooduname . "'  title='" . $mooduname . "'/></td></tr>\n";
 }
 
 $HTMLOUT .= "</table>\n";

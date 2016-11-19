@@ -130,8 +130,8 @@ $HTMLOUT.="<script type='text/javascript'>
  
  $HTMLOUT .= begin_main_frame();
  $HTMLOUT.="<br /><h1 align='center'>Welcome {$CURUSER['username']} to the Database Backup Manager.<br />
- Click<a href='{$TBDEV['baseurl']}/admin.php?action=backup&amp;mode=backup'><b>&nbsp;Here&nbsp;</b></a>to backup now.<br />
- Click<a href='{$TBDEV['baseurl']}/admin.php?action=backup&amp;mode=check'><b>&nbsp;Here&nbsp;</b></a>to check config.</h1>";
+ Click<a href='{$INSTALLER09['baseurl']}/admin.php?action=backup&amp;mode=backup'><b>&nbsp;Here&nbsp;</b></a>to backup now.<br />
+ Click<a href='{$INSTALLER09['baseurl']}/admin.php?action=backup&amp;mode=check'><b>&nbsp;Here&nbsp;</b></a>to check config.</h1>";
  
  $HTMLOUT.="<br /><h1 align='center'></h1>";
  
@@ -158,7 +158,7 @@ $HTMLOUT.="<script type='text/javascript'>
       <td align='center'>";
 			if (!empty($arr['username']))
 			{
-			$HTMLOUT.="<a href='{$TBDEV['baseurl']}/userdetails.php?id=".(int)$arr['uid']."'>".htmlspecialchars($arr['username'])."</a>";
+			$HTMLOUT.="<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=".(int)$arr['uid']."'>".htmlspecialchars($arr['username'])."</a>";
 			}
 			else
 			{
@@ -199,11 +199,11 @@ $HTMLOUT.="<script type='text/javascript'>
 
 else if ($mode == "backup")
 {
-  global $TBDEV;
-	$mysql_host = $TBDEV['mysql_host'];
-	$mysql_user = $TBDEV['mysql_user'];
-	$mysql_pass = $TBDEV['mysql_pass'];
-	$mysql_db = $TBDEV['mysql_db'];
+  global $INSTALLER09;
+	$mysql_host = $INSTALLER09['mysql_host'];
+	$mysql_user = $INSTALLER09['mysql_user'];
+	$mysql_pass = $INSTALLER09['mysql_pass'];
+	$mysql_db = $INSTALLER09['mysql_db'];
 	
 	$ext = $mysql_db.'-'.date('d').'-'.date('m').'-'.date('Y').'_'.date('H').'-'.date('i').'-'.date('s').'_'.date('D').".sql";
 	

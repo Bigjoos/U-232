@@ -26,7 +26,7 @@ require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'password_functions.php');
 
 if (!min_class(UC_STAFF)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
     
 //== Reset Lost Password
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

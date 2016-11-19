@@ -31,7 +31,7 @@ if (!$row)
     stderr("{$lang['confirm_user_error']}", "{$lang['confirm_invalid_id']}");
 
 if ($row['status'] != 'pending') {
-    header("Refresh: 0; url={$TBDEV['baseurl']}/ok.php?type=confirmed");
+    header("Refresh: 0; url={$INSTALLER09['baseurl']}/ok.php?type=confirmed");
     exit();
 }
 
@@ -45,5 +45,5 @@ if (!mysqli_affected_rows($GLOBALS["___mysqli_ston"]))
     stderr("{$lang['confirm_user_error']}", "{$lang['confirm_cannot_confirm']}");
 
 logincookie($id, $row['passhash']);
-header("Refresh: 0; url={$TBDEV['baseurl']}/ok.php?type=confirm");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/ok.php?type=confirm");
 ?>

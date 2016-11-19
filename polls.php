@@ -9,7 +9,7 @@
 
 function parse_poll()
 {
-	    global $CURUSER, $TBDEV;
+	    global $CURUSER, $INSTALLER09;
 	    
 	    $htmlout = "";
 	    $check = 0;
@@ -241,22 +241,22 @@ function parse_poll()
 
 function poll_header($pid="",$poll_q="") {
 
-    global $TBDEV;
+    global $INSTALLER09;
     $HTMLOUT = "";
 
     $HTMLOUT .= "<script type=\"text/javascript\">
     <!-- // Hide js from html validator
     function go_gadget_show()
     {
-      window.location = \"{$TBDEV['baseurl']}/index.php?pollid={$pid}&mode=show&st=main\";
+      window.location = \"{$INSTALLER09['baseurl']}/index.php?pollid={$pid}&mode=show&st=main\";
     }
     function go_gadget_vote()
     {
-      window.location = \"{$TBDEV['baseurl']}/index.php?pollid={$pid}&st=main\";
+      window.location = \"{$INSTALLER09['baseurl']}/index.php?pollid={$pid}&st=main\";
     }
     //-->
     </script>
-    <form action='{$TBDEV['baseurl']}/polls_take_vote.php?pollid={$pid}&amp;st=main&amp;addpoll=1' method='post'>
+    <form action='{$INSTALLER09['baseurl']}/polls_take_vote.php?pollid={$pid}&amp;st=main&amp;addpoll=1' method='post'>
     <div class='roundedCorners' style='text-align: left; width: 80%; border: 1px solid black; padding: 5px;'>
     <div style='background: none repeat scroll 0% 0% transparent; height: 25px;'><span   style='font-weight: bold; font-size: 12pt;'>{$poll_q}</span></div>";
 
@@ -278,14 +278,14 @@ function poll_footer() {
 
 
 function poll_show_rendered_choice($choice_id="",$votes="",$id="",$answer="",$percentage="",$width="") {
-    global $TBDEV;
+    global $INSTALLER09;
     $HTMLOUT = "";
 
     $HTMLOUT .= "<tr>
       <td width='25%' colspan='2'>$answer</td>
       <td width='10%' nowrap='nowrap'> [ <b>$votes</b> ] </td>
       <td width='70%' nowrap='nowrap'>
-      <img src='{$TBDEV['pic_base_url']}polls/bar.gif' width='$width' height='11' align='middle' alt='' />
+      <img src='{$INSTALLER09['pic_base_url']}polls/bar.gif' width='$width' height='11' align='middle' alt='' />
       &nbsp;[$percentage%]
       </td>
       </tr>";

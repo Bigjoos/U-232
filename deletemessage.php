@@ -44,5 +44,5 @@ if ($type == 'in') {
         die("{$lang['deletemessage_sentbox']}");
 } else
     die("{$lang['deletemessage_unknown']}");
-header("Location: {$TBDEV['baseurl']}/inbox.php" . ($type == 'out' ? "?out=1" : ""));
+header("Location: {$INSTALLER09['baseurl']}/inbox.php" . ($type == 'out' ? "?out=1" : ""));
 ?>

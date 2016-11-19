@@ -26,7 +26,7 @@ require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'html_functions.php');
 
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
     $lang = array_merge( $lang, load_language('ad_index') );
     
@@ -209,7 +209,7 @@ function show_views(){
     			
     			$htmlout .= "<tr>
     			<td valign='middle'>$date</td>
-    			<td valign='middle'><img src='{$TBDEV['pic_base_url']}/bar_left.gif' border='0' width='4' height='11' align='middle' alt='' /><img src='{$TBDEV['pic_base_url']}/bar.gif' border='0' width='$img_width' height='11' align='middle' alt='' /><img src='{$TBDEV['pic_base_url']}/bar_right.gif' border='0' width='4' height='11' align='middle' alt='' /></td>
+    			<td valign='middle'><img src='{$INSTALLER09['pic_base_url']}/bar_left.gif' border='0' width='4' height='11' align='middle' alt='' /><img src='{$INSTALLER09['pic_base_url']}/bar.gif' border='0' width='$img_width' height='11' align='middle' alt='' /><img src='{$INSTALLER09['pic_base_url']}/bar_right.gif' border='0' width='4' height='11' align='middle' alt='' /></td>
 					<td valign='middle'><center>{$data['result_count']}</center></td>
 					</tr>";
 			}
@@ -235,7 +235,7 @@ function show_views(){
 
 function result_screen($mode='reg'){
 
-		global $TBDEV, $inbound, $month_names;
+		global $INSTALLER09, $inbound, $month_names;
 		
 		$page_title = "Statistic Center Results";
 		$page_detail = "&nbsp;";
@@ -431,7 +431,7 @@ function result_screen($mode='reg'){
     			
     			$htmlout .= "<tr>
     			<td valign='middle'>$date</td>
-    			<td valign='middle'><img src='{$TBDEV['pic_base_url']}/bar_left.gif' border='0' width='4' height='11' align='middle' alt='' /><img src='{$TBDEV['pic_base_url']}/bar.gif' border='0' width='$img_width' height='11' align='middle' alt='' /><img src='{$TBDEV['pic_base_url']}/bar_right.gif' border='0' width='4' height='11' align='middle' alt='' /></td>
+    			<td valign='middle'><img src='{$INSTALLER09['pic_base_url']}/bar_left.gif' border='0' width='4' height='11' align='middle' alt='' /><img src='{$INSTALLER09['pic_base_url']}/bar.gif' border='0' width='$img_width' height='11' align='middle' alt='' /><img src='{$INSTALLER09['pic_base_url']}/bar_right.gif' border='0' width='4' height='11' align='middle' alt='' /></td>
 					<td valign='middle'><center>{$data['result_count']}</center></td>
 					</tr>";
 			}
@@ -457,7 +457,7 @@ function result_screen($mode='reg'){
 
 function main_screen($mode='reg'){
 
-		global $TBDEV;
+		global $INSTALLER09;
 		
 		$page_title = "Statistic Center";
 		$page_detail = "Please define the date ranges and other options below.<br />Note: The statistics generated are based on the information currently held in the database.";
@@ -523,7 +523,7 @@ function main_screen($mode='reg'){
       <span style='font-weight: bold; font-size: 12pt;'>Statistics Center</span>
       </div><br />
     {$menu}
-    <form action='{$TBDEV['baseurl']}/admin.php?action=stats_extra' method='post' name='StatsForm'>
+    <form action='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra' method='post' name='StatsForm'>
     <input name='mode' value='{$form_code}' type='hidden' />
 
 	
@@ -642,18 +642,18 @@ function make_select($name, $in=array(), $default="") {
 
 function make_side_menu() {
 
-    global $TBDEV;
+    global $INSTALLER09;
     
     $htmlout = "<div style='float:left;border: 1px solid black;padding:5px;'>
     <div align='left'><strong>Statistic Menu</strong></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=reg' style='text-decoration: none;'>Registration Stats</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=topic' style='text-decoration: none;'>New Topic Stats</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=post' style='text-decoration: none;'>Post Stats</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=msg' style='text-decoration: none;'>Personal Message</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=views' style='text-decoration: none;'>Topic Views</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=comms' style='text-decoration: none;'>Comment Stats</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=torrents' style='text-decoration: none;'>Torrents Stats</a></div>
-    <div align='left'>&nbsp;&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=stats_extra&amp;mode=reps' style='text-decoration: none;'>Reputation Stats</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=reg' style='text-decoration: none;'>Registration Stats</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=topic' style='text-decoration: none;'>New Topic Stats</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=post' style='text-decoration: none;'>Post Stats</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=msg' style='text-decoration: none;'>Personal Message</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=views' style='text-decoration: none;'>Topic Views</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=comms' style='text-decoration: none;'>Comment Stats</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=torrents' style='text-decoration: none;'>Torrents Stats</a></div>
+    <div align='left'>&nbsp;&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=stats_extra&amp;mode=reps' style='text-decoration: none;'>Reputation Stats</a></div>
 </div>";
 
     return $htmlout;

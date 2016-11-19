@@ -16,7 +16,7 @@ return $CURUSER["anonymous_until"];
 //$CURUSER['reputation'] = 650;
 function get_reputation($user, $mode = '', $rep_is_on = TRUE)
 {
-global $TBDEV;
+global $INSTALLER09;
 
 $member_reputation = "";
 if( $rep_is_on )
@@ -126,7 +126,7 @@ $posneg .= "<img src='pic/rep/reputation_$rep_img.gif' border='0' alt=\"Reputati
 
 // now decide the locale
 if($mode != '')
-return "Rep: ".$posneg . "<br /><br /><a href='javascript:;' onclick=\"PopUp('{$TBDEV['baseurl']}/reputation.php?pid={$user['id']}&amp;locale=".$mode."','Reputation',400,241,1,1);\"><img src='{$TBDEV['pic_base_url']}forumicons/giverep.jpg' border='0' alt='Add reputation:: {$user['username']}' title='Add reputation:: {$user['username']}' /></a>";
+return "Rep: ".$posneg . "<br /><br /><a href='javascript:;' onclick=\"PopUp('{$INSTALLER09['baseurl']}/reputation.php?pid={$user['id']}&amp;locale=".$mode."','Reputation',400,241,1,1);\"><img src='{$INSTALLER09['pic_base_url']}forumicons/giverep.jpg' border='0' alt='Add reputation:: {$user['username']}' title='Add reputation:: {$user['username']}' /></a>";
 else
 return " ".$posneg;
 
@@ -138,9 +138,9 @@ return '<span title="Set offline by admin setting">Rep System Offline</span>';
 }
 ////////////// REP SYSTEM END //////////
 function autoshout($msg) {
-global $TBDEV;
+global $INSTALLER09;
 require_once(INCL_DIR.'bbcode_functions.php');
-sql_query('INSERT INTO shoutbox(userid,date,text,text_parsed)VALUES ('.$TBDEV['bot_id'].','.time().','.sqlesc($msg).','.sqlesc(format_comment($msg)).')');
+sql_query('INSERT INTO shoutbox(userid,date,text,text_parsed)VALUES ('.$INSTALLER09['bot_id'].','.time().','.sqlesc($msg).','.sqlesc(format_comment($msg)).')');
 }
 
 function parked()
@@ -231,13 +231,13 @@ define('UC_STAFF', 4); // start of staff classes
         UC_SYSOP                => '4080B0');
 
    $class_images = array(
-        UC_USER                 => $TBDEV['pic_base_url'].'class/user.gif',
-        UC_POWER_USER           => $TBDEV['pic_base_url'].'class/power.gif',
-        UC_VIP                  => $TBDEV['pic_base_url'].'class/vip.gif',
-        UC_UPLOADER             => $TBDEV['pic_base_url'].'class/uploader.gif',
-        UC_MODERATOR            => $TBDEV['pic_base_url'].'class/moderator.gif',
-        UC_ADMINISTRATOR        => $TBDEV['pic_base_url'].'class/administrator.gif',
-        UC_SYSOP                => $TBDEV['pic_base_url'].'class/sysop.gif');
+        UC_USER                 => $INSTALLER09['pic_base_url'].'class/user.gif',
+        UC_POWER_USER           => $INSTALLER09['pic_base_url'].'class/power.gif',
+        UC_VIP                  => $INSTALLER09['pic_base_url'].'class/vip.gif',
+        UC_UPLOADER             => $INSTALLER09['pic_base_url'].'class/uploader.gif',
+        UC_MODERATOR            => $INSTALLER09['pic_base_url'].'class/moderator.gif',
+        UC_ADMINISTRATOR        => $INSTALLER09['pic_base_url'].'class/administrator.gif',
+        UC_SYSOP                => $INSTALLER09['pic_base_url'].'class/sysop.gif');
         
    function get_user_class_name($class) {
         global $class_names;
@@ -291,7 +291,7 @@ define('UC_STAFF', 4); // start of staff classes
     }
        
 function format_username($user, $icons = true) {
-        global $TBDEV;
+        global $INSTALLER09;
         $user['id']    = (int)$user['id'];
         $user['class'] = (int)$user['class'];
         if ($user['id'] == 0)
@@ -299,15 +299,15 @@ function format_username($user, $icons = true) {
         elseif ($user['username'] == '')
             return 'unknown['.$user['id'].']';
         $username = '<span style="color:#'.get_user_class_color($user['class']).';"><b>'.$user['username'].'</b></span>';
-        $str = '<span style="white-space: nowrap;"><a class="user_'.$user['id'].'" href="'.$TBDEV['baseurl'].'/userdetails.php?id='.$user['id'].'"target="_blank">'.$username.'</a>';
+        $str = '<span style="white-space: nowrap;"><a class="user_'.$user['id'].'" href="'.$INSTALLER09['baseurl'].'/userdetails.php?id='.$user['id'].'"target="_blank">'.$username.'</a>';
         if ($icons != false) {
-            $str .= ($user['donor'] == 'yes' ? '<img src="'.$TBDEV['pic_base_url'].'star.png" alt="Donor" title="Donor" />' : '');
-            $str .= ($user['warned'] >= 1 ? '<img src="'.$TBDEV['pic_base_url'].'warned.png" alt="Warned" title="Warned" />' : '');
-            $str .= ($user['leechwarn'] >= 1 ? '<img src="'.$TBDEV['pic_base_url'].'warned.png" alt="Leech Warned" title="Leech Warned" />' : '');
-            $str .= ($user['enabled'] != 'yes' ? '<img src="'.$TBDEV['pic_base_url'].'disabled.gif" alt="Disabled" title="Disabled" />' : '');
-            $str .= ($user['chatpost'] == 0 ?  '<img src="'.$TBDEV['pic_base_url'].'chatpos.gif" alt="No Chat" title="Shout disabled" />'  : '');
-            $str .= ($user['pirate'] != 0 ? '<img src="'.$TBDEV['pic_base_url'].'pirate.png" alt="Pirate" title="Pirate" />' : '');
-            $str .= ($user['king'] != 0 ? '<img src="'.$TBDEV['pic_base_url'].'king.png" alt="King" title="King" />' : '');
+            $str .= ($user['donor'] == 'yes' ? '<img src="'.$INSTALLER09['pic_base_url'].'star.png" alt="Donor" title="Donor" />' : '');
+            $str .= ($user['warned'] >= 1 ? '<img src="'.$INSTALLER09['pic_base_url'].'warned.png" alt="Warned" title="Warned" />' : '');
+            $str .= ($user['leechwarn'] >= 1 ? '<img src="'.$INSTALLER09['pic_base_url'].'warned.png" alt="Leech Warned" title="Leech Warned" />' : '');
+            $str .= ($user['enabled'] != 'yes' ? '<img src="'.$INSTALLER09['pic_base_url'].'disabled.gif" alt="Disabled" title="Disabled" />' : '');
+            $str .= ($user['chatpost'] == 0 ?  '<img src="'.$INSTALLER09['pic_base_url'].'chatpos.gif" alt="No Chat" title="Shout disabled" />'  : '');
+            $str .= ($user['pirate'] != 0 ? '<img src="'.$INSTALLER09['pic_base_url'].'pirate.png" alt="Pirate" title="Pirate" />' : '');
+            $str .= ($user['king'] != 0 ? '<img src="'.$INSTALLER09['pic_base_url'].'king.png" alt="King" title="King" />' : '');
         }
         $str .= "</span>\n";
         return $str;
@@ -337,8 +337,8 @@ return $ratio;
 
 //== Made by putyn@tbdev
 function blacklist($fo) {
-	global $TBDEV;
-	$blacklist = file_exists($TBDEV['nameblacklist']) && is_array(unserialize(file_get_contents($TBDEV['nameblacklist']))) ? unserialize(file_get_contents($TBDEV['nameblacklist'])) : array();
+	global $INSTALLER09;
+	$blacklist = file_exists($INSTALLER09['nameblacklist']) && is_array(unserialize(file_get_contents($INSTALLER09['nameblacklist']))) ? unserialize(file_get_contents($INSTALLER09['nameblacklist'])) : array();
 	if(isset($blacklist[$fo]) && $blacklist[$fo] == 1)
 	return false;
 	return true;

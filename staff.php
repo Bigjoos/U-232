@@ -27,7 +27,7 @@ $res = sql_query("SELECT * FROM users WHERE class >= " . UC_UPLOADER . " AND sta
 
 while ($arr = mysqli_fetch_assoc($res)) {
     $staff_table                = ($staff_table ? $staff_table : '');
-    $staff_table[$arr['class']] = $staff_table[$arr['class']] . "<td class='staffembedded'><a class='altlink' href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['username']) . "</a></td><td class='staffembedded'> " . ("'" . $arr['last_access'] . "'" > $dt ? "<img src='" . $TBDEV['pic_base_url'] . "user_online.gif' border='0' alt='online' />" : "<img src='" . $TBDEV['pic_base_url'] . "user_offline.gif' border='0' alt='offline' />") . "</td>" . "<td class='staffembedded'><a href='{$TBDEV['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "'>" . "<img src='" . $TBDEV['pic_base_url'] . "pm.gif' alt='Pm'  border='0' /></a></td>" . " ";
+    $staff_table[$arr['class']] = $staff_table[$arr['class']] . "<td class='staffembedded'><a class='altlink' href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "'>" . htmlspecialchars($arr['username']) . "</a></td><td class='staffembedded'> " . ("'" . $arr['last_access'] . "'" > $dt ? "<img src='" . $INSTALLER09['pic_base_url'] . "user_online.gif' border='0' alt='online' />" : "<img src='" . $INSTALLER09['pic_base_url'] . "user_offline.gif' border='0' alt='offline' />") . "</td>" . "<td class='staffembedded'><a href='{$INSTALLER09['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "'>" . "<img src='" . $INSTALLER09['pic_base_url'] . "pm.gif' alt='Pm'  border='0' /></a></td>" . " ";
     // Show 3 staff per row, separated by an empty column
     ++$col[$arr['class']];
     if ($col[$arr['class']] <= 3)
@@ -93,8 +93,8 @@ while ($arr = mysqli_fetch_assoc($res)) {
             $cname = $c["name"];
         }
     
-    $firstline .= "<tr style=\"height:15px\"><td class=\"embedded\"><a class=\"altlink\" href=\"{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "\">" . htmlspecialchars($arr['username']) . "</a></td>
-<td class=\"embedded\"> " . ("'" . $arr['last_access'] . "'" > $dt ? " <img src=\"" . $TBDEV['pic_base_url'] . "user_online.gif\"  border=\"0\" alt=\"online\" />" : "<img src=\"" . $TBDEV['pic_base_url'] . "user_offline.gif\" border=\"0\" alt=\"offline\" />") . "</td>" . "<td class=\"embedded\"><a href=\"{$TBDEV['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "\">" . "<img src=\"" . $TBDEV['pic_base_url'] . "pm.gif\" alt=\"Pm\" border=\"0\" /></a></td>" . "<td class=\"embedded\"><img src=\"" . $TBDEV['pic_base_url'] . "flag/$flag\" alt=\"" . $cname . "\" title=\"" . $cname . "\" border=\"0\" /></td>" . "<td class=\"embedded\">" . $arr['supportfor'] . "</td></tr>\n";
+    $firstline .= "<tr style=\"height:15px\"><td class=\"embedded\"><a class=\"altlink\" href=\"{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr['id']) . "\">" . htmlspecialchars($arr['username']) . "</a></td>
+<td class=\"embedded\"> " . ("'" . $arr['last_access'] . "'" > $dt ? " <img src=\"" . $INSTALLER09['pic_base_url'] . "user_online.gif\"  border=\"0\" alt=\"online\" />" : "<img src=\"" . $INSTALLER09['pic_base_url'] . "user_offline.gif\" border=\"0\" alt=\"offline\" />") . "</td>" . "<td class=\"embedded\"><a href=\"{$INSTALLER09['baseurl']}/sendmessage.php?receiver=" . intval($arr['id']) . "\">" . "<img src=\"" . $INSTALLER09['pic_base_url'] . "pm.gif\" alt=\"Pm\" border=\"0\" /></a></td>" . "<td class=\"embedded\"><img src=\"" . $INSTALLER09['pic_base_url'] . "flag/$flag\" alt=\"" . $cname . "\" title=\"" . $cname . "\" border=\"0\" /></td>" . "<td class=\"embedded\">" . $arr['supportfor'] . "</td></tr>\n";
 }
 $HTMLOUT .= "<table width='725' cellspacing='0' align='center'>
 <tr>

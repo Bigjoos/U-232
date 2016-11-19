@@ -66,14 +66,14 @@ if ($action == "avatar") {
     }
     if (!empty($avatar)) {
         $img_size = @GetImageSize($avatar);
-        if ($img_size == FALSE || !in_array($img_size['mime'], $TBDEV['allowed_ext']))
+        if ($img_size == FALSE || !in_array($img_size['mime'], $INSTALLER09['allowed_ext']))
             stderr($lang['takeeditcp_user_error'], $lang['takeeditcp_image_error']);
         if ($img_size[0] < 5 || $img_size[1] < 5)
             stderr($lang['takeeditcp_user_error'], $lang['takeeditcp_small_image']);
-        if (($img_size[0] > $TBDEV['av_img_width']) OR ($img_size[1] > $TBDEV['av_img_height'])) {
+        if (($img_size[0] > $INSTALLER09['av_img_width']) OR ($img_size[1] > $INSTALLER09['av_img_height'])) {
             $image = resize_image(array(
-                'max_width' => $TBDEV['av_img_width'],
-                'max_height' => $TBDEV['av_img_height'],
+                'max_width' => $INSTALLER09['av_img_width'],
+                'max_height' => $INSTALLER09['av_img_height'],
                 'cur_width' => $img_size[0],
                 'cur_height' => $img_size[1]
             ));
@@ -101,14 +101,14 @@ elseif ($action == "signature") {
     }
     if (!empty($signature)) {
         $img_size = @GetImageSize($signature);
-        if ($img_size == FALSE || !in_array($img_size['mime'], $TBDEV['allowed_ext']))
+        if ($img_size == FALSE || !in_array($img_size['mime'], $INSTALLER09['allowed_ext']))
             stderr('USER ERROR', 'Not an image or unsupported image!');
         if ($img_size[0] < 5 || $img_size[1] < 5)
             stderr('USER ERROR', 'Image is too small');
-        if (($img_size[0] > $TBDEV['sig_img_width']) OR ($img_size[1] > $TBDEV['sig_img_height'])) {
+        if (($img_size[0] > $INSTALLER09['sig_img_width']) OR ($img_size[1] > $INSTALLER09['sig_img_height'])) {
             $image = resize_image(array(
-                'max_width' => $TBDEV['sig_img_width'],
-                'max_height' => $TBDEV['sig_img_height'],
+                'max_width' => $INSTALLER09['sig_img_width'],
+                'max_height' => $INSTALLER09['sig_img_height'],
                 'cur_width' => $img_size[0],
                 'cur_height' => $img_size[1]
             ));
@@ -187,12 +187,12 @@ elseif ($action == "signature") {
             '<#CHANGE_LINK#>'
         ), array(
             $CURUSER['username'],
-            $TBDEV['site_name'],
+            $INSTALLER09['site_name'],
             $email,
             $_SERVER['REMOTE_ADDR'],
-            "{$TBDEV['baseurl']}/confirmemail.php?uid={$CURUSER['id']}&key=$hash&email=$obemail"
+            "{$INSTALLER09['baseurl']}/confirmemail.php?uid={$CURUSER['id']}&key=$hash&email=$obemail"
         ), $lang['takeeditcp_email_body']);
-        mail($email, "$thisdomain {$lang['takeeditcp_confirm']}", $body, "From: {$TBDEV['site_email']}");
+        mail($email, "$thisdomain {$lang['takeeditcp_confirm']}", $body, "From: {$INSTALLER09['site_email']}");
         $urladd .= "&mailsent=1";
     }
     $action = "security";
@@ -262,5 +262,5 @@ elseif ($action == "signature") {
 //== End == then update the sets :)
 if (sizeof($updateset) > 0)
     sql_query("UPDATE users SET " . implode(",", $updateset) . " WHERE id = " . sqlesc($CURUSER["id"])) or sqlerr(__FILE__, __LINE__);
-header("Location: {$TBDEV['baseurl']}/usercp.php?edited=1&action=$action" . $urladd);
+header("Location: {$INSTALLER09['baseurl']}/usercp.php?edited=1&action=$action" . $urladd);
 ?>

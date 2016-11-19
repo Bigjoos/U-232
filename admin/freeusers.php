@@ -26,7 +26,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 require_once(INCL_DIR.'user_functions.php');
 
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $HTMLOUT = '';
 

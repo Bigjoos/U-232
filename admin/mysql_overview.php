@@ -48,7 +48,7 @@ class_check(UC_SYSOP);
         //all good? Do it!
         sql_query($sql) or sqlerr(__FILE__,__LINE__);
         
-        header("Location: {$TBDEV['baseurl']}/admin.php?action=mysql_overview&Do=F");
+        header("Location: {$INSTALLER09['baseurl']}/admin.php?action=mysql_overview&Do=F");
         exit;
         }
     }
@@ -126,7 +126,7 @@ class_check(UC_SYSOP);
 
     $count = 0;
     
-    $res = sql_query("SHOW TABLE STATUS FROM {$TBDEV['mysql_db']}") or stderr(__FILE__,__LINE__);
+    $res = sql_query("SHOW TABLE STATUS FROM {$INSTALLER09['mysql_db']}") or stderr(__FILE__,__LINE__);
     
     while ($row = mysqli_fetch_array($res)) 
     {

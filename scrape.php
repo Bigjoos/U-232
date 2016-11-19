@@ -9,12 +9,12 @@
 require_once("include/config.php");
 
 
-if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'],  $TBDEV['mysql_user'],  $TBDEV['mysql_pass'])))
+if (!@($GLOBALS["___mysqli_ston"] = mysqli_connect($INSTALLER09['mysql_host'],  $INSTALLER09['mysql_user'],  $INSTALLER09['mysql_pass'])))
   {
 	  exit();
   }
     
-  @((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE $TBDEV['mysql_db']")) or exit();
+  @((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE $INSTALLER09['mysql_db']")) or exit();
 
 function hash_where($name, $hash)
 {

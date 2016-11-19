@@ -40,17 +40,17 @@ $lang = array_merge( $lang );
 $HTMLOUT="";
  
 if (!min_class(UC_ADMINISTRATOR))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 function deletetorrent($id) {
-    global $TBDEV;
+    global $INSTALLER09;
     sql_query("DELETE FROM torrents WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM coins WHERE torrentid = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM bookmarks WHERE torrentid = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM snatched WHERE torrentid = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     foreach(explode(".","peers.files.comments.ratings") as $x)
         sql_query("DELETE FROM ".sqlesc($x)." WHERE torrent = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
-    unlink("{$TBDEV['torrent_dir']}/$id.torrent");
+    unlink("{$INSTALLER09['torrent_dir']}/$id.torrent");
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")

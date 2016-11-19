@@ -33,7 +33,7 @@ if (!$count) {
 } else {
     $pager = pager(20, $count, "mytorrents.php?");
     
-    $res = sql_query("SELECT torrents.type, torrents.sticky, torrents.nuked, torrents.descr, torrents.nukereason, torrents.free, torrents.comments, torrents.leechers, torrents.seeders, IF(torrents.numratings < {$TBDEV['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, torrents.id, categories.name AS cat_name, categories.image AS cat_pic, torrents.name, save_as, numfiles, added, size, views, visible, hits, times_completed, category, freeslots.tid, freeslots.uid, freeslots.free AS freeslot, freeslots.double AS doubleup FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN freeslots ON (torrents.id=freeslots.tid)$where ORDER BY id DESC " . $pager['limit']) or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT torrents.type, torrents.sticky, torrents.nuked, torrents.descr, torrents.nukereason, torrents.free, torrents.comments, torrents.leechers, torrents.seeders, IF(torrents.numratings < {$INSTALLER09['minvotes']}, NULL, ROUND(torrents.ratingsum / torrents.numratings, 1)) AS rating, torrents.id, categories.name AS cat_name, categories.image AS cat_pic, torrents.name, save_as, numfiles, added, size, views, visible, hits, times_completed, category, freeslots.tid, freeslots.uid, freeslots.free AS freeslot, freeslots.double AS doubleup FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN freeslots ON (torrents.id=freeslots.tid)$where ORDER BY id DESC " . $pager['limit']) or sqlerr(__FILE__, __LINE__);
     
     $HTMLOUT .= $pager['pagertop'];
     

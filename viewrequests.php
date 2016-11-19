@@ -24,11 +24,11 @@ loggedinorreturn();
 //parked();
 
 /** settings **/
-$TBDEV['req_comment_bonus'] = 10; // amount karma received when fill request, default: 10
-$TBDEV['req_cost_bonus']    = 5; // amount karma to make request, default: 5
-$TBDEV['req_min_class']     = UC_USER; // minimum class needed to use requests, default: UC_USER
-$TBDEV['req_gigs_upped']    = 10; // Upload amount in GB, default: 10
-$TBDEV['req_min_ratio']     = 0.5; // min ratio needed to use requests, default: 0.5
+$INSTALLER09['req_comment_bonus'] = 10; // amount karma received when fill request, default: 10
+$INSTALLER09['req_cost_bonus']    = 5; // amount karma to make request, default: 5
+$INSTALLER09['req_min_class']     = UC_USER; // minimum class needed to use requests, default: UC_USER
+$INSTALLER09['req_gigs_upped']    = 10; // Upload amount in GB, default: 10
+$INSTALLER09['req_min_ratio']     = 0.5; // min ratio needed to use requests, default: 0.5
 
 
 $lang = array_merge(load_language('global'), load_language('requests'));

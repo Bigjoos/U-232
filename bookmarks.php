@@ -21,14 +21,14 @@ $htmlout='';
 
 function bookmarktable($res, $variant = "index")
 {
-global $TBDEV, $CURUSER, $lang;
+global $INSTALLER09, $CURUSER, $lang;
    $htmlout = '';
    $htmlout .= "
    <span>Icon Legend :
-   <img src='{$TBDEV['pic_base_url']}plus.gif' alt='Delete Bookmark' border='none' /> = Delete Bookmark |
-   <img src='{$TBDEV['pic_base_url']}download.gif' alt='Download Bookmark' border='none' />= Download Torrent |
-   <img alt='Bookmark is Private' src='{$TBDEV['pic_base_url']}key.gif' border='none'  /> = Bookmark is Private |
-   <img src='{$TBDEV['pic_base_url']}public.gif' alt='Bookmark is Public' border='none'  /> = Bookmark is Public</span>
+   <img src='{$INSTALLER09['pic_base_url']}plus.gif' alt='Delete Bookmark' border='none' /> = Delete Bookmark |
+   <img src='{$INSTALLER09['pic_base_url']}download.gif' alt='Download Bookmark' border='none' />= Download Torrent |
+   <img alt='Bookmark is Private' src='{$INSTALLER09['pic_base_url']}key.gif' border='none'  /> = Bookmark is Private |
+   <img src='{$INSTALLER09['pic_base_url']}public.gif' alt='Bookmark is Public' border='none'  /> = Bookmark is Public</span>
    <table border='1' cellspacing='0' cellpadding='5'>
    <tr>
    <td class='colhead' align='center'>{$lang["torrenttable_type"]}</td>
@@ -66,7 +66,7 @@ global $TBDEV, $CURUSER, $lang;
         {
             $htmlout .= "<a href='browse.php?cat=".intval($row['category'])."'>";
             if (isset($row["cat_pic"]) && $row["cat_pic"] != "")
-                $htmlout .= "<img border='0' src='{$TBDEV['pic_base_url']}caticons/".htmlspecialchars($row['cat_pic'])."' alt='".htmlspecialchars($row['cat_name'])."' />";
+                $htmlout .= "<img border='0' src='{$INSTALLER09['pic_base_url']}caticons/".htmlspecialchars($row['cat_pic'])."' alt='".htmlspecialchars($row['cat_name'])."' />";
             else
             {
                 $htmlout .= htmlspecialchars($row["cat_name"]);
@@ -90,21 +90,21 @@ global $TBDEV, $CURUSER, $lang;
       
       $htmlout .= "'><b>$dispname</b></a>&nbsp;</td>\n";
 
-      $htmlout.= ($variant == "index" ? "<td align='center'><a href='bookmark.php?torrent=".$id."&amp;action=delete'><img src='".$TBDEV['pic_base_url']."plus.gif' border='0' alt='Delete Bookmark!' title='Delete Bookmark!' /></a></td>" : "");
+      $htmlout.= ($variant == "index" ? "<td align='center'><a href='bookmark.php?torrent=".$id."&amp;action=delete'><img src='".$INSTALLER09['pic_base_url']."plus.gif' border='0' alt='Delete Bookmark!' title='Delete Bookmark!' /></a></td>" : "");
 
-      $htmlout.= ($variant == "index" ? "<td align='center'><a href='download.php?torrent=".$id."'><img src='".$TBDEV['pic_base_url']."download.gif' border='0' alt='Download Bookmark!' title='Download Bookmark!' /></a></td>" : "");
+      $htmlout.= ($variant == "index" ? "<td align='center'><a href='download.php?torrent=".$id."'><img src='".$INSTALLER09['pic_base_url']."download.gif' border='0' alt='Download Bookmark!' title='Download Bookmark!' /></a></td>" : "");
 
   
         $bm = sql_query("SELECT * FROM bookmarks WHERE torrentid=".sqlesc($id)." && userid=".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 		    $bms = mysqli_fetch_assoc($bm);    
         if ($bms['private'] == 'yes' && $bms['userid'] == $CURUSER['id']) {
-        $makepriv = "<a href='bookmark.php?torrent=".$id."&amp;action=public'><img src='".$TBDEV['pic_base_url']."key.gif' border='0' alt='Mark Bookmark Public!' title='Mark Bookmark Public!' /></a>";
+        $makepriv = "<a href='bookmark.php?torrent=".$id."&amp;action=public'><img src='".$INSTALLER09['pic_base_url']."key.gif' border='0' alt='Mark Bookmark Public!' title='Mark Bookmark Public!' /></a>";
             
         $htmlout.="". ($variant == "index" ? "<td align='center'>".$makepriv."</td>" : "");
         }
         elseif ($bms['private'] == 'no' && $bms['userid'] == $CURUSER['id'])
         {
-        $makepriv = "<a href='bookmark.php?torrent=".$id."&amp;action=private'><img src='".$TBDEV['pic_base_url']."public.gif' border='0' alt='Mark Bookmark Private!' title='Mark Bookmark Private!' /></a>";
+        $makepriv = "<a href='bookmark.php?torrent=".$id."&amp;action=private'><img src='".$INSTALLER09['pic_base_url']."public.gif' border='0' alt='Mark Bookmark Private!' title='Mark Bookmark Private!' /></a>";
         $htmlout.="". ($variant == "index" ? "<td align='center'>".$makepriv."</td>" : "");
         }    
 

@@ -42,7 +42,7 @@ if ($CURUSER['username'] != $Name) {
 
 $_SESSION['picname'] = $Name;
 $PICSALT             = $CURUSER['username'] . $SaLt;
-$address             = $TBDEV['baseurl'] . '/';
+$address             = $INSTALLER09['baseurl'] . '/';
 
 if (isset($_GET["delete"]) && ($CURUSER['class'] >= UC_STAFF)) {
     $getfile = htmlspecialchars($_GET['delete']);
@@ -62,9 +62,9 @@ if (isset($_GET["delete"]) && ($CURUSER['class'] >= UC_STAFF)) {
         stderr($lang['userimages_hey'], "{$lang['userimages_imagenf']}");
     
     if (isset($_GET["type"]) && $_GET["type"] == 2)
-        header("Refresh: 2; url={$TBDEV['baseurl']}/userimages.php?images=2&user=".$_SESSION['picname']."");
+        header("Refresh: 2; url={$INSTALLER09['baseurl']}/userimages.php?images=2&user=".$_SESSION['picname']."");
     else
-        header("Refresh: 2; url={$TBDEV['baseurl']}/userimages.php?images=1&user=".$_SESSION['picname']."");
+        header("Refresh: 2; url={$INSTALLER09['baseurl']}/userimages.php?images=1&user=".$_SESSION['picname']."");
     die('Deleting Image (' . $delfile . '), Redirecting...');
 }
 
@@ -74,7 +74,7 @@ if (isset($_GET["avatar"]) && $_GET["avatar"] != '' && (($_GET["avatar"]) != $CU
         stderr($lang['userimages_error'], "{$lang['userimages_mustbe']}");
     $avatar = htmlspecialchars($_GET['avatar']);
     sql_query("UPDATE users SET avatar = " . sqlesc($avatar) . " WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
-    header("Refresh: 0; url={$TBDEV['baseurl']}/userimages.php?images=$type&updated=avatar&user=".$_SESSION['picname']."");
+    header("Refresh: 0; url={$INSTALLER09['baseurl']}/userimages.php?images=$type&updated=avatar&user=".$_SESSION['picname']."");
 }
 if (isset($_GET["updated"]) && $_GET["updated"] == 'avatar') {
     $HTMLOUT .= "<h3>{$lang['userimages_updated']}<p><img src=\"" . htmlspecialchars($CURUSER['avatar']) . "\" border=\"0\" alt=\"\" /></p></h3>";
@@ -88,14 +88,14 @@ document.getElementById(id).select();
 }
 </script>";
 if (isset($_GET['images']) && $_GET['images'] == 1) {
-    $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?images=2&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_avvy']}</a></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?user={$Name}\">{$lang['userimages_hide']} {$Name} {$lang['userimages_images']}</a></p>";
+    $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?images=2&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_avvy']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?user={$Name}\">{$lang['userimages_hide']} {$Name} {$lang['userimages_images']}</a></p>";
 } elseif (isset($_GET['images']) && $_GET['images'] == 2) {
-    $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?images=1&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_images']}</a></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?user={$Name}\">{$lang['userimages_hide']} {$Name} {$lang['userimages_avvy']}</a></p>";
+    $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?images=1&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_images']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?user={$Name}\">{$lang['userimages_hide']} {$Name} {$lang['userimages_avvy']}</a></p>";
 } else {
-    $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?images=1&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_images']}</a></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?images=2&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_avvy']}</a></p>";
+    $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?images=1&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_images']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?images=2&amp;user={$Name}\">{$lang['userimages_view']} {$Name} {$lang['userimages_avvy']}</a></p>";
 }
 
 if (isset($_GET['images'])) {
@@ -103,16 +103,16 @@ if (isset($_GET['images'])) {
         if (!empty($filename)) {
             $encryptedfilename = urlencode(encrypt($filename));
             $eid               = md5($filename);
-            $HTMLOUT .= "<a href=\"{$TBDEV['baseurl']}/{$filename}\"><img src=\"{$TBDEV['baseurl']}/{$filename}\" width=\"200\" alt=\"\" /><br />{$TBDEV['baseurl']}/{$filename}</a><br />";
+            $HTMLOUT .= "<a href=\"{$INSTALLER09['baseurl']}/{$filename}\"><img src=\"{$INSTALLER09['baseurl']}/{$filename}\" width=\"200\" alt=\"\" /><br />{$INSTALLER09['baseurl']}/{$filename}</a><br />";
             
             
             
             $HTMLOUT .= "<p>{$lang['userimages_directlink']}<br />
-<input style=\"font-size: 9pt;text-align: center;\" id=\"d" . $eid . "d\" onclick=\"SelectAll('d" . $eid . "d');\" type=\"text\" size=\"70\" value=\"{$TBDEV['baseurl']}/{$filename}\" readonly=\"readonly\" /></p>
+<input style=\"font-size: 9pt;text-align: center;\" id=\"d" . $eid . "d\" onclick=\"SelectAll('d" . $eid . "d');\" type=\"text\" size=\"70\" value=\"{$INSTALLER09['baseurl']}/{$filename}\" readonly=\"readonly\" /></p>
 <p align=\"center\">{$lang['userimages_tag']}<br />
-<input style=\"font-size: 9pt;text-align: center;\" id=\"t" . $eid . "t\" onclick=\"SelectAll('t" . $eid . "t');\" type=\"text\" size=\"70\" value=\"[img]{$TBDEV['baseurl']}/{$filename}[/img]\" readonly=\"readonly\" /></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;avatar={$TBDEV['baseurl']}/{$filename}\">{$lang['userimages_maketma']}</a></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/userimages.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;delete={$encryptedfilename}&amp;delhash=" . md5($filename . $_SESSION['picname'] . $skey) . "\">{$lang['userimages_delete']}</a></p>
+<input style=\"font-size: 9pt;text-align: center;\" id=\"t" . $eid . "t\" onclick=\"SelectAll('t" . $eid . "t');\" type=\"text\" size=\"70\" value=\"[img]{$INSTALLER09['baseurl']}/{$filename}[/img]\" readonly=\"readonly\" /></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;avatar={$INSTALLER09['baseurl']}/{$filename}\">{$lang['userimages_maketma']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/userimages.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;delete={$encryptedfilename}&amp;delhash=" . md5($filename . $_SESSION['picname'] . $skey) . "\">{$lang['userimages_delete']}</a></p>
 <br />";
         } else
             $HTMLOUT .= "{$lang['userimages_noimage']}";

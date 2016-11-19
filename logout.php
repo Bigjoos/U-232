@@ -9,5 +9,5 @@
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'bittorrent.php');
 dbconn();
 logoutcookie();
-Header("Location: {$TBDEV['baseurl']}/");
+Header("Location: {$INSTALLER09['baseurl']}/");
 ?>

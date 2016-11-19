@@ -34,7 +34,7 @@ function bark($msg)
 
 function snatchtable($res)
 {
-    global $TBDEV, $lang;
+    global $INSTALLER09, $lang;
     $htmlout = '';
     $htmlout = "<table class='main' border='1' cellspacing='0' cellpadding='5'>
  <tr>
@@ -74,7 +74,7 @@ function snatchtable($res)
 
 function maketable($res)
 {
-    global $TBDEV, $lang;
+    global $INSTALLER09, $lang;
     
     $htmlout = '';
     
@@ -87,7 +87,7 @@ function maketable($res)
             $ratio = "{$lang['userdetails_inf']}";
         else
             $ratio = "---";
-        $catimage   = "{$TBDEV['pic_base_url']}caticons/{$arr['image']}";
+        $catimage   = "{$INSTALLER09['pic_base_url']}caticons/{$arr['image']}";
         $catname    = htmlspecialchars($arr["catname"]);
         $catimage   = "<img src=\"" . htmlspecialchars($catimage) . "\" title=\"$catname\" alt=\"$catname\" width='42' height='42' />";
         $size       = str_replace(" ", "<br />", mksize($arr["size"]));
@@ -129,7 +129,7 @@ $r = sql_query("SELECT t.id, t.name, t.seeders, t.leechers, c.name AS cname, c.i
 if (mysqli_num_rows($r) > 0) {
     $torrents = "<table class='main' border='1' cellspacing='0' cellpadding='5'>\n" . "<tr><td class='colhead'>{$lang['userdetails_type']}</td><td class='colhead'>{$lang['userdetails_name']}</td><td class='colhead'>{$lang['userdetails_seeders']}</td><td class='colhead'>{$lang['userdetails_leechers']}</td></tr>\n";
     while ($a = mysqli_fetch_assoc($r)) {
-        $cat = "<img src=\"{$TBDEV['pic_base_url']}caticons/" . htmlspecialchars($a['image']) . "\" title=\"" . htmlspecialchars($a['cname']) . "\" alt=\"" . htmlspecialchars($a['cname']) . "\" />";
+        $cat = "<img src=\"{$INSTALLER09['pic_base_url']}caticons/" . htmlspecialchars($a['image']) . "\" title=\"" . htmlspecialchars($a['cname']) . "\" alt=\"" . htmlspecialchars($a['cname']) . "\" />";
         $torrents .= "<tr><td style='padding: 0px'>$cat</td><td><a href='details.php?id=" . intval($a['id']) . "&amp;hit=1'><b>" . htmlspecialchars($a["name"]) . "</b></a></td>" . "<td align='right'>" . intval($a['seeders']) . "</td><td align='right'>" . intval($a['leechers']) . "</td></tr>\n";
     }
     $torrents .= "</table>";
@@ -166,7 +166,7 @@ $country = '';
 $res = sql_query("SELECT name,flagpic FROM countries WHERE id=" . sqlesc($user['country']) . " LIMIT 1") or sqlerr(__FILE__, __LINE__);
 if (mysqli_num_rows($res) == 1) {
     $arr     = mysqli_fetch_assoc($res);
-    $country = "<td class='embedded'><img src=\"{$TBDEV['pic_base_url']}flag/" . htmlspecialchars($arr['flagpic']) . "\" alt=\"" . htmlspecialchars($arr['name']) . "\" style='margin-left: 8pt' /></td>";
+    $country = "<td class='embedded'><img src=\"{$INSTALLER09['pic_base_url']}flag/" . htmlspecialchars($arr['flagpic']) . "\" alt=\"" . htmlspecialchars($arr['name']) . "\" style='margin-left: 8pt' /></td>";
 }
 
 
@@ -187,7 +187,7 @@ if ($user['anonymous'] == 'yes' && ($CURUSER['class'] < UC_STAFF && $user["id"] 
         $HTMLOUT .= "<tr><td colspan='2' align='center'><img src='" . htmlspecialchars($user["avatar"]) . "'></td></tr>\n";
     if ($user["info"])
         $HTMLOUT .= "<tr valign='top'><td align='left' colspan='2' class=text bgcolor='#F4F4F0'>'" . format_comment($user["info"]) . "'</td></tr>\n";
-    $HTMLOUT .= "<tr><td colspan='2' align='center'><form method='get' action='{$TBDEV['baseurl']}/sendmessage.php'><input type='hidden' name='receiver' value='" . intval($user["id"]) . "' /><input type='submit' value='{$lang['userdetails_sendmess']}' style='height: 23px' /></form>";
+    $HTMLOUT .= "<tr><td colspan='2' align='center'><form method='get' action='{$INSTALLER09['baseurl']}/sendmessage.php'><input type='hidden' name='receiver' value='" . intval($user["id"]) . "' /><input type='submit' value='{$lang['userdetails_sendmess']}' style='height: 23px' /></form>";
     if ($CURUSER['class'] < UC_STAFF && $user["id"] != $CURUSER["id"]) {
         $HTMLOUT .= end_main_frame();
         echo stdhead('Anonymous user') . $HTMLOUT . stdfoot();
@@ -227,19 +227,19 @@ if ($user["donor"] && $CURUSER["id"] == $user["id"] || $CURUSER["class"] == UC_S
         $HTMLOUT .= "";
     else {
         $HTMLOUT .= "<b>Donated Status Until - " . get_date($user['donoruntil'], 'DATE') . "";
-        $HTMLOUT .= " [ " . mkprettytime($donoruntil - TIME_NOW) . " ] To go...</b><font size=\"-2\"> To re-new your donation click <a class='altlink' href='{$TBDEV['baseurl']}/donate.php'>Here</a>.</font><br /><br />\n";
+        $HTMLOUT .= " [ " . mkprettytime($donoruntil - TIME_NOW) . " ] To go...</b><font size=\"-2\"> To re-new your donation click <a class='altlink' href='{$INSTALLER09['baseurl']}/donate.php'>Here</a>.</font><br /><br />\n";
     }
 }
 
 if ($CURUSER['id'] == $user['id'])
-    $HTMLOUT .= "<h1><a href='{$TBDEV['baseurl']}/usercp.php'>Edit My Profile</a></h1>
- 	  <h1><a href='{$TBDEV['baseurl']}/view_announce_history.php'>View My Announcements</a></h1>";
+    $HTMLOUT .= "<h1><a href='{$INSTALLER09['baseurl']}/usercp.php'>Edit My Profile</a></h1>
+ 	  <h1><a href='{$INSTALLER09['baseurl']}/view_announce_history.php'>View My Announcements</a></h1>";
 
 if ($CURUSER['class'] >= UC_STAFF)
-    $HTMLOUT .= "<h1><a href='{$TBDEV['baseurl']}/userimages.php?user=" . htmlspecialchars($user['username']) . "'>{$lang['userdetails_viewimages']}</a></h1>";
+    $HTMLOUT .= "<h1><a href='{$INSTALLER09['baseurl']}/userimages.php?user=" . htmlspecialchars($user['username']) . "'>{$lang['userdetails_viewimages']}</a></h1>";
 
 if ($CURUSER['id'] != $user['id'])
-    $HTMLOUT .= "<h1><a href='{$TBDEV['baseurl']}/sharemarks.php?id=$id'>View sharemarks</a></h1>\n";
+    $HTMLOUT .= "<h1><a href='{$INSTALLER09['baseurl']}/sharemarks.php?id=$id'>View sharemarks</a></h1>\n";
 
 $HTMLOUT .= begin_main_frame();
 
@@ -247,7 +247,7 @@ $HTMLOUT .= "<table width='100%' border='1' cellspacing='0' cellpadding='5'>";
 /* flush all torrents mod */
 if ($CURUSER['class'] >= UC_STAFF) {
     $un = $user["username"];
-    $HTMLOUT .= "<tr><td class='rowhead' width='1%'>{$lang['userdetails_flush']}</td><td align='left' width='99%'>" . ("{$lang['userdetails_flush1']}<a href='{$TBDEV['baseurl']}/admin.php?action=flush&amp;id=$id'><b>" . htmlspecialchars($un) . "</b></a>\n") . "</td></tr>";
+    $HTMLOUT .= "<tr><td class='rowhead' width='1%'>{$lang['userdetails_flush']}</td><td align='left' width='99%'>" . ("{$lang['userdetails_flush1']}<a href='{$INSTALLER09['baseurl']}/admin.php?action=flush&amp;id=$id'><b>" . htmlspecialchars($un) . "</b></a>\n") . "</td></tr>";
 }
 $HTMLOUT .= "<tr><td class='rowhead' width='1%'>{$lang['userdetails_joined']}</td><td align='left' width='99%'>{$joindate}</td></tr>
     <tr><td class='rowhead'>{$lang['userdetails_seen']}</td><td align='left'>{$lastseen}</td></tr>";
@@ -256,20 +256,20 @@ $HTMLOUT .= "<tr><td class='rowhead' valign='top' align='right' width='1%'>{$lan
     </td></tr>";
 
 if ($CURUSER['class'] >= UC_STAFF)
-    $HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_email']}</td><td align='left'><a href='{$TBDEV['baseurl']}/email-gateway.php?id=" . intval($user['id']) . "'>" . htmlspecialchars($user['email']) . "</a></td></tr>\n";
+    $HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_email']}</td><td align='left'><a href='{$INSTALLER09['baseurl']}/email-gateway.php?id=" . intval($user['id']) . "'>" . htmlspecialchars($user['email']) . "</a></td></tr>\n";
 if (isset($addr))
     $HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_address']}</td><td align='left'>$addr</td></tr>\n";
 if ($CURUSER["class"] >= UC_STAFF) {
     $resip = sql_query("SELECT ip FROM iplog WHERE userid = " . sqlesc($id) . " GROUP BY ip") or sqlerr(__FILE__, __LINE__);
     $iphistory = mysqli_num_rows($resip);
     if ($iphistory > 0)
-        $HTMLOUT .= "<tr><td class='rowhead'>IP History</td><td align='left'>This user has earlier used <b><a href='{$TBDEV['baseurl']}/admin.php?action=iphistory&amp;id=" . intval($user['id']) . "'>{$iphistory} different IP addresses</a></b></td></tr>\n";
+        $HTMLOUT .= "<tr><td class='rowhead'>IP History</td><td align='left'>This user has earlier used <b><a href='{$INSTALLER09['baseurl']}/admin.php?action=iphistory&amp;id=" . intval($user['id']) . "'>{$iphistory} different IP addresses</a></b></td></tr>\n";
 }
 
 $days = round((time() - $user['added']) / 86400);
 $HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_downloaded']}</td><td align='left'>" . mksize($user['downloaded']) . " {$lang['userdetails_daily']}" . ($days > 1 ? mksize($user['downloaded'] / $days) : mksize($user['downloaded'])) . "</td></tr>
     <tr><td class='rowhead'>{$lang['userdetails_uploaded']}</td><td align='left'>" . mksize($user['uploaded']) . " {$lang['userdetails_daily']}" . ($days > 1 ? mksize($user['uploaded'] / $days) : mksize($user['uploaded'])) . "</td></tr>\n";
-if (!$TBDEV['coins']) {
+if (!$INSTALLER09['coins']) {
     if ($user["downloaded"] > 0) {
         $sr = $user["uploaded"] / $user["downloaded"];
         if ($sr >= 4)
@@ -285,24 +285,24 @@ if (!$TBDEV['coins']) {
         else
             $s = "cry";
         $sr = floor($sr * 1000) / 1000;
-        $sr = "<table border='0' cellspacing='0' cellpadding='0'><tr><td class='embedded'><font color='" . get_ratio_color($sr) . "'>" . number_format($sr, 3) . "</font></td><td class='embedded'>&nbsp;&nbsp;<img src=\"{$TBDEV['pic_base_url']}smilies/{$s}.gif\" alt='' /></td></tr></table>";
+        $sr = "<table border='0' cellspacing='0' cellpadding='0'><tr><td class='embedded'><font color='" . get_ratio_color($sr) . "'>" . number_format($sr, 3) . "</font></td><td class='embedded'>&nbsp;&nbsp;<img src=\"{$INSTALLER09['pic_base_url']}smilies/{$s}.gif\" alt='' /></td></tr></table>";
         $HTMLOUT .= "<tr><td class='rowhead' style='vertical-align: middle'>Share ratio</td><td align='left' valign='middle' style='padding-top: 1px; padding-bottom: 0px'>$sr</td></tr>\n";
     }
 } else {
     $HTMLOUT .= "<tr><td class='rowhead'>Coins</td><td align='left'>" . (int) $user["coins"] . "</td></tr>";
 }
-$HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_bonus_points']}</td><td align='left'><a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>" . (int) $user['seedbonus'] . "</a></td></tr>";
+$HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_bonus_points']}</td><td align='left'><a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>" . (int) $user['seedbonus'] . "</a></td></tr>";
 //==Connectable and port shit
 $q1 = sql_query('SELECT connectable, port,agent FROM peers WHERE userid = ' . sqlesc($id) . ' LIMIT 1') or sqlerr(__FILE__, __LINE__);
 if ($a = mysqli_fetch_row($q1)) {
     $connect = $a[0];
     if ($connect == "yes") {
-        $connectable = "<img src='{$TBDEV['pic_base_url']}tick.png' alt='Yes' title='Sorted Yer connectable' style='border:none;padding:2px;' /><font color='green'><b>{$lang['userdetails_yes']}</b></font>";
+        $connectable = "<img src='{$INSTALLER09['pic_base_url']}tick.png' alt='Yes' title='Sorted Yer connectable' style='border:none;padding:2px;' /><font color='green'><b>{$lang['userdetails_yes']}</b></font>";
     } else {
-        $connectable = "<img src='{$TBDEV['pic_base_url']}cross.png' alt='No' title='Contact Site Staff' style='border:none;padding:2px;' /><font color='red'><b>{$lang['userdetails_no']}</b></font>";
+        $connectable = "<img src='{$INSTALLER09['pic_base_url']}cross.png' alt='No' title='Contact Site Staff' style='border:none;padding:2px;' /><font color='red'><b>{$lang['userdetails_no']}</b></font>";
     }
 } else {
-    $connectable = "<img src='{$TBDEV['pic_base_url']}smilies/unsure.gif' alt='Unknown' title='Not connected To Peers' style='border:none;padding:2px;' /><font color='blue'><b>{$lang['userdetails_unknown']}</b></font>";
+    $connectable = "<img src='{$INSTALLER09['pic_base_url']}smilies/unsure.gif' alt='Unknown' title='Not connected To Peers' style='border:none;padding:2px;' /><font color='blue'><b>{$lang['userdetails_unknown']}</b></font>";
 }
 $HTMLOUT .= "<tr><td class='rowhead'>{$lang['userdetails_connectable']}</td><td align='left'>" . $connectable . "</td></tr>";
 $port  = $a[1];
@@ -406,8 +406,8 @@ if ($CURUSER['class'] >= UC_STAFF) {
             else
                 $ratio = "N/A";
             
-            $HTMLOUT .= "<tr><td class='$class' align='center'>" . ($arr['owner'] == $id ? "<b><font color='orange'>Torrent owner</font></b><br />" : "" . ($arr['complete_date'] != '0' ? "<b><font color='lightgreen'>Finished</font></b><br />" : "<b><font color='red'>Not Finished</font></b><br />") . "") . "<img src='{$TBDEV['pic_base_url']}caticons/" . htmlspecialchars($arr['image']) . "' alt='" . htmlspecialchars($arr['name']) . "' title='" . htmlspecialchars($arr['name']) . "' /></td>" . "
-    <td class='$class'><a class='altlink' href='{$TBDEV['baseurl']}/details.php?id=" . intval($arr['torrentid']) . "'><b>" . htmlspecialchars($arr['torrent_name']) . "</b></a>" . ($arr['complete_date'] != '0' ? "<br />" . "
+            $HTMLOUT .= "<tr><td class='$class' align='center'>" . ($arr['owner'] == $id ? "<b><font color='orange'>Torrent owner</font></b><br />" : "" . ($arr['complete_date'] != '0' ? "<b><font color='lightgreen'>Finished</font></b><br />" : "<b><font color='red'>Not Finished</font></b><br />") . "") . "<img src='{$INSTALLER09['pic_base_url']}caticons/" . htmlspecialchars($arr['image']) . "' alt='" . htmlspecialchars($arr['name']) . "' title='" . htmlspecialchars($arr['name']) . "' /></td>" . "
+    <td class='$class'><a class='altlink' href='{$INSTALLER09['baseurl']}/details.php?id=" . intval($arr['torrentid']) . "'><b>" . htmlspecialchars($arr['torrent_name']) . "</b></a>" . ($arr['complete_date'] != '0' ? "<br />" . "
     <font color='yellow'>started: " . get_date($arr['start_date'], 0, 1) . "</font><br />
     " : " " . "<font color='yellow'>started:" . get_date($arr['start_date'], 0, 1) . "</font><br /><font color='orange'>Last Action:" . get_date($arr['last_action'], 0, 1) . "</font>" . " 
     " . get_date($arr['complete_date'], 0, 1) . " " . ($arr['complete_date'] == '0' ? "" . ($arr['owner'] == $id ? "" : "[ " . mksize($arr["size"] - $arr["downloaded"]) . " still to go ]") . "" : "") . "") . " " . get_date($arr['complete_date'], 0, 1) . " " . ($arr['complete_date'] != '0' ? "<br />" . "
@@ -518,11 +518,11 @@ if (mysqli_num_rows($r) > 0) {
                 break;
         }
         //=== mark of cain / hit and run
-        $checkbox_for_delete = ($CURUSER['class'] >= UC_STAFF ? " [<a href='" . $TBDEV['baseurl'] . "/userdetails.php?id=" . $id . "&amp;delete_hit_and_run=" . intval($a['id']) . "'>Remove</a>]" : '');
-        $mark_of_cain        = ($a['mark_of_cain'] == 'yes' ? "<img src='{$TBDEV['pic_base_url']}moc.gif' alt='Mark Of Cain' title='The mark of Cain!' />" . $checkbox_for_delete : '');
-        $hit_n_run           = ($a['hit_and_run'] > 0 ? "<img src='{$TBDEV['pic_base_url']}hnr.gif' alt='Hit and run' title='Hit and run!' />" : '');
-        $completed .= "<tr><td style='padding: 0px' class='$class'><img src='{$TBDEV['pic_base_url']}caticons/" . htmlspecialchars($a['image']) . "' alt='" . htmlspecialchars($a['name']) . "' title='" . htmlspecialchars($a['name']) . "' /></td>
-    <td class='$class'><a class='altlink' href='{$TBDEV['baseurl']}/details.php?id=" . intval($a['tid']) . "&amp;hit=1'><b>" . htmlspecialchars($a['name']) . "</b></a>
+        $checkbox_for_delete = ($CURUSER['class'] >= UC_STAFF ? " [<a href='" . $INSTALLER09['baseurl'] . "/userdetails.php?id=" . $id . "&amp;delete_hit_and_run=" . intval($a['id']) . "'>Remove</a>]" : '');
+        $mark_of_cain        = ($a['mark_of_cain'] == 'yes' ? "<img src='{$INSTALLER09['pic_base_url']}moc.gif' alt='Mark Of Cain' title='The mark of Cain!' />" . $checkbox_for_delete : '');
+        $hit_n_run           = ($a['hit_and_run'] > 0 ? "<img src='{$INSTALLER09['pic_base_url']}hnr.gif' alt='Hit and run' title='Hit and run!' />" : '');
+        $completed .= "<tr><td style='padding: 0px' class='$class'><img src='{$INSTALLER09['pic_base_url']}caticons/" . htmlspecialchars($a['image']) . "' alt='" . htmlspecialchars($a['name']) . "' title='" . htmlspecialchars($a['name']) . "' /></td>
+    <td class='$class'><a class='altlink' href='{$INSTALLER09['baseurl']}/details.php?id=" . intval($a['tid']) . "&amp;hit=1'><b>" . htmlspecialchars($a['name']) . "</b></a>
     <br /><font color='.$color.'>  " . (($CURUSER['class'] >= UC_STAFF || $user['id'] == $CURUSER['id']) ? "seeded for</font>: " . mkprettytime($a['seedtime']) . (($minus_ratio != '0:00' && $a['uploaded'] < $a['downloaded']) ? "<br />should still seed for: " . $minus_ratio . "&nbsp;&nbsp;" : '') . ($a['seeder'] == 'yes' ? "&nbsp;<font color='limegreen'> [<b>seeding</b>]</font>" : $hit_n_run . "&nbsp;" . $mark_of_cain) : '') . "</td>
     <td align='center' class='$class'>" . intval($a['seeders']) . "</td>
     <td align='center' class='$class'>" . intval($a['leechers']) . "</td>
@@ -906,7 +906,7 @@ if ($CURUSER['class'] >= UC_STAFF && $user["class"] < $CURUSER['class']) {
         $HTMLOUT .= "<tr>
       <td class='rowhead'>{$lang['userdetails_addupload']}</td>
       <td align='center'>
-      <img src='{$TBDEV['pic_base_url']}plus.gif' alt='Change Ratio' title='Change Ratio !' id='uppic' onclick=\"togglepic('{$TBDEV['baseurl']}', 'uppic','upchange')\" /> 
+      <img src='{$INSTALLER09['pic_base_url']}plus.gif' alt='Change Ratio' title='Change Ratio !' id='uppic' onclick=\"togglepic('{$INSTALLER09['baseurl']}', 'uppic','upchange')\" /> 
       <input type='text' name='amountup' size='10' />
       </td>
       <td>
@@ -919,7 +919,7 @@ if ($CURUSER['class'] >= UC_STAFF && $user["class"] < $CURUSER['class']) {
       <tr>
       <td class='rowhead'>{$lang['userdetails_adddownload']}</td>
       <td align='center'>
-      <img src='{$TBDEV['pic_base_url']}plus.gif' alt='Change Ratio' title='Change Ratio !' id='downpic' onclick=\"togglepic('{$TBDEV['baseurl']}','downpic','downchange')\" /> 
+      <img src='{$INSTALLER09['pic_base_url']}plus.gif' alt='Change Ratio' title='Change Ratio !' id='downpic' onclick=\"togglepic('{$INSTALLER09['baseurl']}','downpic','downchange')\" /> 
       <input type='text' name='amountdown' size='10' />
       </td>
       <td>
@@ -939,7 +939,7 @@ if ($CURUSER['class'] >= UC_STAFF && $user["class"] < $CURUSER['class']) {
 		<table cellpadding='5' border='0' style='margin:3px;' >";
         $i = 1;
         while ($a = mysqli_fetch_assoc($r)) {
-            $HTMLOUT .= "<tr><td style='border-width: 1px 0px 0px 0px;border-style:dotted;' width='100%'><a href='{$TBDEV['baseurl']}/forums.php?action=viewforum&amp;forumid=" . intval($a["id"]) . "'>" . htmlspecialchars($a["name"]) . "</a><br />
+            $HTMLOUT .= "<tr><td style='border-width: 1px 0px 0px 0px;border-style:dotted;' width='100%'><a href='{$INSTALLER09['baseurl']}/forums.php?action=viewforum&amp;forumid=" . intval($a["id"]) . "'>" . htmlspecialchars($a["name"]) . "</a><br />
     <font style='font-size:10px; padding-left:15px;'>" . (strlen($a["description"]) > 80 ? substr($a["description"], 0, 80) . "..." : $a["description"]) . "</font>
     </td>
     <td nowrap='nowrap' align='right' style='border:none; border-width: 1px 0px 0px 0px;border-style:dotted'>

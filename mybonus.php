@@ -38,16 +38,16 @@ if($freeleech_success == '1'){
 
 if ($_GET["norefund"] != '0') {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}/smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
-$CURUSER[username] you have set the tracker <b>Free Leech !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next freeleech period automatically!".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}/smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
+$CURUSER[username] you have set the tracker <b>Free Leech !</b> <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next freeleech period automatically!".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 } else {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
-$CURUSER[username] you have set the tracker <b>Free Leech !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
+$CURUSER[username] you have set the tracker <b>Free Leech !</b> <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 }
@@ -56,9 +56,9 @@ die;
 }
 if($freeleech_success == '2'){
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>".
-"$CURUSER[username] you have contributed towards making the tracker Free Leech ! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>".
+"$CURUSER[username] you have contributed towards making the tracker Free Leech ! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
@@ -73,16 +73,16 @@ if($doubleup_success == '1'){
 
 if ($_GET["norefund"] != '0') {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
-$CURUSER[username] you have set the tracker <b>Double Up !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next Double upload period automatically!".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
+$CURUSER[username] you have set the tracker <b>Double Up !</b> <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next Double upload period automatically!".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 } else {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
-$CURUSER[username] you have set the tracker <b>Double Up !</b> <img src={$TBDEV['pic_base_url']}smilies/w00t.gif alt='w00t' title='W00t' /><br />".
-"<b /r> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
+$CURUSER[username] you have set the tracker <b>Double Up !</b> <img src={$INSTALLER09['pic_base_url']}smilies/w00t.gif alt='w00t' title='W00t' /><br />".
+"<b /r> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 }
@@ -91,9 +91,9 @@ die;
 }
 if($doubleup_success == '2'){
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>".
-"$CURUSER[username] you have contributed towards making the tracker Double Upload ! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>".
+"$CURUSER[username] you have contributed towards making the tracker Double Upload ! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
@@ -108,16 +108,16 @@ if($halfdown_success == '1'){
 
 if ($_GET["norefund"] != '0') {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
-$CURUSER[username] you have set the tracker <b>Half Download !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next Half download period automatically!".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
+$CURUSER[username] you have set the tracker <b>Half Download !</b> <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br /><br />Remaining ".htmlspecialchars($_GET['norefund'])." points have been contributed towards the next Half download period automatically!".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 } else {
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
-$CURUSER[username] you have set the tracker <b>Half Download !</b> <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>
+$CURUSER[username] you have set the tracker <b>Half Download !</b> <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 }
@@ -126,9 +126,9 @@ die;
 }
 if($halfdown_success == '2'){
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>".
-"$CURUSER[username] you have contributed towards making the tracker Half Download ! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
-"<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
+"<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b>".
+"$CURUSER[username] you have contributed towards making the tracker Half Download ! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='W00t' /><br />".
+"<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />".
 "</td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
@@ -172,10 +172,10 @@ $amt = '1 TB';
 }
 
 $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td class='clearalt6' align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
+<td class='clearalt6' align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just increased your upload amount by ".$amt."!
-<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
-<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
+<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -183,10 +183,10 @@ case (isset($_GET['anonymous_success'])):{
 I_smell_a_rat($_GET['anonymous_success']);
 }
 $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td class='clearalt6' align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
+<td class='clearalt6' align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just purchased Anonymous profile for 14 days!
-<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
-<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
+<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -194,10 +194,10 @@ case (isset($_GET['freeyear_success'])):{
 I_smell_a_rat($_GET['freeyear_success']);
 }
 $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td class='clearalt6' align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
+<td class='clearalt6' align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just purchased freeleech for one year!
-<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
-<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
+<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -206,10 +206,10 @@ I_smell_a_rat($_GET['freeslots_success']);
 }
 
 $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td class='clearalt6' align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
+<td class='clearalt6' align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have got your self 3 freeleech slots!!
-<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
-<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
+<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -218,10 +218,10 @@ I_smell_a_rat($_GET['itrade_success']);
 }
 
 $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td class='clearalt6' align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
+<td class='clearalt6' align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td>
 <td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have got your self 200 points !!
-<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
-<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br /><br /><br /> click to go back to your 
+<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -230,10 +230,10 @@ I_smell_a_rat($_GET['itrade2_success']);
 }
 
 $HTMLOUT .= "<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td class='clearalt6' align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td>
+<td class='clearalt6' align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td>
 <td class='clearalt6' align='left'><b>Sorry ! </b>".$CURUSER['username']." you just got yourself 2 freeslots !!
-<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='W00t' title='W00t' /><br /><br /><br /><br /> click to go back to your 
-<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='W00t' title='W00t' /><br /><br /><br /><br /> click to go back to your 
+<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -241,9 +241,9 @@ case (isset($_GET['pirate_success'])):{
 I_smell_a_rat($_GET['pirate_success']);
 } 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr>
-<tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/pirate2.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have got yourself Pirate Status and Freeleech for two weeks! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
+<tr><td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/pirate2.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have got yourself Pirate Status and Freeleech for two weeks! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> Click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -251,9 +251,9 @@ case (isset($_GET['king_success'])):{
 I_smell_a_rat($_GET['king_success']);
 } 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr>
-<tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/king.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have got yourself King Status and Freeleech for one month! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
+<tr><td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/king.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have got yourself King Status and Freeleech for one month! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> Click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -275,10 +275,10 @@ default:
 }
 
 $HTMLOUT .="<table width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>".
-"<td class='clearalt6 align='left'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td>".
+"<td class='clearalt6 align='left'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good Karma' /></td>".
 "<td class='clearalt6' align='left'><b>Congratulations ! </b>".$CURUSER['username']." you have just decreased your download amount by ".$amt."!".
-"<img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' /><br /><br /><br /><br /> click to go back to your ".
-"<a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+"<img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' /><br /><br /><br /><br /> click to go back to your ".
+"<a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -286,9 +286,9 @@ case (isset($_GET['class_success'])):
 I_smell_a_rat($_GET['class_success']);
  
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr>
-<tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have got yourself VIP Status for one month! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
+<tr><td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have got yourself VIP Status for one month! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> Click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -296,9 +296,9 @@ case (isset($_GET['smile_success'])):
 I_smell_a_rat($_GET['smile_success']);
  
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr>
-<tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have got yourself a set of custom smilies for one month! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
+<tr><td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have got yourself a set of custom smilies for one month! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> Click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -306,9 +306,9 @@ case (isset($_GET['warning_success'])):
 I_smell_a_rat($_GET['warning_success']);
  
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr>
-<tr><td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have removed your warning for the low price of 1000 points!! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> Click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
+<tr><td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have removed your warning for the low price of 1000 points!! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> Click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Points</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -316,9 +316,9 @@ case (isset($_GET['invite_success'])):
 I_smell_a_rat($_GET['invite_success']);
  
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr><td align='left' class='clearalt6'>
-<img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have got your self 3 new invites! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br />
-click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have got your self 3 new invites! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br />
+click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -327,9 +327,9 @@ case (isset($_GET['freeslots_success'])):
 I_smell_a_rat($_GET['freeslots_success']);
 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr><td align='left' class='clearalt6'>
-<img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you have got your self 3 freeleech slots! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br />
-click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you have got your self 3 freeleech slots! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br /><br />
+click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -337,9 +337,9 @@ case (isset($_GET['title_success'])):
 I_smell_a_rat($_GET['title_success']);
  
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
-<b>Congratulations! </b>".$CURUSER['username']." you are now known as <b>".$CURUSER['title']."</b>! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'>
+<b>Congratulations! </b>".$CURUSER['username']." you are now known as <b>".$CURUSER['title']."</b>! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -347,9 +347,9 @@ case (isset($_GET['ratio_success'])):
 I_smell_a_rat($_GET['ratio_success']);
 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr>
-<td align='left' class='clearalt6'><img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b> ".$CURUSER['username']." you
-have gained a 1 to 1 ratio on the selected torrent, and the difference in MB has been added to your total upload! <img src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
-<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />
+<td align='left' class='clearalt6'><img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'><b>Congratulations! </b> ".$CURUSER['username']." you
+have gained a 1 to 1 ratio on the selected torrent, and the difference in MB has been added to your total upload! <img src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='w00t' title='w00t' /><br />
+<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br />
 </td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
@@ -358,17 +358,17 @@ case (isset($_GET['gift_fail'])):
 I_smell_a_rat($_GET['gift_fail']);
 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Huh?</h1></td></tr><tr><td align='left' class='clearalt6'>
-<img src='{$TBDEV['pic_base_url']}smilies/cry.gif' alt='bad_karma' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Not so fast there Mr. fancy pants!</b><br />
+<img src='{$INSTALLER09['pic_base_url']}smilies/cry.gif' alt='bad_karma' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Not so fast there Mr. fancy pants!</b><br />
 <b>".$CURUSER['username']."...</b> you can not spread the karma to yourself...<br />If you want to spread the love, pick another user! <br />
-<br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 case (isset($_GET['gift_fail_user'])):
 I_smell_a_rat($_GET['gift_fail_user']);
 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Error</h1></td></tr><tr><td align='left' class='clearalt6'>
-<img src='{$TBDEV['pic_base_url']}smilies/cry.gif' alt='bad_karma' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Sorry ".$CURUSER['username']."...</b>
-<br /> No User with that username <br /><br /> click to go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.
+<img src='{$INSTALLER09['pic_base_url']}smilies/cry.gif' alt='bad_karma' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Sorry ".$CURUSER['username']."...</b>
+<br /> No User with that username <br /><br /> click to go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.
 <br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
@@ -376,8 +376,8 @@ case (isset($_GET['gift_fail_points'])):
 I_smell_a_rat($_GET['gift_fail_points']);
 
 $HTMLOUT .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Oops!</h1></td></tr><tr><td align='left' class='clearalt6'>
-<img src='{$TBDEV['pic_base_url']}smilies/cry.gif' alt='oups' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Sorry </b>".$CURUSER['username']." you dont have enough Karma points
-<br /> go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+<img src='{$INSTALLER09['pic_base_url']}smilies/cry.gif' alt='oups' title='Bad karma' /></td><td align='left' class='clearalt6'><b>Sorry </b>".$CURUSER['username']." you dont have enough Karma points
+<br /> go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 
@@ -385,10 +385,10 @@ case (isset($_GET['gift_success'])):
 I_smell_a_rat($_GET['gift_success']);
  
 $HTMLOUT  .="<table align='center' width='80%'><tr><td class='colhead' align='left' colspan='2'><h1>Success!</h1></td></tr><tr><td align='left' class='clearalt6'>
-<img src='{$TBDEV['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'><b>Congratulations! ".$CURUSER['username']." </b>
+<img src='{$INSTALLER09['pic_base_url']}smilies/karma.gif' alt='good_karma' title='Good karma' /></td><td align='left' class='clearalt6'><b>Congratulations! ".$CURUSER['username']." </b>
 you have spread the Karma well.<br /><br />Member <b>".htmlspecialchars($_GET['usernamegift'])."</b> will be pleased with your kindness!<br /><br />This is the message that was sent:<br />
 <b>Subject:</b> Someone Loves you!<br /> <p>You have been given a gift of <b>".(0 + $_GET['gift_amount_points'])."</b> Karma points by ".$CURUSER['username']."</p><br />
-You may also <a class='altlink' href='{$TBDEV['baseurl']}/sendmessage.php?receiver=".(0 + $_GET['gift_id'])."'>send ".htmlspecialchars($_GET['usernamegift'])." a message as well</a>, or go back to your <a class='altlink' href='mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
+You may also <a class='altlink' href='{$INSTALLER09['baseurl']}/sendmessage.php?receiver=".(0 + $_GET['gift_id'])."'>send ".htmlspecialchars($_GET['usernamegift'])." a message as well</a>, or go back to your <a class='altlink' href='mybonus.php'>Karma Bonus Point</a> page.<br /><br /></td></tr></table>";
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();
 die;
 }
@@ -429,7 +429,7 @@ case 'traffic':
 $up = $upload + $arr_points['menge'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for upload bonus.\n " .$bonuscomment;
 sql_query("UPDATE users SET uploaded = ".sqlesc($upload + $arr_points['menge']).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?up_success=1&amt=$points");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?up_success=1&amt=$points");
 die;
 break;
  
@@ -440,7 +440,7 @@ if ($CURUSER['anonymous_until'] >= 1)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 14 days Anonymous profile.\n " .$bonuscomment;
 sql_query("UPDATE users SET anonymous_until = ".sqlesc($anonymous_until).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?anonymous_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?anonymous_success=1");
 die;
 break;
 
@@ -451,7 +451,7 @@ if ($CURUSER['downloaded'] == 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for download credit removal.\n " .$bonuscomment;
 sql_query("UPDATE users SET downloaded = ".sqlesc($download - $arr_points['menge']).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?dload_success=1&amt=$points");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?dload_success=1&amt=$points");
 die;
 break;
 
@@ -462,7 +462,7 @@ if ($CURUSER['free_switch'] != 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for One year of freeleech.\n " .$bonuscomment;
 sql_query("UPDATE users SET free_switch = ".sqlesc($free_switch).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?freeyear_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?freeyear_success=1");
 die;
 break;
 
@@ -472,7 +472,7 @@ $freeslots = $CURUSER['freeslots'];
 $slots = $freeslots+$arr_points['menge'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for freeslots.\n " .$bonuscomment;
 sql_query("UPDATE users SET freeslots = ".sqlesc($slots).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?freeslots_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?freeslots_success=1");
 die;
 break;
 
@@ -484,7 +484,7 @@ if ($CURUSER['invites'] == 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " invites for bonus points.\n" .$bonuscomment;
 sql_query("UPDATE users SET invites = invites - 1, seedbonus = seedbonus + 200 WHERE id = ".sqlesc($userid)." AND invites = ".sqlesc($invites +1)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?itrade_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?itrade_success=1");
 die;
 break;
 
@@ -496,31 +496,31 @@ if ($CURUSER['invites'] == 0)
 stderr("Error", "Time shall unfold what plighted cunning hides\n\nWho cover faults, at last shame them derides.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " invites for bonus points.\n" .$bonuscomment;
 sql_query("UPDATE users SET invites = invites - 1, freeslots = freeslots + 2 WHERE id = ".sqlesc($userid)." AND invites = ".sqlesc($invites +1)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?itrade2_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?itrade2_success=1");
 die;
 break;
 
 case 'pirate':
 //=== trade for 2 weeks pirate status 
 if ($CURUSER['pirate'] != 0 OR $CURUSER['king'] != 0)
-stderr("Error", "Now why would you want to add what you already have?<br />go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
+stderr("Error", "Now why would you want to add what you already have?<br />go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
 $pirate = (86400 * 14 + time());
 $free_switch = (14 * 86400 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 2 weeks Pirate + freeleech Status.\n " .$bonuscomment;
 sql_query("UPDATE users SET free_switch = ".sqlesc($free_switch).", pirate = ".sqlesc($pirate).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?pirate_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?pirate_success=1");
 die;
 break;
 
 case 'king':
 //=== trade for one month king status 
 if ($CURUSER['king'] != 0 OR $CURUSER['pirate'] != 0)
-stderr("Error", "Now why would you want to add what you already have?<br />go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
+stderr("Error", "Now why would you want to add what you already have?<br />go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
 $king = (86400 * 30 + time());
 $free_switch = (30 * 86400 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 month King + freeleech Status.\n " .$bonuscomment;
 sql_query("UPDATE users SET free_switch = ".sqlesc($free_switch).", king = ".sqlesc($king).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?king_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?king_success=1");
 die;
 break;
 
@@ -547,7 +547,7 @@ sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).",  bonuscomment = 
 $sql2 = "UPDATE bonus SET pointspool = ".sqlesc($norefund)." WHERE id = '11' LIMIT 1";
 sql_query($sql2) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "freeleech");
-header("Refresh: 0; url={$TBDEV['baseurl']}//mybonus.php?freeleech_success=1&norefund=$norefund");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}//mybonus.php?freeleech_success=1&norefund=$norefund");
 die;
 } else {
 // add to the pool
@@ -556,7 +556,7 @@ sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for freeleech.\n " .$bonuscomment;
 sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "freeleech");
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?freeleech_success=2");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?freeleech_success=2");
 die;
 }
 die;
@@ -585,7 +585,7 @@ sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).",  bonuscomment = 
 $sql2 = "UPDATE bonus SET pointspool = ".sqlesc($norefund)." WHERE id = '12' LIMIT 1";
 sql_query($sql2) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "doubleupload");
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?doubleup_success=1&norefund=$norefund");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?doubleup_success=1&norefund=$norefund");
 die;
 } else {
 // add to the pool
@@ -594,7 +594,7 @@ sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$donation. " Points contributed for doubleupload.\n " .$bonuscomment;
 sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "doubleupload");
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?doubleup_success=2");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?doubleup_success=2");
 die;
 }
 die;
@@ -623,7 +623,7 @@ sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).",  bonuscomment = 
 $sql2 = "UPDATE bonus SET pointspool = ".sqlesc($norefund)." WHERE id = '13' LIMIT 1";
 sql_query($sql2) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "halfdownload");
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?halfdown_success=1&norefund=$norefund");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?halfdown_success=1&norefund=$norefund");
 die;
 } else {
 // add to the pool
@@ -632,7 +632,7 @@ sql_query($sql) or sqlerr(__FILE__, __LINE__);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points contributed for halfdownload.\n " .$bonuscomment;
 sql_query("UPDATE users SET seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 write_bonus_log($CURUSER["id"], $donation, $type = "halfdownload");
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?halfdown_success=2");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?halfdown_success=2");
 die;
 }
 die;
@@ -644,33 +644,33 @@ $torrent_number = 0 + $_POST['torrent_id'];
 $res_snatched = sql_query("SELECT s.uploaded, s.downloaded, t.name FROM snatched AS s LEFT JOIN torrents AS t ON t.id = s.torrentid WHERE s.userid = ".sqlesc($userid)." AND torrentid = ".sqlesc($torrent_number)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
 $arr_snatched = mysqli_fetch_assoc($res_snatched);
 if ($arr_snatched['name'] == '')
-stderr("Error", "No torrent with that ID!<br />Back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.");
+stderr("Error", "No torrent with that ID!<br />Back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.");
 if ($arr_snatched['uploaded'] >= $arr_snatched['downloaded'])
-stderr("Error", "Your ratio on that torrent is fine, you must have selected the wrong torrent ID.<br />Back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.");
+stderr("Error", "Your ratio on that torrent is fine, you must have selected the wrong torrent ID.<br />Back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page.");
 sql_query("UPDATE snatched SET uploaded = ".sqlesc($arr_snatched['downloaded'])." WHERE userid = ".sqlesc($userid)." AND torrentid = ".sqlesc($torrent_number)) or sqlerr(__FILE__, __LINE__);
 $difference = $arr_snatched['downloaded'] - $arr_snatched['uploaded'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 to 1 ratio on torrent: ".$arr_snatched['name']." ".$torrent_number.", ".$difference." added .\n " .$bonuscomment;
 $upload_to_add = $upload + $difference;
 sql_query("UPDATE users SET uploaded = ".sqlesc($upload_to_add).", bonuscomment = ".sqlesc($bonuscomment).", seedbonus = ".sqlesc($seedbonus)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?ratio_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?ratio_success=1");
 die;
 break;
 
 case 'class':
 //=== trade for one month VIP status 
 if ($CURUSER['class'] > UC_VIP)
-stderr("Error", "Now why would you want to lower yourself to VIP?<br />go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
+stderr("Error", "Now why would you want to lower yourself to VIP?<br />go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
 $vip_until = (86400 * 28 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 month VIP Status.\n " .$bonuscomment;
 sql_query("UPDATE users SET class = ".UC_VIP.", vip_added = 'yes', vip_until = ".sqlesc($vip_until).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?class_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?class_success=1");
 die;
 break;
 
 case 'warning':
 //=== trade for removal of warning :P
 if ($CURUSER['warned'] == 0)
-stderr("Error", "How can we remove a warning that isn't there?<br />go back to your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
+stderr("Error", "How can we remove a warning that isn't there?<br />go back to your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Point</a> page and think that one over.");
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for removing warning.\n " .$bonuscomment;
 $res_warning = sql_query("SELECT modcomment FROM users WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 $arr = mysqli_fetch_assoc($res_warning);
@@ -682,7 +682,7 @@ $dt = sqlesc(time());
 $subject = sqlesc("Warning removed by Karma.");
 $msg = sqlesc("Your warning has been removed by the big Karma payoff... Please keep on your best behaviour from now on.\n");
 sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, $userid, $dt, $msg, $subject)") or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?warning_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?warning_success=1");
 die;
 break;
 
@@ -691,7 +691,7 @@ case 'smile':
 $smile_until = (86400 * 28 + time());
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for 1 month of custom smilies.\n " .$bonuscomment;
 sql_query("UPDATE users SET smile_until = ".sqlesc($smile_until).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?smile_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?smile_success=1");
 die;
 break;
 
@@ -701,7 +701,7 @@ $invites = $CURUSER['invites'];
 $inv = $invites+$arr_points['menge'];
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for invites.\n " .$bonuscomment;
 sql_query("UPDATE users SET invites = ".sqlesc($inv).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?invite_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?invite_success=1");
 die;
 break;
 
@@ -715,7 +715,7 @@ $words = array('fuck', 'shit', 'Moderator', 'Administrator', 'Admin', 'pussy', '
 $title = str_replace($words, "I just wasted my karma", $title);
 $bonuscomment = get_date( time(), 'DATE', 1 ) . " - " .$points. " Points for custom title. Old title was $CURUSER[title] new title is ".$title.".\n " .$bonuscomment;
 sql_query("UPDATE users SET title = ".sqlesc($title).", seedbonus = ".sqlesc($seedbonus).", bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?title_success=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?title_success=1");
 die;
 break;
 
@@ -741,11 +741,11 @@ $bonuscomment_gift = get_date( time(), 'DATE', 1 ) . " - recieved " .$points. " 
 $seedbonus=$bonus-$points;
 $giftbonus1=$userseedbonus+$points;
 if ($userid==$useridgift){
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?gift_fail=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?gift_fail=1");
 die;
 }
 if (!$useridgift){
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?gift_fail_user=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?gift_fail_user=1");
 die;
 }
 sql_query("SELECT bonuscomment,id FROM users WHERE id = ".sqlesc($useridgift)) or sqlerr(__FILE__, __LINE__);
@@ -757,11 +757,11 @@ $subject = sqlesc("Someone Loves you");
 $added = sqlesc(time());
 $msg = sqlesc("You have been given a gift of $points Karma points by ".$CURUSER['username']);
 sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES(0, $subject, $useridgift, $msg, $added)") or sqlerr(__FILE__, __LINE__);
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?gift_success=1&gift_amount_points=$points&usernamegift=$usernamegift&gift_id=$useridgift");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?gift_success=1&gift_amount_points=$points&usernamegift=$usernamegift&gift_id=$useridgift");
 die;
 }
 else{
-header("Refresh: 0; url={$TBDEV['baseurl']}/mybonus.php?gift_fail_points=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/mybonus.php?gift_fail_points=1");
 die;
 }
 break;
@@ -900,7 +900,7 @@ function write_bonus_log($userid, $amount, $type){
     $top_donators_id = $row["id"];
     $damount_donated = $row["total"];
     $top_donators_username = $row['username'];
-    $top_donators .= "<li><a href='{$TBDEV['baseurl']}/userdetails.php?id=$top_donators_id'>" . $top_donators_username . "</a> ( $damount_donated )</li>";
+    $top_donators .= "<li><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$top_donators_id'>" . $top_donators_username . "</a> ( $damount_donated )</li>";
     }
 
     $sql = "SELECT bonuslog.id, SUM(bonuslog.donation) as total, users.username FROM bonuslog left join users ON bonuslog.id=users.id WHERE bonuslog.type = 'doubleupload' GROUP BY bonuslog.id ORDER BY total DESC LIMIT 10;";
@@ -909,7 +909,7 @@ function write_bonus_log($userid, $amount, $type){
     $top_donators_id = $row["id"];
     $damount_donated = $row["total"];
     $top_donators_username = $row['username'];
-    $top_donators2 .= "<li><a href='{$TBDEV['baseurl']}/userdetails.php?id=$top_donators_id'>" . $top_donators_username . "</a> ( $damount_donated )</li>";
+    $top_donators2 .= "<li><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$top_donators_id'>" . $top_donators_username . "</a> ( $damount_donated )</li>";
     }
 
     $sql = "SELECT bonuslog.id, SUM(bonuslog.donation) as total, users.username FROM bonuslog left join users ON bonuslog.id=users.id WHERE bonuslog.type = 'halfdownload' GROUP BY bonuslog.id ORDER BY total DESC LIMIT 10;";
@@ -918,7 +918,7 @@ function write_bonus_log($userid, $amount, $type){
     $top_donators_id = $row["id"];
     $damount_donated = $row["total"];
     $top_donators_username = $row['username'];
-    $top_donators3 .= "<li><a href='{$TBDEV['baseurl']}/userdetails.php?id=$top_donators_id'>" . $top_donators_username . "</a> ( $damount_donated )</li>";
+    $top_donators3 .= "<li><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$top_donators_id'>" . $top_donators_username . "</a> ( $damount_donated )</li>";
     }
     //==End
             //== Show the percentages
@@ -950,7 +950,7 @@ function write_bonus_log($userid, $amount, $type){
             $HTMLOUT .="<table align='center' width='100%' border='1' cellspacing='0' cellpadding='5'>
             <tr>
             <td align='center' colspan='4' style='background:transparent;height:25px;'>
-            Exchange your <a class='altlink' href='{$TBDEV['baseurl']}/mybonus.php'>Karma Bonus Points</a> [ current ".$bonus." ] for goodies!
+            Exchange your <a class='altlink' href='{$INSTALLER09['baseurl']}/mybonus.php'>Karma Bonus Points</a> [ current ".$bonus." ] for goodies!
             <br /><br />[ If no buttons appear, you have not earned enough bonus points to trade. ]<br /><br />
             </td></tr>
             <tr>
@@ -985,28 +985,28 @@ function write_bonus_log($userid, $amount, $type){
 
   switch (true){
  	case ($gets['id'] == 5):
- 	$HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."<br /><br />Enter the <b>Special Title</b> you would like to have <input type='text' name='title' size='30' maxlength='30' /> click Exchange! </td><td align='center' class='".$class."'>".$gets['points']."</td>";
+ 	$HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."<br /><br />Enter the <b>Special Title</b> you would like to have <input type='text' name='title' size='30' maxlength='30' /> click Exchange! </td><td align='center' class='".$class."'>".$gets['points']."</td>";
   break;
   case ($gets['id'] == 7):
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."<br /><br />Enter the <b>username</b> of the person you would like to send karma to, and select how many points you want to send and click Exchange!<br />".$otheroption."</td><td align=center class='".$class."'>min.<br />".$gets['points']."<br />max.<br />100000.0</td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."<br /><br />Enter the <b>username</b> of the person you would like to send karma to, and select how many points you want to send and click Exchange!<br />".$otheroption."</td><td align=center class='".$class."'>min.<br />".$gets['points']."<br />max.<br />100000.0</td>";
   break;
   case ($gets['id'] == 9):
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."</td><td align='center' class='".$class."'>min.<br />".$gets['points']."</td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."</td><td align='center' class='".$class."'>min.<br />".$gets['points']."</td>";
   break;
   case ($gets['id'] == 10):
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."<br /><br />Enter the <b>ID number of the Torrent:</b> <input type='text' name='torrent_id' size='4' maxlength='8' /> you would like to buy a 1 to 1 ratio on.</td><td align='center' class='".$class."'>min.<br />".$gets['points']."</td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."<br /><br />Enter the <b>ID number of the Torrent:</b> <input type='text' name='torrent_id' size='4' maxlength='8' /> you would like to buy a 1 to 1 ratio on.</td><td align='center' class='".$class."'>min.<br />".$gets['points']."</td>";
   break;
   case ($gets['id'] == 11):
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color=\"#CECFF3\">".$gets["bonusname"]."</font></h1>".$gets['description']."<br /><h4>Top 10 Contributors </h4> <ol>".$top_donators." </ol> <br />Enter the <b>amount to contribute</b><input type='text' name='donate' size='10' maxlength='10' /></td><td align='center' class='".$class."'>" .$gets['minpoints'] ." <br /></td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color=\"#CECFF3\">".$gets["bonusname"]."</font></h1>".$gets['description']."<br /><h4>Top 10 Contributors </h4> <ol>".$top_donators." </ol> <br />Enter the <b>amount to contribute</b><input type='text' name='donate' size='10' maxlength='10' /></td><td align='center' class='".$class."'>" .$gets['minpoints'] ." <br /></td>";
   break;
   case ($gets['id'] == 12):
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color=\"#CECFF3\">".$gets["bonusname"]."</font></h1>".$gets['description']."<br /><h4>Top 10 Contributors </h4> <ol>".$top_donators2." </ol> <br />Enter the <b>amount to contribute</b><input type='text' name='donate' size='10' maxlength='10' /></td><td align='center' class='".$class."'>" .$gets['minpoints'] ." <br /></td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color=\"#CECFF3\">".$gets["bonusname"]."</font></h1>".$gets['description']."<br /><h4>Top 10 Contributors </h4> <ol>".$top_donators2." </ol> <br />Enter the <b>amount to contribute</b><input type='text' name='donate' size='10' maxlength='10' /></td><td align='center' class='".$class."'>" .$gets['minpoints'] ." <br /></td>";
   break;
   case ($gets['id'] == 13):
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color=\"#CECFF3\">".$gets["bonusname"]."</font></h1>".$gets['description']."<br /><h4>Top 10 Contributors </h4> <ol>".$top_donators3." </ol> <br />Enter the <b>amount to contribute</b><input type='text' name='donate' size='10' maxlength='10' /></td><td align='center' class='".$class."'>" .$gets['minpoints'] ." <br /></td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color=\"#CECFF3\">".$gets["bonusname"]."</font></h1>".$gets['description']."<br /><h4>Top 10 Contributors </h4> <ol>".$top_donators3." </ol> <br />Enter the <b>amount to contribute</b><input type='text' name='donate' size='10' maxlength='10' /></td><td align='center' class='".$class."'>" .$gets['minpoints'] ." <br /></td>";
   break;
   default:
-  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$TBDEV['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."</td><td align='center' class='".$class."'>".$gets['points']."</td>";
+  $HTMLOUT .="<tr><td align='left' class='".$class."'><form action='{$INSTALLER09['baseurl']}/mybonus.php?exchange=1' method='post'><input type='hidden' name='option' value='".$gets['id']."' /> <input type='hidden' name='art' value='".$gets['art']."' /><h1><font color='#CECFF3'>".$gets['bonusname']."</font></h1>".$gets['description']."</td><td align='center' class='".$class."'>".$gets['points']."</td>";
   }
 
 
@@ -1075,7 +1075,7 @@ function write_bonus_log($userid, $amount, $type){
   <br /><br />&#186;&nbsp;*Please note, staff can give or take away points for breaking the rules, or doing good for the community.
   <br />
   <div align='center'><br />
-  <a class='altlink' href='{$TBDEV['baseurl']}/index.php'><b>Back to homepage</b></a></div>
+  <a class='altlink' href='{$INSTALLER09['baseurl']}/index.php'><b>Back to homepage</b></a></div>
   </td></tr></table></div>";
   
 echo stdhead($CURUSER['username'] . "'s Karma Bonus Points Page") . $HTMLOUT . stdfoot();

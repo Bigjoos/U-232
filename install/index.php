@@ -98,11 +98,11 @@ function basic_query()
 	$sql_lines = implode(' ', file(dirname(__FILE__) . '/install.sql'));
 	$sql_lines = explode("\n", $sql_lines);
 	require_once('../include/config.php');
-	if( !($GLOBALS["___mysqli_ston"] = mysqli_connect($TBDEV['mysql_host'], $TBDEV['mysql_user'], $TBDEV['mysql_pass'])) )
+	if( !($GLOBALS["___mysqli_ston"] = mysqli_connect($INSTALLER09['mysql_host'], $INSTALLER09['mysql_user'], $INSTALLER09['mysql_pass'])) )
 	{
 	die('Cant connect to databaseserver');
 	}
-	if( !((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$TBDEV['mysql_db']}")) )
+	if( !((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE {$INSTALLER09['mysql_db']}")) )
 	{
 	die('Cant select database');
 	}

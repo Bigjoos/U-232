@@ -14,8 +14,8 @@ $arr = mysqli_fetch_assoc($res);
 
 if (($CURUSER['id'] == $arr['userid']) || ($CURUSER['class'] >= UC_MODERATOR) || ($CURUSER['id'] == $arr['filledby'])) {
 
- if ($TBDEV['karma'] && isset($CURUSER['seedbonus']) && $arr['torrentid'] != 0)
-     sql_query("UPDATE users SET seedbonus = seedbonus-".sqlesc($TBDEV['req_comment_bonus'])." WHERE id = ".sqlesc($arr['filledby'])) or sqlerr(__FILE__, __LINE__);
+ if ($INSTALLER09['karma'] && isset($CURUSER['seedbonus']) && $arr['torrentid'] != 0)
+     sql_query("UPDATE users SET seedbonus = seedbonus-".sqlesc($INSTALLER09['req_comment_bonus'])." WHERE id = ".sqlesc($arr['filledby'])) or sqlerr(__FILE__, __LINE__);
 
  sql_query("UPDATE requests SET torrentid = 0, filledby = 0 WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
  

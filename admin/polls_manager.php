@@ -30,8 +30,8 @@ require_once(INCL_DIR.'user_functions.php');
     $params['mode'] = isset($params['mode']) ? $params['mode'] : '';
 
 
-$TBDEV['max_poll_questions'] = 2;
-$TBDEV['max_poll_choices_per_question'] = 20;
+$INSTALLER09['max_poll_questions'] = 2;
+$INSTALLER09['max_poll_choices_per_question'] = 20;
 
 
     switch($params['mode'])
@@ -64,7 +64,7 @@ $TBDEV['max_poll_choices_per_question'] = 20;
 
 function delete_poll() {
 
-    global $TBDEV;
+    global $INSTALLER09;
     
     $total_votes = 0;
     
@@ -75,7 +75,7 @@ function delete_poll() {
     
     if( !isset($_GET['sure']) )
       stderr('USER WARNING', "<h2>You are about to delete a poll forever!</h2>
-      <a href='javascript:history.back()' title='Cancel this operation!' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>&nbsp;<a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid={$pid}&amp;sure=1' title='Delete this poll, there is no going back!' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_tick.gif' alt='Delete' />Delete Sure?</span></a>");
+      <a href='javascript:history.back()' title='Cancel this operation!' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>&nbsp;<a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid={$pid}&amp;sure=1' title='Delete this poll, there is no going back!' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_tick.gif' alt='Delete' />Delete Sure?</span></a>");
     
     sql_query("DELETE FROM polls WHERE pid = ".sqlesc($pid)) or sqlerr(__FILE__, __LINE__);
     sql_query("DELETE FROM poll_voters WHERE poll_id = ".sqlesc($pid)) or sqlerr(__FILE__, __LINE__);
@@ -86,7 +86,7 @@ function delete_poll() {
 
 function update_poll() {
 
-    global $TBDEV, $CURUSER;
+    global $INSTALLER09, $CURUSER;
     
     $total_votes = 0;
     
@@ -120,12 +120,12 @@ function update_poll() {
     if( -1 == mysqli_affected_rows($GLOBALS["___mysqli_ston"]) )
     {
       $msg = "<h2>An Error Occured!</h2>
-      <a href='javascript:history.back()' title='Go back and fix the error' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>";
+      <a href='javascript:history.back()' title='Go back and fix the error' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>";
     }
     else
     {
       $msg = "<h2>Groovy, everything went hunky dory!</h2>
-      <a href='admin.php?action=polls_manager' title='Return to Polls Manager' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_tick.gif' alt='Success' />Success</span></a>";
+      <a href='admin.php?action=polls_manager' title='Return to Polls Manager' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_tick.gif' alt='Success' />Success</span></a>";
     }
     
     echo stdhead('Poll Manager::Add New Poll') . $msg . stdfoot();
@@ -133,7 +133,7 @@ function update_poll() {
 }
 function insert_new_poll() {
 
-    global $TBDEV, $CURUSER;
+    global $INSTALLER09, $CURUSER;
     
     if( !isset($_POST['poll_question']) OR empty($_POST['poll_question']) )
       stderr('USER ERROR', 'There is no title defined!');
@@ -158,12 +158,12 @@ function insert_new_poll() {
     if( false == ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res) )
     {
       $msg = "<h2>An Error Occured!</h2>
-      <a href='javascript:history.back()' title='Go back and fix the error' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>";
+      <a href='javascript:history.back()' title='Go back and fix the error' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_delete.gif' alt='Go Back' />Go Back</span></a>";
     }
     else
     {
       $msg = "<h2>Groovy, everything went hunky dory!</h2>
-      <a href='admin.php?action=polls_manager' title='Return to Polls Manager' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_tick.gif' alt='Success' />Success</span></a>";
+      <a href='admin.php?action=polls_manager' title='Return to Polls Manager' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_tick.gif' alt='Success' />Success</span></a>";
     }
     
     echo stdhead('Poll Manager::Add New Poll') . $msg . stdfoot();
@@ -173,10 +173,10 @@ function insert_new_poll() {
 
 function show_poll_form() {
 
-    global $TBDEV;
+    global $INSTALLER09;
     
     
-    $poll_box = poll_box($TBDEV['max_poll_questions'],$TBDEV['max_poll_choices_per_question'], 'poll_new');
+    $poll_box = poll_box($INSTALLER09['max_poll_questions'],$INSTALLER09['max_poll_choices_per_question'], 'poll_new');
 
     echo stdhead('Poll Manager::Add New Poll') . $poll_box . stdfoot();
 
@@ -185,7 +185,7 @@ function show_poll_form() {
 
 function edit_poll_form() {
 
-    global $TBDEV;
+    global $INSTALLER09;
 
     $poll_questions = '';
     $poll_multi = '';
@@ -227,7 +227,7 @@ function edit_poll_form() {
     $show_open     = $poll_data['choices'] ? 1 : 0;
 
 
-    $poll_box = poll_box( $TBDEV['max_poll_questions'], $TBDEV['max_poll_choices_per_question'], 'poll_update', $poll_questions, $poll_choices, $poll_votes, $show_open, $poll_question, $poll_multi );
+    $poll_box = poll_box( $INSTALLER09['max_poll_questions'], $INSTALLER09['max_poll_choices_per_question'], 'poll_update', $poll_questions, $poll_choices, $poll_votes, $show_open, $poll_question, $poll_multi );
 
     echo stdhead('Poll Manager::Edit Poll') . $poll_box . stdfoot();
 }
@@ -235,7 +235,7 @@ function edit_poll_form() {
 			
 function show_poll_archive() {
 
-    global $TBDEV;
+    global $INSTALLER09;
     
     $HTMLOUT = '';
     $query = sql_query("SELECT * FROM polls ORDER BY start_date DESC") or sqlerr(__FILE__, __LINE__);
@@ -244,13 +244,13 @@ function show_poll_archive() {
     { 
       $HTMLOUT = "<h2>No polls defined</h2>
       <br />
-      <a href='admin.php?action=polls_manager&amp;mode=new'><span class='btn' style='padding:3px;' title='Add a new poll'><img style='vertical-align:top;' src='{$TBDEV['pic_base_url']}/polls/p_add.gif' alt='Add New' />&nbsp;Add New Poll</span></a>";
+      <a href='admin.php?action=polls_manager&amp;mode=new'><span class='btn' style='padding:3px;' title='Add a new poll'><img style='vertical-align:top;' src='{$INSTALLER09['pic_base_url']}/polls/p_add.gif' alt='Add New' />&nbsp;Add New Poll</span></a>";
     }
     else
     {
       $HTMLOUT .= "<h2>Manage Polls</h2>
       <br /><br />
-      <a href='admin.php?action=polls_manager&amp;mode=new'><span class='btn' style='padding:3px;' title='Add a new poll'><img style='vertical-align:top;' src='{$TBDEV['pic_base_url']}/polls/p_add.gif' alt='Add New' />&nbsp;Add New Poll</span></a>
+      <a href='admin.php?action=polls_manager&amp;mode=new'><span class='btn' style='padding:3px;' title='Add a new poll'><img style='vertical-align:top;' src='{$INSTALLER09['pic_base_url']}/polls/p_add.gif' alt='Add New' />&nbsp;Add New Poll</span></a>
       <br /><br />
       <table cellpadding='5'>
       <tr>
@@ -272,8 +272,8 @@ function show_poll_archive() {
           <td>".intval($row['votes'])."</td>
           <td>".htmlspecialchars($row['start_date'])."</td>
           <td><a href='userdetails.php?id=".intval($row['starter_id'])."'>".htmlspecialchars($row['starter_name'])."</a></td>
-          <td><a href='admin.php?action=polls_manager&amp;mode=edit&amp;pid=".intval($row['pid'])."'><span class='btn' title='Edit poll'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_edit.gif' alt='Edit' />&nbsp;Edit</span></a>&nbsp;
-          <a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid=".intval($row['pid'])."'><span class='btn' title='Delete poll'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Delete' />&nbsp;Delete</span></a></td>
+          <td><a href='admin.php?action=polls_manager&amp;mode=edit&amp;pid=".intval($row['pid'])."'><span class='btn' title='Edit poll'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_edit.gif' alt='Edit' />&nbsp;Edit</span></a>&nbsp;
+          <a href='admin.php?action=polls_manager&amp;mode=delete&amp;pid=".intval($row['pid'])."'><span class='btn' title='Delete poll'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_delete.gif' alt='Delete' />&nbsp;Delete</span></a></td>
         </tr>";
 
       }
@@ -288,7 +288,7 @@ function show_poll_archive() {
 
 function poll_box($max_poll_questions="",$max_poll_choices="",$form_type='',$poll_questions="",$poll_choices="",$poll_votes="",$show_open="",$poll_question="",$poll_multi="") {
 
-    global $TBDEV;
+    global $INSTALLER09;
     
     $pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
     
@@ -316,15 +316,15 @@ function poll_box($max_poll_questions="",$max_poll_choices="",$form_type='',$pol
       var max_poll_choices   = parseInt(\"{$max_poll_choices}\");
       
       // HTML elements
-      var html_add_question = \"<a href='#' title='Add Poll Question' style='color:green;font-weight:bold' onclick='return poll_add_question()'><span class='btn' style='padding:3px;'><img style='vertical-align:-30%;' src='{$TBDEV['pic_base_url']}/polls/p_plus.gif' alt='Add Poll Question' />Add Poll Question</span></a>\";
+      var html_add_question = \"<a href='#' title='Add Poll Question' style='color:green;font-weight:bold' onclick='return poll_add_question()'><span class='btn' style='padding:3px;'><img style='vertical-align:-30%;' src='{$INSTALLER09['pic_base_url']}/polls/p_plus.gif' alt='Add Poll Question' />Add Poll Question</span></a>\";
       
-      var html_add_choice = \"<li>&nbsp;<a href='#' title='Add Poll Choice' style='color:green;font-weight:bold' onclick='return poll_add_choice(\"+'\"'+'<%1>'+'\"'+\")'><span class='btn' style='padding:3px;'><img style='vertical-align:-30%;' src='{$TBDEV['pic_base_url']}/polls/p_plus.gif' alt='Add Poll Choice' />Add Poll Choice</span></a></li>\";
+      var html_add_choice = \"<li>&nbsp;<a href='#' title='Add Poll Choice' style='color:green;font-weight:bold' onclick='return poll_add_choice(\"+'\"'+'<%1>'+'\"'+\")'><span class='btn' style='padding:3px;'><img style='vertical-align:-30%;' src='{$INSTALLER09['pic_base_url']}/polls/p_plus.gif' alt='Add Poll Choice' />Add Poll Choice</span></a></li>\";
       
-      var html_question_box = \"<input type='text' id='question_<%1>' name='question[<%1>]' size='50' class='input' value='<%2>' /> <a href='#' title='Remove Question' style='color:red;font-weight:bold' onclick='return poll_remove_question(\"+'\"'+'<%1>'+'\"'+\")'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_minus.gif' alt='Add New' /></a><br /><input class='checkbox' type='checkbox' id='multi_<%1>' name='multi[<%1>]' value='1' <%3> /><span>Multiple choice question? (Allows users to select more than one choice) </span>\";
+      var html_question_box = \"<input type='text' id='question_<%1>' name='question[<%1>]' size='50' class='input' value='<%2>' /> <a href='#' title='Remove Question' style='color:red;font-weight:bold' onclick='return poll_remove_question(\"+'\"'+'<%1>'+'\"'+\")'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_minus.gif' alt='Add New' /></a><br /><input class='checkbox' type='checkbox' id='multi_<%1>' name='multi[<%1>]' value='1' <%3> /><span>Multiple choice question? (Allows users to select more than one choice) </span>\";
       
       var html_votes_box = \"&nbsp;<input type='text' id='votes_<%1>_<%2>' name='votes[<%1>_<%2>]' size='5' class='input' value='<%3>' />\";
       
-      var html_choice_box = \"<li><input type='text' id='choice_<%1>_<%2>' name='choice[<%1>_<%2>]' size='35' class='input' value='<%3>' /><%4> <a href='#' title='Remove Choice' style='color:red;font-weight:bold' onclick='return poll_remove_choice(\"+'\"'+'<%1>_<%2>'+'\"'+\")'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_minus.gif' alt='Add New' /></a></li>\";
+      var html_choice_box = \"<li><input type='text' id='choice_<%1>_<%2>' name='choice[<%1>_<%2>]' size='35' class='input' value='<%3>' /><%4> <a href='#' title='Remove Choice' style='color:red;font-weight:bold' onclick='return poll_remove_choice(\"+'\"'+'<%1>_<%2>'+'\"'+\")'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_minus.gif' alt='Add New' /></a></li>\";
       
       var html_choice_wrap = \"<ol><%1></ol>\";
       var html_question_wrap = \"<div><%1></div>\";
@@ -340,7 +340,7 @@ function poll_box($max_poll_questions="",$max_poll_choices="",$form_type='',$pol
      
      <h2>Editing Poll</h2>
      <br />
-     <a href='admin.php?action=polls_manager' title='Cancel' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$TBDEV['pic_base_url']}/polls/p_delete.gif' alt='Cancel' />Cancel</span></a>
+     <a href='admin.php?action=polls_manager' title='Cancel' style='color:green;font-weight:bold'><span class='btn' style='padding:3px;'><img style='vertical-align:middle;' src='{$INSTALLER09['pic_base_url']}/polls/p_delete.gif' alt='Cancel' />Cancel</span></a>
      <br /><br />
      <form id='postingform' action='admin.php?action=polls_manager' method='post' name='inputform' enctype='multipart/form-data'>
      <input type='hidden' name='mode' value='{$form_type}' />
@@ -378,7 +378,7 @@ function poll_box($max_poll_questions="",$max_poll_choices="",$form_type='',$pol
 
 function makepoll()
 {
-    global $TBDEV, $CURUSER;
+    global $INSTALLER09, $CURUSER;
 
     $questions     = array();
     $choices_count = 0;
@@ -454,12 +454,12 @@ function makepoll()
       }
     }
 
-    if ( count( $questions ) > $TBDEV['max_poll_questions'] )
+    if ( count( $questions ) > $INSTALLER09['max_poll_questions'] )
     {
       exit('poll_to_many');
     }
 
-    if ( count( $choices_count ) > ( $TBDEV['max_poll_questions'] * $TBDEV['max_poll_choices_per_question'] ) )
+    if ( count( $choices_count ) > ( $INSTALLER09['max_poll_questions'] * $INSTALLER09['max_poll_choices_per_question'] ) )
     {
       exit('poll_to_many');
     }

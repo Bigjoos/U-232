@@ -24,7 +24,7 @@ function readMore($text, $char, $link)
 }
 
 function torrenttable($res, $variant = "index") {
-    global $TBDEV, $CURUSER, $lang, $free;
+    global $INSTALLER09, $CURUSER, $lang, $free;
     $htmlout = '';
     /** ALL FREE/DOUBLE **/
     foreach($free as $fl) {
@@ -80,10 +80,10 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
    $htmlout .= "<table border='1' cellspacing='0' cellpadding='5'>
    <tr>
    <td class='colhead' align='center'>{$lang["torrenttable_type"]}</td>
-   <td class='colhead' align='left'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=1&amp;type={$link1}'>{$lang["torrenttable_name"]}</a></td>
-   <td class='colhead' align='left'><img src='".$TBDEV['pic_base_url']."zip.gif' border='0' alt='Download' title='Download' /></td>";
+   <td class='colhead' align='left'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=1&amp;type={$link1}'>{$lang["torrenttable_name"]}</a></td>
+   <td class='colhead' align='left'><img src='".$INSTALLER09['pic_base_url']."zip.gif' border='0' alt='Download' title='Download' /></td>";
    
-   $htmlout.= ($variant == 'index' ? "<td class='colhead' align='center'><a href='".$TBDEV['baseurl']."/bookmarks.php'><img src='".$TBDEV['pic_base_url']."bookmark.gif'  border='0' alt='Bookmark' title='Go To My Bookmarks' /></a></td>" : '');
+   $htmlout.= ($variant == 'index' ? "<td class='colhead' align='center'><a href='".$INSTALLER09['baseurl']."/bookmarks.php'><img src='".$INSTALLER09['pic_base_url']."bookmark.gif'  border='0' alt='Bookmark' title='Go To My Bookmarks' /></a></td>" : '');
 
    if ($variant == "mytorrents")
    {
@@ -91,16 +91,16 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
    $htmlout .= "<td class='colhead' align='center'>{$lang["torrenttable_visible"]}</td>\n";
    }
 
-   $htmlout .= "<td class='colhead' align='right'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=2&amp;type={$link2}'>{$lang["torrenttable_files"]}</a></td>
-   <td class='colhead' align='right'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=3&amp;type={$link3}'>{$lang["torrenttable_comments"]}</a></td>
-   <td class='colhead' align='center'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=4&amp;type={$link4}'>{$lang["torrenttable_added"]}</a></td>
-   <td class='colhead' align='center'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=5&amp;type={$link5}'>{$lang["torrenttable_size"]}</a></td>
-   <td class='colhead' align='center'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=6&amp;type={$link6}'>{$lang["torrenttable_snatched"]}</a></td>
-   <td class='colhead' align='right'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=7&amp;type={$link7}'>{$lang["torrenttable_seeders"]}</a></td>
-   <td class='colhead' align='right'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=8&amp;type={$link8}'>{$lang["torrenttable_leechers"]}</a></td>";
+   $htmlout .= "<td class='colhead' align='right'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=2&amp;type={$link2}'>{$lang["torrenttable_files"]}</a></td>
+   <td class='colhead' align='right'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=3&amp;type={$link3}'>{$lang["torrenttable_comments"]}</a></td>
+   <td class='colhead' align='center'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=4&amp;type={$link4}'>{$lang["torrenttable_added"]}</a></td>
+   <td class='colhead' align='center'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=5&amp;type={$link5}'>{$lang["torrenttable_size"]}</a></td>
+   <td class='colhead' align='center'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=6&amp;type={$link6}'>{$lang["torrenttable_snatched"]}</a></td>
+   <td class='colhead' align='right'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=7&amp;type={$link7}'>{$lang["torrenttable_seeders"]}</a></td>
+   <td class='colhead' align='right'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=8&amp;type={$link8}'>{$lang["torrenttable_leechers"]}</a></td>";
 
    if ($variant == 'index')
-   $htmlout .= "<td class='colhead' align='center'><a href='{$TBDEV['baseurl']}/browse.php?{$oldlink}sort=9&amp;type={$link9}'>{$lang["torrenttable_uppedby"]}</a></td>\n";
+   $htmlout .= "<td class='colhead' align='center'><a href='{$INSTALLER09['baseurl']}/browse.php?{$oldlink}sort=9&amp;type={$link9}'>{$lang["torrenttable_uppedby"]}</a></td>\n";
 
     $htmlout .= "</tr>\n";
 
@@ -116,7 +116,7 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
         {
             $htmlout .= "<a href='browse.php?cat=".intval($row['category'])."'>";
             if (isset($row["cat_pic"]) && $row["cat_pic"] != "")
-                $htmlout .= "<img border='0' src='{$TBDEV['pic_base_url']}caticons/".htmlspecialchars($row['cat_pic'])."' alt='".htmlspecialchars($row['cat_name'])."' />";
+                $htmlout .= "<img border='0' src='{$INSTALLER09['pic_base_url']}caticons/".htmlspecialchars($row['cat_pic'])."' alt='".htmlspecialchars($row['cat_name'])."' />";
             else
             {
                 $htmlout .= htmlspecialchars($row["cat_name"]);
@@ -129,8 +129,8 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
         }
         $htmlout .= "</td>\n";
         $dispname = htmlspecialchars($row["name"]);
-        $checked = ((!empty($row['checked_by']) && $CURUSER['class'] >= UC_USER) ? "&nbsp;<img src='{$TBDEV['pic_base_url']}mod.gif' width='15' border='0' alt='Checked - by ".htmlspecialchars($row['checked_by'])."' title='Checked - by ".htmlspecialchars($row['checked_by'])."' />" : "");
-        $poster = empty($row["poster"]) ? "<img src=\'{$TBDEV['pic_base_url']}noposter.png\' width=\'150\' height=\'220\' border=\'0\' alt=\'Poster\' title=\'poster\' />" : "<img src=\'".htmlspecialchars($row['poster'])."\' width=\'150\' height=\'220\' border=\'0\' alt=\'Poster\' title=\'poster\' />";
+        $checked = ((!empty($row['checked_by']) && $CURUSER['class'] >= UC_USER) ? "&nbsp;<img src='{$INSTALLER09['pic_base_url']}mod.gif' width='15' border='0' alt='Checked - by ".htmlspecialchars($row['checked_by'])."' title='Checked - by ".htmlspecialchars($row['checked_by'])."' />" : "");
+        $poster = empty($row["poster"]) ? "<img src=\'{$INSTALLER09['pic_base_url']}noposter.png\' width=\'150\' height=\'220\' border=\'0\' alt=\'Poster\' title=\'poster\' />" : "<img src=\'".htmlspecialchars($row['poster'])."\' width=\'150\' height=\'220\' border=\'0\' alt=\'Poster\' title=\'poster\' />";
  
         if ($row["descr"])
         $descr = str_replace("\"", "&quot;", readMore($row["descr"], 350, "details.php?id=" . intval($row["id"]) . "&amp;hit=1"));
@@ -143,30 +143,30 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
         if ($variant == "index")
             $htmlout .= "&amp;hit=1";
         
-        $sticky = ($row['sticky']=="yes" ? "<img src='{$TBDEV['pic_base_url']}sticky.gif' border='0' alt='Sticky' title='Sticky !' />" : "");
-        $nuked = ($row["nuked"] == "yes" ? "<img src='{$TBDEV['pic_base_url']}nuked.gif' style='border:none' alt='Nuked'  align='right' title='Reason :".htmlspecialchars($row["nukereason"])."' />" : "");
+        $sticky = ($row['sticky']=="yes" ? "<img src='{$INSTALLER09['pic_base_url']}sticky.gif' border='0' alt='Sticky' title='Sticky !' />" : "");
+        $nuked = ($row["nuked"] == "yes" ? "<img src='{$INSTALLER09['pic_base_url']}nuked.gif' style='border:none' alt='Nuked'  align='right' title='Reason :".htmlspecialchars($row["nukereason"])."' />" : "");
 
          /** FREE Torrent **/
         $free_tag = ($row['free'] != 0 ? ' <a class="info" href="#"><b>[FREE]</b> <span>'. ($row['free'] > 1 ? 'Expires: '.get_date($row['free'], 'DATE').'<br />('.mkprettytime($row['free'] - TIME_NOW).' to go)<br />' : 'Unlimited<br />').'</span></a>' : $all_free_tag);
 
         /** Freeslot Slot in Use **/
-        $isdlfree = ($row['tid'] == $id && $row['uid'] == $CURUSER['id'] && $row['freeslot'] != 0 ? '<a class="info" href="#"><img src="'.$TBDEV['baseurl'].'/pic/freedownload.gif" alt="" /><span>Freeleech slot in use<br />'.($row['freeslot'] != 0 ? ($row['freeslot'] > 1 ? 'Expires: '.get_date($row['freeslot'], 'DATE').'<br />('.mkprettytime($row['freeslot'] - TIME_NOW).' to go)<br />' : 'Unlimited<br />') : '').'</span></a>' : '');
+        $isdlfree = ($row['tid'] == $id && $row['uid'] == $CURUSER['id'] && $row['freeslot'] != 0 ? '<a class="info" href="#"><img src="'.$INSTALLER09['baseurl'].'/pic/freedownload.gif" alt="" /><span>Freeleech slot in use<br />'.($row['freeslot'] != 0 ? ($row['freeslot'] > 1 ? 'Expires: '.get_date($row['freeslot'], 'DATE').'<br />('.mkprettytime($row['freeslot'] - TIME_NOW).' to go)<br />' : 'Unlimited<br />') : '').'</span></a>' : '');
 
        /** Double Upload Slot in Use **/
-       $isdouble = ($row['tid'] == $id && $row['uid'] == $CURUSER['id'] && $row['doubleup'] != 0 ? ' <a class="info" href="#"><img src="'.$TBDEV['baseurl'].'/pic/doubleseed.gif" alt="" /><span>Double Upload slot in use<br />'.($row['doubleup'] != 0 ? ($row['doubleup'] > 1 ? 'Expires: '.get_date($row['doubleup'], 'DATE').'<br />('.mkprettytime($row['doubleup'] - TIME_NOW).' to go)<br />' : 'Unlimited<br />') : '').'</span></a>' : '');
+       $isdouble = ($row['tid'] == $id && $row['uid'] == $CURUSER['id'] && $row['doubleup'] != 0 ? ' <a class="info" href="#"><img src="'.$INSTALLER09['baseurl'].'/pic/doubleseed.gif" alt="" /><span>Double Upload slot in use<br />'.($row['doubleup'] != 0 ? ($row['doubleup'] > 1 ? 'Expires: '.get_date($row['doubleup'], 'DATE').'<br />('.mkprettytime($row['doubleup'] - TIME_NOW).' to go)<br />' : 'Unlimited<br />') : '').'</span></a>' : '');
 
-       $htmlout .= "' onmouseover=\"Tip('<b>" . CutName($dispname, 80) . "</b><br /><b>Added:&nbsp;".get_date($row['added'],'DATE',0,1)."</b><br /><b>Size:&nbsp;".mksize(intval($row["size"])) ."</b><br /><b>Seeders:&nbsp;".intval($row["seeders"]) ."</b><br /><b>Leechers:&nbsp;".intval($row["leechers"]) ."</b><br />$poster');\" onmouseout=\"UnTip();\"><b>" . CutName($dispname, 45) . "</b></a>&nbsp;&nbsp;<a href=\"javascript:klappe_descr('descr" . intval($row["id"]) . "');\" ><img src=\"/pic/plus.gif\" border=\"0\" alt=\"Show torrent info in this page\" title=\"Show torrent info in this page\" /></a>&nbsp;&nbsp;$sticky&nbsp;".($row['added'] >= $CURUSER['last_browse'] ? " <img src='{$TBDEV['pic_base_url']}newb.png' border='0' alt='New !' title='New !' />" : "")."&nbsp;$checked&nbsp;$free_tag&nbsp;$nuked<br />\n".$isdlfree.$isdouble."</td>\n";
+       $htmlout .= "' onmouseover=\"Tip('<b>" . CutName($dispname, 80) . "</b><br /><b>Added:&nbsp;".get_date($row['added'],'DATE',0,1)."</b><br /><b>Size:&nbsp;".mksize(intval($row["size"])) ."</b><br /><b>Seeders:&nbsp;".intval($row["seeders"]) ."</b><br /><b>Leechers:&nbsp;".intval($row["leechers"]) ."</b><br />$poster');\" onmouseout=\"UnTip();\"><b>" . CutName($dispname, 45) . "</b></a>&nbsp;&nbsp;<a href=\"javascript:klappe_descr('descr" . intval($row["id"]) . "');\" ><img src=\"/pic/plus.gif\" border=\"0\" alt=\"Show torrent info in this page\" title=\"Show torrent info in this page\" /></a>&nbsp;&nbsp;$sticky&nbsp;".($row['added'] >= $CURUSER['last_browse'] ? " <img src='{$INSTALLER09['pic_base_url']}newb.png' border='0' alt='New !' title='New !' />" : "")."&nbsp;$checked&nbsp;$free_tag&nbsp;$nuked<br />\n".$isdlfree.$isdouble."</td>\n";
     
 	      if ($variant == "mytorrents")
         
-        $htmlout .= "<td align='center'><a href=\"download.php?torrent=".$id."\"><img src='".$TBDEV['pic_base_url']."zip.gif' border='0' alt='Download This Torrent!' title='Download This Torrent!' /></a></td>\n";
+        $htmlout .= "<td align='center'><a href=\"download.php?torrent=".$id."\"><img src='".$INSTALLER09['pic_base_url']."zip.gif' border='0' alt='Download This Torrent!' title='Download This Torrent!' /></a></td>\n";
 	        
         if ($variant == "mytorrents")
             
         $htmlout .= "<td align='center'><a href='edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . intval($row['id'])."'>".$lang["torrenttable_edit"]."</a></td>\n";
         
         
-        $htmlout.= ($variant == "index" ? "<td align='center'><a href=\"download.php?torrent=".$id."\"><img src='".$TBDEV['pic_base_url']."zip.gif' border='0' alt='Download This Torrent!' title='Download This Torrent!' /></a></td>" : "");
+        $htmlout.= ($variant == "index" ? "<td align='center'><a href=\"download.php?torrent=".$id."\"><img src='".$INSTALLER09['pic_base_url']."zip.gif' border='0' alt='Download This Torrent!' title='Download This Torrent!' /></a></td>" : "");
         
         if ($variant == "mytorrents") 
         {
@@ -178,7 +178,7 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
             $htmlout .= "</td>\n";
         }
         
-        $bookmarked = (!isset($row["bookmark"]) ? "<a href='bookmark.php?torrent=" . $id . "&amp;action=add'><img src='" . $TBDEV['pic_base_url'] . "bookmark.gif' border='0' alt='Bookmark it!' title='Bookmark it!' /></a>":"<a href='bookmark.php?torrent=" . $id . "&amp;action=delete'><img src='" . $TBDEV['pic_base_url'] . "plus2.gif' border='0' alt='Delete Bookmark!' title='Delete Bookmark!' /></a>");
+        $bookmarked = (!isset($row["bookmark"]) ? "<a href='bookmark.php?torrent=" . $id . "&amp;action=add'><img src='" . $INSTALLER09['pic_base_url'] . "bookmark.gif' border='0' alt='Bookmark it!' title='Bookmark it!' /></a>":"<a href='bookmark.php?torrent=" . $id . "&amp;action=delete'><img src='" . $INSTALLER09['pic_base_url'] . "plus2.gif' border='0' alt='Delete Bookmark!' title='Delete Bookmark!' /></a>");
         if ($variant == "index")  
         $htmlout.="<td align='right'>{$bookmarked}</td>"; 
 
@@ -259,7 +259,7 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
        $htmlout .= "<td align='center'><i>Anonymous</i></td>\n";
        }
        else {
-       $htmlout .= "<td align='center'>" . (isset($row["username"]) ? ("<a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($row["owner"])."'><b>" . htmlspecialchars($row["username"]) . "</b></a>") : "<i>(".$lang["torrenttable_unknown_uploader"].")</i>") . "</td>\n";
+       $htmlout .= "<td align='center'>" . (isset($row["username"]) ? ("<a href='{$INSTALLER09['baseurl']}/userdetails.php?id=".intval($row["owner"])."'><b>" . htmlspecialchars($row["username"]) . "</b></a>") : "<i>(".$lang["torrenttable_unknown_uploader"].")</i>") . "</td>\n";
        }
        }
        $htmlout .= "</tr>\n";
@@ -270,7 +270,7 @@ $all_free_tag = ($fl['modifier'] != 0 && ($fl['expires'] > TIME_NOW || $fl['expi
         
 function commenttable($rows, $variant = 'torrent') {
 	require_once(INCL_DIR.'html_functions.php');
-	global $CURUSER, $TBDEV;
+	global $CURUSER, $INSTALLER09;
 	$lang = load_language( 'torrenttable_functions' );
 	$htmlout = '';
 	$count = 0;
@@ -296,8 +296,8 @@ function commenttable($rows, $variant = 'torrent') {
     			else
     				$title = htmlspecialchars($title);
                 $htmlout .= "<a name='comm".intval($row["id"])."' href='userdetails.php?id=".intval($row["user"])."'><b>" .
-            	htmlspecialchars($row["username"]) . "</b></a>" . ($row["donor"] == "yes" ? "<img src='{$TBDEV['pic_base_url']}star.gif' alt='".$lang["commenttable_donor_alt"]."' />" : "") . ($row["warned"] == "yes" ? "<img src=".
-        			"'{$TBDEV['pic_base_url']}warned.gif' alt='".$lang["commenttable_warned_alt"]."' />" : "") . " ($title)\n";
+            	htmlspecialchars($row["username"]) . "</b></a>" . ($row["donor"] == "yes" ? "<img src='{$INSTALLER09['pic_base_url']}star.gif' alt='".$lang["commenttable_donor_alt"]."' />" : "") . ($row["warned"] == "yes" ? "<img src=".
+        			"'{$INSTALLER09['pic_base_url']}warned.gif' alt='".$lang["commenttable_warned_alt"]."' />" : "") . " ($title)\n";
     		}
         }
 		else
@@ -310,7 +310,7 @@ function commenttable($rows, $variant = 'torrent') {
 			($row["editedby"] && $CURUSER["class"] >= UC_STAFF ? "- [<a href='comment.php?action=vieworiginal&amp;cid=".$row['id'].$extra_link."&amp;tid=".$row[$variant]."'>".$lang["commenttable_view_original"]."</a>]" : "") . "</p>\n";
 		$avatar = ($CURUSER["avatars"] == "all" ? htmlspecialchars($row["avatar"]) : ($CURUSER["avatars"] == "some" && $row["offavatar"] == "no" ? htmlspecialchars($row["avatar"]) : ""));
 		if (!$avatar)
-			$avatar = "{$TBDEV['pic_base_url']}forumicons/default_avatar.gif";
+			$avatar = "{$INSTALLER09['pic_base_url']}forumicons/default_avatar.gif";
 		$text = format_comment($row["text"]);
     if ($row["editedby"])
     	$text .= "<p><font size='1' class='small'>".$lang["commenttable_last_edited_by"]." <a href='userdetails.php?id=".intval($row['editedby'])."'><b>".htmlspecialchars($row['username'])."</b></a> ".$lang["commenttable_last_edited_at"]." ".get_date($row['editedat'],'DATE')."</font></p>\n";

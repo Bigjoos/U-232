@@ -95,7 +95,7 @@ function _torrenttable($res, $frame_caption)
 
 function countriestable($res, $frame_caption, $what)
 {
-    global $CURUSER, $TBDEV, $lang;
+    global $CURUSER, $INSTALLER09, $lang;
     
     $htmlout = '';
     
@@ -119,7 +119,7 @@ function countriestable($res, $frame_caption, $what)
             $value = mksize($a["ul_avg"]);
         elseif ($what == "Ratio")
             $value = number_format($a["r"], 2);
-        $htmlout .= "<tr><td align='center'>$num</td><td align='left'><table border='0' class='main' cellspacing='0' cellpadding='0'><tr><td class='embedded'>" . "<img src=\"{$TBDEV['pic_base_url']}flag/{$a['flagpic']}\" alt='' /></td><td class='embedded' style='padding-left: 5px'><b>$a[name]</b></td>" . "</tr></table></td><td align='right'>$value</td></tr>\n";
+        $htmlout .= "<tr><td align='center'>$num</td><td align='left'><table border='0' class='main' cellspacing='0' cellpadding='0'><tr><td class='embedded'>" . "<img src=\"{$INSTALLER09['pic_base_url']}flag/{$a['flagpic']}\" alt='' /></td><td class='embedded' style='padding-left: 5px'><b>$a[name]</b></td>" . "</tr></table></td><td align='right'>$value</td></tr>\n";
     }
     $htmlout .= end_table();
     $htmlout .= end_frame();

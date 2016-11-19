@@ -29,11 +29,11 @@ $HTMLOUT ="";
 $lang = array_merge($lang, load_language('inactive') );
 /** new way **/
 if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 // made by putyn tbdev.net
 // email part by x0r tbdev.net
 // config
-$replyto = $TBDEV['site_email']; // The Reply-to email.
+$replyto = $INSTALLER09['site_email']; // The Reply-to email.
 $record_mail = true; // set this true or false . If you set this true every time whene you send a mail the time , userid , and the number of mail sent will be recorded
 $days = 50; //number of days of inactivity
 // end config
@@ -44,11 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($action == "deluser" && (!empty($_POST["userid"]))) {
         sql_query("DELETE FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['userid'])) . ") ") or sqlerr(__FILE__, __LINE__);
-        stderr($lang['inactive_success'], "{$lang['inactive_deleted']} <a href='".$TBDEV['baseurl']."/inactive.php'>{$lang['inactive_back']}</a>");
+        stderr($lang['inactive_success'], "{$lang['inactive_deleted']} <a href='".$INSTALLER09['baseurl']."/inactive.php'>{$lang['inactive_back']}</a>");
     }
     if ($action == "disable" && (!empty($_POST["userid"]))) {
         sql_query("UPDATE users SET enabled='no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['userid'])) . ") ") or sqlerr(__FILE__, __LINE__);
-        stderr($lang['inactive_success'], "{$lang['inactive_disabled']} <a href='".$TBDEV['baseurl']."/inactive.php'>{$lang['inactive_back']}</a>");
+        stderr($lang['inactive_success'], "{$lang['inactive_disabled']} <a href='".$INSTALLER09['baseurl']."/inactive.php'>{$lang['inactive_back']}</a>");
     }
 
     if ($action == "mail" && (!empty($_POST["userid"]))) {
@@ -61,16 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $added = get_date($arr["added"], 'DATE');
             $last_access = get_date($arr["last_access"], 'DATE');
 
-            $subject = "{$lang['inactive_youracc']}Your account at {$TBDEV['site_name']} !";
+            $subject = "{$lang['inactive_youracc']}Your account at {$INSTALLER09['site_name']} !";
             $message = "{$lang['inactive_hey']}
-            {$lang['inactive_youracc']} {$TBDEV['site_name']} {$lang['inactive_marked']} {$TBDEV['site_name']}{$lang['inactive_plogin']}\n
+            {$lang['inactive_youracc']} {$INSTALLER09['site_name']} {$lang['inactive_marked']} {$INSTALLER09['site_name']}{$lang['inactive_plogin']}\n
             {$lang['inactive_yourusername']} $username\n
             {$lang['inactive_created']} $added\n
             {$lang['inactive_lastaccess']} $last_access\n
-            {$lang['inactive_loginat']} {$TBDEV['baseurl']}/login.php\n
-            {$lang['inactive_forgotten']} {$TBDEV['baseurl']}/recover.php\n
-            {$lang['inactive_welcomeback']} {$TBDEV['site_name']}";
-            $headers = 'From: ' . $TBDEV['site_email'] . "\r\n" . 'Reply-To:' . $replyto . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+            {$lang['inactive_loginat']} {$INSTALLER09['baseurl']}/login.php\n
+            {$lang['inactive_forgotten']} {$INSTALLER09['baseurl']}/recover.php\n
+            {$lang['inactive_welcomeback']} {$INSTALLER09['site_name']}";
+            $headers = 'From: ' . $INSTALLER09['site_email'] . "\r\n" . 'Reply-To:' . $replyto . "\r\n" . 'X-Mailer: PHP/' . phpversion();
             $mail = @mail($email, $subject, $message, $headers);
             }
 
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($mail)
-            stderr($lang['inactive_success'], "{$lang['inactive_msgsent']} <a href='".$TBDEV['baseurl']."/admin.php?action=inactive'>{$lang['inactive_back']}</a>");
+            stderr($lang['inactive_success'], "{$lang['inactive_msgsent']} <a href='".$INSTALLER09['baseurl']."/admin.php?action=inactive'>{$lang['inactive_back']}</a>");
       
         else
             stderr($lang['inactive_error'], "{$lang['inactive_tryagain']}");
@@ -129,7 +129,7 @@ return 'Check All'; }
         $last_seen = (($arr["last_access"] == "0") ? "never" : "" . get_date($arr["last_access"], 'DATE') . "&nbsp;");
         $class = get_user_class_name($arr["class"]);
         $HTMLOUT .="<tr>
-        <td><a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "'>" . htmlspecialchars($arr["username"]) . "</a></td>
+        <td><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "'>" . htmlspecialchars($arr["username"]) . "</a></td>
         <td>" . $class . "</td>
         <td><a href='mailto:" . htmlspecialchars($arr["email"]) . "'>" . htmlspecialchars($arr["email"]) . "</a></td>
         <td>" . $ratio . "</td>
@@ -149,7 +149,7 @@ return 'Check All'; }
         $ress = sql_query("SELECT avps.value_s AS userid, avps.value_i AS last_mail, avps.value_u AS mails, users.username FROM avps LEFT JOIN users ON avps.value_s=users.id WHERE avps.arg='inactivemail' LIMIT 1") or sqlerr(__FILE__, __LINE__);
         $date = mysqli_fetch_assoc($ress);
         if ($date["last_mail"] > 0)
-            $HTMLOUT .="<tr><td colspan='6' class='colhead' align='center' style='color:red;'>{$lang['inactive_lastmail']} <a href='{$TBDEV['baseurl']}/userdetails.php?id=" . intval($date["userid"]) . "'>" . htmlspecialchars($date["username"]) . "</a> {$lang['inactive_on']} <b>" . get_date($date["last_mail"], 'DATE') . " -  " . intval($date["mails"]) . "</b>{$lang['inactive_email']} " . ($date["mails"] > 1 ? "s" : "") . "  {$lang['inactive_sent']}</td></tr>";
+            $HTMLOUT .="<tr><td colspan='6' class='colhead' align='center' style='color:red;'>{$lang['inactive_lastmail']} <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($date["userid"]) . "'>" . htmlspecialchars($date["username"]) . "</a> {$lang['inactive_on']} <b>" . get_date($date["last_mail"], 'DATE') . " -  " . intval($date["mails"]) . "</b>{$lang['inactive_email']} " . ($date["mails"] > 1 ? "s" : "") . "  {$lang['inactive_sent']}</td></tr>";
     }
     $HTMLOUT .="</table></form>";
 } else {

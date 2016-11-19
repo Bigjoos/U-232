@@ -13,7 +13,7 @@ dbconn();
 loggedinorreturn();
 
 if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 $lang = array_merge( load_language('global'), load_language('ad_ipcheck') );
 
@@ -31,7 +31,7 @@ $HTMLOUT ="";
             $added = sqlesc(time());
             $userid = implode(", ", array_map("sqlesc", $_POST['usernw']));
             //$userid = implode(", ", $_POST["usernw"]);
-             sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($TBDEV['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
+             sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($INSTALLER09['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
             $r = sql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernw'])) . ")") or sqlerr(__FILE__, __LINE__);
             $user = mysqli_fetch_assoc($r);
             $exmodcomment = htmlspecialchars($user["modcomment"]);
@@ -40,7 +40,7 @@ $HTMLOUT ="";
             sql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernw'])) . ")") or sqlerr(__FILE__, __LINE__);
             $do = "UPDATE users SET warned='0' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernw'])) . ")";
             $res = sql_query($do) or sqlerr(__FILE__, __LINE__); 
-            header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
+            header("Refresh: 3; url={$INSTALLER09['baseurl']}/warned.php");
             stderr("Success","Warning Removed - Redirecting in 3..2..1");
             }
 
@@ -50,7 +50,7 @@ $HTMLOUT ="";
             $added = sqlesc(time());
             //$userid = implode(", ", $_POST["usernlw"]);
             $userid = implode(", ", array_map("sqlesc", $_POST['usernlw']));
-             sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($TBDEV['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
+             sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($INSTALLER09['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
             $r = sql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernlw'])) . ")")or sqlerr(__FILE__, __LINE__);
             $user = mysqli_fetch_assoc($r);
             $exmodcomment = $user["modcomment"];
@@ -59,7 +59,7 @@ $HTMLOUT ="";
             sql_query("UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernlw'])) . ")") or sqlerr(__FILE__, __LINE__);
             $do = "UPDATE users SET leechwarn='0' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernlw'])) . ")";
             $res = sql_query($do) or sqlerr(__FILE__, __LINE__);
-            header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
+            header("Refresh: 3; url={$INSTALLER09['baseurl']}/warned.php");
             stderr("Success","Leech Warning Removed - Redirecting in 3..2..1");
             }
 
@@ -69,7 +69,7 @@ $HTMLOUT ="";
             $added = sqlesc(time());
             $userid = implode(", ", $_POST["usernhnr"]);
             $userid = implode(", ", array_map("sqlesc", $_POST['usernhnr']));
-            sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($TBDEV['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
+            sql_query("INSERT INTO messages (sender, receiver, msg, added) VALUES (".sqlesc($INSTALLER09['bot_id']).", $userid, $msg, $added)") or sqlerr(__FILE__, __LINE__);                              
             $r = sql_query("SELECT modcomment FROM users WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernhnr'])) . ")")or sqlerr(__FILE__, __LINE__);
             $user = mysqli_fetch_assoc($r);
             $exmodcomment = $user["modcomment"];
@@ -78,14 +78,14 @@ $HTMLOUT ="";
             mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE users SET modcomment=" . sqlesc($modcomment) . " WHERE id IN (" . implode(", ", $_POST["usernhnr"]) . ")") or sqlerr(__FILE__, __LINE__);
             $do = "UPDATE users SET hnrwarn='no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['usernhnr'])) . ")";
             $res = sql_query($do) or sqlerr(__FILE__, __LINE__);
-            header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
+            header("Refresh: 3; url={$INSTALLER09['baseurl']}/warned.php");
             stderr("Success","Hit And Run Warning Removed - Redirecting in 3..2..1");
             }
 
         if (!empty($_POST["desact"])) {                       
             $do = "UPDATE users SET enabled='no' WHERE id IN (" . implode(", ", array_map("sqlesc", $_POST['desact'])) . ")";
             $res = sql_query($do) or sqlerr(__FILE__, __LINE__);
-            header("Refresh: 3; url={$TBDEV['baseurl']}/warned.php");
+            header("Refresh: 3; url={$INSTALLER09['baseurl']}/warned.php");
             stderr("Success","Member Disabled - Redirecting in 3..2..1");
             }
             }
@@ -137,7 +137,7 @@ for ($i = 1; $i <= $num; $i++) {
     $last_access = get_date($arr['last_access'], 'LONG', 1,0);
     $class = get_user_class_name($arr["class"]);
 
-$HTMLOUT .="<tr><td align='left'><a href='{$TBDEV['baseurl']}/userdetails.php?id=".intval($arr['id'])."'><b>".htmlspecialchars($arr['username'])."</b></a>" . ($arr["donor"] == "yes" ? "<img src='/pic/star.gif' border='0' alt='Donor' />" : "") . "</td>
+$HTMLOUT .="<tr><td align='left'><a href='{$INSTALLER09['baseurl']}/userdetails.php?id=".intval($arr['id'])."'><b>".htmlspecialchars($arr['username'])."</b></a>" . ($arr["donor"] == "yes" ? "<img src='/pic/star.gif' border='0' alt='Donor' />" : "") . "</td>
 <td align='center'>$added</td>
 <td align='center'>$last_access</td>
 <td align='center'>$class</td>

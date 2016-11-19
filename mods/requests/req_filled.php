@@ -23,14 +23,14 @@ $arr = mysqli_fetch_assoc($res);
 if ($CURUSER['id'] == $arr['userid'])
     stderr("{$lang['error_error']}", "{$lang['error_own_id']}");
 
-$msg = "{$lang['filled_your']}[b]".htmlspecialchars($arr['request'])."[/b]{$lang['filled_by']}[b]".$CURUSER['username']."[/b]{$lang['filled_dl']}[b][url=details.php?id=".$torrentid."]".$TBDEV['baseurl']."/details.php?id=".$torrentid."[/url][/b]{$lang['filled_thx']}{$lang['filled_wrong']}[b][url=".$TBDEV['baseurl']."/viewrequests.php?id=$id&req_reset]{$lang['filled_this']}[/url][/b]{$lang['filled_link']}";
+$msg = "{$lang['filled_your']}[b]".htmlspecialchars($arr['request'])."[/b]{$lang['filled_by']}[b]".$CURUSER['username']."[/b]{$lang['filled_dl']}[b][url=details.php?id=".$torrentid."]".$INSTALLER09['baseurl']."/details.php?id=".$torrentid."[/url][/b]{$lang['filled_thx']}{$lang['filled_wrong']}[b][url=".$INSTALLER09['baseurl']."/viewrequests.php?id=$id&req_reset]{$lang['filled_this']}[/url][/b]{$lang['filled_link']}";
 
 sql_query("UPDATE requests SET torrentid = ".sqlesc($torrentid).", filledby = ".sqlesc($CURUSER['id'])." WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 
 sql_query("INSERT INTO messages (poster, sender, receiver, added, msg, subject, location) VALUES(0, 0, ".sqlesc($arr['userid']).", ".TIME_NOW.", ".sqlesc($msg).", 'Request Filled', 1)") or sqlerr(__FILE__, __LINE__);
 
-if ($TBDEV['karma'] && isset($CURUSER['seedbonus']))
-    sql_query("UPDATE users SET seedbonus = seedbonus+".sqlesc($TBDEV['req_comment_bonus'])." WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
+if ($INSTALLER09['karma'] && isset($CURUSER['seedbonus']))
+    sql_query("UPDATE users SET seedbonus = seedbonus+".sqlesc($INSTALLER09['req_comment_bonus'])." WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 
 $res = sql_query("SELECT `userid` FROM `voted_requests` WHERE `requestid` = ".sqlesc($id)." AND userid != ".sqlesc($arr['userid'])) or sqlerr(__FILE__, __LINE__);
 
@@ -42,7 +42,7 @@ if (mysqli_num_rows($res) > 0) {
     
     $pn_msg     = sqlesc("{$lang['filled_voted']}[b]".$arr['request']."[/b]{$lang['filled_by']}[b]".
     $CURUSER['username']."[/b]{$lang['filled_dl']}
-    [b][url=details.php?id=".$torrentid."]".$TBDEV['baseurl']."/details.php?id=".$torrentid."[/url][/b].
+    [b][url=details.php?id=".$torrentid."]".$INSTALLER09['baseurl']."/details.php?id=".$torrentid."[/url][/b].
       {$lang['filled_thx']}");
 
     while ($row = mysqli_fetch_assoc($res))
@@ -62,7 +62,7 @@ $HTMLOUT .= "<table class='main' width='750px' border='0' cellspacing='0' cellpa
 
 $HTMLOUT .=  "<h1 align='center'>{$lang['reset_success']}</h1>
 <table cellspacing='10' cellpadding='10'>
-<tr><td align='left'>{$lang['filled_your']}$id (".htmlspecialchars($arr['request'])."){$lang['filled_success']}<a class='altlink' href='details.php?id=".$torrentid."'>".$TBDEV['baseurl']."/details.php?id=".$torrentid."</a>.  
+<tr><td align='left'>{$lang['filled_your']}$id (".htmlspecialchars($arr['request'])."){$lang['filled_success']}<a class='altlink' href='details.php?id=".$torrentid."'>".$INSTALLER09['baseurl']."/details.php?id=".$torrentid."</a>.  
 <br /><br />{$lang['filled_user']}<a class='altlink' href='userdetails.php?id=".intval($arr['userid'])."'><b>".htmlspecialchars($arr['username'])."</b></a>{$lang['filled_pm']}<br /><br />
 {$lang['filled_mistake']}<br />{$lang['filled_reset']}<a class='altlink' href='viewrequests.php?id=$id&amp;req_reset'>{$lang['filled_here']}</a> 
 <br /><br />{$lang['filled_unless']}<br /><br />

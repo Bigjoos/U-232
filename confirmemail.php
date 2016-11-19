@@ -49,5 +49,5 @@ sql_query("UPDATE users SET editsecret='', email=" . sqlesc($email) . " WHERE id
 
 if (!mysqli_affected_rows($GLOBALS["___mysqli_ston"]))
     stderr("{$lang['confirmmail_user_error']}", "{$lang['confirmmail_not_complete']}");
-header("Refresh: 0; url={$TBDEV['baseurl']}/my.php?emailch=1");
+header("Refresh: 0; url={$INSTALLER09['baseurl']}/my.php?emailch=1");
 ?>

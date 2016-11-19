@@ -29,7 +29,7 @@ $HTMLOUT = '';
 //== ID list - Add individual user IDs to this list for access to this script
 
 if (!min_class(UC_SYSOP)) // or just simply: if (!min_class(UC_STAFF))
-    header("Location: {$TBDEV['baseurl']}/index.php");
+    header("Location: {$INSTALLER09['baseurl']}/index.php");
 
 $allowed_ids = array(
     1

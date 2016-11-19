@@ -19,8 +19,8 @@ $newpage = new page_verify();
 $newpage->check('tkIs');
 $res = sql_query("SELECT COUNT(*) FROM users") or sqlerr(__FILE__, __LINE__);
 $arr = mysqli_fetch_row($res);
-if ($arr[0] >= $TBDEV['maxusers'])
-    stderr($lang['stderr_errorhead'], sprintf($lang['stderr_ulimit'], $TBDEV['maxusers']));
+if ($arr[0] >= $INSTALLER09['maxusers'])
+    stderr($lang['stderr_errorhead'], sprintf($lang['stderr_ulimit'], $INSTALLER09['maxusers']));
 
 if (!mkglobal("wantusername:wantpassword:passagain:email:invite:captchaSelection:submitme:passhint:hintanswer"))
     die();
@@ -90,7 +90,7 @@ if ($c[0] != 0)
 if (isset($_POST["user_timezone"]) && preg_match('#^\-?\d{1,2}(?:\.\d{1,2})?$#', $_POST['user_timezone'])) {
     $time_offset = sqlesc($_POST['user_timezone']);
 } else {
-    $time_offset = isset($TBDEV['time_offset']) ? sqlesc($TBDEV['time_offset']) : '0';
+    $time_offset = isset($INSTALLER09['time_offset']) ? sqlesc($INSTALLER09['time_offset']) : '0';
 }
 // have a stab at getting dst parameter?
 $dst_in_use = localtime(time() + ($time_offset * 3600), true);
@@ -120,7 +120,7 @@ $new_user       = sql_query("INSERT INTO users (username, passhash, secret, pass
     (int) $assoc['sender'],
     $email
 ))) . ", " . (!$arr[0] ? UC_SYSOP . ", " : "") . "'" . time() . "','" . time() . "','" . time() . "', $time_offset, {$dst_in_use['tm_isdst']})");
-$message        = "Welcome New {$TBDEV['site_name']} Member : - " . htmlspecialchars($wantusername) . "";
+$message        = "Welcome New {$INSTALLER09['site_name']} Member : - " . htmlspecialchars($wantusername) . "";
 if (!$new_user) {
     if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) == 1062)
         stderr("Error", "Username already exists!");
@@ -130,7 +130,7 @@ if (!$new_user) {
 //===send PM to inviter
 $sender  = sqlesc(intval($assoc["sender"]));
 $added   = sqlesc(time());
-$msg     = sqlesc("Hey there [you] ! :wave:\nIt seems that someone you invited to {$TBDEV['site_name']} has arrived ! :clap2: \n\n Please go to your [url={$TBDEV['baseurl']}/invite.php]Invite page[/url] to confirm them so they can log in.\n\ncheers\n");
+$msg     = sqlesc("Hey there [you] ! :wave:\nIt seems that someone you invited to {$INSTALLER09['site_name']} has arrived ! :clap2: \n\n Please go to your [url={$INSTALLER09['baseurl']}/invite.php]Invite page[/url] to confirm them so they can log in.\n\ncheers\n");
 $subject = sqlesc("Someone you invited has arrived!");
 sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES (0, $subject, $sender, $msg, $added)") or sqlerr(__FILE__, __LINE__);
 //////////////end/////////////////////

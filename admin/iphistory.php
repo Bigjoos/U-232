@@ -76,14 +76,14 @@ switch($do) {
 	$q1 = sql_query('SELECT u.id,INET_ATON(u.ip) as cip, l.ip, l.access AS last_access, (SELECT count(u2.id) FROM users as u2 WHERE u2.id != u.id AND INET_ATON(u2.ip) = l.ip ) as log_count, (SELECT count(b.id) FROM bans as b WHERE l.ip >= first AND l.ip <= last ) as ban_count FROM users as u LEFT JOIN iplog as l ON u.id = l.userid WHERE u.id = '.sqlesc($uid).' ORDER BY '.($order == 'access' ? 'l.access' : 'l.ip').' DESC '.$pager['limit']) or sqlerr(__FILE__,__LINE__);
 
 
-	$HTMLOUT = begin_main_frame().begin_frame("Historical IP addresses used by <a href='{$TBDEV['baseurl']}/userdetails.php?id=$uid'><b>".$username."</b></a>", true);
+	$HTMLOUT = begin_main_frame().begin_frame("Historical IP addresses used by <a href='{$INSTALLER09['baseurl']}/userdetails.php?id=$uid'><b>".$username."</b></a>", true);
 
 	if ($count > $perpage)
 		$HTMLOUT .= $pager['pagertop'];
 
 	$HTMLOUT .= begin_table()."<tr>
-	<td class='colhead'><a class='colhead' href='{$TBDEV['baseurl']}/admin.php?action=iphistory&amp;id=".$uid."&amp;order=access'>Last access</a></td>\n
-	<td class='colhead'><a class='colhead' href='{$TBDEV['baseurl']}/admin.php?action=iphistory&amp;id=".$uid."&amp;order=ip'>IP</a></td>\n
+	<td class='colhead'><a class='colhead' href='{$INSTALLER09['baseurl']}/admin.php?action=iphistory&amp;id=".$uid."&amp;order=access'>Last access</a></td>\n
+	<td class='colhead'><a class='colhead' href='{$INSTALLER09['baseurl']}/admin.php?action=iphistory&amp;id=".$uid."&amp;order=ip'>IP</a></td>\n
 	<td class='colhead'>Hostname</td>\n
 	</tr>\n";
 	while ($a = mysqli_fetch_assoc($q1))
@@ -91,9 +91,9 @@ switch($do) {
 		$HTMLOUT .="<tr><td>".get_date($a["last_access"], 'DATE', 1,0)."</td>\n";
 		$ip = long2ip($a['ip']);
 		if($a['log_count'] >= 1 )
-			$HTMLOUT .= "<td><b><a href='{$TBDEV['baseurl']}/admin.php?action=ipsearch&amp;ip=". $ip ."' title='ip used by other persons'>" . $ip ."</a></b></td>\n";
+			$HTMLOUT .= "<td><b><a href='{$INSTALLER09['baseurl']}/admin.php?action=ipsearch&amp;ip=". $ip ."' title='ip used by other persons'>" . $ip ."</a></b></td>\n";
 		elseif($a['ban_count'] > 0) 
-			$HTMLOUT .= "<td><a href='{$TBDEV['baseurl']}/admin.php?action=testip&amp;ip=" . $ip . "' title='ip banned'><font color='#FF0000' ><b>" . $ip . "</b></font></a></td>\n";
+			$HTMLOUT .= "<td><a href='{$INSTALLER09['baseurl']}/admin.php?action=testip&amp;ip=" . $ip . "' title='ip banned'><font color='#FF0000' ><b>" . $ip . "</b></font></a></td>\n";
 		else
 			$HTMLOUT .= "<td><b>" . $ip . "</b></td>\n";
 		//$d = gethost($ip);

@@ -27,7 +27,7 @@ require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'html_functions.php');
 
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	foreach($limits as $class=>$limit)
 		if($limit == 0) unset($limits[$class]);
 		
-	if(file_put_contents($TBDEV['flood_file'],serialize($limits))) {
+	if(file_put_contents($INSTALLER09['flood_file'],serialize($limits))) {
 		header('Refresh: 2; url=/admin.php?action=floodlimit');
 		stderr('Success','Limits saved! returning to main page');
 	} else
@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 } else {
 
-if(!file_exists($TBDEV['flood_file']) || !is_array($limit = unserialize(file_get_contents($TBDEV['flood_file']))))
+if(!file_exists($INSTALLER09['flood_file']) || !is_array($limit = unserialize(file_get_contents($INSTALLER09['flood_file']))))
 	$limit = array();
 
 $out = begin_main_frame().begin_frame('Edit flood limit');

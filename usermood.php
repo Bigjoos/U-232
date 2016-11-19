@@ -54,7 +54,7 @@ foreach ($mood as $key => $value) {
     $moodurl              = str_replace(' ', '+', $moodname);
     $moodpic              = $change[$value['id']]['image'];
     $htmlout .= "<a href='?mood=" . $moodurl . "&amp;id=" . $moodid . "'>
-    <img src='" . $TBDEV['pic_base_url'] . "smilies/{$moodpic}' alt='{$moodname}' border='0' />{$moodname}</a>&nbsp;&nbsp;";
+    <img src='" . $INSTALLER09['pic_base_url'] . "smilies/{$moodpic}' alt='{$moodname}' border='0' />{$moodname}</a>&nbsp;&nbsp;";
 }
 
 $htmlout .= "<br /><a href=\"javascript:self.close();\"><font color=\"#FF0000\">Close window</font></a>";

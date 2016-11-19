@@ -16,20 +16,20 @@ if (!$CURUSER) {
 }
 
 $sha = sha1($_SERVER['REMOTE_ADDR']);
-if (is_file('' . $TBDEV['dictbreaker'] . '/' . $sha) && filemtime('' . $TBDEV['dictbreaker'] . '/' . $sha) > (time() - 8)) {
-    @fclose(@fopen('' . $TBDEV['dictbreaker'] . '/' . $sha, 'w'));
+if (is_file('' . $INSTALLER09['dictbreaker'] . '/' . $sha) && filemtime('' . $INSTALLER09['dictbreaker'] . '/' . $sha) > (time() - 8)) {
+    @fclose(@fopen('' . $INSTALLER09['dictbreaker'] . '/' . $sha, 'w'));
     die('Minimum 8 seconds between login attempts :)');
 }
 
 // 09 failed logins thanks to pdq - Retro - Ezero
 function failedloginscheck()
 {
-    global $TBDEV;
+    global $INSTALLER09;
     $total = 0;
     $ip    = sqlesc(getip());
     $res = sql_query("SELECT SUM(attempts) FROM failedlogins WHERE ip=$ip") or sqlerr(__FILE__, __LINE__);
     list($total) = mysqli_fetch_row($res);
-    if ($total >= $TBDEV['failedlogins']) {
+    if ($total >= $INSTALLER09['failedlogins']) {
         sql_query("UPDATE failedlogins SET banned = 'yes' WHERE ip=$ip") or sqlerr(__FILE__, __LINE__);
         stderr("Login Locked!", "You have been <b>Exceeded</b> the allowed maximum login attempts without successful login, therefore your ip address <b>(" . htmlspecialchars($ip) . ")</b> has been locked for 24 hours.");
     }
@@ -58,7 +58,7 @@ $newpage->check('takelogin');
 function bark($text = 'Username or password incorrect')
 {
     global $lang;
-    @fclose(@fopen('' . $TBDEV['dictbreaker'] . '/' . sha1($_SERVER['REMOTE_ADDR']), 'w'));
+    @fclose(@fopen('' . $INSTALLER09['dictbreaker'] . '/' . sha1($_SERVER['REMOTE_ADDR']), 'w'));
     stderr($lang['tlogin_failed'], $text);
 }
 
@@ -78,7 +78,7 @@ if (!$row) {
         sql_query("INSERT INTO failedlogins (ip, added, attempts) VALUES ($ip, $added, 1)") or sqlerr(__FILE__, __LINE__);
     else
         sql_query("UPDATE failedlogins SET attempts = attempts + 1 where ip=$ip") or sqlerr(__FILE__, __LINE__);
-    @fclose(@fopen('' . $TBDEV['dictbreaker'] . '/' . sha1($_SERVER['REMOTE_ADDR']), 'w'));
+    @fclose(@fopen('' . $INSTALLER09['dictbreaker'] . '/' . sha1($_SERVER['REMOTE_ADDR']), 'w'));
     bark();
 }
 if ($row['passhash'] != make_passhash($row['secret'], md5($password))) {
@@ -89,13 +89,13 @@ if ($row['passhash'] != make_passhash($row['secret'], md5($password))) {
         sql_query("INSERT INTO failedlogins (ip, added, attempts) VALUES ($ip, $added, 1)") or sqlerr(__FILE__, __LINE__);
     else
         sql_query("UPDATE failedlogins SET attempts = attempts + 1 where ip=$ip") or sqlerr(__FILE__, __LINE__);
-    @fclose(@fopen('' . $TBDEV['dictbreaker'] . '/' . sha1($_SERVER['REMOTE_ADDR']), 'w'));
+    @fclose(@fopen('' . $INSTALLER09['dictbreaker'] . '/' . sha1($_SERVER['REMOTE_ADDR']), 'w'));
     $to      = sqlesc(intval($row["id"]));
     $subject = "Failed login";
-    $msg     = "[color=red]Security alert[/color]\n Account: ID=" . intval($row['id']) . " Somebody (probably you, " . $username . " !) tried to login but failed!" . "\nTheir [b]Ip Address [/b] was : " . $ip . "\n If this wasn't you please report this event to a {$TBDEV['site_name']} staff member\n - Thank you.\n";
+    $msg     = "[color=red]Security alert[/color]\n Account: ID=" . intval($row['id']) . " Somebody (probably you, " . $username . " !) tried to login but failed!" . "\nTheir [b]Ip Address [/b] was : " . $ip . "\n If this wasn't you please report this event to a {$INSTALLER09['site_name']} staff member\n - Thank you.\n";
     $sql     = "INSERT INTO messages (sender, receiver, msg, subject, added) VALUES('System', $to, " . sqlesc($msg) . ", " . sqlesc($subject) . ", $added);";
     $res = sql_query($sql) or sqlerr(__FILE__, __LINE__);
-    stderr("Login failed !", "<b>Error</b>: Username or password entry incorrect <br />Have you forgotten your password? <a href='{$TBDEV['baseurl']}/resetpw.php'><b>Recover</b></a> your password !");
+    stderr("Login failed !", "<b>Error</b>: Username or password entry incorrect <br />Have you forgotten your password? <a href='{$INSTALLER09['baseurl']}/resetpw.php'><b>Recover</b></a> your password !");
     bark();
 }
 
@@ -108,6 +108,6 @@ logincookie($row["id"], $passh);
 $ip = sqlesc(getip());
 sql_query("DELETE FROM failedlogins WHERE ip = " . sqlesc($ip)) or sqlerr(__FILE__, __LINE__);
 
-header("Location: {$TBDEV['baseurl']}/index.php");
+header("Location: {$INSTALLER09['baseurl']}/index.php");
 
 ?>

@@ -75,7 +75,7 @@ if ($want_pot && (isset($pot_options[$want_pot]))) {
         /** shoutbox announce **/
         
         require_once(INCL_DIR . 'bbcode_functions.php');
-        $msg = $CURUSER['username'] . " put " . $want_pot . " karma point" . ($want_pot > 1 ? 's' : '') . " into the site pot! * Only [b]" . $Remaining . "[/b] more karma point" . ($Remaining > 1 ? 's' : '') . " to go! * [color=green][b]Site Pot:[/b][/color] [url={$TBDEV['baseurl']}/sitepot.php]" . $give . "/" . $potsize . '[/url]';
+        $msg = $CURUSER['username'] . " put " . $want_pot . " karma point" . ($want_pot > 1 ? 's' : '') . " into the site pot! * Only [b]" . $Remaining . "[/b] more karma point" . ($Remaining > 1 ? 's' : '') . " to go! * [color=green][b]Site Pot:[/b][/color] [url={$INSTALLER09['baseurl']}/sitepot.php]" . $give . "/" . $potsize . '[/url]';
         autoshout($msg);
         
         

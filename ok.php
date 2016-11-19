@@ -62,8 +62,8 @@ dbconn();
       {
         $HTMLOUT .= stdhead("{$lang['ok_signup_confirm']}");
         $HTMLOUT .= "<h1>{$lang['ok_success_confirmed']}</h1>\n";
-        $HTMLOUT .= "<p>".sprintf($lang['ok_account_active_login'], "<a href='{$TBDEV['baseurl']}/index.php'><b>{$lang['ok_account_active_login_link']}</b></a>")."</p>\n";
-        $HTMLOUT .= sprintf($lang['ok_read_rules'], $TBDEV['site_name']);
+        $HTMLOUT .= "<p>".sprintf($lang['ok_account_active_login'], "<a href='{$INSTALLER09['baseurl']}/index.php'><b>{$lang['ok_account_active_login_link']}</b></a>")."</p>\n";
+        $HTMLOUT .= sprintf($lang['ok_read_rules'], $INSTALLER09['site_name']);
         $HTMLOUT .= stdfoot();
         echo $HTMLOUT;
       }

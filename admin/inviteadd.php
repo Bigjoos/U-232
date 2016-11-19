@@ -29,7 +29,7 @@ require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'html_functions.php');
 /** new way **/
 if (!min_class(UC_ADMINISTRATOR)) // or just simply: if (!min_class(UC_STAFF))
-header( "Location: {$TBDEV['baseurl']}/index.php");
+header( "Location: {$INSTALLER09['baseurl']}/index.php");
 
 	
 	//dont forget to edit this 
@@ -75,11 +75,11 @@ header( "Location: {$TBDEV['baseurl']}/index.php");
 				{
 					$subject = sqlesc($do == "remove_all" || $do == "remove" ?  $lang['inviteadd_subject_r'] : $lang['inviteadd_subject_a']);
 					switch($do) {
-						case 'remove_all' : $body = sprintf($lang['inviteadd_body_removeall'],$a['username'],$TBDEV['site_name']);
+						case 'remove_all' : $body = sprintf($lang['inviteadd_body_removeall'],$a['username'],$INSTALLER09['site_name']);
 					break;
-						case 'remove' : $body = sprintf($lang['inviteadd_body_remove'],$a['username'],$invites, ($invites > 1 ? 's' : ''),$TBDEV['site_name']);
+						case 'remove' : $body = sprintf($lang['inviteadd_body_remove'],$a['username'],$invites, ($invites > 1 ? 's' : ''),$INSTALLER09['site_name']);
 					break;
-						case 'add' : $body = sprintf($lang['inviteadd_body_add'],$a['username'],$invites, ($invites > 1 ? 's' : ''),$TBDEV['site_name']);
+						case 'add' : $body = sprintf($lang['inviteadd_body_add'],$a['username'],$invites, ($invites > 1 ? 's' : ''),$INSTALLER09['site_name']);
 					break;
 					}
 					$pms[] = "(0,".sqlesc($a['id']).",".sqlesc(time()).",".sqlesc($body)." ".($use_subject ? ",".sqlesc($subject)."" : "").")" ;

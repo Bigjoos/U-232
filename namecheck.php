@@ -57,10 +57,10 @@ $numbers = mysqli_num_rows($result);
 
 if ($numbers > 0) {
     while ($namecheck = mysqli_fetch_assoc($result)) {
-        $HTMLOUT .= "<font color='#cc0000'><font size='2'><b><img src='{$TBDEV['pic_base_url']}cross.png' alt='Cross' title='Username  Not Available' align='absmiddle' />Sorry... Username - " . htmlspecialchars($namecheck["username"]) . " is already in use.</font>";
+        $HTMLOUT .= "<font color='#cc0000'><font size='2'><b><img src='{$INSTALLER09['pic_base_url']}cross.png' alt='Cross' title='Username  Not Available' align='absmiddle' />Sorry... Username - " . htmlspecialchars($namecheck["username"]) . " is already in use.</font>";
     }
 } else {
-    $HTMLOUT .= "<font color='#33cc33'><font size='2'><b><img src='{$TBDEV['pic_base_url']}tick.png' alt='Tick' title='Username Available' align='absmiddle' /> Username Available</font>";
+    $HTMLOUT .= "<font color='#33cc33'><font size='2'><b><img src='{$INSTALLER09['pic_base_url']}tick.png' alt='Tick' title='Username Available' align='absmiddle' /> Username Available</font>";
 }
 
 echo $HTMLOUT;

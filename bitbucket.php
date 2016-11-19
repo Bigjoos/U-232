@@ -21,7 +21,7 @@ $HTMLOUT = "";
 
 $SaLt      = 'mE0wI924dsfsfs!@B'; // change this!
 $skey      = 'eTe5$Ybnsccgbsfdsfsw4h6W'; // change this!
-$maxsize   = $TBDEV['bucket_maxsize'];
+$maxsize   = $INSTALLER09['bucket_maxsize'];
 // valid file formats
 $formats   = array(
     '.gif',
@@ -30,7 +30,7 @@ $formats   = array(
 );
 // path to bucket/avatar directories
 $bucketdir = (isset($_POST["avy"]) ? 'avatars/' : 'bitbucket/');
-$address   = $TBDEV['baseurl'] . '/';
+$address   = $INSTALLER09['baseurl'] . '/';
 
 $PICSALT = $SaLt . $CURUSER['username'];
 
@@ -53,9 +53,9 @@ if (!isset($_FILES['file'])) {
             stderr($lang['bitbucket_hey'], "{$lang['bitbucket_imagenf']}");
         
         if (isset($_GET["type"]) && $_GET["type"] == 2)
-            header("Refresh: 2; url={$TBDEV['baseurl']}/bitbucket.php?images=2");
+            header("Refresh: 2; url={$INSTALLER09['baseurl']}/bitbucket.php?images=2");
         else
-            header("Refresh: 2; url={$TBDEV['baseurl']}/bitbucket.php?images=1");
+            header("Refresh: 2; url={$INSTALLER09['baseurl']}/bitbucket.php?images=1");
         die('Deleting Image (' . $delfile . '), Redirecting...');
     }
     
@@ -65,7 +65,7 @@ if (!isset($_FILES['file'])) {
             stderr($lang['bitbucket_error'], "{$lang['bitbucket_mustbe']}Avatar MUST be in jpg, gif or png format. Make sure you include http:// in the URL.");
         $avatar = sqlesc($_GET['avatar']);
         sql_query("UPDATE users SET avatar = " . sqlesc($avatar) . " WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
-        header("Refresh: 0; url={$TBDEV['baseurl']}/bitbucket.php?images=$type&updated=avatar");
+        header("Refresh: 0; url={$INSTALLER09['baseurl']}/bitbucket.php?images=$type&updated=avatar");
     }
     
     if (isset($_GET["updated"]) && htmlspecialchars($_GET["updated"]) == 'avatar') {
@@ -102,25 +102,25 @@ if (!isset($_FILES['file'])) {
     </script>";
     
     if (isset($_GET['images']) && $_GET['images'] == 1) {
-        $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?images=2\">{$lang['bitbucket_viewmya']}</a></p>
-    <p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php\">{$lang['bitbucket_hidemyi']}</a></p>";
+        $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?images=2\">{$lang['bitbucket_viewmya']}</a></p>
+    <p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php\">{$lang['bitbucket_hidemyi']}</a></p>";
     } elseif (isset($_GET['images']) && $_GET['images'] == 2) {
-        $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?images=1\">{$lang['bitbucket_viewmyi']}</a></p>
-    <p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php\">{$lang['bitbucket_hidemya']}</a></p>";
+        $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?images=1\">{$lang['bitbucket_viewmyi']}</a></p>
+    <p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php\">{$lang['bitbucket_hidemya']}</a></p>";
     } else {
-        $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?images=1\">{$lang['bitbucket_viewmyi']}</a></p>
-    <p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?images=2\">{$lang['bitbucket_viewmya']}</a></p>";
+        $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?images=1\">{$lang['bitbucket_viewmyi']}</a></p>
+    <p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?images=2\">{$lang['bitbucket_viewmya']}</a></p>";
     }
     if (isset($_GET['images'])) {
         foreach ((array) glob((($_GET['images'] == 2) ? 'avatars/' : 'bitbucket/') . $CURUSER['username'] . '_*') as $filename) {
             if (!empty($filename)) {
                 $encryptedfilename = urlencode(encrypt($filename));
                 $eid               = md5($filename);
-                $HTMLOUT .= "<a href=\"{$TBDEV['baseurl']}/{$filename}\"><img src=\"{$TBDEV['baseurl']}/{$filename}\" width=\"200\" alt=\"\" /><br />{$TBDEV['baseurl']}/{$filename}</a><br />";
-                $HTMLOUT .= "<p>Direct link to image<br /><input style=\"font-size: 9pt;text-align: center;\" id=\"d" . $eid . "d\" onclick=\"SelectAll('d" . $eid . "d');\" type=\"text\" size=\"70\" value=\"{$TBDEV['baseurl']}/{$filename}\" readonly=\"readonly\" /></p>";
-                $HTMLOUT .= "<p align=\"center\">Tag for forums or comments<br /><input style=\"font-size: 9pt;text-align: center;\" id=\"t" . $eid . "t\" onclick=\"SelectAll('t" . $eid . "t');\" type=\"text\" size=\"70\" value=\"[img]{$TBDEV['baseurl']}/{$filename}[/img]\" readonly=\"readonly\" /></p>";
-                $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;avatar={$TBDEV['baseurl']}/{$filename}\">{$lang['bitbucket_maketma']}</a></p>";
-                $HTMLOUT .= "<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;delete=" . $encryptedfilename . "&amp;delhash=" . md5($filename . $CURUSER['username'] . $SaLt) . "\">{$lang['bitbucket_delete']}</a></p><br />";
+                $HTMLOUT .= "<a href=\"{$INSTALLER09['baseurl']}/{$filename}\"><img src=\"{$INSTALLER09['baseurl']}/{$filename}\" width=\"200\" alt=\"\" /><br />{$INSTALLER09['baseurl']}/{$filename}</a><br />";
+                $HTMLOUT .= "<p>Direct link to image<br /><input style=\"font-size: 9pt;text-align: center;\" id=\"d" . $eid . "d\" onclick=\"SelectAll('d" . $eid . "d');\" type=\"text\" size=\"70\" value=\"{$INSTALLER09['baseurl']}/{$filename}\" readonly=\"readonly\" /></p>";
+                $HTMLOUT .= "<p align=\"center\">Tag for forums or comments<br /><input style=\"font-size: 9pt;text-align: center;\" id=\"t" . $eid . "t\" onclick=\"SelectAll('t" . $eid . "t');\" type=\"text\" size=\"70\" value=\"[img]{$INSTALLER09['baseurl']}/{$filename}[/img]\" readonly=\"readonly\" /></p>";
+                $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;avatar={$INSTALLER09['baseurl']}/{$filename}\">{$lang['bitbucket_maketma']}</a></p>";
+                $HTMLOUT .= "<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?type=" . ((isset($_GET['images']) && $_GET['images'] == 2) ? '2' : '1') . "&amp;delete=" . $encryptedfilename . "&amp;delhash=" . md5($filename . $CURUSER['username'] . $SaLt) . "\">{$lang['bitbucket_delete']}</a></p><br />";
             } else
                 $HTMLOUT .= "{$lang['bitbucket_noimages']}";
         }
@@ -185,9 +185,9 @@ $HTMLOUT .= "<p>{$lang['bitbucket_directlink']}<br />
 <input style=\"font-size: 9pt;text-align: center;\" id=\"direct\" onclick=\"SelectAll('direct');\" type=\"text\" size=\"70\" value=\"" . $address . $path . "\" readonly=\"readonly\" /></p>
 <p align=\"center\">{$lang['bitbucket_tags']}
 <input style=\"font-size: 9pt;text-align: center;\" id=\"tag\" onclick=\"SelectAll('tag');\" type=\"text\" size=\"70\" value=\"[img]" . $address . $path . "[/img]\" readonly=\"readonly\" /></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?type=2&amp;avatar=" . $address . $path . "\">{$lang['bitbucket_maketma']}</a></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?images=1\">{$lang['bitbucket_viewmyi']}</a></p>
-<p align=\"center\"><a href=\"{$TBDEV['baseurl']}/bitbucket.php?images=2\">{$lang['bitbucket_viewmya']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?type=2&amp;avatar=" . $address . $path . "\">{$lang['bitbucket_maketma']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?images=1\">{$lang['bitbucket_viewmyi']}</a></p>
+<p align=\"center\"><a href=\"{$INSTALLER09['baseurl']}/bitbucket.php?images=2\">{$lang['bitbucket_viewmya']}</a></p>
 </td>
 </tr>
 </table>";

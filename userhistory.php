@@ -109,7 +109,7 @@ if ($action == "viewposts") {
         
         $forumname = htmlspecialchars($arr["name"]);
         
-        $dt = (time() - $TBDEV['readpost_expiry']);
+        $dt = (time() - $INSTALLER09['readpost_expiry']);
         
         $newposts = 0;
         

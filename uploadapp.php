@@ -28,7 +28,7 @@ if (isset($_POST["form"]) != "1") {
         
         $HTMLOUT .= "<h1 align='center'>{$lang['uploadapp_application']}</h1>
         <table width='750' border='1' cellspacing='0' cellpadding='10'><tr><td>
-        <form action='{$TBDEV['baseurl']}/uploadapp.php' method='post' enctype='multipart/form-data'>
+        <form action='{$INSTALLER09['baseurl']}/uploadapp.php' method='post' enctype='multipart/form-data'>
         <table border='1' cellspacing='0' cellpadding='5' align='center'>";
         
         if ($CURUSER['downloaded'] > 0)
@@ -146,7 +146,7 @@ if (isset($_POST["form"]) != "1") {
             stderr($lang['uploadapp_error'], $lang['uploadapp_tryagain']);
     } else {
         $subject = sqlesc("Uploader application");
-        $msg     = sqlesc("An uploader application has just been filled in by [url={$TBDEV['baseurl']}/userdetails.php?id=$CURUSER[id]][b]$CURUSER[username][/b][/url]. Click [url={$TBDEV['baseurl']}/uploadapps.php][b]Here[/b][/url] to go to the uploader applications page.");
+        $msg     = sqlesc("An uploader application has just been filled in by [url={$INSTALLER09['baseurl']}/userdetails.php?id=$CURUSER[id]][b]$CURUSER[username][/b][/url]. Click [url={$INSTALLER09['baseurl']}/uploadapps.php][b]Here[/b][/url] to go to the uploader applications page.");
         $dt      = sqlesc(time());
         $subres = sql_query('SELECT id FROM users WHERE class = 6') or sqlerr(__FILE__, __LINE__);
         while ($arr = mysqli_fetch_assoc($subres))
@@ -186,7 +186,7 @@ if (isset($_POST["form"]) != "1") {
 
         $HTMLOUT .="<h1 align='center'>{$lang['uploadapp_application']}</h1>
         <table width='750' border='1' cellspacing='0' cellpadding='10'><tr><td>
-        <form action='{$TBDEV['baseurl']}/uploadapp.php' method='post' enctype='multipart/form-data'>
+        <form action='{$INSTALLER09['baseurl']}/uploadapp.php' method='post' enctype='multipart/form-data'>
         <table border='1' cellspacing='0' cellpadding='5' align='center'>";
 
         if ($CURUSER['downloaded'] > 0)
@@ -293,7 +293,7 @@ if (isset($_POST["form"]) != "1") {
             stderr($lang['uploadapp_error'], $lang['uploadapp_tryagain']);
     } else {
         $subject = sqlesc("Uploader application");
-        $msg = sqlesc("An uploader application has just been filled in by [url={$TBDEV['baseurl']}/userdetails.php?id=$CURUSER[id]][b]$CURUSER[username][/b][/url]. Click [url={$TBDEV['baseurl']}/uploadapps.php][b]Here[/b][/url] to go to the uploader applications page.");
+        $msg = sqlesc("An uploader application has just been filled in by [url={$INSTALLER09['baseurl']}/userdetails.php?id=$CURUSER[id]][b]$CURUSER[username][/b][/url]. Click [url={$INSTALLER09['baseurl']}/uploadapps.php][b]Here[/b][/url] to go to the uploader applications page.");
         $dt = sqlesc(time());
         $subres = sql_query('SELECT id FROM users WHERE class = 6') or sqlerr(__FILE__, __LINE__);
         while ($arr = mysqli_fetch_assoc($subres))

@@ -42,7 +42,7 @@ if ($CURUSER) {
         fwrite($handle, serialize($arr));
         fclose($handle);
     }
-    $new_user = "&nbsp;<a href=\"{$TBDEV['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "\">" . htmlspecialchars($arr["username"]) . "</a>\n";
+    $new_user = "&nbsp;<a href=\"{$INSTALLER09['baseurl']}/userdetails.php?id=" . intval($arr["id"]) . "\">" . htmlspecialchars($arr["username"]) . "</a>\n";
 }
 
 //==Stats Begin
@@ -89,7 +89,7 @@ if ((!empty($ann_subject)) AND (!empty($ann_body))) {
    <tr><td style='padding: 10px; background:lightgrey'>
    " . format_comment($ann_body) . "
    <br /><hr /><br />
-   Click <a href='{$TBDEV['baseurl']}/clear_announcement.php'>
+   Click <a href='{$INSTALLER09['baseurl']}/clear_announcement.php'>
    <i><b>here</b></i></a> to clear this announcement.</td></tr></table></div><br />\n";
 }
 
@@ -109,11 +109,11 @@ if ($CURUSER['show_shout'] === "yes") {
     $HTMLOUT .= "<form action='shoutbox.php' method='get' target='sbox' name='shbox' onsubmit='mysubmit()'>
    <div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'>
 	 <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:12pt;'>{$lang['index_shout']}</span></div>
-	 <br /><b>{$lang['index_shoutbox']}</b>&nbsp;[&nbsp;<a href='{$TBDEV['baseurl']}/shoutbox.php?show_shout=1&amp;show=no'><b>{$lang['index_shoutbox_close']}</b></a>&nbsp;]";
+	 <br /><b>{$lang['index_shoutbox']}</b>&nbsp;[&nbsp;<a href='{$INSTALLER09['baseurl']}/shoutbox.php?show_shout=1&amp;show=no'><b>{$lang['index_shoutbox_close']}</b></a>&nbsp;]";
     if ($CURUSER['class'] >= UC_STAFF) {
-        $HTMLOUT .= "[&nbsp;<a href='{$TBDEV['baseurl']}/admin.php?action=shistory'><b>{$lang['index_shoutbox_history']}</b></a>&nbsp;]";
+        $HTMLOUT .= "[&nbsp;<a href='{$INSTALLER09['baseurl']}/admin.php?action=shistory'><b>{$lang['index_shoutbox_history']}</b></a>&nbsp;]";
     }
-    $HTMLOUT .= "<iframe src='{$TBDEV['baseurl']}/shoutbox.php' width='100%' height='200' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe>
+    $HTMLOUT .= "<iframe src='{$INSTALLER09['baseurl']}/shoutbox.php' width='100%' height='200' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe>
    <br/>
    <br/>
 	 <div align='center'>
@@ -122,29 +122,29 @@ if ($CURUSER['show_shout'] === "yes") {
    <input class='button' type='submit' value='{$lang['index_shoutbox_send']}' />
    <input type='hidden' name='sent' value='yes' />
    <br />
-	 <a href=\"javascript:SmileIT(':-)','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/smile1.gif' alt='Smile' title='Smile' /></a> 
-   <a href=\"javascript:SmileIT(':smile:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/smile2.gif' alt='Smiling' title='Smiling' /></a> 
-   <a href=\"javascript:SmileIT(':-D','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/grin.gif' alt='Grin' title='Grin' /></a> 
-   <a href=\"javascript:SmileIT(':lol:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/laugh.gif' alt='Laughing' title='Laughing' /></a> 
-   <a href=\"javascript:SmileIT(':w00t:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/w00t.gif' alt='W00t' title='W00t' /></a> 
-   <a href=\"javascript:SmileIT(':blum:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/blum.gif' alt='Rasp' title='Rasp' /></a> 
-   <a href=\"javascript:SmileIT(';-)','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/wink.gif' alt='Wink' title='Wink' /></a> 
-   <a href=\"javascript:SmileIT(':devil:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/devil.gif' alt='Devil' title='Devil' /></a> 
-   <a href=\"javascript:SmileIT(':yawn:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/yawn.gif' alt='Yawn' title='Yawn' /></a> 
-   <a href=\"javascript:SmileIT(':-/','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/confused.gif' alt='Confused' title='Confused' /></a> 
-   <a href=\"javascript:SmileIT(':o)','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/clown.gif' alt='Clown' title='Clown' /></a> 
-   <a href=\"javascript:SmileIT(':innocent:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/innocent.gif' alt='Innocent' title='innocent' /></a> 
-   <a href=\"javascript:SmileIT(':whistle:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/whistle.gif' alt='Whistle' title='Whistle' /></a> 
-   <a href=\"javascript:SmileIT(':unsure:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/unsure.gif' alt='Unsure' title='Unsure' /></a> 
-   <a href=\"javascript:SmileIT(':blush:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/blush.gif' alt='Blush' title='Blush' /></a> 
-   <a href=\"javascript:SmileIT(':hmm:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/hmm.gif' alt='Hmm' title='Hmm' /></a> 
-   <a href=\"javascript:SmileIT(':hmmm:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/hmmm.gif' alt='Hmmm' title='Hmmm' /></a> 
-   <a href=\"javascript:SmileIT(':huh:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/huh.gif' alt='Huh' title='Huh' /></a> 
-   <a href=\"javascript:SmileIT(':look:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/look.gif' alt='Look' title='Look' /></a> 
-   <a href=\"javascript:SmileIT(':rolleyes:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/rolleyes.gif' alt='Roll Eyes' title='Roll Eyes' /></a> 
-   <a href=\"javascript:SmileIT(':kiss:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/kiss.gif' alt='Kiss' title='Kiss' /></a> 
-   <a href=\"javascript:SmileIT(':blink:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/blink.gif' alt='Blink' title='Blink' /></a> 
-   <a href=\"javascript:SmileIT(':baby:','shbox','shbox_text')\"><img border='0' src='{$TBDEV['pic_base_url']}smilies/baby.gif' alt='Baby' title='Baby' /></a><br/>
+	 <a href=\"javascript:SmileIT(':-)','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/smile1.gif' alt='Smile' title='Smile' /></a> 
+   <a href=\"javascript:SmileIT(':smile:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/smile2.gif' alt='Smiling' title='Smiling' /></a> 
+   <a href=\"javascript:SmileIT(':-D','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/grin.gif' alt='Grin' title='Grin' /></a> 
+   <a href=\"javascript:SmileIT(':lol:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/laugh.gif' alt='Laughing' title='Laughing' /></a> 
+   <a href=\"javascript:SmileIT(':w00t:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/w00t.gif' alt='W00t' title='W00t' /></a> 
+   <a href=\"javascript:SmileIT(':blum:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/blum.gif' alt='Rasp' title='Rasp' /></a> 
+   <a href=\"javascript:SmileIT(';-)','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/wink.gif' alt='Wink' title='Wink' /></a> 
+   <a href=\"javascript:SmileIT(':devil:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/devil.gif' alt='Devil' title='Devil' /></a> 
+   <a href=\"javascript:SmileIT(':yawn:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/yawn.gif' alt='Yawn' title='Yawn' /></a> 
+   <a href=\"javascript:SmileIT(':-/','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/confused.gif' alt='Confused' title='Confused' /></a> 
+   <a href=\"javascript:SmileIT(':o)','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/clown.gif' alt='Clown' title='Clown' /></a> 
+   <a href=\"javascript:SmileIT(':innocent:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/innocent.gif' alt='Innocent' title='innocent' /></a> 
+   <a href=\"javascript:SmileIT(':whistle:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/whistle.gif' alt='Whistle' title='Whistle' /></a> 
+   <a href=\"javascript:SmileIT(':unsure:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/unsure.gif' alt='Unsure' title='Unsure' /></a> 
+   <a href=\"javascript:SmileIT(':blush:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/blush.gif' alt='Blush' title='Blush' /></a> 
+   <a href=\"javascript:SmileIT(':hmm:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/hmm.gif' alt='Hmm' title='Hmm' /></a> 
+   <a href=\"javascript:SmileIT(':hmmm:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/hmmm.gif' alt='Hmmm' title='Hmmm' /></a> 
+   <a href=\"javascript:SmileIT(':huh:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/huh.gif' alt='Huh' title='Huh' /></a> 
+   <a href=\"javascript:SmileIT(':look:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/look.gif' alt='Look' title='Look' /></a> 
+   <a href=\"javascript:SmileIT(':rolleyes:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/rolleyes.gif' alt='Roll Eyes' title='Roll Eyes' /></a> 
+   <a href=\"javascript:SmileIT(':kiss:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/kiss.gif' alt='Kiss' title='Kiss' /></a> 
+   <a href=\"javascript:SmileIT(':blink:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/blink.gif' alt='Blink' title='Blink' /></a> 
+   <a href=\"javascript:SmileIT(':baby:','shbox','shbox_text')\"><img border='0' src='{$INSTALLER09['pic_base_url']}smilies/baby.gif' alt='Baby' title='Baby' /></a><br/>
 	 </div>
 	 <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:8pt;'>{$refreshbutton}</span></div>
    <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:8pt;'>{$commandbutton}</span></div>
@@ -154,7 +154,7 @@ if ($CURUSER['show_shout'] === "yes") {
    </form><br />\n";
 }
 if ($CURUSER['show_shout'] === "no") {
-    $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'><div style='background:transparent;height:25px;'><b>{$lang['index_shoutbox']}&nbsp;</b>[&nbsp;<a href='{$TBDEV['baseurl']}/shoutbox.php?show_shout=1&amp;show=yes'><b>{$lang['index_shoutbox_open']}&nbsp;]</b></a></div></div><br />";
+    $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'><div style='background:transparent;height:25px;'><b>{$lang['index_shoutbox']}&nbsp;</b>[&nbsp;<a href='{$INSTALLER09['baseurl']}/shoutbox.php?show_shout=1&amp;show=yes'><b>{$lang['index_shoutbox_open']}&nbsp;]</b></a></div></div><br />";
 }
 //==end 09 shoutbox
 
@@ -165,7 +165,7 @@ if ($CURUSER >= UC_STAFF)
     $adminbutton = "<span style='float:right;'><a href='admin.php?action=news'>News page</a></span>\n";
 $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'>
     <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:12pt;'>{$lang['news_title']}</span>{$adminbutton}</div>";
-$news_file = "{$TBDEV['cache']}/news.txt";
+$news_file = "{$INSTALLER09['cache']}/news.txt";
 $expire    = 15 * 60; // 15min
 if (file_exists($news_file) && filemtime($news_file) > (time() - $expire)) {
     $news2 = unserialize(file_get_contents($news_file));
@@ -186,7 +186,7 @@ if ($news2) {
         $button = '';
         if ($CURUSER['class'] >= UC_STAFF) {
             $hash   = md5('the@@saltto66??' . $array['id'] . 'add' . '@##mu55y==');
-            $button = "<br /><div style='float:right;'><a href='admin.php?action=news&amp;mode=edit&amp;newsid=" . intval($array['id']) . "&amp;returnto=" . urlencode($_SERVER['PHP_SELF']) . "'><img src='{$TBDEV['pic_base_url']}button_edit2.gif' border='0' alt=\"Edit news\"  title=\"Edit news\" /></a>&nbsp;<a href='admin.php?action=news&amp;mode=delete&amp;newsid=" . intval($array['id']) . "&amp;h=$hash&amp;returnto=" . urlencode($_SERVER['PHP_SELF']) . "'><img src='{$TBDEV['pic_base_url']}del.png' border='0' alt=\"Delete news\" title=\"Delete news\" /></a></div>";
+            $button = "<br /><div style='float:right;'><a href='admin.php?action=news&amp;mode=edit&amp;newsid=" . intval($array['id']) . "&amp;returnto=" . urlencode($_SERVER['PHP_SELF']) . "'><img src='{$INSTALLER09['pic_base_url']}button_edit2.gif' border='0' alt=\"Edit news\"  title=\"Edit news\" /></a>&nbsp;<a href='admin.php?action=news&amp;mode=delete&amp;newsid=" . intval($array['id']) . "&amp;h=$hash&amp;returnto=" . urlencode($_SERVER['PHP_SELF']) . "'><img src='{$INSTALLER09['pic_base_url']}del.png' border='0' alt=\"Delete news\" title=\"Delete news\" /></a></div>";
         }
         $HTMLOUT .= "<div style='background:transparent;height:20px;'><span style='font-weight:bold;font-size:10pt;'>";
         if ($news_flag < 2) {
@@ -211,7 +211,7 @@ $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border
 $page = 1;
 $num  = 0;
 //== Latest posts query
-$topicres = sql_query("SELECT t.id, t.userid, t.anonymous AS top_anon, t.subject, t.locked, t.forumid, t.lastpost, t.sticky, t.views, t.forumid, f.minclassread, f.name " . ", (SELECT COUNT(id) FROM posts WHERE topicid=t.id) AS p_count " . ", p.userid AS puserid, p.anonymous AS pos_anon, p.added " . ", u.id AS uid, u.username " . ", u2.username AS u2_username " . "FROM topics AS t " . "LEFT JOIN forums AS f ON f.id = t.forumid " . "LEFT JOIN posts AS p ON p.id=(SELECT MAX(id) FROM posts WHERE topicid = t.id) " . "LEFT JOIN users AS u ON u.id=p.userid " . "LEFT JOIN users AS u2 ON u2.id=t.userid " . "WHERE f.minclassread <= " . $CURUSER['class'] . " " . "ORDER BY t.lastpost DESC LIMIT {$TBDEV['latest_posts_limit']}") or sqlerr(__FILE__, __LINE__);
+$topicres = sql_query("SELECT t.id, t.userid, t.anonymous AS top_anon, t.subject, t.locked, t.forumid, t.lastpost, t.sticky, t.views, t.forumid, f.minclassread, f.name " . ", (SELECT COUNT(id) FROM posts WHERE topicid=t.id) AS p_count " . ", p.userid AS puserid, p.anonymous AS pos_anon, p.added " . ", u.id AS uid, u.username " . ", u2.username AS u2_username " . "FROM topics AS t " . "LEFT JOIN forums AS f ON f.id = t.forumid " . "LEFT JOIN posts AS p ON p.id=(SELECT MAX(id) FROM posts WHERE topicid = t.id) " . "LEFT JOIN users AS u ON u.id=p.userid " . "LEFT JOIN users AS u2 ON u2.id=t.userid " . "WHERE f.minclassread <= " . $CURUSER['class'] . " " . "ORDER BY t.lastpost DESC LIMIT {$INSTALLER09['latest_posts_limit']}") or sqlerr(__FILE__, __LINE__);
 if (mysqli_num_rows($topicres) > 0) {
     $HTMLOUT .= "<table width='100%' cellspacing='0' cellpadding='5'><tr>
         <td align='left' class='colhead'>{$lang['latestposts_topic_title']}</td>
@@ -268,9 +268,9 @@ if (mysqli_num_rows($topicres) > 0) {
         } else {
             $author = (!empty($topicarr['u2_username']) ? "<a href='/userdetails.php?id=$topic_userid'><b>" . htmlspecialchars($topicarr['u2_username']) . "</b></a>" : ($topic_userid == '0' ? "<i>System</i>" : "<i>Unknown[$topic_userid]</i>"));
         }
-        $staffimg  = ($topicarr['minclassread'] >= UC_MODERATOR ? "<img src='" . $TBDEV['pic_base_url'] . "staff.png' border='0' alt='Staff forum' title='Staff Forum' />" : '');
-        $stickyimg = ($topicarr['sticky'] == 'yes' ? "<img src='" . $TBDEV['pic_base_url'] . "sticky.gif' border='0' alt='Sticky' title='Sticky Topic' />&nbsp;&nbsp;" : '');
-        $lockedimg = ($topicarr['locked'] == 'yes' ? "<img src='" . $TBDEV['pic_base_url'] . "forumicons/locked.gif' border='0' alt='Locked' title='Locked Topic' />&nbsp;" : '');
+        $staffimg  = ($topicarr['minclassread'] >= UC_MODERATOR ? "<img src='" . $INSTALLER09['pic_base_url'] . "staff.png' border='0' alt='Staff forum' title='Staff Forum' />" : '');
+        $stickyimg = ($topicarr['sticky'] == 'yes' ? "<img src='" . $INSTALLER09['pic_base_url'] . "sticky.gif' border='0' alt='Sticky' title='Sticky Topic' />&nbsp;&nbsp;" : '');
+        $lockedimg = ($topicarr['locked'] == 'yes' ? "<img src='" . $INSTALLER09['pic_base_url'] . "forumicons/locked.gif' border='0' alt='Locked' title='Locked Topic' />&nbsp;" : '');
         $subject   = $lockedimg . $stickyimg . "<a href='/forums.php?action=viewtopic&amp;topicid=$topicid&amp;page=last#" . (int) $topicarr['lastpost'] . "'><b>" . htmlspecialchars($topicarr['subject']) . "</b></a>&nbsp;&nbsp;$staffimg&nbsp;&nbsp;$menu<br /><font class='small'>in <a href='forums.php?action=viewforum&amp;forumid=" . (int) $topicarr['forumid'] . "'>" . htmlspecialchars($topicarr['name']) . "</a>&nbsp;by&nbsp;$author&nbsp;&nbsp;($added)</font>";
         
         $HTMLOUT .= "<tr><td>{$subject}</td><td align='center'>{$replies}</td><td align='center'>" . number_format($topicarr['views']) . "</td><td align='center'>{$username}</td></tr>";
@@ -288,7 +288,7 @@ $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border
         <table width='100%' border='1' cellspacing='0' cellpadding='10'><tr><td align='center'>
         <table class='main' border='1' cellspacing='0' cellpadding='5'>
         <tr>
-	      <td class='rowhead'>{$lang['index_stats_regged']}</td><td align='right'>{$registered}/{$TBDEV['maxusers']}</td>
+	      <td class='rowhead'>{$lang['index_stats_regged']}</td><td align='right'>{$registered}/{$INSTALLER09['maxusers']}</td>
 	      <td class='rowhead'>{$lang['index_stats_online']}</td><td align='right'>{$numactive}</td>
         </tr>
         <tr>
@@ -361,9 +361,9 @@ $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border
 //== Cached Last24 by putyn
 function last24hours()
 {
-    global $TBDEV, $CURUSER;
-    $_last24       = (file_exists($TBDEV['last24cache']) ? unserialize(file_get_contents($TBDEV['last24cache'])) : array());
-    $_last24record = (file_exists($TBDEV['last24record']) ? unserialize(file_get_contents($TBDEV['last24record'])) : array(
+    global $INSTALLER09, $CURUSER;
+    $_last24       = (file_exists($INSTALLER09['last24cache']) ? unserialize(file_get_contents($INSTALLER09['last24cache'])) : array());
+    $_last24record = (file_exists($INSTALLER09['last24record']) ? unserialize(file_get_contents($INSTALLER09['last24record'])) : array(
         'num' => 0,
         'date' => 0
     ));
@@ -376,17 +376,17 @@ function last24hours()
         if (isset($_last24record['num']) && $_last24record['num'] < $_newcount) {
             $_last24record['num']  = $_newcount;
             $_last24record['date'] = time();
-            file_put_contents($TBDEV['last24record'], serialize($_last24record));
+            file_put_contents($INSTALLER09['last24record'], serialize($_last24record));
         }
-        file_put_contents($TBDEV['last24cache'], serialize($_last24));
+        file_put_contents($INSTALLER09['last24cache'], serialize($_last24));
     }
 }
 //== Cached Last24 by putyn
 function las24hours_display()
 {
-    global $TBDEV, $lang, $CURUSER;
-    $_last24       = (file_exists($TBDEV['last24cache']) ? unserialize(file_get_contents($TBDEV['last24cache'])) : array());
-    $_last24record = (file_exists($TBDEV['last24record']) ? unserialize(file_get_contents($TBDEV['last24record'])) : array(
+    global $INSTALLER09, $lang, $CURUSER;
+    $_last24       = (file_exists($INSTALLER09['last24cache']) ? unserialize(file_get_contents($INSTALLER09['last24cache'])) : array());
+    $_last24record = (file_exists($INSTALLER09['last24record']) ? unserialize(file_get_contents($INSTALLER09['last24record'])) : array(
         'num' => 0,
         'date' => 0
     ));
@@ -440,8 +440,8 @@ if ($Progress_so_far >= 100)
     $Progress_so_far = 100;
 
 $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'>
-    <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:12pt;'>{$lang['index_donations']}</span></div><br /><div align='center'><a href='{$TBDEV['baseurl']}/donate.php'>
-    <img border='0' src='{$TBDEV['pic_base_url']}makedonation.gif' alt='Donate' title='Donate'  /></a><br /><br />
+    <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:12pt;'>{$lang['index_donations']}</span></div><br /><div align='center'><a href='{$INSTALLER09['baseurl']}/donate.php'>
+    <img border='0' src='{$INSTALLER09['pic_base_url']}makedonation.gif' alt='Donate' title='Donate'  /></a><br /><br />
     <table width='140' style='height: 20%;' border='2'><tr>
     <td bgcolor='transparent' align='center' valign='middle' width='$Progress_so_far%'>$Progress_so_far%</td><td bgcolor='grey' align='center' valign='middle'></td></tr></table></div></div><br />";
 //end
@@ -454,14 +454,14 @@ $HTMLOUT .="
 <table width='100%' border='1' cellspacing='0' cellpadding='1'>
 <tr><td align='center'>
 <table class='main' border='0' width='402'>
-<tr><td style='padding: 0px; background-image: url({$TBDEV['pic_base_url']}loadbarbg.gif); background-repeat: repeat-x'>";
+<tr><td style='padding: 0px; background-image: url({$INSTALLER09['pic_base_url']}loadbarbg.gif); background-repeat: repeat-x'>";
 $perc = get_server_load();
 $percent = min(100, $perc);
 if ($percent <= 70) $pic = "loadbargreen.gif";
 elseif ($percent <= 90) $pic = "loadbaryellow.gif";
 else $pic = "loadbarred.gif";
 $width = $percent * 4;
-$HTMLOUT .="<img height='15' width='$width' src=\"{$TBDEV['pic_base_url']}{$pic}\" alt='$percent%' /><br /></td></tr></table></td></tr></table></div><br />";
+$HTMLOUT .="<img height='15' width='$width' src=\"{$INSTALLER09['pic_base_url']}{$pic}\" alt='$percent%' /><br /></td></tr></table></td></tr></table></div><br />";
 //==End
 */
 /*
@@ -473,19 +473,19 @@ $HTMLOUT .="
 <table width='100%' border='1' cellspacing='0' cellpadding='1'>
 <tr><td align='center'>
 <table class='main' border='0' width='402'>
-<tr><td style='padding: 0px; background-image: url({$TBDEV['pic_base_url']}loadbarbg.gif); background-repeat: repeat-x'>";
+<tr><td style='padding: 0px; background-image: url({$INSTALLER09['pic_base_url']}loadbarbg.gif); background-repeat: repeat-x'>";
 $percent = min(100, round(exec('ps ax | grep -c apache') / 256 * 100));
 if ($percent <= 70) $pic = "loadbargreen.gif";
 elseif ($percent <= 90) $pic = "loadbaryellow.gif";
 else $pic = "loadbarred.gif";
 $width = $percent * 4;
-$HTMLOUT .="<img height='15' width='$width' src=\"{$TBDEV['pic_base_url']}{$pic}\" alt='$percent%' /><br /></td></tr></table></td></tr></table></div><br />";
+$HTMLOUT .="<img height='15' width='$width' src=\"{$INSTALLER09['pic_base_url']}{$pic}\" alt='$percent%' /><br /></td></tr></table></td></tr></table></div><br />";
 //==End
 */
 //== Disclaimer
 $HTMLOUT .= "<div class='roundedCorners' style='text-align:left;width:80%;border:1px solid black;padding:5px;'>
     <div style='background:transparent;height:25px;'><span style='font-weight:bold;font-size:12pt;'>{$lang['index_disclaimer']}</span></div><br />";
-$HTMLOUT .= sprintf("<p><font class='small'>{$lang['foot_disclaimer']}</font></p>", $TBDEV['site_name']);
+$HTMLOUT .= sprintf("<p><font class='small'>{$lang['foot_disclaimer']}</font></p>", $INSTALLER09['site_name']);
 $HTMLOUT .= "</div>";
 
 echo stdhead('Home') . $HTMLOUT . stdfoot($stdfoot);

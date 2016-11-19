@@ -26,7 +26,7 @@ if ( ! defined( 'IN_TBDEV_ADMIN' ) )
 require_once(INCL_DIR.'user_functions.php');
 require_once(INCL_DIR.'html_functions.php');
 
-$blacklist = file_exists($TBDEV['nameblacklist']) && is_array(unserialize(file_get_contents($TBDEV['nameblacklist'])))  ? unserialize(file_get_contents($TBDEV['nameblacklist'])) : array();
+$blacklist = file_exists($INSTALLER09['nameblacklist']) && is_array(unserialize(file_get_contents($INSTALLER09['nameblacklist'])))  ? unserialize(file_get_contents($INSTALLER09['nameblacklist'])) : array();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
@@ -39,11 +39,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else
 		$blacklist[$badnames] = (int)1;
 
-	if(file_put_contents($TBDEV['nameblacklist'],serialize($blacklist))) {
+	if(file_put_contents($INSTALLER09['nameblacklist'],serialize($blacklist))) {
 		header('Refresh:2; url=admin.php?action=nameblacklist');
 		stderr('Success','The file was written...wait for redirect');
 	} else
-		stderr('Error','There was an error while saving the file check if this file <b>'.$TBDEV['nameblacklist'].'</b> is writable');
+		stderr('Error','There was an error while saving the file check if this file <b>'.$INSTALLER09['nameblacklist'].'</b> is writable');
 } else {
 
 $out = begin_main_frame();
