@@ -467,7 +467,7 @@ function insert_quick_jump_menu($currentforum = 0)
     $res = sql_query("SELECT id, name, minclassread FROM forums ORDER BY name") or sqlerr(__FILE__, __LINE__);
     while ($arr = mysqli_fetch_assoc($res))
         if ($CURUSER['class'] >= $arr["minclassread"])
-            $htmlout .= "<option value='" . intval($arr["id"]) . ($currentforum == $arr["id"] ? " selected" : "") . "'>" . htmlspecialchar($arr["name"]) . "</option>";
+            $htmlout .= "<option value='" . intval($arr["id"]) . ($currentforum == $arr["id"] ? " selected" : "") . "'>" . htmlspecialchars($arr["name"]) . "</option>";
     $htmlout .= "</select>
 	<input type='submit' value='Go!' class='gobutton' />
 	</div>
