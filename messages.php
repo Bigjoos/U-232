@@ -177,7 +177,7 @@ if (!$action)
         {
           $res2 = sql_query("select username FROM users WHERE id=" . sqlesc($row['receiver'])) or sqlerr(__FILE__,__LINE__);
           $username = mysqli_fetch_array($res2);
-          $username = "<a href='userdetails.php?id=".intval($row['receiver'])."'>".htmlsafechars($username[0])."</a>";
+          $username = "<a href='userdetails.php?id=".intval($row['receiver'])."'>".htmlspecialchars($username[0])."</a>";
  
        
         $id = intval($row['receiver']);
@@ -470,7 +470,7 @@ if (!$action)
       $res = sql_query("SELECT username FROM users WHERE id=" . sqlesc($orig) . " OR id=" . sqlesc($from)) or sqlerr(__FILE__,__LINE__);
       $orig2 = mysqli_fetch_assoc($res);
       
-      $orig_name = "<a href='userdetails.php?id=$from'>".htmlsafechars($orig2['username'])."</a>";
+      $orig_name = "<a href='userdetails.php?id=$from'>".htmlspecialchars($orig2['username'])."</a>";
       
       if ($from == 0)
       {
@@ -480,7 +480,7 @@ if (!$action)
       else
       {
         $from2 = mysqli_fetch_array($res);
-        $from_name = "<a href='userdetails.php?id=$from'>".htmlsafechars($from2['username'])."</a>";
+        $from_name = "<a href='userdetails.php?id=$from'>".htmlspecialchars($from2['username'])."</a>";
       }
 
       $body = sprintf($lang['messages_original'], $from2['username']) . format_comment($message['msg']);
